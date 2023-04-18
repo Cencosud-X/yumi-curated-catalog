@@ -7,7 +7,7 @@
     "Yumi",
     "experimental"
   ],
-  "kind": "library",
+  "kind": "foundrate",
   "folder": "libs",
   "icons": {
     "light": "icons/icon.svg",
