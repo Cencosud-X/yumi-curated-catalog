@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/manifiestrc.schema.json",
+  "name": "Yumi curated modules catalog",
+  "author": {
+    "github_user": "team_globalization",
+    "name": "Team Globalization"
+  },
+  "icons": {
+    "dark": "logo.svg",
+    "light": "logo.svg"
+  },
+  "descriptions": {
+    "es": "Lista de plantillas de modulos regionales para Seki con configuraciones dinamicas por modulo disponibles para la región",
+    "en": "long description..."
+  },
+  "types": [
+    "foundrate/typerc.json"
+  ]
+}
