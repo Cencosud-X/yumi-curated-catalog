@@ -12,8 +12,7 @@ interface IState {
     view: 'LOADING' | 'LIST' | 'ERROR';
     categories: string[];
 }
-export interface ICategoriesPageProps extends Components.IPageProps {
-    extensions: ICategoriesPageExtensions;
+export interface ICategoriesPageProps extends Components.IPageProps<{}, ICategoriesPageExtensions> {
 }
 export declare class CategoriesPage extends Components.Page<ICategoriesPageProps, IState> {
     state: IState;

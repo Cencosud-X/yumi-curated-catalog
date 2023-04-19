@@ -3,7 +3,9 @@ module.exports = async (runner, args) => {
     console.log('> POST: Cleansing (API):');
 
     const rc = args.rc;
-    await runner.execute([], {
+    await runner.execute([
+      'rm -rf ./src/lib'
+    ], {
       cwd: args.workspacePath
     })
 

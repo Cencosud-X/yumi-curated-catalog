@@ -2329,7 +2329,8 @@
           }, 1000);
         };
         _this.onClickCategory = function (category) {
-          if (_this.props.extensions.triggers) {
+          var _a;
+          if ((_a = _this.props.extensions) === null || _a === void 0 ? void 0 : _a.triggers) {
             _this.props.extensions.triggers.on_click_category(category);
             return;
           }
@@ -2393,7 +2394,7 @@
                     }, void 0)
                   }), category);
                 })
-              }, void 0), extensions.white_boxes && extensions.white_boxes.after_list_box]
+              }, void 0), (extensions === null || extensions === void 0 ? void 0 : extensions.white_boxes) && extensions.white_boxes.after_list_box]
             }, void 0)]
           }, void 0);
         };
@@ -2419,8 +2420,9 @@
           }, 1000);
         };
         _this.onFinalize = function () {
+          var _a;
           var extensions = _this.props.extensions;
-          if (extensions.triggers.on_finalize) {
+          if ((_a = extensions === null || extensions === void 0 ? void 0 : extensions.triggers) === null || _a === void 0 ? void 0 : _a.on_finalize) {
             extensions.triggers.on_finalize();
           }
         };

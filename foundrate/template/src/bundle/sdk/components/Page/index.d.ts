@@ -6,8 +6,8 @@ export interface IPageExtensions {
 }
 export interface IPageProps<Params extends {
     [K in keyof Params]?: string | undefined;
-} = {}> extends RouteComponentProps<Params> {
-    extensions?: IPageExtensions;
+} = {}, Extensions extends IPageExtensions = {}> extends RouteComponentProps<Params> {
+    extensions?: Extensions;
 }
 export declare class Page<IPageProps = {}, S = {}> extends React.Component<IPageProps, S> {
 }

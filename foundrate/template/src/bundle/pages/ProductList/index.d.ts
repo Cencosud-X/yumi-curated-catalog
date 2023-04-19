@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import { Components } from "../../sdk";
 export interface IProductListPageExtensions extends Components.IPageExtensions {
-    triggers: {
+    triggers?: {
         on_finalize: () => void;
     };
 }
@@ -11,8 +11,7 @@ interface IState {
 }
 export interface IProductListPageProps extends Components.IPageProps<{
     category: string;
-}> {
-    extensions: IProductListPageExtensions;
+}, IProductListPageExtensions> {
 }
 export declare class ProductListPage extends Components.Page<IProductListPageProps, IState> {
     state: IState;

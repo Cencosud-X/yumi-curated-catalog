@@ -1,5 +1,4 @@
-import { FoundRateModule, IModuleProps } from './spike-module'
-
+import { FoundRateModule, IModuleProps } from './bundle'
 
 export class FoundRateOverrideModule extends FoundRateModule {
     constructor(props: IModuleProps) {

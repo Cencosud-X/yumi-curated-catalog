@@ -2687,7 +2687,8 @@ class CategoriesPage extends Page {
       }, 1000);
     };
     this.onClickCategory = category => {
-      if (this.props.extensions.triggers) {
+      var _a;
+      if ((_a = this.props.extensions) === null || _a === void 0 ? void 0 : _a.triggers) {
         this.props.extensions.triggers.on_click_category(category);
         return;
       }
@@ -2753,7 +2754,7 @@ class CategoriesPage extends Page {
                 children: category
               }, void 0)
             }), category))
-          }, void 0), extensions.white_boxes && extensions.white_boxes.after_list_box]
+          }, void 0), (extensions === null || extensions === void 0 ? void 0 : extensions.white_boxes) && extensions.white_boxes.after_list_box]
         }, void 0)]
       }, void 0);
     };
@@ -2776,10 +2777,11 @@ class ProductListPage extends Page {
       }, 1000);
     };
     this.onFinalize = () => {
+      var _a;
       const {
         extensions
       } = this.props;
-      if (extensions.triggers.on_finalize) {
+      if ((_a = extensions === null || extensions === void 0 ? void 0 : extensions.triggers) === null || _a === void 0 ? void 0 : _a.on_finalize) {
         extensions.triggers.on_finalize();
       }
     };
