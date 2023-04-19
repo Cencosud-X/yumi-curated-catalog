@@ -5,7 +5,7 @@ module.exports = async (runner, args) => {
     const rc = args.rc;
     await runner.execute(
       [
-        `nx g @nrwl/react:lib ${rc.path}`
+        `nx g @nrwl/react:lib ${rc.path} --buildable`
       ],
       {
         cwd: rc.workspace_path,
