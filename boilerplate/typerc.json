@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
-  "name": "Globalization Module Boilerplate",
+  "name": "Package Source",
   "tags": [
     "Globalization",
     "Boilerplate",

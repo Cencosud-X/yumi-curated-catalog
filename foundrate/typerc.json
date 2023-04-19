@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
-  "name": "Found rate module",
+  "name": "Yumi Module",
   "tags": [
     "Globalization",
     "Found Rate",
