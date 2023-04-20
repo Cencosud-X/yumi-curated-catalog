@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
-  "name": "Package Source",
+  "name": "Blank Source",
   "tags": [
     "Globalization",
     "Boilerplate",
@@ -14,8 +14,8 @@
     "dark": "icons/icon.svg"
   },
   "descriptions": {
-    "en": "Boilerplate for the creation of a new module with the globalization framework ready for happy coding ^^",
-    "es": "Boilerplate for the creation of a new module with the globalization framework ready for happy coding ^^ in spanish"
+    "en": "Template to create the source(definition) of a new module. Used by module creators.",
+    "es": "Template para crear el source(definición) de un nuevo módulo. Usado por creadores de módulos."
   },
   "scripts": {
     "pre": "scripts/pre.js",
