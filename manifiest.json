@@ -14,6 +14,7 @@
     "en": "long description..."
   },
   "types": [
-    "blank-source/typerc.json"
+    "blank-source/typerc.json",
+    "my-super-module-implementation/typerc.json"
   ]
 }
