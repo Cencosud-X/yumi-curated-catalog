@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
-  "name": "Hello World Module",
+  "name": "Module Implementation",
   "tags": [
     "Globalization",
     "Yumi",
@@ -14,8 +14,8 @@
     "dark": "icons/icon.svg"
   },
   "descriptions": {
-    "en": "Hello World Module.",
-    "es": "Hello World Module."
+    "en": "Base template of a module to integrate into a project. Used by the Yumi Globalization development team.",
+    "es": "Template base de un módulo para integrar en un proyecto. Usado por el equipo de desarrollo de Yumi Globalización."
   },
   "scripts": {
     "pre": "scripts/pre.js",

@@ -1,13 +1,13 @@
 {
   "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
-  "name": "Blank Module",
+  "name": "Module Implementation",
   "tags": [
     "Globalization",
     "Yumi",
     "Module",
     "experimental"
   ],
-  "kind": "foundrate",
+  "kind": "module-implementation",
   "folder": "libs",
   "icons": {
     "light": "icons/icon.svg",
