@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react/jsx-runtime'), require('@ionic/react'), require('react'), require('react-router-dom')) :
-    typeof define === 'function' && define.amd ? define(['exports', 'react/jsx-runtime', '@ionic/react', 'react', 'react-router-dom'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.HelloWorldSource = {}, global.jsxRuntime, global.react, global.React, global.reactRouterDom));
-})(this, (function (exports, jsxRuntime, react, React, reactRouterDom) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react/jsx-runtime'), require('@ionic/react'), require('react'), require('react-router-dom')) :
+    typeof define === 'function' && define.amd ? define(['react/jsx-runtime', '@ionic/react', 'react', 'react-router-dom'], factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.HelloWorldSource = factory(global.jsxRuntime, global.react, global.React, global.reactRouterDom));
+})(this, (function (jsxRuntime, react, React, reactRouterDom) { 'use strict';
 
     function _interopNamespace(e) {
         if (e && e.__esModule) return e;
@@ -2358,8 +2358,6 @@
       return HelloWorldModule;
     }(Module);
 
-    exports.HelloWorldModule = HelloWorldModule;
-
-    Object.defineProperty(exports, '__esModule', { value: true });
+    return HelloWorldModule;
 
 }));

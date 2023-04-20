@@ -1,6 +1,10 @@
-import { FoundRateModule, IModuleProps } from './bundle'
+import Module, { IModuleProps } from './bundle'
 
-export class FoundRateOverrideModule extends FoundRateModule {
+/*
+{{#json data}}{{/json}}
+*/
+
+export class {{data.name}}OverrideModule extends Module {
     constructor(props: IModuleProps) {
         super(props, {});
     }

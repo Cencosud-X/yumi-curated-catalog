@@ -7,7 +7,7 @@ export interface IHelloWorldDescription extends Components.IModuleOverride {
     };
     routes?: Components.IModuleRoute[];
 }
-export declare abstract class HelloWorldModule extends Components.Module {
+export default abstract class HelloWorldModule extends Components.Module {
     protected override: IHelloWorldDescription;
     static route: string;
     constructor(props: Components.IModuleProps, override: IHelloWorldDescription);

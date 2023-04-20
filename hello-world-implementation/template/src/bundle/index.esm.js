@@ -2711,4 +2711,4 @@ class HelloWorldModule extends Module {
 }
 HelloWorldModule.route = '/hello-world';
 
-export { HelloWorldModule };
+export { HelloWorldModule as default };

@@ -15,7 +15,6 @@
   },
   "types": [
     "blank-source/typerc.json",
-    "found-rate-implementation/typerc.json",
     "hello-world-implementation/typerc.json"
   ]
 }
