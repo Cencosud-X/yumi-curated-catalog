@@ -7,7 +7,7 @@
     "Yumi",
     "experimental"
   ],
-  "kind": "boilerplate",
+  "kind": "blank-source",
   "folder": "packages",
   "icons": {
     "light": "icons/icon.svg",
