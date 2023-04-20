@@ -2709,6 +2709,6 @@ class HelloWorldModule extends Module {
     this.override = override;
   }
 }
-HelloWorldModule.route = "/hello-world-s";
+HelloWorldModule.route = "/hello-world";
 
 export { HelloWorldModule };

@@ -2354,7 +2354,7 @@
         _this.override = override;
         return _this;
       }
-      HelloWorldModule.route = "/hello-world-s";
+      HelloWorldModule.route = "/hello-world";
       return HelloWorldModule;
     }(Module);
 
