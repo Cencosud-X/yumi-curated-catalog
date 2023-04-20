@@ -1,4 +1,3 @@
-{{{{raw-helper}}}}
 import { IonContent, IonHeader, IonPage } from '@ionic/react';
 import { Components } from '../../sdk';
 
@@ -17,4 +16,3 @@ export class AboutPage extends Components.Page<IProps, IState> {
     );
   }
 }
-{{{{/raw-helper}}}}
