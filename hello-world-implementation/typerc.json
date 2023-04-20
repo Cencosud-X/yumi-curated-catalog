@@ -1,7 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
   "name": "Module Implementation",
-  "display_name": "Hello World",
   "tags": [
     "Globalization",
     "Yumi",
@@ -26,5 +25,6 @@
   "interpolations": {
     "source": "template",
     "substitutions": {}
-  }
+  },
+  "display_name": "Hello World"
 }

@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react/jsx-runtime'), require('@ionic/react'), require('react'), require('react-router-dom')) :
     typeof define === 'function' && define.amd ? define(['exports', 'react/jsx-runtime', '@ionic/react', 'react', 'react-router-dom'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.HelloWorld = {}, global.jsxRuntime, global.react, global.React, global.reactRouterDom));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.HelloWorldSource = {}, global.jsxRuntime, global.react, global.React, global.reactRouterDom));
 })(this, (function (exports, jsxRuntime, react, React, reactRouterDom) { 'use strict';
 
     function _interopNamespace(e) {
@@ -2354,7 +2354,7 @@
         _this.override = override;
         return _this;
       }
-      HelloWorldModule.route = "/hello-world-asd";
+      HelloWorldModule.route = '/hello-world';
       return HelloWorldModule;
     }(Module);
 
