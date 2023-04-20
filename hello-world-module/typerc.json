@@ -1,0 +1,29 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
+  "name": "Yumi Module",
+  "tags": [
+    "Globalization",
+    "Found Rate",
+    "Yumi",
+    "experimental"
+  ],
+  "kind": "foundrate",
+  "folder": "libs",
+  "icons": {
+    "light": "icons/icon.svg",
+    "dark": "icons/icon.svg"
+  },
+  "descriptions": {
+    "en": "Found rate description",
+    "es": "Found rate description in spanish"
+  },
+  "scripts": {
+    "pre": "scripts/pre.js",
+    "rollback": "scripts/rollback.js",
+    "post": "scripts/post.js"
+  },
+  "interpolations": {
+    "source": "template",
+    "substitutions": {}
+  }
+}
