@@ -15,6 +15,6 @@
   },
   "types": [
     "boilerplate/typerc.json",
-    "foundrate/typerc.json"
+    "hello-world-module/typerc.json"
   ]
 }
