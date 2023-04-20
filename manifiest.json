@@ -14,7 +14,6 @@
     "en": "long description..."
   },
   "types": [
-    "blank-source/typerc.json",
-    "hello-world-implementation/typerc.json"
+    "blank-source/typerc.json"
   ]
 }
