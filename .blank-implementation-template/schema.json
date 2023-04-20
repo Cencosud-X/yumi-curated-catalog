@@ -4,18 +4,10 @@
     {
       "properties": {
         "settings": {
-          "required": [
-            "ping"
-          ],
+          "required": [],
           "type": "object",
           "description": "Specific configuration",
-          "properties": {
-            "ping": {
-              "type": "string",
-              "description": "This is a custom variable for the module",
-              "default": "pong"
-            }
-          }
+          "properties": {}
         }
       }
     },

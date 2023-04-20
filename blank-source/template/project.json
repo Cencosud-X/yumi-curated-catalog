@@ -1,6 +1,6 @@
 {
-  "root": "packages/{{data.path}}",
-  "sourceRoot": "packages/{{data.path}}/src",
+  "root": "{{data.group_folder}}/{{data.path}}",
+  "sourceRoot": "{{data.group_folder}}/{{data.path}}/src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -8,16 +8,16 @@
       "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/{{data.path}}",
-        "tsConfig": "packages/{{data.path}}/tsconfig.lib.json",
-        "project": "packages/{{data.path}}/package.json",
-        "entryFile": "packages/{{data.path}}/src/index.ts",
+        "outputPath": "dist/{{data.group_folder}}/{{data.path}}",
+        "tsConfig": "{{data.group_folder}}/{{data.path}}/tsconfig.lib.json",
+        "project": "{{data.group_folder}}/{{data.path}}/package.json",
+        "entryFile": "{{data.group_folder}}/{{data.path}}/src/index.ts",
         "external": ["react/jsx-runtime"],
         "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
         "compiler": "babel",
         "assets": [
           {
-            "glob": "packages/{{data.path}}/README.md",
+            "glob": "{{data.group_folder}}/{{data.path}}/README.md",
             "input": ".",
             "output": "."
           }
@@ -28,14 +28,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/{{data.path}}/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["{{data.group_folder}}/{{data.path}}/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/{{data.path}}"],
+      "outputs": ["coverage/{{data.group_folder}}/{{data.path}}"],
       "options": {
-        "jestConfig": "packages/{{data.path}}/jest.config.js",
+        "jestConfig": "{{data.group_folder}}/{{data.path}}/jest.config.js",
         "passWithNoTests": true
       }
     },
