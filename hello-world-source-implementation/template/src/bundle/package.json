@@ -1,0 +1,24 @@
+{
+  "name": "@milocal/hello-world-source",
+  "description": "Hello world source code",
+  "version": "0.0.1",
+  "author": {
+    "name": "Milocal",
+    "email": "yumi@gmail.com"
+  },
+  "displayName": "Hello World",
+  "keywords": [
+    "milocal",
+    "hello",
+    "world"
+  ],
+  "main": "./index.umd.js",
+  "module": "./index.esm.js",
+  "typings": "./index.d.ts",
+  "dependencies": {},
+  "peerDependencies": {
+    "@ionic/react": "5.8.3",
+    "react": "17.0.2",
+    "react-router-dom": "5.3.0"
+  }
+}

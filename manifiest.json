@@ -16,6 +16,7 @@
   "types": [
     "blank-source/typerc.json",
     "hello-world-implementation/typerc.json",
-    "found-rate-implementation/typerc.json"
+    "found-rate-implementation/typerc.json",
+    "hello-world-source-implementation/typerc.json"
   ]
 }
