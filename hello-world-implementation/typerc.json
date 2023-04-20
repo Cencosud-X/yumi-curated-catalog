@@ -1,13 +1,14 @@
 {
   "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
   "name": "Module Implementation",
+  "display_name": "Hello World",
   "tags": [
     "Globalization",
     "Yumi",
     "Module",
     "experimental"
   ],
-  "kind": "foundrate",
+  "kind": "hello-world-implementation",
   "folder": "libs",
   "icons": {
     "light": "icons/icon.svg",

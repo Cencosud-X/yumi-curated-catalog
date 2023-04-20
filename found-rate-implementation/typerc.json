@@ -1,13 +1,14 @@
 {
   "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
   "name": "Module Implementation",
+  "display_name": "Found Rate",
   "tags": [
     "Globalization",
     "Yumi",
     "Module",
     "experimental"
   ],
-  "kind": "module-implementation",
+  "kind": "found-rate-implementation",
   "folder": "libs",
   "icons": {
     "light": "icons/icon.svg",
