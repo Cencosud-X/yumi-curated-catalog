@@ -1,6 +1,17 @@
 {
   "name": "@milocal/hello-world",
+  "description": "Hello world source code",
   "version": "0.0.1",
+  "author": {
+    "name": "Milocal",
+    "email": "yumi@gmail.com"
+  },
+  "displayName": "Hello World",
+  "keywords": [
+    "milocal",
+    "hello",
+    "world"
+  ],
   "main": "./index.umd.js",
   "module": "./index.esm.js",
   "typings": "./index.d.ts",
