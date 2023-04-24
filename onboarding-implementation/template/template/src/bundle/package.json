@@ -1,5 +1,5 @@
 {
-  "name": "@yumi/my-awesome-module-source",
+  "name": "@yumi/onboarding-source",
   "version": "0.0.1",
   "main": "./index.umd.js",
   "module": "./index.esm.js",

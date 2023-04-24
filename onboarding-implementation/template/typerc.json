@@ -7,7 +7,7 @@
     "Module",
     "experimental"
   ],
-  "kind": "my-awesome-module-implementation",
+  "kind": "onboarding-implementation",
   "folder": "libs",
   "icons": {
     "light": "icons/icon.svg",
@@ -26,5 +26,5 @@
     "source": "template",
     "substitutions": {}
   },
-  "display_name": "My Awesome Module"
+  "display_name": "Onboarding"
 }

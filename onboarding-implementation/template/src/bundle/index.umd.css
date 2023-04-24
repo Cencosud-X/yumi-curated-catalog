@@ -1,0 +1,124 @@
+.ion-page {
+  background-size: cover;
+}
+
+ion-content {
+  --background: transparent;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  margin-top: 40px;
+  width: '375px';
+  height: '378px'
+}
+
+.texts {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin: 10px;
+}
+
+.texts .title {
+  font-family: Open Sans;
+  font-size: 40px;
+  text-align: left;
+  font-weight: 700;
+  line-height: 1.25;
+  max-width: 300px;
+  line-height: 1.1;
+  letter-spacing: -0.05em;
+  margin-top: 0px;
+}
+
+.texts .subtitle {
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: left;
+  line-height: 1.25;
+  font-family: Open Sans;
+  letter-spacing: -0.05em;
+  max-width: 300px;
+}
+
+ion-footer {
+  display: block;
+  max-width: 100%;
+  padding: 10px;
+}
+
+.button-text {
+  text-transform: capitalize;
+  font-weight: 700;
+  font-size: 16px;
+  font-family: Open Sans;
+}
+.ion-page {
+  background-size: cover;
+}
+
+ion-content {
+  --background: transparent;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  margin-top: 40px;
+  width: '375px';
+  height: '378px'
+}
+
+.texts {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin: 10px;
+}
+
+.texts .title {
+  font-family: Open Sans;
+  font-size: 40px;
+  text-align: left;
+  font-weight: 700;
+  line-height: 1.25;
+  max-width: 300px;
+  line-height: 1.1;
+  margin-top: 40px;
+  letter-spacing: -0.05em;
+}
+
+.texts .subtitle {
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: left;
+  line-height: 1.25;
+  font-family: Open Sans;
+  letter-spacing: -0.05em;
+  max-width: 300px;
+}
+
+ion-footer {
+  display: block;
+  max-width: 100%;
+  padding: 10px;
+}
+
+.button-text {
+  text-transform: capitalize;
+  font-weight: 700;
+  font-size: 16px;
+  font-family: Open Sans;
+}

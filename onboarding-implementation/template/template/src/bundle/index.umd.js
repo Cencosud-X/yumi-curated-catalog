@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react/jsx-runtime'), require('@ionic/react'), require('react'), require('react-router-dom')) :
     typeof define === 'function' && define.amd ? define(['react/jsx-runtime', '@ionic/react', 'react', 'react-router-dom'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.MyAwesomeModuleSource = factory(global.jsxRuntime, global.react, global.React, global.reactRouterDom));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.OnboardingSource = factory(global.jsxRuntime, global.react, global.React, global.reactRouterDom));
 })(this, (function (jsxRuntime, react, React, reactRouterDom) { 'use strict';
 
     function _interopNamespace(e) {
