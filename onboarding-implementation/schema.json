@@ -7,25 +7,20 @@
           "required": ["screens"],
           "type": "object",
           "description": "Specific configuration",
-          "default": { "screens": { "welcome": true } },
+          "default": { "screens": { "gps": true } },
           "properties": {
             "screens": {
               "type": "object",
               "description": "Screen configuration",
               "additionalProperties": false,
-              "required": ["welcome"],
+              "required": [],
               "properties": {
-                "welcome": {
-                  "type": "boolean",
-                  "description": "Added Welcome page (boostrap)",
-                  "enum": [true]
+                "gps": {
+                  "description": "Added Gps feature and enable Geolocalization in devices",
+                  "type": "boolean"
                 },
                 "notification": {
                   "description": "Added notification page and enable push notifications",
-                  "type": "boolean"
-                },
-                "gps": {
-                  "description": "Added Gps feature and enable Geolocalization in devices",
                   "type": "boolean"
                 },
                 "custom_screens": {
