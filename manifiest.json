@@ -16,6 +16,7 @@
   "types": [
     "blank-source/typerc.json",
     "my-super-module-implementation/typerc.json",
-    "my-awesome-module-implementation/typerc.json"
+    "my-awesome-module-implementation/typerc.json",
+    "onboarding-implementation/typerc.json"
   ]
 }
