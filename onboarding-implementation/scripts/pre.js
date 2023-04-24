@@ -34,7 +34,7 @@ module.exports = async (runner, args) => {
     /*
       WE NEED TO DO THE FOLLOWING FLOW
         - We need to get the App.tsx which is inside the following path
-          {{rc.workspace_path}}/apps/www/src/app/App.tsx
+          /apps/www/src/app/App.tsx
 
         - An option to configure the app.tsx file, will be override the YUMI_MAIN_FILE_PATH
         in the seki product settings

@@ -4,10 +4,40 @@
     {
       "properties": {
         "settings": {
-          "required": [],
+          "required": ["screens"],
           "type": "object",
           "description": "Specific configuration",
-          "properties": {}
+          "default": { "screens": { "welcome": true } },
+          "properties": {
+            "screens": {
+              "type": "object",
+              "description": "Screen configuration",
+              "additionalProperties": false,
+              "required": ["welcome"],
+              "properties": {
+                "welcome": {
+                  "type": "boolean",
+                  "description": "Added Welcome page (boostrap)",
+                  "enum": [true]
+                },
+                "notification": {
+                  "description": "Added notification page and enable push notifications",
+                  "type": "boolean"
+                },
+                "gps": {
+                  "description": "Added Gps feature and enable Geolocalization in devices",
+                  "type": "boolean"
+                },
+                "custom_screens": {
+                  "type": "integer",
+                  "default": 1,
+                  "description": "Added a specific blank screens for personalization",
+                  "minimum": 1,
+                  "maximum": 10
+                }
+              }
+            }
+          }
         }
       }
     },

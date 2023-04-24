@@ -1,14 +1,23 @@
-import { IHomePageExtension } from './flow/home-page';
+import * as Pages from './flow';
 import { Components } from './sdk';
+export { Pages };
 export declare type IModuleProps = Components.IModuleProps;
-export interface IHelloWorldDescription extends Components.IModuleOverride {
-    extensions?: {
-        home_page: IHomePageExtension;
+export interface ISettings {
+    screens: {
+        geolocalization: boolean;
+        notification: boolean;
+        custom_screens: number;
     };
+}
+export interface IOnBoardingDescription extends Components.IModuleOverride {
+    extensions?: {};
     routes?: Components.IModuleRoute[];
 }
-export default abstract class HelloWorldModule extends Components.Module {
-    protected override: IHelloWorldDescription;
+export default abstract class OnBoardingModule extends Components.Module {
+    protected override: IOnBoardingDescription;
     static route: string;
-    constructor(props: Components.IModuleProps, override: IHelloWorldDescription);
+    private pageIndex;
+    constructor(props: Components.IModuleProps, override: IOnBoardingDescription);
+    onChangeToNextPageHandler: () => void;
+    onFinalize(): void;
 }

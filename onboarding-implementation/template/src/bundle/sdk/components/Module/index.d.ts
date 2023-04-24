@@ -14,8 +14,9 @@ export interface IModuleDescriptor {
     override: IModuleOverride;
 }
 export declare type IModuleProps = RouteComponentProps;
-export declare class Module extends React.Component<IModuleProps> {
+export declare abstract class Module extends React.Component<IModuleProps> {
     descriptor: IModuleDescriptor;
     constructor(props: IModuleProps, descriptor: IModuleDescriptor);
+    abstract onFinalize(): void;
     render(): JSX.Element;
 }
