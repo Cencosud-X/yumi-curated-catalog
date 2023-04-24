@@ -17,7 +17,7 @@ module.exports = async (runner, args) => {
     const rc = args.rc;
     await runner.execute(
       [
-        `nx g @nrwl/react:lib ${rc.path}`,
+        `npx nx g @nrwl/react:lib ${rc.path}`,
         'npm install @ionic/react@^5.8.3',
         'npm install @ionic/react-router@^5.8.3',
         'npm install react@^17.0.2',
