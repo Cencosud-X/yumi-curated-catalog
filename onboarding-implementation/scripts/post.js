@@ -2,7 +2,7 @@ module.exports = async (runner, args) => {
   try {
     console.log('> POST: Cleansing (API):');
 
-    const rc = args.rc;
+    //const rc = args.rc;
     await runner.execute([
       'rm -rf ./src/lib'
     ], {
@@ -13,6 +13,6 @@ module.exports = async (runner, args) => {
 
   } catch(ex) {
     console.error(ex);
-    throw new Error('Failed to clean API koa generators');
+    throw new Error('Failed to clean (POST process)');
   }
 }

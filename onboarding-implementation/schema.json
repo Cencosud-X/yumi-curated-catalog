@@ -7,11 +7,11 @@
           "required": ["screens"],
           "type": "object",
           "description": "Specific configuration",
-          "default": { "screens": { "welcome": true } },
           "properties": {
             "screens": {
               "type": "object",
               "description": "Screen configuration",
+              "default": { "welcome": true, "gps": true, "notification": true },
               "additionalProperties": false,
               "required": ["welcome"],
               "properties": {

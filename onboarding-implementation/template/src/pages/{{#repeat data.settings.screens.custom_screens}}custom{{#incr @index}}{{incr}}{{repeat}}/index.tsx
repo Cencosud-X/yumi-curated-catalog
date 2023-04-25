@@ -2,7 +2,7 @@ import { IonButton, IonContent, IonFooter, IonPage, IonText } from '@ionic/react
 import { Lib } from '../../bundle'
 import styles from './index.module.css'
 
-export class Custom1 extends Lib.BasePage {
+export class CustomScreen extends Lib.BasePage {
     onNextClickHandler = () => {
         // do the logic here
 

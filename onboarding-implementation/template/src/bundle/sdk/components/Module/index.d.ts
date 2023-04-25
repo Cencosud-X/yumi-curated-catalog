@@ -17,6 +17,6 @@ export declare type IModuleProps = RouteComponentProps;
 export declare abstract class Module extends React.Component<IModuleProps> {
     descriptor: IModuleDescriptor;
     constructor(props: IModuleProps, descriptor: IModuleDescriptor);
-    abstract onFinalize(): void;
+    abstract _onFinalize(): void;
     render(): JSX.Element;
 }

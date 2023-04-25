@@ -24,6 +24,13 @@ export class {{#pascalCase data.name}}{{/pascalCase}}OverrideModule extends Modu
                     page: Pages.Notification,
                 },
                 {{/if}}
+                {{#repeat data.settings.screens.custom_screens}}
+                {
+                    path: '/custom{{@index}}',
+                    page: Pages.Custom{{@index}},
+                },
+                {{/repeat}}
+                
             ]
         });
     }

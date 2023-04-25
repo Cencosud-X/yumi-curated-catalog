@@ -11,6 +11,7 @@ export default abstract class OnBoardingModule extends Components.Module {
     private pageIndex;
     constructor(props: Components.IModuleProps, override: IOnBoardingOverride);
     onChangeToNextPageHandler: () => void;
-    onFinalize(): void;
+    abstract onFinalize(): void;
+    _onFinalize(): void;
 }
 export { Lib };
