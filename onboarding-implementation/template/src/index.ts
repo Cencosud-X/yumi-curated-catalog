@@ -37,5 +37,6 @@ export class {{#pascalCase data.name}}{{/pascalCase}}OverrideModule extends Modu
     override onFinalize(): void {
         // In that step you should call this.props.history.push('/some-route')
         // to navigate to the next screen in your app flow.
+        console.log('Onboarding is done!')
     }
 }
