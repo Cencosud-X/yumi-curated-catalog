@@ -3321,7 +3321,7 @@ class BaseGPS extends BasePage {
           }, {
             children: jsx(IonImg, {
               src: img$1,
-              className: styles$1.image__c
+              className: styles$1.image__content
             }, void 0)
           }), void 0), jsxs("div", Object.assign({
             className: styles$1.texts

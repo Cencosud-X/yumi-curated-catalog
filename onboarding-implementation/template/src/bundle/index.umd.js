@@ -2976,7 +2976,7 @@
 	          }, {
 	            children: jsxRuntime.jsx(react.IonImg, {
 	              src: img$1,
-	              className: styles$1.image__c
+	              className: styles$1.image__content
 	            }, void 0)
 	          }), void 0), jsxRuntime.jsxs("div", __assign({
 	            className: styles$1.texts
