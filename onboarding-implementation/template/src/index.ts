@@ -26,12 +26,16 @@ export class {{#pascalCase data.name}}{{/pascalCase}}OverrideModule extends Modu
                 {{/if}}
                 {{#repeat data.settings.screens.custom_screens}}
                 {
-                    path: '/custom{{@index}}',
-                    page: Pages.Custom{{@index}},
+                    path: '/custom-screen{{#incr @index}}{{/incr}}',
+                    page: Pages.CustomScreen{{#incr @index}}{{/incr}},
                 },
                 {{/repeat}}
-                
             ]
         });
+    }
+
+    override onFinalize(): void {
+        // In that step you should call this.props.history.push('/some-route')
+        // to navigate to the next screen in your app flow.
     }
 }

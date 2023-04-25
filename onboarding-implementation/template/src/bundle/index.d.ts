@@ -8,7 +8,6 @@ export interface IOnBoardingOverride extends Components.IModuleOverride {
 export default abstract class OnBoardingModule extends Components.Module {
     protected override: IOnBoardingOverride;
     static route: string;
-    private pageIndex;
     constructor(props: Components.IModuleProps, override: IOnBoardingOverride);
     onChangeToNextPageHandler: () => void;
     abstract onFinalize(): void;
