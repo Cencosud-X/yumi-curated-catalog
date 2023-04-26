@@ -15,7 +15,6 @@
   },
   "types": [
     "blank-source/typerc.json",
-    "onboarding-implementation/typerc.json",
-    "hello-world-implementation/typerc.json"
+    "blank-feature/typerc.json"
   ]
 }

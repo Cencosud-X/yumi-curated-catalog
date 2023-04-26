@@ -1,21 +1,21 @@
 {
   "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
-  "name": "Module Implementation",
+  "name": "React Feature",
+  "display_name": "React feature",
   "tags": [
-    "Globalization",
     "Yumi",
     "Module",
-    "experimental"
+    "Release Candidate"
   ],
-  "kind": "onboarding-implementation",
+  "kind": "blank-feature",
   "folder": "libs",
   "icons": {
     "light": "icons/icon.svg",
     "dark": "icons/icon.svg"
   },
   "descriptions": {
-    "en": "Base template of a module to integrate into a project. Used by the Yumi Globalization development team.",
-    "es": "Template base de un módulo para integrar en un proyecto. Usado por el equipo de desarrollo de Yumi Globalización."
+    "en": "React base feature , disconnected via Nx",
+    "es": "Plantilla base para una funcionalidad de react bajo Nx"
   },
   "scripts": {
     "pre": "scripts/pre.js",
@@ -25,6 +25,5 @@
   "interpolations": {
     "source": "template",
     "substitutions": {}
-  },
-  "display_name": "Onboarding"
+  }
 }

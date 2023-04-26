@@ -9,7 +9,8 @@ module.exports = async (runner, args) => {
 
     console.log('> Rollback ✅ DONE')
 
-  } catch {
-    throw new Error('failed to rollback Nx');
+  } catch (ex) {
+    console.error(ex);
+    throw new Error('Failed to rollback Nx');
   }
 }
