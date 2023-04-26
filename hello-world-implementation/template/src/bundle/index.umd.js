@@ -2325,8 +2325,8 @@
           children: [jsxRuntime.jsx(react.IonHeader, {
             children: "Home Page"
           }, void 0), jsxRuntime.jsxs(react.IonContent, {
-            children: [jsxRuntime.jsxs("div", {
-              children: ["I am the hello world page", jsxRuntime.jsx("br", {}, void 0), "you can extend the below content (red box) !!"]
+            children: [jsxRuntime.jsx("div", {
+              children: "Home Page Content"
             }, void 0), jsxRuntime.jsx("div", __assign({
               style: {
                 backgroundColor: 'red',

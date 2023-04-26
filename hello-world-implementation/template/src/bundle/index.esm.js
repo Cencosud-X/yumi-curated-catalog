@@ -2682,8 +2682,8 @@ class HomePage extends Page {
       children: [jsx(IonHeader, {
         children: "Home Page"
       }, void 0), jsxs(IonContent, {
-        children: [jsxs("div", {
-          children: ["I am the hello world page", jsx("br", {}, void 0), "you can extend the below content (red box) !!"]
+        children: [jsx("div", {
+          children: "Home Page Content"
         }, void 0), jsx("div", Object.assign({
           style: {
             backgroundColor: 'red',

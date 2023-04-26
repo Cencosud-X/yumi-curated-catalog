@@ -1,6 +1,6 @@
 import Module, { IModuleProps } from './bundle'
 
-export class HelloWorldOverrideModule extends Module {
+export class {{#pascalCase data.name}}{{/pascalCase}}OverrideModule extends Module {
     constructor(props: IModuleProps) {
         super(props, {});
     }
