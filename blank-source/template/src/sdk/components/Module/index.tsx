@@ -21,17 +21,19 @@ export interface IModuleOverride {
   routes?: IModuleRoute[];
 }
 
-export interface IModuleDescriptor {
+export interface IModuleDescriptor<O extends IModuleOverride> {
   routes: IModuleRoute[];
-  override: IModuleOverride;
+  override: O;
 }
 
-export type IModuleProps = RouteComponentProps;
+export interface IModuleState {}
 
-export class Module extends React.Component<IModuleProps> {
-  descriptor: IModuleDescriptor;
+export interface IModuleProps extends RouteComponentProps {};
 
-  constructor(props: IModuleProps, descriptor: IModuleDescriptor) {
+export class Module<IOverride extends IModuleOverride = {}> extends React.Component<IModuleProps, IModuleState> {
+  descriptor: IModuleDescriptor<IOverride>;
+
+  constructor(props: IModuleProps, descriptor: IModuleDescriptor<IOverride>) {
     super(props);
     this.descriptor = descriptor;
   }
