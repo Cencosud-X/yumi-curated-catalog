@@ -3,12 +3,14 @@ import { RouteComponentProps } from 'react-router-dom';
 
 export interface IPageExtensions {
   triggers?: Record<string, (...args: any) => void>;
-  white_boxes?: Record<string, React.ReactNode>;
+  white_boxes?: Record<string, React.ComponentClass>;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export interface IPageProps<
+  // eslint-disable-next-line @typescript-eslint/ban-types
   Params extends { [K in keyof Params]?: string | undefined } = {},
+  // eslint-disable-next-line @typescript-eslint/ban-types
   Extensions extends IPageExtensions = {}
 > extends RouteComponentProps<Params> {
   extensions?: Extensions;

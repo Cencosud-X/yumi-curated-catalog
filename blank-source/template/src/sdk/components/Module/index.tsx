@@ -26,11 +26,10 @@ export interface IModuleDescriptor<O extends IModuleOverride> {
   override: O;
 }
 
-export interface IModuleState {}
+export type IModuleProps = RouteComponentProps;
 
-export interface IModuleProps extends RouteComponentProps {};
-
-export class Module<IOverride extends IModuleOverride = {}> extends React.Component<IModuleProps, IModuleState> {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export class Module<IOverride extends IModuleOverride = {}> extends React.Component<IModuleProps> {
   descriptor: IModuleDescriptor<IOverride>;
 
   constructor(props: IModuleProps, descriptor: IModuleDescriptor<IOverride>) {
