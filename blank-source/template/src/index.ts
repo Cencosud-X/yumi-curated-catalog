@@ -8,12 +8,12 @@ export interface IHelloWorldModuleOverride extends Components.IModuleOverride {
   routes?: Components.IModuleRoute[];
 }
 
-export interface IHelloWorldModuleProps extends Components.IModuleProps {}
+export interface IModuleProps extends Components.IModuleProps {}
 
 export default abstract class HelloWorldModule extends Components.Module<IHelloWorldModuleOverride> {
   static route = '/hello-world';
 
-  constructor(props: IHelloWorldModuleProps, override: IHelloWorldModuleOverride) {
+  constructor(props: IModuleProps, override: IHelloWorldModuleOverride) {
     super(props, {
       routes: [
         {
