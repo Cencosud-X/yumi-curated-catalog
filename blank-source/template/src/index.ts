@@ -25,21 +25,3 @@ export default abstract class HelloWorldModule extends Components.Module<IHelloW
     });
   }
 }
-
-interface IHelloWorldProps extends IHelloWorldModuleProps {}
-
-export class HelloWorld extends HelloWorldModule {
-
-  constructor(props: IHelloWorldProps) {
-    super(props, {
-      routes: [],
-      extensions: {
-        home_page: {
-          white_boxes: {
-            red_box: () => 'Red Box',
-          }
-        }
-      }
-    });
-  }
-}
