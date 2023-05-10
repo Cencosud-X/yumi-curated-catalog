@@ -7,7 +7,7 @@
     "Module",
     "experimental"
   ],
-  "kind": "onboarding-implementation",
+  "kind": "found-rate-implementation",
   "folder": "libs",
   "icons": {
     "light": "icons/icon.svg",
@@ -26,5 +26,5 @@
     "source": "template",
     "substitutions": {}
   },
-  "display_name": "Onboarding"
+  "display_name": "Found Rate"
 }
