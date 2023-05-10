@@ -4,8 +4,6 @@ module.exports = async (runner, args) => {
 
     const rc = args.rc;
 
-    console.log(rc);
-
     const commands = [
       `nx g @nrwl/react:lib ${rc.path} --buildable`,
       'rm -rf ./.custom'
