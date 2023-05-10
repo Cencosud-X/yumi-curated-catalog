@@ -16,7 +16,6 @@
   "types": [
     "blank-source/typerc.json",
     "blank-feature/typerc.json",
-    "welcome-implementation/typerc.json",
-    "found-rate-implementation/typerc.json"
+    "welcome-implementation/typerc.json"
   ]
 }
