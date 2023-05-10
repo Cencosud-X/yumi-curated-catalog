@@ -21,7 +21,7 @@ module.exports = async (runner, args) => {
         'npm install @ionic/react@^5.9.4',
         'npm install @ionic/react-router@^5.9.4',
         'npm install react@^17.0.2',
-        'npm install react-dom@^16.14.0',
+        'npm install react-dom@^17.0.2',
         'npm install react-router-dom@^5.3.0',
       ],
       {
