@@ -1,6 +1,6 @@
 import { IHomePageExtension } from './flow/home-page';
 import { Components } from './sdk';
-export interface IHelloWorldModuleOverride extends Components.IModuleOverride {
+export interface IArcusInventoryModuleOverride extends Components.IModuleOverride {
     extensions?: {
         home_page: IHomePageExtension;
     };
@@ -8,7 +8,7 @@ export interface IHelloWorldModuleOverride extends Components.IModuleOverride {
 }
 export interface IModuleProps extends Components.IModuleProps {
 }
-export default abstract class HelloWorldModule extends Components.Module<IHelloWorldModuleOverride> {
+export default abstract class ArcusInventoryModule extends Components.Module<IArcusInventoryModuleOverride> {
     static route: string;
-    constructor(props: IModuleProps, override: IHelloWorldModuleOverride);
+    constructor(props: IModuleProps, override: IArcusInventoryModuleOverride);
 }
