@@ -17,7 +17,7 @@
     "blank-source/typerc.json",
     "blank-feature/typerc.json",
     "welcome-implementation/typerc.json",
-    "identity-and-access-manager-implementation/typerc.json"
-
+    "identity-and-access-manager-implementation/typerc.json",
+    "cencosudx-authentication-implementation/typerc.json"
   ]
 }
