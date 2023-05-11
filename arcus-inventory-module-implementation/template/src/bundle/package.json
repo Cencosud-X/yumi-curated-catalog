@@ -1,0 +1,14 @@
+{
+  "name": "@yumi/arcus-inventory-module-source",
+  "version": "0.0.1",
+  "module": "./index.js",
+  "main": "./index.js",
+  "type": "module",
+  "types": "./index.d.ts",
+  "dependencies": {},
+  "peerDependencies": {
+    "react": "16.14.0",
+    "@ionic/react": "^7.0.0",
+    "react-router-dom": "5.3.0"
+  }
+}
