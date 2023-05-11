@@ -20,9 +20,9 @@ module.exports = async (runner, args) => {
         `npx nx g @nrwl/react:lib ${rc.path}`,
         'npm install @ionic/react@7.0.0',
         'npm install @ionic/react-router@7.0.0',
-        'npm install react@17.0.2',
-        'npm install react-dom@17.0.2',
-        'npm install react-router-dom@5.3.3',
+        'npm install react@16.14.0',
+        'npm install react-dom@16.14.0',
+        'npm install react-router-dom@5.3.0',
       ],
       {
         cwd: rc.workspace_path,
