@@ -89,7 +89,7 @@ var check = function (it) {
 };
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-var global$f =
+var global$g =
   // eslint-disable-next-line es/no-global-this -- safe
   check(typeof globalThis == 'object' && globalThis) ||
   check(typeof window == 'object' && window) ||
@@ -97,28 +97,28 @@ var global$f =
   check(typeof self == 'object' && self) ||
   check(typeof commonjsGlobal == 'object' && commonjsGlobal) ||
   // eslint-disable-next-line no-new-func -- fallback
-  (function () { return this; })() || Function('return this')();
+  (function () { return this; })() || commonjsGlobal || Function('return this')();
 
 var shared$4 = {exports: {}};
 
-var global$e = global$f;
+var global$f = global$g;
 
 // eslint-disable-next-line es/no-object-defineproperty -- safe
 var defineProperty$7 = Object.defineProperty;
 
 var defineGlobalProperty$3 = function (key, value) {
   try {
-    defineProperty$7(global$e, key, { value: value, configurable: true, writable: true });
+    defineProperty$7(global$f, key, { value: value, configurable: true, writable: true });
   } catch (error) {
-    global$e[key] = value;
+    global$f[key] = value;
   } return value;
 };
 
-var global$d = global$f;
+var global$e = global$g;
 var defineGlobalProperty$2 = defineGlobalProperty$3;
 
 var SHARED = '__core-js_shared__';
-var store$3 = global$d[SHARED] || defineGlobalProperty$2(SHARED, {});
+var store$3 = global$e[SHARED] || defineGlobalProperty$2(SHARED, {});
 
 var sharedStore = store$3;
 
@@ -127,10 +127,10 @@ var store$2 = sharedStore;
 (shared$4.exports = function (key, value) {
   return store$2[key] || (store$2[key] = value !== undefined ? value : {});
 })('versions', []).push({
-  version: '3.30.1',
+  version: '3.30.2',
   mode: 'global',
   copyright: '© 2014-2023 Denis Pushkarev (zloirock.ru)',
-  license: 'https://github.com/zloirock/core-js/blob/v3.30.1/LICENSE',
+  license: 'https://github.com/zloirock/core-js/blob/v3.30.2/LICENSE',
   source: 'https://github.com/zloirock/core-js'
 });
 
@@ -168,11 +168,11 @@ var uid$2 = function (key) {
 
 var engineUserAgent = typeof navigator != 'undefined' && String(navigator.userAgent) || '';
 
-var global$c = global$f;
+var global$d = global$g;
 var userAgent = engineUserAgent;
 
-var process = global$c.process;
-var Deno = global$c.Deno;
+var process = global$d.process;
+var Deno = global$d.Deno;
 var versions = process && process.versions || Deno && Deno.version;
 var v8 = versions && versions.v8;
 var match, version;
@@ -200,13 +200,18 @@ var engineV8Version = version;
 
 var V8_VERSION = engineV8Version;
 var fails$g = fails$j;
+var global$c = global$g;
+
+var $String$5 = global$c.String;
 
 // eslint-disable-next-line es/no-object-getownpropertysymbols -- required for testing
 var symbolConstructorDetection = !!Object.getOwnPropertySymbols && !fails$g(function () {
   var symbol = Symbol();
   // Chrome 38 Symbol has incorrect toString conversion
   // `get-own-property-symbols` polyfill symbols converted to object are not Symbol instances
-  return !String(symbol) || !(Object(symbol) instanceof Symbol) ||
+  // nb: Do not call `String` directly to avoid this being optimized out to `symbol+''` which will,
+  // of course, fail.
+  return !$String$5(symbol) || !(Object(symbol) instanceof Symbol) ||
     // Chrome 38-40 symbols are not inherited from DOM collections prototypes to instances
     !Symbol.sham && V8_VERSION && V8_VERSION < 41;
 });
@@ -219,7 +224,7 @@ var useSymbolAsUid = NATIVE_SYMBOL$1
   && !Symbol.sham
   && typeof Symbol.iterator == 'symbol';
 
-var global$b = global$f;
+var global$b = global$g;
 var shared$3 = shared$4.exports;
 var hasOwn$a = hasOwnProperty_1;
 var uid$1 = uid$2;
@@ -308,7 +313,7 @@ var v8PrototypeDefineBug = DESCRIPTORS$b && fails$e(function () {
 
 var objectDefineProperty = {};
 
-var global$a = global$f;
+var global$a = global$g;
 var isObject$6 = isObject$8;
 
 var document$1 = global$a.document;
@@ -339,7 +344,7 @@ var functionCall = NATIVE_BIND$1 ? call$b.bind(call$b) : function () {
   return call$b.apply(call$b, arguments);
 };
 
-var global$9 = global$f;
+var global$9 = global$g;
 var isCallable$g = isCallable$i;
 
 var aFunction = function (argument) {
@@ -766,7 +771,7 @@ var addToUnscopables$1 = function (key) {
 
 var iterators = {};
 
-var global$8 = global$f;
+var global$8 = global$g;
 var isCallable$c = isCallable$i;
 
 var WeakMap$1 = global$8.WeakMap;
@@ -794,7 +799,7 @@ var createNonEnumerableProperty$6 = DESCRIPTORS$7 ? function (object, key, value
 };
 
 var NATIVE_WEAK_MAP = weakMapBasicDetection;
-var global$7 = global$f;
+var global$7 = global$g;
 var isObject$3 = isObject$8;
 var createNonEnumerableProperty$5 = createNonEnumerableProperty$6;
 var hasOwn$8 = hasOwnProperty_1;
@@ -1097,7 +1102,7 @@ var POLYFILL = isForced$2.POLYFILL = 'P';
 
 var isForced_1 = isForced$2;
 
-var global$6 = global$f;
+var global$6 = global$g;
 var getOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
 var createNonEnumerableProperty$4 = createNonEnumerableProperty$6;
 var defineBuiltIn$5 = defineBuiltIn$6;
@@ -1514,7 +1519,7 @@ var DOMTokenListPrototype$1 = classList && classList.constructor && classList.co
 
 var domTokenListPrototype = DOMTokenListPrototype$1 === Object.prototype ? undefined : DOMTokenListPrototype$1;
 
-var global$5 = global$f;
+var global$5 = global$g;
 var DOMIterables = domIterables;
 var DOMTokenListPrototype = domTokenListPrototype;
 var ArrayIteratorMethods = es_array_iterator;
@@ -1687,7 +1692,7 @@ var regexpFlags$1 = function () {
 };
 
 var fails$7 = fails$j;
-var global$4 = global$f;
+var global$4 = global$g;
 
 // babel-minify and Closure Compiler transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError
 var $RegExp$2 = global$4.RegExp;
@@ -1718,7 +1723,7 @@ var regexpStickyHelpers = {
 };
 
 var fails$6 = fails$j;
-var global$3 = global$f;
+var global$3 = global$g;
 
 // babel-minify and Closure Compiler transpiles RegExp('.', 's') -> /./s and it causes SyntaxError
 var $RegExp$1 = global$3.RegExp;
@@ -1729,7 +1734,7 @@ var regexpUnsupportedDotAll = fails$6(function () {
 });
 
 var fails$5 = fails$j;
-var global$2 = global$f;
+var global$2 = global$g;
 
 // babel-minify and Closure Compiler transpiles RegExp('(?<a>b)', 'g') -> /(?<a>b)/g and it causes SyntaxError
 var $RegExp = global$2.RegExp;
@@ -2456,7 +2461,7 @@ var setSpecies$1 = function (CONSTRUCTOR_NAME) {
 };
 
 var DESCRIPTORS = descriptors;
-var global$1 = global$f;
+var global$1 = global$g;
 var uncurryThis = functionUncurryThis;
 var isForced = isForced_1;
 var inheritIfRequired = inheritIfRequired$1;
