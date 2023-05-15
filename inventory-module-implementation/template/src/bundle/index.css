@@ -137,7 +137,7 @@ ion-card ion-item ion-thumbnail {
   justify-content: flex-end;
   align-items: flex-end;
 }
-ion-item {
+.manual-zone-modal ion-item {
   --background: #fff;
   --border-radius: 24px;
   --border-color: #D6D6D6;

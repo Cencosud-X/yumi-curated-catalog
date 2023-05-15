@@ -1,7 +1,7 @@
 import { jsx, jsxs, Fragment as Fragment$1 } from 'react/jsx-runtime';
-import { IonRouterOutlet, IonCard, IonItem, IonThumbnail, IonModal, IonHeader, IonToolbar, IonContent, IonImg, IonInput, IonButtons, IonButton, IonIcon, IonCardHeader, IonCardContent } from '@ionic/react';
+import { IonRouterOutlet, IonCard, IonItem, IonThumbnail, IonPage, IonModal, IonHeader, IonToolbar, IonContent, IonImg, IonInput, IonButtons, IonButton, IonIcon, IonCardHeader, IonCardContent } from '@ionic/react';
 import * as React from 'react';
-import React__default, { useState, createContext, Fragment, useEffect, useRef, useContext } from 'react';
+import React__default, { Fragment, useEffect, useRef, useState, createContext, useContext } from 'react';
 import { Route } from 'react-router-dom';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 
@@ -2071,21 +2071,6 @@ fixRegExpWellKnownSymbolLogic$1('match', function (MATCH, nativeMatch, maybeCall
   ];
 });
 
-const InventoryContext = /*#__PURE__*/createContext({});
-const InventoryProvider = ({
-  children
-}) => {
-  const [inventory, setInventory] = useState();
-  return jsx(InventoryContext.Provider, Object.assign({
-    value: {
-      inventory,
-      setInventory
-    }
-  }, {
-    children: children
-  }));
-};
-
 const toSnakeCase = str => {
   const matches = str.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g) || [];
   return matches.map(x => x.toLowerCase()).join('_');
@@ -2111,27 +2096,25 @@ class Module extends React.Component {
         console.warn(`Override route ${match.path} was not added because it already exists in definition module.`);
       });
     }
-    return jsx(InventoryProvider, {
-      children: jsx(IonRouterOutlet, {
-        children: routes.map(({
-          path,
-          page: PageComponent
-        }) => {
-          const absolutePath = [match.url, path].join('');
-          return jsx(Route, {
-            path: absolutePath,
-            exact: true,
-            render: props => {
-              let extensions = null;
-              if (this.descriptor.override.extensions && this.descriptor.override.extensions[toSnakeCase(PageComponent.name)]) {
-                extensions = this.descriptor.override.extensions[toSnakeCase(PageComponent.name)];
-              }
-              return jsx(PageComponent, Object.assign({}, props, {
-                extensions: extensions
-              }));
+    return jsx(IonRouterOutlet, {
+      children: routes.map(({
+        path,
+        page: PageComponent
+      }) => {
+        const absolutePath = [match.url, path].join('');
+        return jsx(Route, {
+          path: absolutePath,
+          exact: true,
+          render: props => {
+            let extensions = null;
+            if (this.descriptor.override.extensions && this.descriptor.override.extensions[toSnakeCase(PageComponent.name)]) {
+              extensions = this.descriptor.override.extensions[toSnakeCase(PageComponent.name)];
             }
-          }, path);
-        })
+            return jsx(PageComponent, Object.assign({}, props, {
+              extensions: extensions
+            }));
+          }
+        }, path);
       })
     });
   }
@@ -6275,26 +6258,28 @@ class HomePage extends Page {
   }
   render() {
     var _a;
-    return jsxs(index.Atoms.XPage, {
-      children: [jsx(index.Atoms.XHeader, {
-        title: "Inventario de perecibles",
-        sticky: true,
-        onBack: (_a = this.props.extensions) === null || _a === void 0 ? void 0 : _a.onBack
-      }), jsx(index.Atoms.XBody, {
-        children: jsx(index.Atoms.XBox, Object.assign({
-          verticalAlign: "start",
-          height: "auto",
-          width: "full",
-          gap: "s",
-          padding: "none"
-        }, {
-          children: jsx(InventoryFunctionList, {
-            history: this.props.history
-          })
-        }))
-      }), jsx(index.Atoms.XFooter, {
-        background: "transparent"
-      })]
+    return jsx(IonPage, {
+      children: jsxs(index.Atoms.XPage, {
+        children: [jsx(index.Atoms.XHeader, {
+          title: "Inventario de perecibles",
+          sticky: true,
+          onBack: (_a = this.props.extensions) === null || _a === void 0 ? void 0 : _a.onBack
+        }), jsx(index.Atoms.XBody, {
+          children: jsx(index.Atoms.XBox, Object.assign({
+            verticalAlign: "start",
+            height: "auto",
+            width: "full",
+            gap: "s",
+            padding: "none"
+          }, {
+            children: jsx(InventoryFunctionList, {
+              history: this.props.history
+            })
+          }))
+        }), jsx(index.Atoms.XFooter, {
+          background: "transparent"
+        })]
+      })
     })
     // <IonPage>
     //   <IonHeader>Home Page</IonHeader>
@@ -6354,6 +6339,7 @@ const InventoryManualZoneModal = props => {
     if ((event.key === 'Enter' || event.keyCode === 13) && entryValue !== '') ;
   };
   return jsxs(IonModal, Object.assign({
+    className: "manual-zone-modal",
     initialBreakpoint: 0.65,
     breakpoints: [0.65],
     isOpen: props.show,
@@ -6514,6 +6500,21 @@ var InventoryPagesModeType;
   InventoryPagesModeType["PAGE_LOADED"] = "PAGE_LOADED";
   InventoryPagesModeType["PAGE_SCAN_ZONE"] = "PAGE_SCAN_ZONE";
 })(InventoryPagesModeType || (InventoryPagesModeType = {}));
+
+const InventoryContext = /*#__PURE__*/createContext({});
+const InventoryProvider = ({
+  children
+}) => {
+  const [inventory, setInventory] = useState();
+  return jsx(InventoryContext.Provider, Object.assign({
+    value: {
+      inventory,
+      setInventory
+    }
+  }, {
+    children: children
+  }));
+};
 
 function useInventory() {
   const context = useContext(InventoryContext);
@@ -6767,8 +6768,10 @@ class InventoryPage extends Page {
   }
   render() {
     var _a;
-    return jsx(InventoryMain, {
-      onBack: (_a = this.props.extensions) === null || _a === void 0 ? void 0 : _a.onBack
+    return jsx(IonPage, {
+      children: jsx(InventoryMain, {
+        onBack: (_a = this.props.extensions) === null || _a === void 0 ? void 0 : _a.onBack
+      })
     });
   }
 }
@@ -6784,6 +6787,11 @@ class InventoryModule extends Module {
         page: InventoryPage
       }],
       override
+    });
+  }
+  render() {
+    return jsx(InventoryProvider, {
+      children: super.render()
     });
   }
 }
