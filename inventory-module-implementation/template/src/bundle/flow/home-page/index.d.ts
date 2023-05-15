@@ -1,8 +1,9 @@
 import { Components } from '../../sdk';
 import React from 'react';
 export interface IHomePageExtension extends Components.IPageExtensions {
+    onBack: () => void;
     white_boxes: {
-        red_box: React.ComponentClass;
+        red_box?: React.ComponentClass;
     };
 }
 export interface IProps extends Components.IPageProps<{}, IHomePageExtension> {
