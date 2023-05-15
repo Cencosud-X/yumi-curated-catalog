@@ -2679,7 +2679,7 @@ if (NOT_GENERIC || INCORRECT_NAME) {
   }, { unsafe: true });
 }
 
-var Styles$c = {"xbox":"root-module_xbox__BgkeR","horizontal_align-stretch":"root-module_horizontal_align-stretch__RsDSG","horizontal_align-start":"root-module_horizontal_align-start__Qw6KM","horizontal_align-end":"root-module_horizontal_align-end__yw58M","horizontal_align-center":"root-module_horizontal_align-center__KeM-o","horizontal_align-between":"root-module_horizontal_align-between__pEOfH","horizontal_align-evenly":"root-module_horizontal_align-evenly__e6eJi","horizontal_align-around":"root-module_horizontal_align-around__j235-","vertical_align-start":"root-module_vertical_align-start__sNb0E","vertical_align-end":"root-module_vertical_align-end__mTzSR","vertical_align-center":"root-module_vertical_align-center__pZuOa","vertical_align-between":"root-module_vertical_align-between__EO116","vertical_align-evenly":"root-module_vertical_align-evenly__RFKcJ","vertical_align-around":"root-module_vertical_align-around__Q3-1J","vertical_align-stretch":"root-module_vertical_align-stretch__E-LVK","orientation-vertical":"root-module_orientation-vertical__Fm0BD","orientation-horizontal":"root-module_orientation-horizontal__fRZCe","padding-none":"root-module_padding-none__EdoeZ","padding-xs":"root-module_padding-xs__3bj0A","padding-s":"root-module_padding-s__nVsOF","padding-m":"root-module_padding-m__--bDL","padding-l":"root-module_padding-l__vkb4-","padding-xl":"root-module_padding-xl__vWGek","gap-none":"root-module_gap-none__QTmry","gap-xs":"root-module_gap-xs__vxwxm","gap-s":"root-module_gap-s__d2plT","gap-m":"root-module_gap-m__0eGVm","gap-l":"root-module_gap-l__x2mIm","gap-xl":"root-module_gap-xl__jgA9t","height-auto":"root-module_height-auto__-VbZ-","height-full":"root-module_height-full__XysBe","height-1":"root-module_height-1__jGkq3","height-2":"root-module_height-2__dw0qK","height-3":"root-module_height-3__Ve-qm","height-4":"root-module_height-4__R2ASX","height-5":"root-module_height-5__4zYwN","height-6":"root-module_height-6__BfTg1","height-7":"root-module_height-7__XyzRA","height-8":"root-module_height-8__oSqoB","height-9":"root-module_height-9__-Nh5k","height-10":"root-module_height-10__EFjFa","height-11":"root-module_height-11__X-z1B","height-12":"root-module_height-12__C6-6C","width-auto":"root-module_width-auto__c0z5C","width-half":"root-module_width-half__JK4IZ","width-full":"root-module_width-full__Ydozy","max_width":"root-module_max_width__9CF6a","min_width":"root-module_min_width__cczDz","width-1":"root-module_width-1__bumbq","width-2":"root-module_width-2__jtPrr","width-3":"root-module_width-3__vIY86","width-4":"root-module_width-4__q4ecu","width-5":"root-module_width-5__z8oQP","width-6":"root-module_width-6__uubpa","width-7":"root-module_width-7__I6dPv","width-8":"root-module_width-8__OT-j6","width-9":"root-module_width-9__6Dg6B","width-10":"root-module_width-10__7fHU-","width-11":"root-module_width-11__t2dyS","width-12":"root-module_width-12__OT9GL","touchable":"root-module_touchable__crRxB","overflow-visible":"root-module_overflow-visible__EUDCq","overflow-hidden":"root-module_overflow-hidden__yuNbr","overflow-auto":"root-module_overflow-auto__urY-3","overflow-scroll":"root-module_overflow-scroll__2cFBU","overflow-scroll_y":"root-module_overflow-scroll_y__LxNho","overflow-scroll_x":"root-module_overflow-scroll_x__9PREg"};
+var Styles$d = {"xbox":"root-module_xbox__BgkeR","horizontal_align-stretch":"root-module_horizontal_align-stretch__RsDSG","horizontal_align-start":"root-module_horizontal_align-start__Qw6KM","horizontal_align-end":"root-module_horizontal_align-end__yw58M","horizontal_align-center":"root-module_horizontal_align-center__KeM-o","horizontal_align-between":"root-module_horizontal_align-between__pEOfH","horizontal_align-evenly":"root-module_horizontal_align-evenly__e6eJi","horizontal_align-around":"root-module_horizontal_align-around__j235-","vertical_align-start":"root-module_vertical_align-start__sNb0E","vertical_align-end":"root-module_vertical_align-end__mTzSR","vertical_align-center":"root-module_vertical_align-center__pZuOa","vertical_align-between":"root-module_vertical_align-between__EO116","vertical_align-evenly":"root-module_vertical_align-evenly__RFKcJ","vertical_align-around":"root-module_vertical_align-around__Q3-1J","vertical_align-stretch":"root-module_vertical_align-stretch__E-LVK","orientation-vertical":"root-module_orientation-vertical__Fm0BD","orientation-horizontal":"root-module_orientation-horizontal__fRZCe","padding-none":"root-module_padding-none__EdoeZ","padding-xs":"root-module_padding-xs__3bj0A","padding-s":"root-module_padding-s__nVsOF","padding-m":"root-module_padding-m__--bDL","padding-l":"root-module_padding-l__vkb4-","padding-xl":"root-module_padding-xl__vWGek","gap-none":"root-module_gap-none__QTmry","gap-xs":"root-module_gap-xs__vxwxm","gap-s":"root-module_gap-s__d2plT","gap-m":"root-module_gap-m__0eGVm","gap-l":"root-module_gap-l__x2mIm","gap-xl":"root-module_gap-xl__jgA9t","height-auto":"root-module_height-auto__-VbZ-","height-full":"root-module_height-full__XysBe","height-1":"root-module_height-1__jGkq3","height-2":"root-module_height-2__dw0qK","height-3":"root-module_height-3__Ve-qm","height-4":"root-module_height-4__R2ASX","height-5":"root-module_height-5__4zYwN","height-6":"root-module_height-6__BfTg1","height-7":"root-module_height-7__XyzRA","height-8":"root-module_height-8__oSqoB","height-9":"root-module_height-9__-Nh5k","height-10":"root-module_height-10__EFjFa","height-11":"root-module_height-11__X-z1B","height-12":"root-module_height-12__C6-6C","width-auto":"root-module_width-auto__c0z5C","width-half":"root-module_width-half__JK4IZ","width-full":"root-module_width-full__Ydozy","max_width":"root-module_max_width__9CF6a","min_width":"root-module_min_width__cczDz","width-1":"root-module_width-1__bumbq","width-2":"root-module_width-2__jtPrr","width-3":"root-module_width-3__vIY86","width-4":"root-module_width-4__q4ecu","width-5":"root-module_width-5__z8oQP","width-6":"root-module_width-6__uubpa","width-7":"root-module_width-7__I6dPv","width-8":"root-module_width-8__OT-j6","width-9":"root-module_width-9__6Dg6B","width-10":"root-module_width-10__7fHU-","width-11":"root-module_width-11__t2dyS","width-12":"root-module_width-12__OT9GL","touchable":"root-module_touchable__crRxB","overflow-visible":"root-module_overflow-visible__EUDCq","overflow-hidden":"root-module_overflow-hidden__yuNbr","overflow-auto":"root-module_overflow-auto__urY-3","overflow-scroll":"root-module_overflow-scroll__2cFBU","overflow-scroll_y":"root-module_overflow-scroll_y__LxNho","overflow-scroll_x":"root-module_overflow-scroll_x__9PREg"};
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -2748,8 +2748,8 @@ const XBox = props => {
   // If orientation change, x and y axis will be inverted
   const hAlign = props.orientation === 'horizontal' ? props.verticalAlign : props.horizontalAlign;
   const vAlign = props.orientation === 'horizontal' ? props.horizontalAlign : props.verticalAlign;
-  const rootClass = classnames(Styles$c.xbox, Styles$c[`orientation-${props.orientation}`], Styles$c[`horizontal_align-${hAlign}`], Styles$c[`vertical_align-${vAlign}`], Styles$c[`padding-${props.padding}`], Styles$c[`overflow-${props.overflow}`], Styles$c[`gap-${props.gap}`], Styles$c[`height-${props.height}`], Styles$c[`width-${props.width}`], {
-    [Styles$c.touchable]: props.touchable
+  const rootClass = classnames(Styles$d.xbox, Styles$d[`orientation-${props.orientation}`], Styles$d[`horizontal_align-${hAlign}`], Styles$d[`vertical_align-${vAlign}`], Styles$d[`padding-${props.padding}`], Styles$d[`overflow-${props.overflow}`], Styles$d[`gap-${props.gap}`], Styles$d[`height-${props.height}`], Styles$d[`width-${props.width}`], {
+    [Styles$d.touchable]: props.touchable
   });
   return jsx("div", {
     className: rootClass,
@@ -2768,11 +2768,11 @@ XBox.defaultProps = {
   touchable: false
 };
 
-var Styles$b = {"xtext":"root-module_xtext__FTEzH","text_overflow-break-word":"root-module_text_overflow-break-word__0-jCX","text_overflow-no-wrap":"root-module_text_overflow-no-wrap__3G8Ju","line_height-normal":"root-module_line_height-normal__-FibS","line_height-title":"root-module_line_height-title__2IApz","weight-lighter":"root-module_weight-lighter__75pw8","weight-normal":"root-module_weight-normal__CRY08","weight-bold":"root-module_weight-bold__krljQ","font_size-inherit":"root-module_font_size-inherit__T-ItM","font_size-1":"root-module_font_size-1__WKnkW","font_size-2":"root-module_font_size-2__Mr6q7","font_size-3":"root-module_font_size-3__3Vhe9","font_size-4":"root-module_font_size-4__3q-j4","font_size-5":"root-module_font_size-5__mfRjv","font_size-6":"root-module_font_size-6__dzU1-","font_size-7":"root-module_font_size-7__gdpm8","font_size-8":"root-module_font_size-8__XgW0l","font_size-9":"root-module_font_size-9__eiNs4","font_size-10":"root-module_font_size-10__WYXfx","font_size-11":"root-module_font_size-11__z-XZD","font_size-12":"root-module_font_size-12__RWIJX","line_clamp":"root-module_line_clamp__-ah3x"};
+var Styles$c = {"xtext":"root-module_xtext__FTEzH","text_overflow-break-word":"root-module_text_overflow-break-word__0-jCX","text_overflow-no-wrap":"root-module_text_overflow-no-wrap__3G8Ju","line_height-normal":"root-module_line_height-normal__-FibS","line_height-title":"root-module_line_height-title__2IApz","weight-lighter":"root-module_weight-lighter__75pw8","weight-normal":"root-module_weight-normal__CRY08","weight-bold":"root-module_weight-bold__krljQ","font_size-inherit":"root-module_font_size-inherit__T-ItM","font_size-1":"root-module_font_size-1__WKnkW","font_size-2":"root-module_font_size-2__Mr6q7","font_size-3":"root-module_font_size-3__3Vhe9","font_size-4":"root-module_font_size-4__3q-j4","font_size-5":"root-module_font_size-5__mfRjv","font_size-6":"root-module_font_size-6__dzU1-","font_size-7":"root-module_font_size-7__gdpm8","font_size-8":"root-module_font_size-8__XgW0l","font_size-9":"root-module_font_size-9__eiNs4","font_size-10":"root-module_font_size-10__WYXfx","font_size-11":"root-module_font_size-11__z-XZD","font_size-12":"root-module_font_size-12__RWIJX","line_clamp":"root-module_line_clamp__-ah3x"};
 
 const XText = props => {
-  const rootClass = classnames(Styles$b.xtext, Styles$b[`text_overflow-${props.textOverflow}`], Styles$b[`line_height-${props.lineHeight}`], Styles$b[`weight-${props.weight}`], Styles$b[`font_size-${props.fontSize}`], {
-    [Styles$b.line_clamp]: props.lineClamp !== 'none'
+  const rootClass = classnames(Styles$c.xtext, Styles$c[`text_overflow-${props.textOverflow}`], Styles$c[`line_height-${props.lineHeight}`], Styles$c[`weight-${props.weight}`], Styles$c[`font_size-${props.fontSize}`], {
+    [Styles$c.line_clamp]: props.lineClamp !== 'none'
   });
   const styles = {};
   if (props.lineClamp !== 'none') {
@@ -2792,7 +2792,7 @@ XText.defaultProps = {
   lineClamp: 'none'
 };
 
-var Styles$a = {"xicon":"root-module_xicon__WMNSi","icon_size-xs":"root-module_icon_size-xs__bK2p2","icon_size-s":"root-module_icon_size-s__zgO05","icon_size-m":"root-module_icon_size-m__-DheZ","icon_size-l":"root-module_icon_size-l__QX1lj","icon_size-xl":"root-module_icon_size-xl__nSVvy","icon-spin":"root-module_icon-spin__0EEdQ","spin":"root-module_spin__XvK3O"};
+var Styles$b = {"xicon":"root-module_xicon__WMNSi","icon_size-xs":"root-module_icon_size-xs__bK2p2","icon_size-s":"root-module_icon_size-s__zgO05","icon_size-m":"root-module_icon_size-m__-DheZ","icon_size-l":"root-module_icon_size-l__QX1lj","icon_size-xl":"root-module_icon_size-xl__nSVvy","icon-spin":"root-module_icon-spin__0EEdQ","spin":"root-module_spin__XvK3O"};
 
 var _path$n;
 function _extends$n() { _extends$n = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends$n.apply(this, arguments); }
@@ -3156,7 +3156,7 @@ var SvgTools = function SvgTools(props) {
 };
 
 const XIcon = props => {
-  const rootClass = classnames(Styles$a.xicon, Styles$a[`icon_size-${props.size}`]);
+  const rootClass = classnames(Styles$b.xicon, Styles$b[`icon_size-${props.size}`]);
   const iconSVG = (() => {
     switch (props.icon) {
       default:
@@ -3196,7 +3196,7 @@ const XIcon = props => {
         return jsx(SvgBug, {});
       case 'loading':
         return jsx("div", {
-          className: Styles$a[`icon-spin`],
+          className: Styles$b[`icon-spin`],
           children: jsx(SvgLoading, {})
         });
       case 'uncheck':
@@ -3230,15 +3230,15 @@ XIcon.defaultProps = {
   size: 'm'
 };
 
-var Styles$9 = {"xbutton":"root-module_xbutton__Qz5J5","xbutton_content":"root-module_xbutton_content__n5-Oj","button_content-reverse":"root-module_button_content-reverse__e-Coj","button_type-default":"root-module_button_type-default__kdN2r","button_type-solid":"root-module_button_type-solid__FM1Wb","button_type-tonal":"root-module_button_type-tonal__ErqJT","button_type-clear":"root-module_button_type-clear__2SPgA","button_type-outline":"root-module_button_type-outline__BStzO","button_size-xs":"root-module_button_size-xs__cHHal","button_size-s":"root-module_button_size-s__2-Dks","button_size-m":"root-module_button_size-m__yR3Pl","button_size-l":"root-module_button_size-l__adiea","button_size-xl":"root-module_button_size-xl__1a1gW","button-loading":"root-module_button-loading__PgU3n"};
+var Styles$a = {"xbutton":"root-module_xbutton__Qz5J5","xbutton_content":"root-module_xbutton_content__n5-Oj","button_content-reverse":"root-module_button_content-reverse__e-Coj","button_type-default":"root-module_button_type-default__kdN2r","button_type-solid":"root-module_button_type-solid__FM1Wb","button_type-tonal":"root-module_button_type-tonal__ErqJT","button_type-clear":"root-module_button_type-clear__2SPgA","button_type-outline":"root-module_button_type-outline__BStzO","button_size-xs":"root-module_button_size-xs__cHHal","button_size-s":"root-module_button_size-s__2-Dks","button_size-m":"root-module_button_size-m__yR3Pl","button_size-l":"root-module_button_size-l__adiea","button_size-xl":"root-module_button_size-xl__1a1gW","button-loading":"root-module_button-loading__PgU3n"};
 
 const XButton = props => {
   const hasIcon = props.icon !== 'none';
-  const rootClass = classnames(Styles$9.xbutton, Styles$9[`button_type-${props.type}`], Styles$9[`button_size-${props.size}`], {
-    [Styles$9[`button-loading`]]: props.loading
+  const rootClass = classnames(Styles$a.xbutton, Styles$a[`button_type-${props.type}`], Styles$a[`button_size-${props.size}`], {
+    [Styles$a[`button-loading`]]: props.loading
   });
-  const contentClass = classnames(Styles$9.xbutton_content, {
-    [Styles$9[`button_content-reverse`]]: props.iconPosition === 'end'
+  const contentClass = classnames(Styles$a.xbutton_content, {
+    [Styles$a[`button_content-reverse`]]: props.iconPosition === 'end'
   });
   const buttonOnClickHandler = e => {
     if (props.onClick && !props.loading) {
@@ -3325,12 +3325,12 @@ XButton.defaultProps = {
   text: undefined
 };
 
-var Styles$8 = {"xbuttonicon":"root-module_xbuttonicon__IVwuz","buttonicon_type-default":"root-module_buttonicon_type-default__L6dJI","buttonicon_type-solid":"root-module_buttonicon_type-solid__bp0V9","buttonicon_type-tonal":"root-module_buttonicon_type-tonal__rre5O","buttonicon_type-clear":"root-module_buttonicon_type-clear__LEA6o","buttonicon_type-outline":"root-module_buttonicon_type-outline__NqzF3","buttonicon_size-xs":"root-module_buttonicon_size-xs__IZZEa","buttonicon_size-s":"root-module_buttonicon_size-s__Fd0yV","buttonicon_size-m":"root-module_buttonicon_size-m__CA47J","buttonicon_size-l":"root-module_buttonicon_size-l__L8uRi","buttonicon_size-xl":"root-module_buttonicon_size-xl__iB8Ub","buttonicon-loading":"root-module_buttonicon-loading__rGPC3"};
+var Styles$9 = {"xbuttonicon":"root-module_xbuttonicon__IVwuz","buttonicon_type-default":"root-module_buttonicon_type-default__L6dJI","buttonicon_type-solid":"root-module_buttonicon_type-solid__bp0V9","buttonicon_type-tonal":"root-module_buttonicon_type-tonal__rre5O","buttonicon_type-clear":"root-module_buttonicon_type-clear__LEA6o","buttonicon_type-outline":"root-module_buttonicon_type-outline__NqzF3","buttonicon_size-xs":"root-module_buttonicon_size-xs__IZZEa","buttonicon_size-s":"root-module_buttonicon_size-s__Fd0yV","buttonicon_size-m":"root-module_buttonicon_size-m__CA47J","buttonicon_size-l":"root-module_buttonicon_size-l__L8uRi","buttonicon_size-xl":"root-module_buttonicon_size-xl__iB8Ub","buttonicon-loading":"root-module_buttonicon-loading__rGPC3"};
 
 const XButtonIcon = props => {
   const hasIcon = props.icon !== 'none';
-  const rootClass = classnames(Styles$8.xbuttonicon, Styles$8[`buttonicon_type-${props.type}`], Styles$8[`buttonicon_size-${props.size}`], {
-    [Styles$8[`buttonicon-loading`]]: props.loading
+  const rootClass = classnames(Styles$9.xbuttonicon, Styles$9[`buttonicon_type-${props.type}`], Styles$9[`buttonicon_size-${props.size}`], {
+    [Styles$9[`buttonicon-loading`]]: props.loading
   });
   const buttonIconOnClickHandler = e => {
     if (props.onClick && !props.loading) {
@@ -3371,7 +3371,7 @@ XButtonIcon.defaultProps = {
   loading: false
 };
 
-var Styles$7 = {"xtag":"root-module_xtag__CLZYk","xtag--size-s":"root-module_xtag--size-s__x-8qV","xtag--size-l":"root-module_xtag--size-l__zdOxQ","xtag--touchable":"root-module_xtag--touchable__dvrbO","xtag__text_container":"root-module_xtag__text_container__GTdbl","xtag__text":"root-module_xtag__text__N-DWl"};
+var Styles$8 = {"xtag":"root-module_xtag__CLZYk","xtag--size-s":"root-module_xtag--size-s__x-8qV","xtag--size-l":"root-module_xtag--size-l__zdOxQ","xtag--touchable":"root-module_xtag--touchable__dvrbO","xtag__text_container":"root-module_xtag__text_container__GTdbl","xtag__text":"root-module_xtag__text__N-DWl"};
 
 const XTag = props => {
   const onCloseHandler = e => {
@@ -3379,22 +3379,22 @@ const XTag = props => {
       props.onClose(e);
     }
   };
-  const rootClass = classnames(Styles$7.xtag, {
-    [Styles$7['xtag--touchable']]: props.onClose
+  const rootClass = classnames(Styles$8.xtag, {
+    [Styles$8['xtag--touchable']]: props.onClose
   }, {
-    [Styles$7[`xtag--size-${props.size}`]]: props.size
+    [Styles$8[`xtag--size-${props.size}`]]: props.size
   });
   if (props.visible === false) return null;
   return jsx("div", {
     className: rootClass,
     onClick: onCloseHandler,
     children: jsxs("div", {
-      className: Styles$7.xtag__text_container,
+      className: Styles$8.xtag__text_container,
       children: [props.icon && jsx(XIcon, {
         icon: props.icon,
         size: "xs"
       }), jsx("div", {
-        className: Styles$7.xtag__text,
+        className: Styles$8.xtag__text,
         children: props.text
       }), props.onClose && jsx("div", {
         children: jsx(XIcon, {
@@ -3411,10 +3411,10 @@ XTag.defaultProps = {
   size: 's'
 };
 
-var Styles$6 = {"ximage":"root-module_ximage__tYtn0","height-auto":"root-module_height-auto__xeMzQ","height-full":"root-module_height-full__TGn22","height-1":"root-module_height-1__55qf3","height-2":"root-module_height-2__X1GeS","height-3":"root-module_height-3__FeUmj","height-4":"root-module_height-4__cC2Gi","height-5":"root-module_height-5__yLI6L","height-6":"root-module_height-6__GNt0Y","height-7":"root-module_height-7__MhDEA","height-8":"root-module_height-8__rhzv1","height-9":"root-module_height-9__UwLQX","height-10":"root-module_height-10__q0Bl-","height-11":"root-module_height-11__BPWAr","height-12":"root-module_height-12__FnLos","width-auto":"root-module_width-auto__LkyC8","width-half":"root-module_width-half__yn2d-","width-full":"root-module_width-full__TAwIh","width-1":"root-module_width-1__BZ9et","width-2":"root-module_width-2__wTEZT","width-3":"root-module_width-3__XwPfp","width-4":"root-module_width-4__EjiBd","width-5":"root-module_width-5__jRYQj","width-6":"root-module_width-6__NF4MZ","width-7":"root-module_width-7__-UKna","width-8":"root-module_width-8__nPXuF","width-9":"root-module_width-9__0UBdF","width-10":"root-module_width-10__6KkbL","width-11":"root-module_width-11__EJiz7","width-12":"root-module_width-12__gnimm"};
+var Styles$7 = {"ximage":"root-module_ximage__tYtn0","height-auto":"root-module_height-auto__xeMzQ","height-full":"root-module_height-full__TGn22","height-1":"root-module_height-1__55qf3","height-2":"root-module_height-2__X1GeS","height-3":"root-module_height-3__FeUmj","height-4":"root-module_height-4__cC2Gi","height-5":"root-module_height-5__yLI6L","height-6":"root-module_height-6__GNt0Y","height-7":"root-module_height-7__MhDEA","height-8":"root-module_height-8__rhzv1","height-9":"root-module_height-9__UwLQX","height-10":"root-module_height-10__q0Bl-","height-11":"root-module_height-11__BPWAr","height-12":"root-module_height-12__FnLos","width-auto":"root-module_width-auto__LkyC8","width-half":"root-module_width-half__yn2d-","width-full":"root-module_width-full__TAwIh","width-1":"root-module_width-1__BZ9et","width-2":"root-module_width-2__wTEZT","width-3":"root-module_width-3__XwPfp","width-4":"root-module_width-4__EjiBd","width-5":"root-module_width-5__jRYQj","width-6":"root-module_width-6__NF4MZ","width-7":"root-module_width-7__-UKna","width-8":"root-module_width-8__nPXuF","width-9":"root-module_width-9__0UBdF","width-10":"root-module_width-10__6KkbL","width-11":"root-module_width-11__EJiz7","width-12":"root-module_width-12__gnimm"};
 
 const XImage = props => {
-  const rootClass = classnames(Styles$6.ximage, Styles$6[`height-${props.height}`], Styles$6[`width-${props.width}`]);
+  const rootClass = classnames(Styles$7.ximage, Styles$7[`height-${props.height}`], Styles$7[`width-${props.width}`]);
   return jsx("img", {
     src: props.src,
     className: rootClass,
@@ -3440,7 +3440,7 @@ var img$1$1 = "data:image/svg+xml,%3csvg width='43' height='32' viewBox='0 0 43 
 
 var img$7 = "data:image/svg+xml,%3csvg width='51' height='32' viewBox='0 0 51 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='50.96' height='32' rx='16' fill='%23E8308A'/%3e%3cpath d='M37.1975 10.2402H34.0511C33.6467 10.2402 33.453 10.3371 33.3603 10.8257L31.7176 21.0103C31.6418 21.5116 31.7345 21.7559 32.181 21.7559H35.58C36.9026 21.7559 37.9809 21.3852 38.7896 20.6944C39.1518 20.3827 39.4635 20.0079 39.7205 19.574C39.573 19.6583 39.434 19.7636 39.3119 19.8899C39.4382 19.7636 39.573 19.6583 39.7205 19.574C40.0785 18.9633 40.327 18.2388 40.4618 17.4091L40.883 14.7639C41.3294 12.0261 39.91 10.2402 37.1975 10.2402ZM38.2631 14.6039L37.8293 17.1985C37.606 18.6095 36.9742 19.1613 35.7317 19.1613H34.6829L35.7022 12.8348H36.8394C38.1409 12.8348 38.44 13.454 38.2631 14.6039ZM38.8149 20.6312C38.8107 20.6397 38.8064 20.6481 38.8064 20.6565C38.8107 20.6481 38.8107 20.6397 38.8149 20.6312C38.8444 20.5723 38.8696 20.5133 38.8991 20.4586C38.8696 20.5133 38.8444 20.5723 38.8149 20.6312Z' fill='white'/%3e%3cpath d='M28.217 21.7559H29.7123C30.0703 21.7559 30.2978 21.6421 30.3694 21.2041L32.0163 10.9521C32.1047 10.4508 31.9573 10.2402 31.5361 10.2402H30.0703C29.7123 10.2402 29.4722 10.3034 29.3964 10.792L27.7327 21.0272C27.6611 21.5453 27.7832 21.7559 28.217 21.7559Z' fill='white'/%3e%3cpath d='M27.9309 13.614C27.9309 11.5881 26.8358 10.2402 24.5023 10.2402H21.2843C20.8042 10.2402 20.6399 10.3371 20.5641 10.8089L18.9046 21.0103C18.8287 21.4821 18.8877 21.7559 19.3974 21.7559H20.8505C21.2843 21.7559 21.4486 21.6421 21.5413 21.1704L22.0341 18.1377H23.681C26.2713 18.142 27.9309 16.3392 27.9309 13.614ZM22.8849 12.8348H24.1443C24.9656 12.8348 25.2815 13.2392 25.2815 13.9384C25.2815 15.0251 24.6245 15.5431 23.681 15.5431H22.4511L22.8849 12.8348Z' fill='white'/%3e%3cpath d='M18.4072 17.8975C18.4072 15.7704 16.9415 15.0249 15.1261 14.7006C14.1995 14.5532 13.5845 14.3931 13.5971 13.5634C13.614 12.8515 14.1531 12.5272 15.1261 12.5272C15.741 12.5272 16.3392 12.7378 16.5498 13.4538C16.6677 13.8287 16.8488 13.9551 17.1942 13.8119L18.5884 13.3106C18.9759 13.1801 19.0517 12.9863 18.9169 12.5146C18.4367 10.8761 17.2532 10 15.2314 10C12.6242 10 10.8888 11.2804 10.8888 13.7318C10.8888 15.9853 12.4894 16.9287 14.2711 17.1857C15.1977 17.3163 15.6779 17.6237 15.6779 18.3061C15.6779 19.0347 15.0503 19.4728 14.031 19.4728C13.1759 19.4728 12.7 19.0853 12.4894 18.483C12.3083 18.0281 12.144 17.9312 11.7691 18.0449L10.375 18.5462C10.0464 18.6599 9.92427 18.8705 10.0464 19.3717C10.4676 21.1239 11.7818 22 13.833 22C16.5834 22 18.3946 20.6564 18.4072 17.8975Z' fill='white'/%3e%3c/svg%3e";
 
-var Styles$5 = {"xtag_business":"root-module_xtag_business__boNqC","xtag_business--size-s":"root-module_xtag_business--size-s__IJchy","xtag_business--size-l":"root-module_xtag_business--size-l__rr9wC"};
+var Styles$6 = {"xtag_business":"root-module_xtag_business__boNqC","xtag_business--size-s":"root-module_xtag_business--size-s__IJchy","xtag_business--size-l":"root-module_xtag_business--size-l__rr9wC"};
 
 const brands = {
   'easy': img$6,
@@ -3452,8 +3452,8 @@ const brands = {
   'spid': img$7
 };
 const XTagBusiness = props => {
-  const rootClass = classnames(Styles$5.xtag_business, {
-    [Styles$5[`xtag_business--size-${props.size}`]]: props.size
+  const rootClass = classnames(Styles$6.xtag_business, {
+    [Styles$6[`xtag_business--size-${props.size}`]]: props.size
   });
   return jsx("div", {
     className: rootClass,
@@ -3467,12 +3467,12 @@ XTagBusiness.defaultProps = {
   size: 's'
 };
 
-var Styles$4 = {"xheader":"root-module_xheader__fOYeD","xheader--sticky":"root-module_xheader--sticky__THgyI","xheader-sticky_pinned":"root-module_xheader-sticky_pinned__BigZ1","xheader__bar":"root-module_xheader__bar__atGCt","xheader__bar__back":"root-module_xheader__bar__back__i9AO9","xheader__bar__title":"root-module_xheader__bar__title__pV3PH","xheader__bar__tag_first":"root-module_xheader__bar__tag_first__M0BQk","xheader__content":"root-module_xheader__content__4RHQb","header__content__title":"root-module_header__content__title__CDZ16"};
+var Styles$5 = {"xheader":"root-module_xheader__fOYeD","xheader--sticky":"root-module_xheader--sticky__THgyI","xheader-sticky_pinned":"root-module_xheader-sticky_pinned__BigZ1","xheader__bar":"root-module_xheader__bar__atGCt","xheader__bar__back":"root-module_xheader__bar__back__i9AO9","xheader__bar__title":"root-module_xheader__bar__title__pV3PH","xheader__bar__tag_first":"root-module_xheader__bar__tag_first__M0BQk","xheader__content":"root-module_xheader__content__4RHQb","header__content__title":"root-module_header__content__title__CDZ16"};
 
 const XHeader = props => {
   const ref = React__default.useRef(null);
-  const rootClass = classnames(Styles$4.xheader, {
-    [Styles$4['xheader--sticky']]: props.sticky
+  const rootClass = classnames(Styles$5.xheader, {
+    [Styles$5['xheader--sticky']]: props.sticky
   });
   const onBackHandler = e => {
     if (props.onBack) {
@@ -3485,7 +3485,7 @@ const XHeader = props => {
       if (ref.current) {
         const targetStiky = 1;
         const origOffsetY = ref.current.offsetTop;
-        ref.current.classList.toggle(Styles$4['xheader-sticky_pinned'], origOffsetY >= targetStiky);
+        ref.current.classList.toggle(Styles$5['xheader-sticky_pinned'], origOffsetY >= targetStiky);
       }
     };
     const page = (_ref$current = ref.current) == null ? void 0 : _ref$current.parentNode;
@@ -3500,16 +3500,16 @@ const XHeader = props => {
     ref: ref,
     className: rootClass,
     children: [jsxs("div", {
-      className: Styles$4.xheader__bar,
+      className: Styles$5.xheader__bar,
       children: [props.onBack && jsx("div", {
         onClick: onBackHandler,
-        className: Styles$4.xheader__main__back,
+        className: Styles$5.xheader__main__back,
         children: jsx(XIcon, {
           size: "s",
           icon: "arrow-left"
         })
       }), props.title && jsx("div", {
-        className: Styles$4.xheader__bar__title,
+        className: Styles$5.xheader__bar__title,
         children: jsx(XText, {
           weight: "bold",
           fontSize: 9,
@@ -3517,7 +3517,7 @@ const XHeader = props => {
         })
       }), props.tags && props.tags.map((tag, index, array) => {
         const rootClass = classnames({
-          [Styles$4.xheader__bar__tag_first]: index === 0 && array.length > 1
+          [Styles$5.xheader__bar__tag_first]: index === 0 && array.length > 1
         });
         if (tag.type === 'business') {
           return jsx("div", {
@@ -3540,9 +3540,9 @@ const XHeader = props => {
         }, index);
       })]
     }), jsx("div", {
-      className: Styles$4.xheader__content,
+      className: Styles$5.xheader__content,
       children: props.title && jsx("div", {
-        className: Styles$4.header__content__title,
+        className: Styles$5.header__content__title,
         children: jsx(XText, {
           weight: "bold",
           fontSize: 9,
@@ -5845,7 +5845,7 @@ function throttle(func, wait, options) {
 
 var throttle_1 = throttle;
 
-var Styles$3 = {"xbody":"root-module_xbody__VGU0O"};
+var Styles$4 = {"xbody":"root-module_xbody__VGU0O"};
 
 const XBody = props => {
   const myRef = useRef(null);
@@ -5910,18 +5910,18 @@ const XBody = props => {
   }
   return jsx("div", {
     ref: myRef,
-    className: Styles$3.xbody,
+    className: Styles$4.xbody,
     style: styles,
     children: props.children
   });
 };
 XBody.defaultProps = {};
 
-var Styles$2 = {"xfooter":"root-module_xfooter__DTxcE","xfooter--backround-solid":"root-module_xfooter--backround-solid__2mamM","xfooter--backround-gradient":"root-module_xfooter--backround-gradient__Q8vTz","xfooter--backround-transparent":"root-module_xfooter--backround-transparent__HR49f"};
+var Styles$3 = {"xfooter":"root-module_xfooter__DTxcE","xfooter--backround-solid":"root-module_xfooter--backround-solid__2mamM","xfooter--backround-gradient":"root-module_xfooter--backround-gradient__Q8vTz","xfooter--backround-transparent":"root-module_xfooter--backround-transparent__HR49f"};
 
 const XFooter = props => {
-  const rootClass = classnames(Styles$2.xfooter, {
-    [Styles$2[`xfooter--backround-${props.background}`]]: props.background
+  const rootClass = classnames(Styles$3.xfooter, {
+    [Styles$3[`xfooter--backround-${props.background}`]]: props.background
   });
   return jsx("div", {
     className: rootClass,
@@ -6136,13 +6136,13 @@ $({ target: 'RegExp', proto: true, forced: /./.exec !== exec }, {
   exec: exec
 });
 
-var Styles$1 = {"xbadge":"root-module_xbadge__qYW5H","xbadge--size-xs":"root-module_xbadge--size-xs__K92A3","xbadge--size-s":"root-module_xbadge--size-s__uG51F","xbadge--size-m":"root-module_xbadge--size-m__P7cES","xbadge--size-l":"root-module_xbadge--size-l__4bDKV","xbadge--size-xl":"root-module_xbadge--size-xl__6SeNN","squared":"root-module_squared__f8rDQ"};
+var Styles$2 = {"xbadge":"root-module_xbadge__qYW5H","xbadge--size-xs":"root-module_xbadge--size-xs__K92A3","xbadge--size-s":"root-module_xbadge--size-s__uG51F","xbadge--size-m":"root-module_xbadge--size-m__P7cES","xbadge--size-l":"root-module_xbadge--size-l__4bDKV","xbadge--size-xl":"root-module_xbadge--size-xl__6SeNN","squared":"root-module_squared__f8rDQ"};
 
 const XBadge = props => {
   const isSingleDigit = /^\d$/.test('' + props.value);
-  const rootClass = classnames(Styles$1.xbadge, {
-    [Styles$1.squared]: isSingleDigit
-  }, Styles$1[`xbadge--size-${props.size}`]);
+  const rootClass = classnames(Styles$2.xbadge, {
+    [Styles$2.squared]: isSingleDigit
+  }, Styles$2[`xbadge--size-${props.size}`]);
   return jsx("div", {
     className: rootClass,
     children: props.value
@@ -6153,10 +6153,10 @@ XBadge.defaultProps = {
   size: 'm'
 };
 
-var Styles = {"xpage":"root-module_xpage__JXLst"};
+var Styles$1 = {"xpage":"root-module_xpage__JXLst"};
 
 const XPage = props => {
-  const rootClass = classnames(Styles.xpage);
+  const rootClass = classnames(Styles$1.xpage);
   const styles = {};
   if (props.backgroundImage) {
     styles.backgroundImage = `url('${props.backgroundImage}')`;
@@ -6169,22 +6169,34 @@ const XPage = props => {
 };
 XPage.defaultProps = {};
 
+var Styles = {"xmodal":"root-module_xmodal__tZkke"};
+
+const XModal = props => {
+  const rootClass = classnames(Styles.xmodal);
+  const styles = {};
+  return jsx("div", {
+    style: styles,
+    className: rootClass,
+    children: props.children
+  });
+};
+XModal.defaultProps = {};
+
 var index = {
-  Atoms: {
-    XBox,
-    XText,
-    XIcon,
-    XButton,
-    XButtonIcon,
-    XHeader,
-    XBody,
-    XFooter,
-    XBadge,
-    XPage,
-    XImage,
-    XTag,
-    XTagBusiness
-  },
+  XBox,
+  XText,
+  XIcon,
+  XButton,
+  XButtonIcon,
+  XHeader,
+  XBody,
+  XFooter,
+  XBadge,
+  XPage,
+  XImage,
+  XTag,
+  XTagBusiness,
+  XModal,
   Molecules: {}
 };
 
@@ -6208,7 +6220,7 @@ const InventoryFunctionCard = props => {
           alt: "Planograms",
           src: props.icon
         })
-      })), jsxs(index.Atoms.XBox, Object.assign({
+      })), jsxs(index.XBox, Object.assign({
         orientation: "horizontal",
         verticalAlign: "center",
         horizontalAlign: "between",
@@ -6217,16 +6229,16 @@ const InventoryFunctionCard = props => {
         gap: "s",
         padding: "none"
       }, {
-        children: [jsx(index.Atoms.XText, Object.assign({
+        children: [jsx(index.XText, Object.assign({
           fontSize: 10,
           lineHeight: "normal",
           weight: "bold"
         }, {
           children: props.title
-        })), jsx(index.Atoms.XBadge, {
+        })), jsx(index.XBadge, {
           value: 20,
           size: "s"
-        }), jsx(index.Atoms.XIcon, {
+        }), jsx(index.XIcon, {
           icon: "chevron-right",
           size: "s"
         })]
@@ -6259,13 +6271,13 @@ class HomePage extends Page {
   render() {
     var _a;
     return jsx(IonPage, {
-      children: jsxs(index.Atoms.XPage, {
-        children: [jsx(index.Atoms.XHeader, {
+      children: jsxs(index.XPage, {
+        children: [jsx(index.XHeader, {
           title: "Inventario de perecibles",
           sticky: true,
           onBack: (_a = this.props.extensions) === null || _a === void 0 ? void 0 : _a.onBack
-        }), jsx(index.Atoms.XBody, {
-          children: jsx(index.Atoms.XBox, Object.assign({
+        }), jsx(index.XBody, {
+          children: jsx(index.XBox, Object.assign({
             verticalAlign: "start",
             height: "auto",
             width: "full",
@@ -6276,7 +6288,7 @@ class HomePage extends Page {
               history: this.props.history
             })
           }))
-        }), jsx(index.Atoms.XFooter, {
+        }), jsx(index.XFooter, {
           background: "transparent"
         })]
       })
@@ -6349,14 +6361,14 @@ const InventoryManualZoneModal = props => {
   }, {
     children: [jsx(IonHeader, {
       children: jsx(IonToolbar, {
-        children: jsx(index.Atoms.XBox, Object.assign({
+        children: jsx(index.XBox, Object.assign({
           horizontalAlign: "end",
           height: "auto",
           width: "full",
           gap: "none",
           padding: "m"
         }, {
-          children: jsx(index.Atoms.XIcon, {
+          children: jsx(index.XIcon, {
             size: "s",
             icon: "close"
           })
@@ -6365,20 +6377,20 @@ const InventoryManualZoneModal = props => {
     }), jsxs(IonContent, Object.assign({
       className: "ion-padding"
     }, {
-      children: [jsxs(index.Atoms.XBox, Object.assign({
+      children: [jsxs(index.XBox, Object.assign({
         verticalAlign: "start",
         height: "auto",
         width: "full",
         gap: "xl",
         padding: "m"
       }, {
-        children: [jsx(index.Atoms.XText, Object.assign({
+        children: [jsx(index.XText, Object.assign({
           fontSize: 8,
           lineHeight: "normal",
           weight: "bold"
         }, {
           children: "Digitaci\u00F3n manual"
-        })), jsx(index.Atoms.XText, Object.assign({
+        })), jsx(index.XText, Object.assign({
           fontSize: 10,
           lineHeight: "normal",
           weight: "bold"
@@ -6406,16 +6418,16 @@ const InventoryManualZoneModal = props => {
             placeholder: `Digita el código`
           })]
         }))]
-      })), jsx(index.Atoms.XBox, {
+      })), jsx(index.XBox, {
         height: 1
-      }), jsx(index.Atoms.XBox, Object.assign({
+      }), jsx(index.XBox, Object.assign({
         verticalAlign: "start",
         height: "auto",
         width: "full",
         gap: "xl",
         padding: "m"
       }, {
-        children: jsx(index.Atoms.XButton, {
+        children: jsx(index.XButton, {
           type: "solid",
           size: "xl",
           text: "Continuar"
@@ -6530,14 +6542,14 @@ const InventoryZoneCard = props => {
   } = useInventory();
   return jsxs(IonCard, {
     children: [jsx(IonCardHeader, {
-      children: jsx(index.Atoms.XBox, Object.assign({
+      children: jsx(index.XBox, Object.assign({
         horizontalAlign: "end",
         height: "full",
         width: "full",
         gap: "none",
         padding: "none"
       }, {
-        children: jsx(index.Atoms.XButton, {
+        children: jsx(index.XButton, {
           type: "outline",
           size: "s",
           text: "Limpiar",
@@ -6546,27 +6558,27 @@ const InventoryZoneCard = props => {
         })
       }))
     }), jsx(IonCardContent, {
-      children: jsxs(index.Atoms.XBox, Object.assign({
+      children: jsxs(index.XBox, Object.assign({
         verticalAlign: "start",
         height: "full",
         width: "full",
         gap: "l",
         padding: "none"
       }, {
-        children: [jsxs(index.Atoms.XBox, Object.assign({
+        children: [jsxs(index.XBox, Object.assign({
           verticalAlign: "start",
           height: "full",
           width: "full",
           gap: "none",
           padding: "none"
         }, {
-          children: [jsx(index.Atoms.XText, Object.assign({
+          children: [jsx(index.XText, Object.assign({
             fontSize: 10,
             lineHeight: "normal",
             weight: "bold"
           }, {
             children: "Centro"
-          })), jsx(index.Atoms.XBox, Object.assign({
+          })), jsx(index.XBox, Object.assign({
             orientation: "horizontal",
             horizontalAlign: "start",
             height: "full",
@@ -6575,28 +6587,28 @@ const InventoryZoneCard = props => {
             padding: "none"
           }, {
             children: (inventory === null || inventory === void 0 ? void 0 : inventory.store) && jsxs(Fragment$1, {
-              children: [jsx(index.Atoms.XTag, {
+              children: [jsx(index.XTag, {
                 text: inventory === null || inventory === void 0 ? void 0 : inventory.store.code,
                 size: 'l'
-              }), jsx(index.Atoms.XTag, {
+              }), jsx(index.XTag, {
                 text: inventory === null || inventory === void 0 ? void 0 : inventory.store.name
               })]
             })
           }))]
-        })), jsxs(index.Atoms.XBox, Object.assign({
+        })), jsxs(index.XBox, Object.assign({
           verticalAlign: "start",
           height: "full",
           width: "full",
           gap: "none",
           padding: "none"
         }, {
-          children: [jsx(index.Atoms.XText, Object.assign({
+          children: [jsx(index.XText, Object.assign({
             fontSize: 10,
             lineHeight: "normal",
             weight: "bold"
           }, {
             children: "Zonificaci\u00F3n"
-          })), jsx(index.Atoms.XBox, Object.assign({
+          })), jsx(index.XBox, Object.assign({
             orientation: "horizontal",
             horizontalAlign: "start",
             height: "full",
@@ -6605,27 +6617,27 @@ const InventoryZoneCard = props => {
             padding: "none"
           }, {
             children: (inventory === null || inventory === void 0 ? void 0 : inventory.zone) && jsxs(Fragment$1, {
-              children: [jsx(index.Atoms.XTag, {
+              children: [jsx(index.XTag, {
                 text: inventory === null || inventory === void 0 ? void 0 : inventory.zone.code
-              }), jsx(index.Atoms.XTag, {
+              }), jsx(index.XTag, {
                 text: inventory === null || inventory === void 0 ? void 0 : inventory.zone.name
               })]
             })
           }))]
-        })), jsxs(index.Atoms.XBox, Object.assign({
+        })), jsxs(index.XBox, Object.assign({
           verticalAlign: "start",
           height: "full",
           width: "full",
           gap: "none",
           padding: "none"
         }, {
-          children: [jsx(index.Atoms.XText, Object.assign({
+          children: [jsx(index.XText, Object.assign({
             fontSize: 10,
             lineHeight: "normal",
             weight: "bold"
           }, {
             children: "Almac\u00E9n"
-          })), jsx(index.Atoms.XBox, Object.assign({
+          })), jsx(index.XBox, Object.assign({
             orientation: "horizontal",
             horizontalAlign: "start",
             height: "full",
@@ -6634,9 +6646,9 @@ const InventoryZoneCard = props => {
             padding: "none"
           }, {
             children: (inventory === null || inventory === void 0 ? void 0 : inventory.storage) && jsxs(Fragment$1, {
-              children: [jsx(index.Atoms.XTag, {
+              children: [jsx(index.XTag, {
                 text: inventory === null || inventory === void 0 ? void 0 : inventory.storage.code
-              }), jsx(index.Atoms.XTag, {
+              }), jsx(index.XTag, {
                 text: inventory === null || inventory === void 0 ? void 0 : inventory.storage.name
               })]
             })
@@ -6678,38 +6690,38 @@ const InventoryLoadedMode = props => {
     BarcodeScanner.stopScan();
   });
   return jsxs(Fragment, {
-    children: [jsx(index.Atoms.XHeader, {
+    children: [jsx(index.XHeader, {
       title: "Inventario de perecibles",
       sticky: true,
       onBack: props.onBack
-    }), jsx(index.Atoms.XBody, {
-      children: jsxs(index.Atoms.XBox, Object.assign({
+    }), jsx(index.XBody, {
+      children: jsxs(index.XBox, Object.assign({
         verticalAlign: "start",
         height: "auto",
         width: "full",
         gap: "xs",
         padding: "none"
       }, {
-        children: [jsx(index.Atoms.XText, Object.assign({
+        children: [jsx(index.XText, Object.assign({
           fontSize: 9,
           lineHeight: "normal",
           weight: "bold"
         }, {
           children: "Zona a inventariar"
-        })), jsxs(index.Atoms.XBox, Object.assign({
+        })), jsxs(index.XBox, Object.assign({
           verticalAlign: "start",
           height: "full",
           width: "full",
           gap: "s",
           padding: "l"
         }, {
-          children: [jsx(index.Atoms.XButton, {
+          children: [jsx(index.XButton, {
             type: "solid",
             size: "xl",
             text: "Escanea el c\u00F3digo",
             icon: "stats",
             onClick: () => startScan()
-          }), jsx(index.Atoms.XButton, {
+          }), jsx(index.XButton, {
             type: "outline",
             size: "xl",
             text: "Ingresa el c\u00F3digo",
@@ -6717,10 +6729,10 @@ const InventoryLoadedMode = props => {
           })]
         })), jsx(InventoryZoneCard, {})]
       }))
-    }), jsx(index.Atoms.XFooter, Object.assign({
+    }), jsx(index.XFooter, Object.assign({
       background: "transparent"
     }, {
-      children: jsx(index.Atoms.XButton, {
+      children: jsx(index.XButton, {
         type: "solid",
         size: "xl",
         text: "Continuar",
@@ -6749,7 +6761,7 @@ const InventoryMain = props => {
     PAGE_LOADED: renderPAGE_LOADED,
     PAGE_SCAN_ZONE: renderPAGE_SCAN_ZONE
   };
-  return jsx(index.Atoms.XPage, {
+  return jsx(index.XPage, {
     children: (() => {
       if (!renders[mode]) {
         return jsx("div", {
