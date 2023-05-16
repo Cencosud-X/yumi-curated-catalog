@@ -3760,7 +3760,7 @@ $$4({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign }
   assign: assign
 });
 
-var Styles$d = {"xbox":"root-module_xbox__6Wa3G","horizontal_align-stretch":"root-module_horizontal_align-stretch__gv5sP","horizontal_align-start":"root-module_horizontal_align-start__HWXLZ","horizontal_align-end":"root-module_horizontal_align-end__lv1N-","horizontal_align-center":"root-module_horizontal_align-center__7dfRK","horizontal_align-between":"root-module_horizontal_align-between__tfij8","horizontal_align-evenly":"root-module_horizontal_align-evenly__cPM04","horizontal_align-around":"root-module_horizontal_align-around__6F53-","vertical_align-start":"root-module_vertical_align-start__hDoSG","vertical_align-end":"root-module_vertical_align-end__3K-Xh","vertical_align-center":"root-module_vertical_align-center__d4o08","vertical_align-between":"root-module_vertical_align-between__ZyjXh","vertical_align-evenly":"root-module_vertical_align-evenly__YEKot","vertical_align-around":"root-module_vertical_align-around__lG5of","vertical_align-stretch":"root-module_vertical_align-stretch__ydBqs","orientation-vertical":"root-module_orientation-vertical__mSiJF","orientation-horizontal":"root-module_orientation-horizontal__8h-SN","padding-none":"root-module_padding-none__WSOfn","padding-xs":"root-module_padding-xs__qPmEg","padding-s":"root-module_padding-s__jrXJf","padding-m":"root-module_padding-m__Hn-b1","padding-l":"root-module_padding-l__-yiiK","padding-xl":"root-module_padding-xl__w97-D","gap-none":"root-module_gap-none__5SZka","gap-xs":"root-module_gap-xs__SYU-p","gap-s":"root-module_gap-s__ipYgr","gap-m":"root-module_gap-m__CMXzK","gap-l":"root-module_gap-l__FJTxi","gap-xl":"root-module_gap-xl__taf3g","height-auto":"root-module_height-auto__kqW13","height-full":"root-module_height-full__G54hz","height-1":"root-module_height-1__tUMsF","height-2":"root-module_height-2__eTXxk","height-3":"root-module_height-3__HFsPi","height-4":"root-module_height-4__V9SIG","height-5":"root-module_height-5__Vqq-1","height-6":"root-module_height-6__TBcqC","height-7":"root-module_height-7__Dsc2i","height-8":"root-module_height-8__UEd-O","height-9":"root-module_height-9__73Okj","height-10":"root-module_height-10__LnsBj","height-11":"root-module_height-11__h3zdO","height-12":"root-module_height-12__YrpHM","width-auto":"root-module_width-auto__g15AE","width-half":"root-module_width-half__SkeAC","width-full":"root-module_width-full__5WhQK","max_width":"root-module_max_width__QYToi","min_width":"root-module_min_width__wqtN7","width-1":"root-module_width-1__JvfqS","width-2":"root-module_width-2__5SX8S","width-3":"root-module_width-3__EaChK","width-4":"root-module_width-4__oKrmT","width-5":"root-module_width-5__Jwf0j","width-6":"root-module_width-6__0xgl6","width-7":"root-module_width-7__nHfd-","width-8":"root-module_width-8__ze3KQ","width-9":"root-module_width-9__pxWvf","width-10":"root-module_width-10__C94jC","width-11":"root-module_width-11__mdz3o","width-12":"root-module_width-12__Rp9e-","touchable":"root-module_touchable__Gm7A8","overflow-visible":"root-module_overflow-visible__DAY63","overflow-hidden":"root-module_overflow-hidden__gylIk","overflow-auto":"root-module_overflow-auto__A1dF7","overflow-scroll":"root-module_overflow-scroll__NP3nz","overflow-scroll_y":"root-module_overflow-scroll_y__Bf9q5","overflow-scroll_x":"root-module_overflow-scroll_x__nDm2a"};
+var Styles$e = {"xbox":"root-module_xbox__6Wa3G","horizontal_align-stretch":"root-module_horizontal_align-stretch__gv5sP","horizontal_align-start":"root-module_horizontal_align-start__HWXLZ","horizontal_align-end":"root-module_horizontal_align-end__lv1N-","horizontal_align-center":"root-module_horizontal_align-center__7dfRK","horizontal_align-between":"root-module_horizontal_align-between__tfij8","horizontal_align-evenly":"root-module_horizontal_align-evenly__cPM04","horizontal_align-around":"root-module_horizontal_align-around__6F53-","vertical_align-start":"root-module_vertical_align-start__hDoSG","vertical_align-end":"root-module_vertical_align-end__3K-Xh","vertical_align-center":"root-module_vertical_align-center__d4o08","vertical_align-between":"root-module_vertical_align-between__ZyjXh","vertical_align-evenly":"root-module_vertical_align-evenly__YEKot","vertical_align-around":"root-module_vertical_align-around__lG5of","vertical_align-stretch":"root-module_vertical_align-stretch__ydBqs","orientation-vertical":"root-module_orientation-vertical__mSiJF","orientation-horizontal":"root-module_orientation-horizontal__8h-SN","padding-none":"root-module_padding-none__WSOfn","padding-xs":"root-module_padding-xs__qPmEg","padding-s":"root-module_padding-s__jrXJf","padding-m":"root-module_padding-m__Hn-b1","padding-l":"root-module_padding-l__-yiiK","padding-xl":"root-module_padding-xl__w97-D","gap-none":"root-module_gap-none__5SZka","gap-xs":"root-module_gap-xs__SYU-p","gap-s":"root-module_gap-s__ipYgr","gap-m":"root-module_gap-m__CMXzK","gap-l":"root-module_gap-l__FJTxi","gap-xl":"root-module_gap-xl__taf3g","height-auto":"root-module_height-auto__kqW13","height-full":"root-module_height-full__G54hz","height-1":"root-module_height-1__tUMsF","height-2":"root-module_height-2__eTXxk","height-3":"root-module_height-3__HFsPi","height-4":"root-module_height-4__V9SIG","height-5":"root-module_height-5__Vqq-1","height-6":"root-module_height-6__TBcqC","height-7":"root-module_height-7__Dsc2i","height-8":"root-module_height-8__UEd-O","height-9":"root-module_height-9__73Okj","height-10":"root-module_height-10__LnsBj","height-11":"root-module_height-11__h3zdO","height-12":"root-module_height-12__YrpHM","width-auto":"root-module_width-auto__g15AE","width-half":"root-module_width-half__SkeAC","width-full":"root-module_width-full__5WhQK","max_width":"root-module_max_width__QYToi","min_width":"root-module_min_width__wqtN7","width-1":"root-module_width-1__JvfqS","width-2":"root-module_width-2__5SX8S","width-3":"root-module_width-3__EaChK","width-4":"root-module_width-4__oKrmT","width-5":"root-module_width-5__Jwf0j","width-6":"root-module_width-6__0xgl6","width-7":"root-module_width-7__nHfd-","width-8":"root-module_width-8__ze3KQ","width-9":"root-module_width-9__pxWvf","width-10":"root-module_width-10__C94jC","width-11":"root-module_width-11__mdz3o","width-12":"root-module_width-12__Rp9e-","touchable":"root-module_touchable__Gm7A8","overflow-visible":"root-module_overflow-visible__DAY63","overflow-hidden":"root-module_overflow-hidden__gylIk","overflow-auto":"root-module_overflow-auto__A1dF7","overflow-scroll":"root-module_overflow-scroll__NP3nz","overflow-scroll_y":"root-module_overflow-scroll_y__Bf9q5","overflow-scroll_x":"root-module_overflow-scroll_x__nDm2a"};
 
 var classnames$1 = {exports: {}};
 
@@ -3827,8 +3827,8 @@ const XBox = props => {
   // If orientation change, x and y axis will be inverted
   const hAlign = props.orientation === 'horizontal' ? props.verticalAlign : props.horizontalAlign;
   const vAlign = props.orientation === 'horizontal' ? props.horizontalAlign : props.verticalAlign;
-  const rootClass = classnames(Styles$d.xbox, Styles$d[`orientation-${props.orientation}`], Styles$d[`horizontal_align-${hAlign}`], Styles$d[`vertical_align-${vAlign}`], Styles$d[`padding-${props.padding}`], Styles$d[`overflow-${props.overflow}`], Styles$d[`gap-${props.gap}`], Styles$d[`height-${props.height}`], Styles$d[`width-${props.width}`], {
-    [Styles$d.touchable]: props.touchable
+  const rootClass = classnames(Styles$e.xbox, Styles$e[`orientation-${props.orientation}`], Styles$e[`horizontal_align-${hAlign}`], Styles$e[`vertical_align-${vAlign}`], Styles$e[`padding-${props.padding}`], Styles$e[`overflow-${props.overflow}`], Styles$e[`gap-${props.gap}`], Styles$e[`height-${props.height}`], Styles$e[`width-${props.width}`], {
+    [Styles$e.touchable]: props.touchable
   });
   return jsx("div", {
     className: rootClass,
@@ -3847,11 +3847,11 @@ XBox.defaultProps = {
   touchable: false
 };
 
-var Styles$c = {"xtext":"root-module_xtext__IcpGn","text_overflow-break-word":"root-module_text_overflow-break-word__29I6j","text_overflow-no-wrap":"root-module_text_overflow-no-wrap__QYsVM","line_height-normal":"root-module_line_height-normal__hCQup","line_height-title":"root-module_line_height-title__3PUVA","weight-lighter":"root-module_weight-lighter__ZHs5Q","weight-normal":"root-module_weight-normal__jlU7s","weight-bold":"root-module_weight-bold__40uN5","font_size-inherit":"root-module_font_size-inherit__nnZvu","font_size-1":"root-module_font_size-1__qoma9","font_size-2":"root-module_font_size-2__WPiKq","font_size-3":"root-module_font_size-3__Lqhpr","font_size-4":"root-module_font_size-4__NY1Io","font_size-5":"root-module_font_size-5__PlnQ5","font_size-6":"root-module_font_size-6__AkFp3","font_size-7":"root-module_font_size-7__eHt0-","font_size-8":"root-module_font_size-8__d4JWI","font_size-9":"root-module_font_size-9__TyCQA","font_size-10":"root-module_font_size-10__xIheG","font_size-11":"root-module_font_size-11__8GqUd","font_size-12":"root-module_font_size-12__V-SPW","line_clamp":"root-module_line_clamp__Sre8c"};
+var Styles$d = {"xtext":"root-module_xtext__IcpGn","text_overflow-break-word":"root-module_text_overflow-break-word__29I6j","text_overflow-no-wrap":"root-module_text_overflow-no-wrap__QYsVM","line_height-normal":"root-module_line_height-normal__hCQup","line_height-title":"root-module_line_height-title__3PUVA","weight-lighter":"root-module_weight-lighter__ZHs5Q","weight-normal":"root-module_weight-normal__jlU7s","weight-bold":"root-module_weight-bold__40uN5","font_size-inherit":"root-module_font_size-inherit__nnZvu","font_size-1":"root-module_font_size-1__qoma9","font_size-2":"root-module_font_size-2__WPiKq","font_size-3":"root-module_font_size-3__Lqhpr","font_size-4":"root-module_font_size-4__NY1Io","font_size-5":"root-module_font_size-5__PlnQ5","font_size-6":"root-module_font_size-6__AkFp3","font_size-7":"root-module_font_size-7__eHt0-","font_size-8":"root-module_font_size-8__d4JWI","font_size-9":"root-module_font_size-9__TyCQA","font_size-10":"root-module_font_size-10__xIheG","font_size-11":"root-module_font_size-11__8GqUd","font_size-12":"root-module_font_size-12__V-SPW","line_clamp":"root-module_line_clamp__Sre8c"};
 
 const XText = props => {
-  const rootClass = classnames(Styles$c.xtext, Styles$c[`text_overflow-${props.textOverflow}`], Styles$c[`line_height-${props.lineHeight}`], Styles$c[`weight-${props.weight}`], Styles$c[`font_size-${props.fontSize}`], {
-    [Styles$c.line_clamp]: props.lineClamp !== 'none'
+  const rootClass = classnames(Styles$d.xtext, Styles$d[`text_overflow-${props.textOverflow}`], Styles$d[`line_height-${props.lineHeight}`], Styles$d[`weight-${props.weight}`], Styles$d[`font_size-${props.fontSize}`], {
+    [Styles$d.line_clamp]: props.lineClamp !== 'none'
   });
   const styles = {};
   if (props.lineClamp !== 'none') {
@@ -3871,7 +3871,7 @@ XText.defaultProps = {
   lineClamp: 'none'
 };
 
-var Styles$b = {"xicon":"root-module_xicon__qDYRt","icon_size-xs":"root-module_icon_size-xs__YasmD","icon_size-s":"root-module_icon_size-s__spR6F","icon_size-m":"root-module_icon_size-m__q8qe4","icon_size-l":"root-module_icon_size-l__vdZri","icon_size-xl":"root-module_icon_size-xl__pWJJQ","icon-spin":"root-module_icon-spin__bKBJP","spin":"root-module_spin__4ShxB"};
+var Styles$c = {"xicon":"root-module_xicon__qDYRt","icon_size-xs":"root-module_icon_size-xs__YasmD","icon_size-s":"root-module_icon_size-s__spR6F","icon_size-m":"root-module_icon_size-m__q8qe4","icon_size-l":"root-module_icon_size-l__vdZri","icon_size-xl":"root-module_icon_size-xl__pWJJQ","icon-spin":"root-module_icon-spin__bKBJP","spin":"root-module_spin__4ShxB"};
 
 var _path$n;
 function _extends$n() { _extends$n = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends$n.apply(this, arguments); }
@@ -4235,7 +4235,7 @@ var SvgTools = function SvgTools(props) {
 };
 
 const XIcon = props => {
-  const rootClass = classnames(Styles$b.xicon, Styles$b[`icon_size-${props.size}`]);
+  const rootClass = classnames(Styles$c.xicon, Styles$c[`icon_size-${props.size}`]);
   const iconSVG = (() => {
     switch (props.icon) {
       default:
@@ -4275,7 +4275,7 @@ const XIcon = props => {
         return jsx(SvgBug, {});
       case 'loading':
         return jsx("div", {
-          className: Styles$b[`icon-spin`],
+          className: Styles$c[`icon-spin`],
           children: jsx(SvgLoading, {})
         });
       case 'uncheck':
@@ -4309,15 +4309,15 @@ XIcon.defaultProps = {
   size: 'm'
 };
 
-var Styles$a = {"xbutton":"root-module_xbutton__isOXp","xbutton_content":"root-module_xbutton_content__CoKvm","button_content-reverse":"root-module_button_content-reverse__uCljU","button_type-default":"root-module_button_type-default__sPty7","button_type-solid":"root-module_button_type-solid__it8wb","button_type-tonal":"root-module_button_type-tonal__TFw16","button_type-clear":"root-module_button_type-clear__-Hre5","button_type-outline":"root-module_button_type-outline__fLta9","button_size-xs":"root-module_button_size-xs__J33Yc","button_size-s":"root-module_button_size-s__XJMYz","button_size-m":"root-module_button_size-m__NofrC","button_size-l":"root-module_button_size-l__L8VZP","button_size-xl":"root-module_button_size-xl__4QZ1L","button-loading":"root-module_button-loading__PAQ6O"};
+var Styles$b = {"xbutton":"root-module_xbutton__isOXp","xbutton_content":"root-module_xbutton_content__CoKvm","button_content-reverse":"root-module_button_content-reverse__uCljU","button_type-default":"root-module_button_type-default__sPty7","button_type-solid":"root-module_button_type-solid__it8wb","button_type-tonal":"root-module_button_type-tonal__TFw16","button_type-clear":"root-module_button_type-clear__-Hre5","button_type-outline":"root-module_button_type-outline__fLta9","button_size-xs":"root-module_button_size-xs__J33Yc","button_size-s":"root-module_button_size-s__XJMYz","button_size-m":"root-module_button_size-m__NofrC","button_size-l":"root-module_button_size-l__L8VZP","button_size-xl":"root-module_button_size-xl__4QZ1L","button-loading":"root-module_button-loading__PAQ6O"};
 
 const XButton = props => {
   const hasIcon = props.icon !== 'none';
-  const rootClass = classnames(Styles$a.xbutton, Styles$a[`button_type-${props.type}`], Styles$a[`button_size-${props.size}`], {
-    [Styles$a[`button-loading`]]: props.loading
+  const rootClass = classnames(Styles$b.xbutton, Styles$b[`button_type-${props.type}`], Styles$b[`button_size-${props.size}`], {
+    [Styles$b[`button-loading`]]: props.loading
   });
-  const contentClass = classnames(Styles$a.xbutton_content, {
-    [Styles$a[`button_content-reverse`]]: props.iconPosition === 'end'
+  const contentClass = classnames(Styles$b.xbutton_content, {
+    [Styles$b[`button_content-reverse`]]: props.iconPosition === 'end'
   });
   const buttonOnClickHandler = e => {
     if (props.onClick && !props.loading) {
@@ -4404,12 +4404,12 @@ XButton.defaultProps = {
   text: undefined
 };
 
-var Styles$9 = {"xbuttonicon":"root-module_xbuttonicon__4dXbb","buttonicon_type-default":"root-module_buttonicon_type-default__FGHfn","buttonicon_type-solid":"root-module_buttonicon_type-solid__W0RSN","buttonicon_type-tonal":"root-module_buttonicon_type-tonal__ujKL0","buttonicon_type-clear":"root-module_buttonicon_type-clear__tKA4A","buttonicon_type-outline":"root-module_buttonicon_type-outline__l-gld","buttonicon_size-xs":"root-module_buttonicon_size-xs__B5VqZ","buttonicon_size-s":"root-module_buttonicon_size-s__WNDXB","buttonicon_size-m":"root-module_buttonicon_size-m__JN1np","buttonicon_size-l":"root-module_buttonicon_size-l__IShdS","buttonicon_size-xl":"root-module_buttonicon_size-xl__fNEPU","buttonicon-loading":"root-module_buttonicon-loading__vn6DE"};
+var Styles$a = {"xbuttonicon":"root-module_xbuttonicon__4dXbb","buttonicon_type-default":"root-module_buttonicon_type-default__FGHfn","buttonicon_type-solid":"root-module_buttonicon_type-solid__W0RSN","buttonicon_type-tonal":"root-module_buttonicon_type-tonal__ujKL0","buttonicon_type-clear":"root-module_buttonicon_type-clear__tKA4A","buttonicon_type-outline":"root-module_buttonicon_type-outline__l-gld","buttonicon_size-xs":"root-module_buttonicon_size-xs__B5VqZ","buttonicon_size-s":"root-module_buttonicon_size-s__WNDXB","buttonicon_size-m":"root-module_buttonicon_size-m__JN1np","buttonicon_size-l":"root-module_buttonicon_size-l__IShdS","buttonicon_size-xl":"root-module_buttonicon_size-xl__fNEPU","buttonicon-loading":"root-module_buttonicon-loading__vn6DE"};
 
 const XButtonIcon = props => {
   const hasIcon = props.icon !== 'none';
-  const rootClass = classnames(Styles$9.xbuttonicon, Styles$9[`buttonicon_type-${props.type}`], Styles$9[`buttonicon_size-${props.size}`], {
-    [Styles$9[`buttonicon-loading`]]: props.loading
+  const rootClass = classnames(Styles$a.xbuttonicon, Styles$a[`buttonicon_type-${props.type}`], Styles$a[`buttonicon_size-${props.size}`], {
+    [Styles$a[`buttonicon-loading`]]: props.loading
   });
   const buttonIconOnClickHandler = e => {
     if (props.onClick && !props.loading) {
@@ -4808,13 +4808,13 @@ $$3({ target: 'RegExp', proto: true, forced: /./.exec !== exec }, {
   exec: exec
 });
 
-var Styles$8 = {"xbadge":"root-module_xbadge__uzhNT","xbadge--size-xs":"root-module_xbadge--size-xs__STaNb","xbadge--size-s":"root-module_xbadge--size-s__TU9YT","xbadge--size-m":"root-module_xbadge--size-m__ooj1d","xbadge--size-l":"root-module_xbadge--size-l__JDq93","xbadge--size-xl":"root-module_xbadge--size-xl__JZHSU","squared":"root-module_squared__-EbjM"};
+var Styles$9 = {"xbadge":"root-module_xbadge__uzhNT","xbadge--size-xs":"root-module_xbadge--size-xs__STaNb","xbadge--size-s":"root-module_xbadge--size-s__TU9YT","xbadge--size-m":"root-module_xbadge--size-m__ooj1d","xbadge--size-l":"root-module_xbadge--size-l__JDq93","xbadge--size-xl":"root-module_xbadge--size-xl__JZHSU","squared":"root-module_squared__-EbjM"};
 
 const XBadge = props => {
   const isSingleDigit = /^\d$/.test('' + props.value);
-  const rootClass = classnames(Styles$8.xbadge, {
-    [Styles$8.squared]: isSingleDigit
-  }, Styles$8[`xbadge--size-${props.size}`]);
+  const rootClass = classnames(Styles$9.xbadge, {
+    [Styles$9.squared]: isSingleDigit
+  }, Styles$9[`xbadge--size-${props.size}`]);
   return jsx("div", {
     className: rootClass,
     children: props.value
@@ -4825,10 +4825,10 @@ XBadge.defaultProps = {
   size: 'm'
 };
 
-var Styles$7 = {"ximage":"root-module_ximage__sVC3Z","height-auto":"root-module_height-auto__al8G6","height-full":"root-module_height-full__C9eQ5","height-1":"root-module_height-1__qIS2r","height-2":"root-module_height-2__7HzI0","height-3":"root-module_height-3__Dz73f","height-4":"root-module_height-4__pHIEY","height-5":"root-module_height-5__uTPtk","height-6":"root-module_height-6__rvVcy","height-7":"root-module_height-7__iJCBf","height-8":"root-module_height-8__Ih4AL","height-9":"root-module_height-9__g8DSC","height-10":"root-module_height-10__ilRk1","height-11":"root-module_height-11__Pk7xm","height-12":"root-module_height-12__qJDrw","width-auto":"root-module_width-auto__oATFd","width-half":"root-module_width-half__eQTST","width-full":"root-module_width-full__sH5UY","width-1":"root-module_width-1__ILVPl","width-2":"root-module_width-2__gr1CM","width-3":"root-module_width-3__6gTJK","width-4":"root-module_width-4__9KWks","width-5":"root-module_width-5__asF1v","width-6":"root-module_width-6__TigOE","width-7":"root-module_width-7__7IJDk","width-8":"root-module_width-8__ZY16e","width-9":"root-module_width-9__y7eoa","width-10":"root-module_width-10__A3-zV","width-11":"root-module_width-11__8Mdo9","width-12":"root-module_width-12__qt3kf"};
+var Styles$8 = {"ximage":"root-module_ximage__sVC3Z","height-auto":"root-module_height-auto__al8G6","height-full":"root-module_height-full__C9eQ5","height-1":"root-module_height-1__qIS2r","height-2":"root-module_height-2__7HzI0","height-3":"root-module_height-3__Dz73f","height-4":"root-module_height-4__pHIEY","height-5":"root-module_height-5__uTPtk","height-6":"root-module_height-6__rvVcy","height-7":"root-module_height-7__iJCBf","height-8":"root-module_height-8__Ih4AL","height-9":"root-module_height-9__g8DSC","height-10":"root-module_height-10__ilRk1","height-11":"root-module_height-11__Pk7xm","height-12":"root-module_height-12__qJDrw","width-auto":"root-module_width-auto__oATFd","width-half":"root-module_width-half__eQTST","width-full":"root-module_width-full__sH5UY","width-1":"root-module_width-1__ILVPl","width-2":"root-module_width-2__gr1CM","width-3":"root-module_width-3__6gTJK","width-4":"root-module_width-4__9KWks","width-5":"root-module_width-5__asF1v","width-6":"root-module_width-6__TigOE","width-7":"root-module_width-7__7IJDk","width-8":"root-module_width-8__ZY16e","width-9":"root-module_width-9__y7eoa","width-10":"root-module_width-10__A3-zV","width-11":"root-module_width-11__8Mdo9","width-12":"root-module_width-12__qt3kf"};
 
 const XImage = props => {
-  const rootClass = classnames(Styles$7.ximage, Styles$7[`height-${props.height}`], Styles$7[`width-${props.width}`]);
+  const rootClass = classnames(Styles$8.ximage, Styles$8[`height-${props.height}`], Styles$8[`width-${props.width}`]);
   return jsx("img", {
     src: props.src,
     className: rootClass,
@@ -4840,7 +4840,7 @@ XImage.defaultProps = {
   width: 'auto'
 };
 
-var Styles$6 = {"xtag":"root-module_xtag__-8-wZ","xtag--size-s":"root-module_xtag--size-s__d-ubi","xtag--size-l":"root-module_xtag--size-l__VO-Cf","xtag--touchable":"root-module_xtag--touchable__i1t5c","xtag__text_container":"root-module_xtag__text_container__HXCgg","xtag__text":"root-module_xtag__text__uszgI"};
+var Styles$7 = {"xtag":"root-module_xtag__-8-wZ","xtag--size-s":"root-module_xtag--size-s__d-ubi","xtag--size-l":"root-module_xtag--size-l__VO-Cf","xtag--touchable":"root-module_xtag--touchable__i1t5c","xtag__text_container":"root-module_xtag__text_container__HXCgg","xtag__text":"root-module_xtag__text__uszgI"};
 
 const XTag = props => {
   const onCloseHandler = e => {
@@ -4848,22 +4848,22 @@ const XTag = props => {
       props.onClose(e);
     }
   };
-  const rootClass = classnames(Styles$6.xtag, {
-    [Styles$6['xtag--touchable']]: props.onClose
+  const rootClass = classnames(Styles$7.xtag, {
+    [Styles$7['xtag--touchable']]: props.onClose
   }, {
-    [Styles$6[`xtag--size-${props.size}`]]: props.size
+    [Styles$7[`xtag--size-${props.size}`]]: props.size
   });
   if (props.visible === false) return null;
   return jsx("div", {
     className: rootClass,
     onClick: onCloseHandler,
     children: jsxs("div", {
-      className: Styles$6.xtag__text_container,
+      className: Styles$7.xtag__text_container,
       children: [props.icon && jsx(XIcon, {
         icon: props.icon,
         size: "xs"
       }), jsx("div", {
-        className: Styles$6.xtag__text,
+        className: Styles$7.xtag__text,
         children: props.text
       }), props.onClose && jsx("div", {
         children: jsx(XIcon, {
@@ -4894,7 +4894,7 @@ var img$1$1 = "data:image/svg+xml,%3csvg width='43' height='32' viewBox='0 0 43 
 
 var img$7 = "data:image/svg+xml,%3csvg width='51' height='32' viewBox='0 0 51 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='50.96' height='32' rx='16' fill='%23E8308A'/%3e%3cpath d='M37.1975 10.2402H34.0511C33.6467 10.2402 33.453 10.3371 33.3603 10.8257L31.7176 21.0103C31.6418 21.5116 31.7345 21.7559 32.181 21.7559H35.58C36.9026 21.7559 37.9809 21.3852 38.7896 20.6944C39.1518 20.3827 39.4635 20.0079 39.7205 19.574C39.573 19.6583 39.434 19.7636 39.3119 19.8899C39.4382 19.7636 39.573 19.6583 39.7205 19.574C40.0785 18.9633 40.327 18.2388 40.4618 17.4091L40.883 14.7639C41.3294 12.0261 39.91 10.2402 37.1975 10.2402ZM38.2631 14.6039L37.8293 17.1985C37.606 18.6095 36.9742 19.1613 35.7317 19.1613H34.6829L35.7022 12.8348H36.8394C38.1409 12.8348 38.44 13.454 38.2631 14.6039ZM38.8149 20.6312C38.8107 20.6397 38.8064 20.6481 38.8064 20.6565C38.8107 20.6481 38.8107 20.6397 38.8149 20.6312C38.8444 20.5723 38.8696 20.5133 38.8991 20.4586C38.8696 20.5133 38.8444 20.5723 38.8149 20.6312Z' fill='white'/%3e%3cpath d='M28.217 21.7559H29.7123C30.0703 21.7559 30.2978 21.6421 30.3694 21.2041L32.0163 10.9521C32.1047 10.4508 31.9573 10.2402 31.5361 10.2402H30.0703C29.7123 10.2402 29.4722 10.3034 29.3964 10.792L27.7327 21.0272C27.6611 21.5453 27.7832 21.7559 28.217 21.7559Z' fill='white'/%3e%3cpath d='M27.9309 13.614C27.9309 11.5881 26.8358 10.2402 24.5023 10.2402H21.2843C20.8042 10.2402 20.6399 10.3371 20.5641 10.8089L18.9046 21.0103C18.8287 21.4821 18.8877 21.7559 19.3974 21.7559H20.8505C21.2843 21.7559 21.4486 21.6421 21.5413 21.1704L22.0341 18.1377H23.681C26.2713 18.142 27.9309 16.3392 27.9309 13.614ZM22.8849 12.8348H24.1443C24.9656 12.8348 25.2815 13.2392 25.2815 13.9384C25.2815 15.0251 24.6245 15.5431 23.681 15.5431H22.4511L22.8849 12.8348Z' fill='white'/%3e%3cpath d='M18.4072 17.8975C18.4072 15.7704 16.9415 15.0249 15.1261 14.7006C14.1995 14.5532 13.5845 14.3931 13.5971 13.5634C13.614 12.8515 14.1531 12.5272 15.1261 12.5272C15.741 12.5272 16.3392 12.7378 16.5498 13.4538C16.6677 13.8287 16.8488 13.9551 17.1942 13.8119L18.5884 13.3106C18.9759 13.1801 19.0517 12.9863 18.9169 12.5146C18.4367 10.8761 17.2532 10 15.2314 10C12.6242 10 10.8888 11.2804 10.8888 13.7318C10.8888 15.9853 12.4894 16.9287 14.2711 17.1857C15.1977 17.3163 15.6779 17.6237 15.6779 18.3061C15.6779 19.0347 15.0503 19.4728 14.031 19.4728C13.1759 19.4728 12.7 19.0853 12.4894 18.483C12.3083 18.0281 12.144 17.9312 11.7691 18.0449L10.375 18.5462C10.0464 18.6599 9.92427 18.8705 10.0464 19.3717C10.4676 21.1239 11.7818 22 13.833 22C16.5834 22 18.3946 20.6564 18.4072 17.8975Z' fill='white'/%3e%3c/svg%3e";
 
-var Styles$5 = {"xtag_business":"root-module_xtag_business__pRYgk","xtag_business--size-s":"root-module_xtag_business--size-s__HnLQh","xtag_business--size-l":"root-module_xtag_business--size-l__251sv"};
+var Styles$6 = {"xtag_business":"root-module_xtag_business__pRYgk","xtag_business--size-s":"root-module_xtag_business--size-s__HnLQh","xtag_business--size-l":"root-module_xtag_business--size-l__251sv"};
 
 const brands = {
   'easy': img$6,
@@ -4906,8 +4906,8 @@ const brands = {
   'spid': img$7
 };
 const XTagBusiness = props => {
-  const rootClass = classnames(Styles$5.xtag_business, {
-    [Styles$5[`xtag_business--size-${props.size}`]]: props.size
+  const rootClass = classnames(Styles$6.xtag_business, {
+    [Styles$6[`xtag_business--size-${props.size}`]]: props.size
   });
   return jsx("div", {
     className: rootClass,
@@ -4921,10 +4921,10 @@ XTagBusiness.defaultProps = {
   size: 's'
 };
 
-var Styles$4 = {"xmodal":"root-module_xmodal__lOO-Z"};
+var Styles$5 = {"xmodal":"root-module_xmodal__lOO-Z"};
 
 const XModal = props => {
-  const rootClass = classnames(Styles$4.xmodal);
+  const rootClass = classnames(Styles$5.xmodal);
   const styles = {};
   return jsx("div", {
     style: styles,
@@ -4933,6 +4933,60 @@ const XModal = props => {
   });
 };
 XModal.defaultProps = {};
+
+var Styles$4 = {"xinput":"root-module_xinput__wKJg8","xinput__label":"root-module_xinput__label__5Qpl0","xinput__content":"root-module_xinput__content__H1uq-","xinput--has-error":"root-module_xinput--has-error__anEKA","xinput--disabled":"root-module_xinput--disabled__cf8s3","xinput--size-s":"root-module_xinput--size-s__46LGs","xinput__icon":"root-module_xinput__icon__QFal7"};
+
+const XInput = props => {
+  const hasIcon = props.icon && props.icon !== 'none' && props.size !== 's';
+  const onChangeHandler = e => {
+    if (props.onChange) {
+      props.onChange(e);
+    }
+  };
+  const rootClass = classnames(Styles$4.xinput, {
+    [Styles$4[`xinput--size-${props.size}`]]: props.size
+  }, {
+    [Styles$4['xinput--disabled']]: props.disabled
+  }, {
+    [Styles$4['xinput--has-error']]: props.hasError
+  });
+  return jsxs("div", {
+    className: rootClass,
+    children: [props.label && jsx("div", {
+      className: Styles$4.xinput__label,
+      children: jsx(XText, {
+        fontSize: 11,
+        weight: "bold",
+        children: props.label
+      })
+    }), jsxs("div", {
+      className: Styles$4.xinput__content,
+      children: [hasIcon && jsx("div", {
+        className: Styles$4.xinput__icon,
+        children: jsx(XIcon, {
+          icon: props.icon,
+          size: 's'
+        })
+      }), jsx("input", {
+        type: props.type,
+        placeholder: props.placeholder,
+        disabled: props.disabled,
+        value: props.value,
+        onChange: onChangeHandler
+      })]
+    })]
+  });
+};
+XInput.defaultProps = {
+  label: undefined,
+  type: 'text',
+  placeholder: undefined,
+  value: undefined,
+  size: 'l',
+  icon: 'none',
+  disabled: false,
+  hasError: false
+};
 
 var Core = {
   XBox,
@@ -4944,7 +4998,8 @@ var Core = {
   XImage,
   XTag,
   XTagBusiness,
-  XModal
+  XModal,
+  XInput
 };
 
 var Styles$3 = {"xpage":"root-module_xpage__-DUi8"};
@@ -6276,6 +6331,7 @@ var img$1 = "data:image/svg+xml,%3csvg width='40' height='40' viewBox='0 0 40 40
 
 const InventoryFunctionCard = props => {
   return jsx(IonCard, Object.assign({
+    className: "inventory-function-card",
     type: "button",
     button: true,
     onClick: props.callback
@@ -6402,12 +6458,13 @@ const InventoryManualZoneModal = props => {
     setEntryValue(event.detail.value);
   };
   const keyUp = event => {
-    if ((event.key === 'Enter' || event.keyCode === 13) && entryValue !== '') ;
+    if ((event.key === 'Enter' || event.keyCode === 13) && entryValue !== '') {
+      props.callback(entryValue);
+    }
   };
   return jsxs(IonModal, Object.assign({
     className: "manual-zone-modal",
-    initialBreakpoint: 0.65,
-    breakpoints: [0.65],
+    initialBreakpoint: 0.4,
     isOpen: props.show,
     handle: false,
     backdropDismiss: false,
@@ -6422,9 +6479,11 @@ const InventoryManualZoneModal = props => {
           gap: "none",
           padding: "m"
         }, {
-          children: jsx(index_mobile.XIcon, {
+          children: jsx(index_mobile.XButtonIcon, {
+            type: "clear",
             size: "s",
-            icon: "close"
+            icon: "close",
+            onClick: props.onBack
           })
         }))
       })
@@ -6444,37 +6503,43 @@ const InventoryManualZoneModal = props => {
           weight: "bold"
         }, {
           children: "Digitaci\u00F3n manual"
-        })), jsx(index_mobile.XText, Object.assign({
-          fontSize: 10,
-          lineHeight: "normal",
-          weight: "bold"
+        })), jsxs(index_mobile.XBox, Object.assign({
+          verticalAlign: "start",
+          height: "auto",
+          width: "full",
+          gap: "xs",
+          padding: "none"
         }, {
-          children: "Zona a inventariar"
-        })), jsxs(IonItem, Object.assign({
-          lines: "none"
-        }, {
-          children: [jsx(IonImg, {
-            src: img,
-            slot: "start"
-          }), jsx(IonInput, {
-            inputmode: "numeric",
-            fill: "outline",
-            onIonChange: inputChange,
-            value: entryValue,
-            type: 'text',
-            maxlength: 18,
-            minlength: 1,
-            onKeyUp: keyUp,
-            onPaste: e => {
-              e.preventDefault();
-              return false;
-            },
-            placeholder: `Digita el código`
-          })]
+          children: [jsx(index_mobile.XText, Object.assign({
+            fontSize: 11,
+            lineHeight: "normal",
+            weight: "lighter"
+          }, {
+            children: "Zonificaci\u00F3n (*)"
+          })), jsxs(IonItem, Object.assign({
+            lines: "none"
+          }, {
+            children: [jsx(IonImg, {
+              src: img,
+              slot: "start"
+            }), jsx(IonInput, {
+              inputmode: "numeric",
+              fill: "outline",
+              onIonChange: inputChange,
+              value: entryValue,
+              type: 'text',
+              maxlength: 18,
+              minlength: 1,
+              onKeyUp: keyUp,
+              onPaste: e => {
+                e.preventDefault();
+                return false;
+              },
+              placeholder: `Ingresa la zona`
+            })]
+          }))]
         }))]
-      })), jsx(index_mobile.XBox, {
-        height: 1
-      }), jsx(index_mobile.XBox, Object.assign({
+      })), jsx(index_mobile.XBox, Object.assign({
         verticalAlign: "start",
         height: "auto",
         width: "full",
@@ -6484,7 +6549,8 @@ const InventoryManualZoneModal = props => {
         children: jsx(index_mobile.XButton, {
           type: "solid",
           size: "xl",
-          text: "Continuar"
+          text: "Confirmar",
+          onClick: () => props.callback(entryValue)
         })
       }))]
     }))]
@@ -6505,6 +6571,11 @@ const BarCodeScannerComponent = props => {
   const onClickManual = () => __awaiter(void 0, void 0, void 0, function* () {
     setShowModal(true);
   });
+  const manualCallback = code => {
+    props.callback(code);
+    setShowModal(false);
+    goBack();
+  };
   return jsxs("div", Object.assign({
     className: "barcode-scanner"
   }, {
@@ -6543,20 +6614,16 @@ const BarCodeScannerComponent = props => {
       })), jsx("div", Object.assign({
         className: "w100 footer"
       }, {
-        children: jsx(IonButton, Object.assign({
-          expand: "block",
-          fill: "outline",
-          strong: true,
-          shape: "round",
-          color: "light",
-          onClick: () => onClickManual()
-        }, {
-          children: "Ingresa el c\u00F3digo"
-        }))
+        children: jsx(index_mobile.XButton, {
+          text: "Ingresa el c\u00F3digo",
+          size: "xl",
+          onClick: onClickManual
+        })
       }))]
     })), jsx(InventoryManualZoneModal, {
       show: showModal,
-      onBack: () => setShowModal(false)
+      onBack: () => setShowModal(false),
+      callback: code => manualCallback(code)
     })]
   }));
 };
@@ -6592,24 +6659,38 @@ function useInventory() {
 
 const InventoryZoneCard = props => {
   const {
-    inventory
+    inventory,
+    setInventory
   } = useInventory();
-  return jsxs(IonCard, {
+  const clearInventory = () => {
+    setInventory(Object.assign({}, inventory === null || inventory === void 0 ? void 0 : inventory.store));
+  };
+  return jsxs(IonCard, Object.assign({
+    className: "inventory-zone-card"
+  }, {
     children: [jsx(IonCardHeader, {
-      children: jsx(index_mobile.XBox, Object.assign({
-        horizontalAlign: "end",
+      children: jsxs(index_mobile.XBox, Object.assign({
+        orientation: "horizontal",
+        horizontalAlign: "between",
         height: "full",
         width: "full",
         gap: "none",
         padding: "none"
       }, {
-        children: jsx(index_mobile.XButton, {
+        children: [jsx(index_mobile.XText, Object.assign({
+          fontSize: 10,
+          lineHeight: "normal",
+          weight: "bold"
+        }, {
+          children: "Detalle"
+        })), jsx(index_mobile.XButton, {
           type: "outline",
           size: "s",
           text: "Limpiar",
           icon: "bug",
-          disabled: true
-        })
+          onClick: clearInventory,
+          disabled: (inventory === null || inventory === void 0 ? void 0 : inventory.zone) ? false : true
+        })]
       }))
     }), jsx(IonCardContent, {
       children: jsxs(index_mobile.XBox, Object.assign({
@@ -6623,13 +6704,13 @@ const InventoryZoneCard = props => {
           verticalAlign: "start",
           height: "full",
           width: "full",
-          gap: "none",
+          gap: "xs",
           padding: "none"
         }, {
           children: [jsx(index_mobile.XText, Object.assign({
-            fontSize: 10,
+            fontSize: 11,
             lineHeight: "normal",
-            weight: "bold"
+            weight: "normal"
           }, {
             children: "Centro"
           })), jsx(index_mobile.XBox, Object.assign({
@@ -6637,13 +6718,12 @@ const InventoryZoneCard = props => {
             horizontalAlign: "start",
             height: "full",
             width: "full",
-            gap: "none",
+            gap: "xs",
             padding: "none"
           }, {
             children: (inventory === null || inventory === void 0 ? void 0 : inventory.store) && jsxs(Fragment$1, {
               children: [jsx(index_mobile.XTag, {
-                text: inventory === null || inventory === void 0 ? void 0 : inventory.store.code,
-                size: 'l'
+                text: inventory === null || inventory === void 0 ? void 0 : inventory.store.code
               }), jsx(index_mobile.XTag, {
                 text: inventory === null || inventory === void 0 ? void 0 : inventory.store.name
               })]
@@ -6653,13 +6733,13 @@ const InventoryZoneCard = props => {
           verticalAlign: "start",
           height: "full",
           width: "full",
-          gap: "none",
+          gap: "xs",
           padding: "none"
         }, {
           children: [jsx(index_mobile.XText, Object.assign({
-            fontSize: 10,
+            fontSize: 11,
             lineHeight: "normal",
-            weight: "bold"
+            weight: "normal"
           }, {
             children: "Zonificaci\u00F3n"
           })), jsx(index_mobile.XBox, Object.assign({
@@ -6667,7 +6747,7 @@ const InventoryZoneCard = props => {
             horizontalAlign: "start",
             height: "full",
             width: "full",
-            gap: "none",
+            gap: "xs",
             padding: "none"
           }, {
             children: (inventory === null || inventory === void 0 ? void 0 : inventory.zone) && jsxs(Fragment$1, {
@@ -6682,13 +6762,13 @@ const InventoryZoneCard = props => {
           verticalAlign: "start",
           height: "full",
           width: "full",
-          gap: "none",
+          gap: "xs",
           padding: "none"
         }, {
           children: [jsx(index_mobile.XText, Object.assign({
-            fontSize: 10,
+            fontSize: 11,
             lineHeight: "normal",
-            weight: "bold"
+            weight: "normal"
           }, {
             children: "Almac\u00E9n"
           })), jsx(index_mobile.XBox, Object.assign({
@@ -6696,7 +6776,7 @@ const InventoryZoneCard = props => {
             horizontalAlign: "start",
             height: "full",
             width: "full",
-            gap: "none",
+            gap: "xs",
             padding: "none"
           }, {
             children: (inventory === null || inventory === void 0 ? void 0 : inventory.storage) && jsxs(Fragment$1, {
@@ -6710,11 +6790,13 @@ const InventoryZoneCard = props => {
         }))]
       }))
     })]
-  });
+  }));
 };
 
 const InventoryLoadedMode = props => {
-  useInventory();
+  const {
+    inventory
+  } = useInventory();
   // Functions
   const startScan = () => __awaiter(void 0, void 0, void 0, function* () {
     yield BarcodeScanner.hideBackground();
@@ -6753,34 +6835,54 @@ const InventoryLoadedMode = props => {
         verticalAlign: "start",
         height: "auto",
         width: "full",
-        gap: "xs",
+        gap: "l",
         padding: "none"
       }, {
         children: [jsx(index_mobile.XText, Object.assign({
-          fontSize: 9,
+          fontSize: 10,
           lineHeight: "normal",
           weight: "bold"
         }, {
           children: "Zona a inventariar"
-        })), jsxs(index_mobile.XBox, Object.assign({
-          verticalAlign: "start",
-          height: "full",
-          width: "full",
-          gap: "s",
-          padding: "l"
+        })), jsx(IonCard, Object.assign({
+          className: "loaded-mode-card"
         }, {
-          children: [jsx(index_mobile.XButton, {
-            type: "solid",
-            size: "xl",
-            text: "Escanea el c\u00F3digo",
-            icon: "stats",
-            onClick: () => startScan()
-          }), jsx(index_mobile.XButton, {
-            type: "outline",
-            size: "xl",
-            text: "Ingresa el c\u00F3digo",
-            icon: "notifications"
-          })]
+          children: jsxs(index_mobile.XBox, Object.assign({
+            verticalAlign: "center",
+            height: "full",
+            width: "full",
+            gap: "xl",
+            padding: "l"
+          }, {
+            children: [jsx(index_mobile.XText, Object.assign({
+              fontSize: 10,
+              lineHeight: "title",
+              weight: "normal"
+            }, {
+              children: "Escanea o ingresa el c\u00F3digo del producto que quieres revisar"
+            })), jsxs(index_mobile.XBox, Object.assign({
+              verticalAlign: "center",
+              height: "full",
+              width: "full",
+              gap: "m",
+              padding: "none"
+            }, {
+              children: [jsx(index_mobile.XButton, {
+                type: "solid",
+                size: "xl",
+                text: "Escanea el c\u00F3digo",
+                icon: "stats",
+                iconPosition: "end",
+                onClick: () => startScan()
+              }), jsx(index_mobile.XButton, {
+                type: "outline",
+                size: "xl",
+                text: "Ingresa el c\u00F3digo",
+                icon: "notifications",
+                iconPosition: "end"
+              })]
+            }))]
+          }))
         })), jsx(InventoryZoneCard, {})]
       }))
     }), jsx(index_mobile.XFooter, Object.assign({
@@ -6790,14 +6892,34 @@ const InventoryLoadedMode = props => {
         type: "solid",
         size: "xl",
         text: "Continuar",
-        disabled: true
+        disabled: (inventory === null || inventory === void 0 ? void 0 : inventory.zone) ? false : true
       })
     }))]
   });
 };
 
 const InventoryMain = props => {
+  const {
+    setInventory
+  } = useInventory();
   const [mode, setMode] = useState(InventoryPagesModeType.PAGE_LOADED);
+  // Functions
+  const scannerCallback = code => {
+    setInventory({
+      store: {
+        code: 'H001',
+        name: 'Hipermercado Metro'
+      },
+      zone: {
+        code: 'A001',
+        name: 'Prueba'
+      },
+      storage: {
+        code: '1001',
+        name: 'Almacén princial'
+      }
+    });
+  };
   // Renders
   const renderPAGE_LOADED = () => {
     return jsx(InventoryLoadedMode, {
@@ -6808,7 +6930,8 @@ const InventoryMain = props => {
   };
   const renderPAGE_SCAN_ZONE = () => {
     return jsx(BarCodeScannerComponent, {
-      onBack: () => setMode(InventoryPagesModeType.PAGE_LOADED)
+      onBack: () => setMode(InventoryPagesModeType.PAGE_LOADED),
+      callback: code => scannerCallback()
     });
   };
   const renders = {
