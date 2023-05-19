@@ -16,7 +16,6 @@
   "types": [
     "blank-source/typerc.json",
     "blank-feature/typerc.json",
-    "welcome-implementation/typerc.json",
     "inventory-module-implementation/typerc.json",
     "merma-module-implementation/typerc.json"
   ]
