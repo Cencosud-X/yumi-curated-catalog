@@ -1,0 +1,29 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
+  "name": "Blank Source",
+  "tags": [
+    "Globalization",
+    "Boilerplate",
+    "Yumi",
+    "Release Candidate"
+  ],
+  "kind": "blank-source",
+  "folder": "libs",
+  "icons": {
+    "light": "icons/icon.svg",
+    "dark": "icons/icon.svg"
+  },
+  "descriptions": {
+    "en": "Template to create the source(definition) of a new module. Used by module creators.",
+    "es": "Template para crear el source(definición) de un nuevo módulo. Usado por creadores de módulos."
+  },
+  "scripts": {
+    "pre": "scripts/pre.js",
+    "rollback": "scripts/rollback.js",
+    "post": "scripts/post.js"
+  },
+  "interpolations": {
+    "source": "template",
+    "substitutions": {}
+  }
+}

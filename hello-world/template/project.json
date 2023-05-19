@@ -1,0 +1,55 @@
+{
+  "root": "{{data.group_folder}}/{{data.path}}",
+  "sourceRoot": "{{data.group_folder}}/{{data.path}}/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/{{data.group_folder}}/{{data.path}}",
+        "tsConfig": "{{data.group_folder}}/{{data.path}}/tsconfig.lib.json",
+        "project": "{{data.group_folder}}/{{data.path}}/package.json",
+        "entryFile": "{{data.group_folder}}/{{data.path}}/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "compiler": "babel",
+        "assets": [
+          {
+            "glob": "{{data.group_folder}}/{{data.path}}/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["{{data.group_folder}}/{{data.path}}/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/{{data.group_folder}}/{{data.path}}"],
+      "options": {
+        "jestConfig": "{{data.group_folder}}/{{data.path}}/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.mjs {{data.path}} {args.release}"
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build"
+        }
+      ]
+    }
+  }
+}

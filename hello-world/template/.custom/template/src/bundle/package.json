@@ -1,0 +1,13 @@
+{
+  "name": "@yumi/onboarding-source",
+  "version": "0.0.1",
+  "main": "./index.umd.js",
+  "module": "./index.esm.js",
+  "typings": "./index.d.ts",
+  "dependencies": {},
+  "peerDependencies": {
+    "@ionic/react": "^5.9.4",
+    "react": "^17.0.2",
+    "react-router-dom": "^5.3.4"
+  }
+}
