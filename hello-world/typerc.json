@@ -1,13 +1,13 @@
 {
   "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
-  "name": "Blank Source",
+  "name": "Hello World",
   "tags": [
     "Globalization",
     "Boilerplate",
     "Yumi",
     "Release Candidate"
   ],
-  "kind": "blank-source",
+  "kind": "hello-world",
   "folder": "libs",
   "icons": {
     "light": "icons/icon.svg",

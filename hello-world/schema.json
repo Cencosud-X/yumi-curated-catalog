@@ -4,14 +4,16 @@
     {
       "properties": {
         "settings": {
-          "required": [],
+          "required": [
+            "name"
+          ],
           "type": "object",
           "description": "Specific configuration",
           "properties": {
-            "add_template_engine_files": {
-              "type": "boolean",
+            "name": {
+              "type": "string",
               "default": false,
-              "description": "Add template files for customize seki installation"
+              "description": "Name to salute!"
             }
           }
         }
