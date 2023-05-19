@@ -17,7 +17,6 @@
     "blank-source/typerc.json",
     "blank-feature/typerc.json",
     "inventory-module-implementation/typerc.json",
-    "merma-module-implementation/typerc.json",
-    "hello-world/typerc.json"
+    "merma-module-implementation/typerc.json"
   ]
 }
