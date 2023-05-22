@@ -18,6 +18,7 @@
     "blank-feature/typerc.json",
     "welcome-implementation/typerc.json",
     "inventory-module-implementation/typerc.json",
-    "merma-module-implementation/typerc.json"
+    "merma-module-implementation/typerc.json",
+    "identity-and-access-manager-implementation/typerc.json"
   ]
 }
