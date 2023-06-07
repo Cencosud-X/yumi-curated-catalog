@@ -12,7 +12,7 @@
         "tsConfig": "{{data.group_folder}}/{{data.path}}/tsconfig.lib.json",
         "project": "{{data.group_folder}}/{{data.path}}/package.json",
         "entryFile": "{{data.group_folder}}/{{data.path}}/src/index.ts",
-        "external": ["react/jsx-runtime"],
+        "external": ["react/jsx-runtime", "@team_yumi/ramen"],
         "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
         "compiler": "babel",
         "assets": [
