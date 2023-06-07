@@ -18379,6 +18379,11 @@ class HelloWorldModule extends Module {
       override
     });
   }
+  render() {
+    return jsx(Ramen.XApp, {
+      children: super.render()
+    });
+  }
 }
 HelloWorldModule.route = '/price-news';
 
