@@ -19,6 +19,7 @@
     "inventory-module-implementation/typerc.json",
     "merma-module-implementation/typerc.json",
     "identity-and-access-manager-implementation/typerc.json",
-    "price-reduction-implementation/typerc.json"
+    "price-reduction-implementation/typerc.json",
+    "price-news-implementation/typerc.json"
   ]
 }

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
+  "name": "Price News",
+  "tags": [
+    "Globalization",
+    "Yumi",
+    "Module",
+    "experimental"
+  ],
+  "kind": "price-news-implementation",
+  "folder": "libs",
+  "icons": {
+    "light": "icons/icon.svg",
+    "dark": "icons/icon.svg"
+  },
+  "descriptions": {
+    "en": "Module to allow the colaborators to know price news and print new tags with new prices.",
+    "es": "Módulo para permitir a los colaboradores conocer las novedades de precios e imprimir nuevas etiquetas con nuevos precios."
+  },
+  "scripts": {
+    "pre": "scripts/pre.js",
+    "rollback": "scripts/rollback.js",
+    "post": "scripts/post.js"
+  },
+  "interpolations": {
+    "source": "template",
+    "substitutions": {}
+  },
+  "display_name": "Price News"
+}
