@@ -1,0 +1,14 @@
+{
+  "name": "@yumi/collaborator-manager-source",
+  "version": "0.0.1",
+  "module": "./index.js",
+  "main": "./index.js",
+  "type": "module",
+  "types": "./index.d.ts",
+  "dependencies": {},
+  "peerDependencies": {
+    "react": "^16.14.0",
+    "@ionic/react": "^7.0.7",
+    "react-router-dom": "^5.3.4"
+  }
+}
