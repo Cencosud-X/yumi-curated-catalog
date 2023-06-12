@@ -1,0 +1,83 @@
+.transparent {
+  background-color: transparent !important;
+}
+
+.body > div {
+  padding: 0;
+  height: 90vh;
+}
+.body .barcode-scanner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;
+}
+.body .barcode-scanner .scanner-zone-container {
+  background-color: transparent !important;
+}
+.body .barcode-scanner .scanner-zone-container > div {
+  background-color: rgba(0, 0, 0, 0.7137254902);
+}
+.body .barcode-scanner .scanner-zone {
+  --g: transparent 0 90deg, #fff 0 !important;
+}
+.body .barcode-scanner .scanner-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+.body .barcode-scanner .scanner-container .scanner-zone-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-content: space-between;
+}
+.body .barcode-scanner .scanner-container .scanner-zone-container .left,
+.body .barcode-scanner .scanner-container .scanner-zone-container .right {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.7137254902);
+  opacity: 0.8;
+  width: 10%;
+  flex-grow: 1;
+}
+.body .barcode-scanner .scanner-container .scanner-zone-container .scanner-zone {
+  background-color: transparent !important;
+  width: 80%;
+  height: 290px;
+  flex-grow: 2;
+  --b: 8px;
+  --c: #fff;
+  --w: 40px;
+  border: var(--b) solid transparent;
+  border-radius: var(--b);
+  --g: #000 0 90deg, var(--c) 0;
+  background: conic-gradient(from 90deg at top var(--b) left var(--b), var(--g)) 0 0, conic-gradient(from 180deg at top var(--b) right var(--b), var(--g)) 100% 0, conic-gradient(from 0deg at bottom var(--b) left var(--b), var(--g)) 0 100%, conic-gradient(from -90deg at bottom var(--b) right var(--b), var(--g)) 100% 100%;
+  background-size: var(--w) var(--w);
+  background-origin: border-box;
+  background-repeat: no-repeat;
+}
+.body .barcode-scanner .scanner-container .bottom {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7137254902);
+  opacity: 0.8;
+}
+.body .barcode-scanner .scanner-container .top {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.7137254902);
+  opacity: 0.8;
+  height: 200px;
+}
+
+.xheader {
+  background-color: rgba(0, 0, 0, 0.7137254902);
+  opacity: 0.8;
+  color: white;
+  font-size: "Open Sans";
+  font-weight: bold;
+}
