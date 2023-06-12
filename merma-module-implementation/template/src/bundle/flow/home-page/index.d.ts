@@ -10,7 +10,6 @@ export interface IProps extends Components.IPageProps<{}, IHomePageExtension> {
 export interface IState {
 }
 export declare class HomePage extends Components.Page<IProps, IState> {
-    constructor(props: IProps);
+    state: IState;
     render(): JSX.Element;
-    handleClick(goTo: string): void;
 }
