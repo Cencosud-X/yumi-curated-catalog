@@ -1,14 +1,16 @@
-import { PropsWithChildren } from 'react';
+import { InitialConfig } from '../../core/client/mass-control-bff-models';
+import { ModalErrorProps } from '../../types';
 import * as H from 'history';
-import { InitialConfigResponse } from '../client/models/queries.models';
+import { PropsWithChildren } from 'react';
 export declare type MermaContextType = {
     productAddedToStorage: boolean;
     productRemovedToStorage: boolean;
     setProductAddedToStorage: (value: boolean) => void;
     setProductRemovedToStorage: (value: boolean) => void;
     history: H.History | undefined;
-    initialConfig?: InitialConfigResponse;
+    initialConfig?: InitialConfig;
     language: Language;
+    setErrorModal: (value: ModalErrorProps) => void;
 };
 declare enum Language {
     es = "es",

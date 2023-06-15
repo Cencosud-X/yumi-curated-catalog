@@ -20,6 +20,10 @@ declare const _default: {
         SNACKBAR_MESSAGE_INSERT: string;
         SNACKBAR_MESSAGE_REMOVE: string;
         TYPE_MOVEMENT_TITLE: string;
+        ERROR_MODAL_TITLE: string;
+        ERROR_MODAL_SUBTITLE: string;
+        ERROR_MODAL_BACK_BUTTON: string;
+        ERROR_MODAL_RETRY_BUTTON: string;
     };
 };
 export default _default;
