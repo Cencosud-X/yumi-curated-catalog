@@ -1,8 +1,7 @@
 /// <reference types="react" />
-import { Components } from '../../sdk';
+import { MeatStockResponse } from '../../core/client/mass-control-bff-models';
 import { MermaContextType } from '../../core/context/MermaContext';
-import { MeatStockResponse } from '../../core/client/models/queries.models';
-export { IMeatStock } from './interfaces/IMeatStock';
+import { Components } from '../../sdk';
 export interface IProductsPageExtension extends Components.IPageExtensions {
     white_boxes: {
         red_box: React.ComponentClass;
@@ -15,6 +14,7 @@ export interface IState {
     isLoading: boolean;
     showModal: boolean;
     totalUnist: number;
+    showModalError: boolean;
 }
 export declare class ProductsPage extends Components.Page<IProps, IState> {
     private massControlClient;
@@ -23,6 +23,7 @@ export declare class ProductsPage extends Components.Page<IProps, IState> {
     private productRemovedToStorage;
     private setProductAddedToStorage;
     private setProductRemovedToStorage;
+    private setErrorModal;
     state: IState;
     constructor(props: IProps);
     componentDidMount(): Promise<void>;
@@ -33,4 +34,7 @@ export declare class ProductsPage extends Components.Page<IProps, IState> {
     actionOneFunction(): void;
     actionTwoFunction(): void;
     calculateTotalboxes(products: MeatStockResponse): number;
+    handleModalErrorClose(): void;
+    handleModalErrorRetry(): void;
+    loadMeatStock(): Promise<void>;
 }

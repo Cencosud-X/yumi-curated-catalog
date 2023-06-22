@@ -1,12 +1,12 @@
 /// <reference types="react" />
+import { MassFlowResponse } from '../../core/client/mass-control-bff-models';
 import { Components } from '../../sdk';
-import { MassControlResponseSchema } from '../../core/client/models/queries.models';
 export interface IProps extends Components.IPageProps {
 }
 export interface IState {
     isLoading: boolean;
     showModal: boolean;
-    products: MassControlResponseSchema | undefined;
+    products: MassFlowResponse | undefined;
 }
 export declare class MassControlPage extends Components.Page<IProps, IState> {
     private massControlClient;

@@ -1,6 +1,6 @@
 /// <reference types="react" />
-import { IProductManagementExtension } from './flow/product-management-page';
 import { IHomePageExtension } from './flow/home-page';
+import { IProductManagementExtension } from './flow/product-management-page';
 import { Components } from './sdk';
 export interface IMermaModuleOverride extends Components.IModuleOverride {
     extensions?: {

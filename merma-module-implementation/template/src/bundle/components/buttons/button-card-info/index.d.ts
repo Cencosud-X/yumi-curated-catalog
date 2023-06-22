@@ -1,7 +1,7 @@
+import { MeatStockItemResponse } from '../../../core/client/mass-control-bff-models';
 import React from 'react';
-import { MeatStocResultkResponse } from 'libs/merma-module-source/src/core/client/models/queries.models';
 interface IProps {
-    product: MeatStocResultkResponse;
+    product: MeatStockItemResponse;
     onClick: Function;
 }
 declare const ButtonCardInfo: React.FC<IProps>;

@@ -1,60 +1,93 @@
 import { z } from 'zod';
-declare const productInformationEntrySchema: z.ZodObject<{
-    tally: z.ZodString;
+export declare const productInfoResponseSchema: z.ZodUnion<[z.ZodObject<{
     price: z.ZodNumber;
     ntrStock: z.ZodNumber;
     averageSale: z.ZodNumber;
     image: z.ZodString;
     name: z.ZodString;
-    ean: z.ZodString;
-    sku: z.ZodString;
     provider: z.ZodString;
     brand: z.ZodString;
+    ean: z.ZodString;
+    sku: z.ZodString;
+    barcode: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    price: number;
+    ntrStock: number;
+    averageSale: number;
+    image: string;
+    name: string;
+    provider: string;
+    brand: string;
+    ean: string;
+    sku: string;
+    barcode: string;
+}, {
+    price: number;
+    ntrStock: number;
+    averageSale: number;
+    image: string;
+    name: string;
+    provider: string;
+    brand: string;
+    ean: string;
+    sku: string;
+    barcode: string;
+}>, z.ZodObject<{
+    price: z.ZodNumber;
+    ntrStock: z.ZodNumber;
+    averageSale: z.ZodNumber;
+    image: z.ZodString;
+    name: z.ZodString;
+    provider: z.ZodString;
+    brand: z.ZodString;
+    ean: z.ZodString;
+    sku: z.ZodString;
     netWeight: z.ZodNumber;
     expirationDate: z.ZodDate;
     usefulLifeLimit: z.ZodDate;
-    noticeLevel: z.ZodEnum<["error", "warning", "info", "success", "neutral"]>;
+    noticeLevel: z.ZodEnum<["info", "success", "warning", "error", "neutral"]>;
+    tally: z.ZodString;
 }, "strip", z.ZodTypeAny, {
-    tally: string;
     price: number;
     ntrStock: number;
     averageSale: number;
     image: string;
     name: string;
-    ean: string;
-    sku: string;
     provider: string;
     brand: string;
+    ean: string;
+    sku: string;
     netWeight: number;
     expirationDate: Date;
+    tally: string;
     usefulLifeLimit: Date;
     noticeLevel: "error" | "warning" | "info" | "success" | "neutral";
 }, {
-    tally: string;
     price: number;
     ntrStock: number;
     averageSale: number;
     image: string;
     name: string;
-    ean: string;
-    sku: string;
     provider: string;
     brand: string;
+    ean: string;
+    sku: string;
     netWeight: number;
     expirationDate: Date;
+    tally: string;
     usefulLifeLimit: Date;
     noticeLevel: "error" | "warning" | "info" | "success" | "neutral";
-}>;
-export declare type ProductInformationEntryResponse = z.infer<typeof productInformationEntrySchema>;
-export declare const productEntryBdSchema: z.ZodUnion<[z.ZodObject<{
+}>]>;
+export declare type ProductInfoResponse = z.infer<typeof productInfoResponseSchema>;
+export declare const productEntryBodySchema: z.ZodUnion<[z.ZodObject<{
     tally: z.ZodString;
     netWeight: z.ZodNumber;
 }, "strip", z.ZodTypeAny, {
-    tally: string;
     netWeight: number;
+    tally: string;
 }, {
-    tally: string;
     netWeight: number;
+    tally: string;
 }>, z.ZodObject<{
     barcode: z.ZodString;
     expirationDate: z.ZodDate;
@@ -68,5 +101,4 @@ export declare const productEntryBdSchema: z.ZodUnion<[z.ZodObject<{
     expirationDate: Date;
     barcode: string;
 }>]>;
-export declare type ProductEntryBd = z.infer<typeof productEntryBdSchema>;
-export {};
+export declare type ProductEntryBody = z.infer<typeof productEntryBodySchema>;
