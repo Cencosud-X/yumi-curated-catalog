@@ -1,3 +1,6 @@
-import IPrint from './IPrint';
+import IPrinter from './IPrinter';
+import ITask from './ITask';
 import ISection from './ISection';
-export { IPrint, ISection };
+import ICategory from './ICategory';
+import IProduct from './IProduct';
+export { IPrinter, ITask, ISection, ICategory, IProduct };
