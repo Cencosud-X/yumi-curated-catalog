@@ -1,11 +1,13 @@
 /// <reference types="react" />
-import { IHomePageExtension } from './flow/home-page';
-import { IInventoryPageExtension } from './flow/inventory';
 import { Components } from './sdk';
+import { IMenuPageExtension } from './flow/inventory-menu-page';
+import { IInventoryNewPageExtension } from './flow/inventory-new-page';
+import { IInventorySavedPageExtension } from './flow/inventory-saved-page';
 export interface IInventoryModuleOverride extends Components.IModuleOverride {
     extensions?: {
-        home_page: IHomePageExtension;
-        inventory_page?: IInventoryPageExtension;
+        menu_page: IMenuPageExtension;
+        inventory_new_page?: IInventoryNewPageExtension;
+        inventory_saved_page?: IInventorySavedPageExtension;
     };
     routes?: Components.IModuleRoute[];
 }
