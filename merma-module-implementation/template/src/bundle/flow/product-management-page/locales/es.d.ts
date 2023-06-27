@@ -21,5 +21,12 @@ declare const locale: {
     WARNING_INFO_TEXT: string;
     SELECT_TITLE_REASON_OF_EXIT: string;
     SELECT_OKTEXT_REASON_OF_EXIT: string;
+    ERROR_MODAL_TITLE: string;
+    ERROR_MODAL_SUBTITLE: string;
+    ERROR_MODAL_BACK_BUTTON: string;
+    ERROR_MODAL_RETRY_BUTTON: string;
+    ERROR_MODAL_SCANNER_TITLE: string;
+    ERROR_MODAL_SCANNER_SUBTITLE: string;
+    ERROR_MODAL_SCANNER_ACCEPT_BUTTON: string;
 };
 export default locale;

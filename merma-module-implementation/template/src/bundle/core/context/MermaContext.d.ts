@@ -1,7 +1,6 @@
-import { InitialConfig } from '../../core/client/mass-control-bff-models';
-import { ModalErrorProps } from '../../types';
-import * as H from 'history';
 import { PropsWithChildren } from 'react';
+import * as H from 'history';
+import { InitialConfig } from '../../core/client/mass-control-bff-models';
 export declare type MermaContextType = {
     productAddedToStorage: boolean;
     productRemovedToStorage: boolean;
@@ -10,7 +9,6 @@ export declare type MermaContextType = {
     history: H.History | undefined;
     initialConfig?: InitialConfig;
     language: Language;
-    setErrorModal: (value: ModalErrorProps) => void;
 };
 declare enum Language {
     es = "es",

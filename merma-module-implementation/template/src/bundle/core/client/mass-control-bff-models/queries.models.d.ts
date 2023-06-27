@@ -3,20 +3,30 @@ export declare const exitFlowReasonsSchema: z.ZodObject<{
     value: z.ZodString;
     label: z.ZodObject<{
         es: z.ZodString;
+        en: z.ZodString;
+        pr: z.ZodString;
     }, "strip", z.ZodTypeAny, {
         es: string;
+        en: string;
+        pr: string;
     }, {
         es: string;
+        en: string;
+        pr: string;
     }>;
 }, "strip", z.ZodTypeAny, {
     value: string;
     label: {
         es: string;
+        en: string;
+        pr: string;
     };
 }, {
     value: string;
     label: {
         es: string;
+        en: string;
+        pr: string;
     };
 }>;
 export declare const initialConfigSchema: z.ZodObject<{
@@ -24,20 +34,30 @@ export declare const initialConfigSchema: z.ZodObject<{
         value: z.ZodString;
         label: z.ZodObject<{
             es: z.ZodString;
+            en: z.ZodString;
+            pr: z.ZodString;
         }, "strip", z.ZodTypeAny, {
             es: string;
+            en: string;
+            pr: string;
         }, {
             es: string;
+            en: string;
+            pr: string;
         }>;
     }, "strip", z.ZodTypeAny, {
         value: string;
         label: {
             es: string;
+            en: string;
+            pr: string;
         };
     }, {
         value: string;
         label: {
             es: string;
+            en: string;
+            pr: string;
         };
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
@@ -45,6 +65,8 @@ export declare const initialConfigSchema: z.ZodObject<{
         value: string;
         label: {
             es: string;
+            en: string;
+            pr: string;
         };
     }[];
 }, {
@@ -52,6 +74,8 @@ export declare const initialConfigSchema: z.ZodObject<{
         value: string;
         label: {
             es: string;
+            en: string;
+            pr: string;
         };
     }[];
 }>;
@@ -63,29 +87,26 @@ export declare const meatStockResponseSchema: z.ZodObject<{
         name: z.ZodString;
         ean: z.ZodString;
         sku: z.ZodString;
-        netWeight: z.ZodNumber;
-        expirationDate: z.ZodDate;
-        usefulLifeLimit: z.ZodDate;
+        totalWeight: z.ZodNumber;
+        nearestUsefulLifeLimit: z.ZodDate;
         alertType: z.ZodEnum<["error", "warning", "info", "success", "neutral"]>;
     }, "strip", z.ZodTypeAny, {
         image: string;
         name: string;
         ean: string;
         sku: string;
-        netWeight: number;
-        expirationDate: Date;
-        usefulLifeLimit: Date;
         units: number;
+        totalWeight: number;
+        nearestUsefulLifeLimit: Date;
         alertType: "error" | "warning" | "info" | "success" | "neutral";
     }, {
         image: string;
         name: string;
         ean: string;
         sku: string;
-        netWeight: number;
-        expirationDate: Date;
-        usefulLifeLimit: Date;
         units: number;
+        totalWeight: number;
+        nearestUsefulLifeLimit: Date;
         alertType: "error" | "warning" | "info" | "success" | "neutral";
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
@@ -94,10 +115,9 @@ export declare const meatStockResponseSchema: z.ZodObject<{
         name: string;
         ean: string;
         sku: string;
-        netWeight: number;
-        expirationDate: Date;
-        usefulLifeLimit: Date;
         units: number;
+        totalWeight: number;
+        nearestUsefulLifeLimit: Date;
         alertType: "error" | "warning" | "info" | "success" | "neutral";
     }[];
 }, {
@@ -106,10 +126,9 @@ export declare const meatStockResponseSchema: z.ZodObject<{
         name: string;
         ean: string;
         sku: string;
-        netWeight: number;
-        expirationDate: Date;
-        usefulLifeLimit: Date;
         units: number;
+        totalWeight: number;
+        nearestUsefulLifeLimit: Date;
         alertType: "error" | "warning" | "info" | "success" | "neutral";
     }[];
 }>;
@@ -120,29 +139,26 @@ export declare const meatStockItemResponseSchema: z.ZodObject<{
     name: z.ZodString;
     ean: z.ZodString;
     sku: z.ZodString;
-    netWeight: z.ZodNumber;
-    expirationDate: z.ZodDate;
-    usefulLifeLimit: z.ZodDate;
+    totalWeight: z.ZodNumber;
+    nearestUsefulLifeLimit: z.ZodDate;
     alertType: z.ZodEnum<["error", "warning", "info", "success", "neutral"]>;
 }, "strip", z.ZodTypeAny, {
     image: string;
     name: string;
     ean: string;
     sku: string;
-    netWeight: number;
-    expirationDate: Date;
-    usefulLifeLimit: Date;
     units: number;
+    totalWeight: number;
+    nearestUsefulLifeLimit: Date;
     alertType: "error" | "warning" | "info" | "success" | "neutral";
 }, {
     image: string;
     name: string;
     ean: string;
     sku: string;
-    netWeight: number;
-    expirationDate: Date;
-    usefulLifeLimit: Date;
     units: number;
+    totalWeight: number;
+    nearestUsefulLifeLimit: Date;
     alertType: "error" | "warning" | "info" | "success" | "neutral";
 }>;
 export declare type MeatStockItemResponse = z.infer<typeof meatStockItemResponseSchema>;

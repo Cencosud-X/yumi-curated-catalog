@@ -23,7 +23,6 @@ export declare class ProductsPage extends Components.Page<IProps, IState> {
     private productRemovedToStorage;
     private setProductAddedToStorage;
     private setProductRemovedToStorage;
-    private setErrorModal;
     state: IState;
     constructor(props: IProps);
     componentDidMount(): Promise<void>;

@@ -81,24 +81,24 @@ export declare const productInfoResponseSchema: z.ZodUnion<[z.ZodObject<{
 export declare type ProductInfoResponse = z.infer<typeof productInfoResponseSchema>;
 export declare const productEntryBodySchema: z.ZodUnion<[z.ZodObject<{
     tally: z.ZodString;
-    netWeight: z.ZodNumber;
+    netWeight: z.ZodOptional<z.ZodNumber>;
 }, "strip", z.ZodTypeAny, {
-    netWeight: number;
     tally: string;
+    netWeight?: number | undefined;
 }, {
-    netWeight: number;
     tally: string;
+    netWeight?: number | undefined;
 }>, z.ZodObject<{
     barcode: z.ZodString;
     expirationDate: z.ZodDate;
-    netWeight: z.ZodNumber;
+    netWeight: z.ZodOptional<z.ZodNumber>;
 }, "strip", z.ZodTypeAny, {
-    netWeight: number;
     expirationDate: Date;
     barcode: string;
+    netWeight?: number | undefined;
 }, {
-    netWeight: number;
     expirationDate: Date;
     barcode: string;
+    netWeight?: number | undefined;
 }>]>;
 export declare type ProductEntryBody = z.infer<typeof productEntryBodySchema>;
