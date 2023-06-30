@@ -22,6 +22,7 @@
     "collaborator-manager-implementation/typerc.json",
     "identity-and-access-manager-implementation/typerc.json",
     "price-reduction-implementation/typerc.json",
-    "price-news-implementation/typerc.json"
+    "price-news-implementation/typerc.json",
+    "internal-consumption-module-implementation/typerc.json"
   ]
 }
