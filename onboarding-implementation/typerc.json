@@ -7,7 +7,7 @@
     "Module",
     "experimental"
   ],
-  "kind": "module-implementation",
+  "kind": "onboarding-implementation",
   "folder": "libs",
   "icons": {
     "light": "icons/icon.svg",
