@@ -23,6 +23,7 @@
     "identity-and-access-manager-implementation/typerc.json",
     "price-reduction-implementation/typerc.json",
     "price-news-implementation/typerc.json",
-    "internal-consumption-module-implementation/typerc.json"
+    "internal-consumption-module-implementation/typerc.json",
+    "onboarding-implementation/typerc.json"
   ]
 }
