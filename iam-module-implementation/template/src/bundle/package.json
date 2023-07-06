@@ -9,7 +9,6 @@
   "peerDependencies": {
     "react": "^16.14.0",
     "react-router-dom": "^5.3.4",
-    "@yumi/sdk": "0.0.1",
     "@awesome-cordova-plugins/in-app-browser": "^6.3.0",
     "lodash": "^4.17.21"
   }

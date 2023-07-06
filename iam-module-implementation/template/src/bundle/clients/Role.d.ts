@@ -1,4 +1,4 @@
-import * as SDK from '@yumi/sdk';
+import * as SDK from '@team_yumi/sdk';
 import * as Models from '../models';
 export declare class Role extends SDK.Clients.RESTClient {
     getAll(country: string, flag: string, store: string): Promise<Models.Core.Role.TModel[]>;

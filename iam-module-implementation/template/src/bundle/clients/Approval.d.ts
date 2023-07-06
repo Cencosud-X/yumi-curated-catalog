@@ -1,4 +1,4 @@
-import * as SDK from '@yumi/sdk';
+import * as SDK from '@team_yumi/sdk';
 import * as Models from '../models';
 export declare class Approval extends SDK.Clients.RESTClient {
     get(id: string): Promise<Models.Core.Approval.TModel>;
