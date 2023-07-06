@@ -14,8 +14,8 @@
     "dark": "icons/icon.svg"
   },
   "descriptions": {
-    "en": "Base template of a module to integrate into a project. Used by the Yumi Globalization development team.",
-    "es": "Template base de un módulo para integrar en un proyecto. Usado por el equipo de desarrollo de Yumi Globalización."
+    "en": "Identity and Access Management (IAM) module implementation template.",
+    "es": "Plantilla de implementación de módulo de Identidad y Acceso (IAM)."
   },
   "scripts": {
     "pre": "scripts/pre.js",
@@ -26,5 +26,5 @@
     "source": "template",
     "substitutions": {}
   },
-  "display_name": "Mobile Module"
+  "display_name": "IAM"
 }
