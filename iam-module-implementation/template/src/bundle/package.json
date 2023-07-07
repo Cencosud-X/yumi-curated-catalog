@@ -8,6 +8,8 @@
   "dependencies": {},
   "peerDependencies": {
     "react": "^16.14.0",
+    "@team_yumi/sdk": "^0.0.1-next.20230707-6e2cfb1-d6dab37be5f3fc0e3775695bfd8e6bfc",
+    "@team_yumi/ramen": "^0.0.3-next.1688753932673",
     "react-router-dom": "^5.3.4",
     "@awesome-cordova-plugins/in-app-browser": "^6.3.0",
     "lodash": "^4.17.21"

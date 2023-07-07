@@ -1,6 +1,11 @@
 import React from 'react';
+import React from 'react';
 import * as IAMModule from './bundle';
-import extensions from './Extensions';
+import './bundle/index.css';
+
+const extensions: IAMModule.IExtensions = {
+  country: 'ar',
+};
 
 export interface ILoginProps {
   onAuthenticated: () => void;
