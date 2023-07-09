@@ -1,5 +1,4 @@
 import React from 'react';
-import React from 'react';
 import * as IAMModule from './bundle';
 import './bundle/index.css';
 
