@@ -3774,7 +3774,16 @@ const Context$1 = props => {
 };
 Context$1.defaultProps = {};
 
-const BASE_URL$3 = 'https://api.staging.cencox.xyz/yumi-iam/bff';
+let secrets = {
+  BACKEND_BASE_URL: 'https://api.staging.cencox.xyz/yumi-iam/bff'
+};
+if (process.env['NODE_ENV'] === 'production') {
+  secrets = {
+    BACKEND_BASE_URL: 'https://api.cencosudx.xyz/yumi-iam/bff'
+  };
+}
+var config = secrets;
+
 class Approval$2 extends SDK.Clients.RESTClient {
   get(id) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -3796,10 +3805,9 @@ class Approval$2 extends SDK.Clients.RESTClient {
   }
 }
 var Approval$3 = new Approval$2({
-  baseURL: BASE_URL$3
+  baseURL: config.BACKEND_BASE_URL
 });
 
-const BASE_URL$2 = 'https://api.staging.cencox.xyz/yumi-iam/bff';
 class User extends SDK.Clients.RESTClient {
   getAll(params, signal) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -3818,10 +3826,9 @@ class User extends SDK.Clients.RESTClient {
   }
 }
 var User$1 = new User({
-  baseURL: BASE_URL$2
+  baseURL: config.BACKEND_BASE_URL
 });
 
-const BASE_URL$1 = 'https://api.staging.cencox.xyz/yumi-iam/bff';
 class Role extends SDK.Clients.RESTClient {
   getAll(country, flag, store) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -3831,10 +3838,9 @@ class Role extends SDK.Clients.RESTClient {
   }
 }
 var Role$1 = new Role({
-  baseURL: BASE_URL$1
+  baseURL: config.BACKEND_BASE_URL
 });
 
-const BASE_URL = 'https://api.staging.cencox.xyz/yumi-iam/bff';
 class Section extends SDK.Clients.RESTClient {
   getAll(country, flag, store) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -3844,7 +3850,7 @@ class Section extends SDK.Clients.RESTClient {
   }
 }
 var Section$1 = new Section({
-  baseURL: BASE_URL
+  baseURL: config.BACKEND_BASE_URL
 });
 
 var constants = {
