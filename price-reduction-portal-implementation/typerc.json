@@ -7,7 +7,7 @@
     "Module",
     "experimental"
   ],
-  "kind": "module-implementation",
+  "kind": "price-reduction-portal-implementation",
   "folder": "libs",
   "icons": {
     "light": "icons/icon.svg",
@@ -26,5 +26,5 @@
     "source": "template",
     "substitutions": {}
   },
-  "display_name": "Onboarding"
+  "display_name": "Price Reduction Portal"
 }
