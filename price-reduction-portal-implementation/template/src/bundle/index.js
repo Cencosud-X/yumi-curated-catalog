@@ -2703,7 +2703,7 @@ class HomePage extends Page {
   }
 }
 
-class HelloWorldModule extends Module {
+class PortalModule extends Module {
   constructor(props, override) {
     super(props, {
       routes: [{
@@ -2714,6 +2714,6 @@ class HelloWorldModule extends Module {
     });
   }
 }
-HelloWorldModule.route = '/hello-world';
+PortalModule.route = '/hello-world';
 
-export { HelloWorldModule as default };
+export { PortalModule as default };
