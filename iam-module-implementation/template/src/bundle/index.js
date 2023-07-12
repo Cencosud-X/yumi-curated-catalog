@@ -2498,6 +2498,8 @@ class Expressions {
 var Expr = new Expressions();
 
 let config = {
+  // IAM_API_BASE_URL: 'http://localhost:8080',
+  // BACKEND_BASE_URL: 'http://localhost:8090',
   IAM_API_BASE_URL: 'https://api.staging.cencox.xyz/yumi-iam/api',
   BACKEND_BASE_URL: 'https://api.staging.cencox.xyz/yumi-iam/bff'
 };
@@ -2527,7 +2529,14 @@ const Login$1 = props => {
             const authData = e.data;
             onAuthenticatedHandler(authData);
           } else {
-            // failed
+            if (e.data.code === 'USER_NOT_REGISTERED_IN_APP') {
+              Ramen.Api.snackbar.error({
+                text: 'Error haciendo login, usuario debe estar registrado previamente',
+                placement: 'top'
+              });
+              return;
+            }
+            // Generic message
             Ramen.Api.snackbar.error({
               text: 'Error haciendo login, reintente por favor',
               placement: 'top'
@@ -2576,7 +2585,7 @@ const Login$1 = props => {
       id: 'gmail',
       label: 'Iniciar sesión',
       icon: 'cencosud-filled',
-      provider: 'google_gmail'
+      provider: 'microsoft_saml'
     });
   }
   return jsxs(Ramen.XPage, Object.assign({
