@@ -18,11 +18,11 @@
     "blank-feature/typerc.json",
     "inventory-module-implementation/typerc.json",
     "merma-module-implementation/typerc.json",
-    "price-reduction-implementation/typerc.json",
     "price-news-implementation/typerc.json",
     "internal-consumption-module-implementation/typerc.json",
     "onboarding-implementation/typerc.json",
     "iam-module-implementation/typerc.json",
-    "price-reduction-portal-implementation/typerc.json"
+    "price-reduction-portal-implementation/typerc.json",
+    "price-reduction-mobile-implementation/typerc.json"
   ]
 }
