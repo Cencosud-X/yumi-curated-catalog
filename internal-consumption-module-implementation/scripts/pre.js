@@ -22,8 +22,7 @@ module.exports = async (runner, args) => {
         // 'npm install @ionic/react-router@^7.0.0',
         //'npm install react@^16.14.0',
         //'npm install react-dom@^16.14.0',
-        //'npm install react-router-dom@^5.3.0',
-        'npm install @team_yumi/code-scanner@^0.0.2 --legacy-peer-deps' 
+        // 'npm install react-router-dom@^5.3.0',
       ],
       {
         cwd: rc.workspace_path,
