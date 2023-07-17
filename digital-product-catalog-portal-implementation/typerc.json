@@ -7,7 +7,7 @@
     "Module",
     "experimental"
   ],
-  "kind": "module-implementation",
+  "kind": "digital-product-catalog-portal-implementation",
   "folder": "libs",
   "icons": {
     "light": "icons/icon.svg",
@@ -26,5 +26,5 @@
     "source": "template",
     "substitutions": {}
   },
-  "display_name": "Onboarding"
+  "display_name": "Digital Product Catalog Portal"
 }
