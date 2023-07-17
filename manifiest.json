@@ -23,6 +23,7 @@
     "onboarding-implementation/typerc.json",
     "iam-module-implementation/typerc.json",
     "price-reduction-portal-implementation/typerc.json",
-    "price-reduction-mobile-implementation/typerc.json"
+    "price-reduction-mobile-implementation/typerc.json",
+    "approval-module-implementation/typerc.json"
   ]
 }
