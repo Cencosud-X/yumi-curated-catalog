@@ -1,12 +1,13 @@
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import { IonRouterOutlet } from '@ionic/react';
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import Ramen from '@team_yumi/ramen';
 import { useScanner, ScannerHoC } from '@team_yumi/code-scanner';
 import { useHistory } from 'react-router';
 import moment$2 from 'moment-timezone';
+import '@team_yumi/code-scanner/index.css';
 import axios from 'axios';
 import { Preferences } from '@capacitor/preferences';
 
@@ -2769,10 +2770,9 @@ const BarCodeScanner = ({
   onScan
 }) => {
   const [barcodeNumber, setBarcodeNumber] = useState('');
+  const barcodeInputRef = useRef(null);
   const printWhenMainClick = () => {
-    // TODO: El componente Ramen.XTextInput no tiene una manera de setearle el foco programáticamente 
-    // Debería poder tener un ref para poder manejar este tipo de cosas
-    console.log('Por el momento esto se ejecuta cuando se presiona el boton escribir codigo manualmente');
+    barcodeInputRef.current && barcodeInputRef.current.focus();
   };
   const {
     startScan
@@ -2805,7 +2805,8 @@ const BarCodeScanner = ({
         icon: "scan-outline",
         size: "l",
         onChange: e => handleChange(e.target.value),
-        value: barcodeNumber
+        value: barcodeNumber,
+        inputRef: barcodeInputRef
       })
     }), jsx(Ramen.XButtonIcon, {
       icon: "arrow-right-extrabold",

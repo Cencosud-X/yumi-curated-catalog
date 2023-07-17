@@ -12,7 +12,7 @@
     "react-router-dom": "^5.3.4",
     "axios": "^1.2.1",
     "@capacitor/preferences": "^4.0.2",
-    "@team_yumi/code-scanner": "0.0.1",
+    "@team_yumi/code-scanner": "^0.0.2",
     "@capacitor/device": "^4.0.1",
     "moment-timezone": "^0.5.43",
     "zod": "^3.19.1",
