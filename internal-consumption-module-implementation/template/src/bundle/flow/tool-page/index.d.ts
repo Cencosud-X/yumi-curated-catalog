@@ -1,8 +1,14 @@
+/// <reference types="react" />
 import { Components } from '../../sdk';
-import React from 'react';
+import { IModuleClient } from '../../clients/module-client.interface';
+import { IProductClient } from '../../clients/product-client.interface';
+import { ITaskClient } from '../../clients/tasks-client.interface';
 export interface IToolPageExtension extends Components.IPageExtensions {
-    white_boxes: {
-        red_box: React.ComponentClass;
+    triggers: {
+        miniImgUrlResolver: (sku: string, ean: string) => string;
+        moduleClientFactory: () => IModuleClient;
+        productClientFactory: () => IProductClient;
+        tasksClientFactory: () => ITaskClient;
     };
 }
 export interface IProps extends Components.IPageProps<{}, IToolPageExtension> {
