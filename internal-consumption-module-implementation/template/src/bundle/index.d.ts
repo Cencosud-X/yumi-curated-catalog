@@ -1,11 +1,10 @@
 import { IToolPageExtension } from './flow/tool-page';
 import { Components } from './sdk';
-import { MDHModuleClient } from './clients/mdh-module-client';
-import { MDHProductClient } from './clients/mdh-product-client';
-import { MDHTasksClient } from './clients/mdh-tasks-client';
+import { ISubTasksPageExtension } from './flow/sub-tasks';
 export interface IInternalConsumptionModuleOverride extends Components.IModuleOverride {
     extensions?: {
         tool_page: IToolPageExtension;
+        sub_tasks_page: ISubTasksPageExtension;
     };
     routes?: Components.IModuleRoute[];
 }
@@ -14,4 +13,6 @@ export default abstract class InternalConsumptionModule extends Components.Modul
     static route: string;
     constructor(props: IModuleProps, override: IInternalConsumptionModuleOverride);
 }
-export { MDHModuleClient, MDHProductClient, MDHTasksClient };
+export * from './clients/module-client.interface';
+export * from './clients/tasks-client.interface';
+export * from './clients/product-client.interface';

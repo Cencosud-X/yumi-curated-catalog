@@ -1,11 +1,13 @@
 /// <reference types="react" />
-import { ITaskClient } from '../../../../clients/tasks-client.interface';
-import { CostCenter } from '../../../../models/cost-center.dto';
+import { Declaration } from '../../../../models/declaration';
 interface IProps {
-    costCenter: CostCenter;
+    tasks: Declaration[];
     open: boolean;
     onClose?: () => void;
-    taskClient: ITaskClient;
+    onDelete: (task: Declaration) => void;
+    onTaskChange: (task: Declaration) => void;
+    onSend: () => void;
+    miniImageUrl: (sku: string, ean: string) => string;
 }
 declare const ProductListModal: React.FC<IProps>;
 export default ProductListModal;

@@ -7,6 +7,7 @@ interface IProps {
     moduleClient: IModuleClient;
     productClient: IProductClient;
     taskClient: ITaskClient;
+    miniImageUrl: (sku: string, ean: string) => string;
 }
 declare const ToolPageWrapper: React.FC<IProps>;
 export default ToolPageWrapper;
