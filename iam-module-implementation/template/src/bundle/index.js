@@ -2628,29 +2628,23 @@ const Login$1 = props => {
 Login$1.defaultProps = {};
 
 class Approval$2 extends SDK.Clients.RESTClient {
-  get(id) {
+  get(country, flag, store, id) {
     return __awaiter(this, void 0, void 0, function* () {
-      const response = yield this.axios.get(`/approvals/${id}`);
+      const response = yield this.axios.get(`/${country}/${flag}/${store}/approvals/${id}`);
       return response.data;
     });
   }
-  getAll(params) {
+  getAll(country, flag, store, params) {
     return __awaiter(this, void 0, void 0, function* () {
-      const response = yield this.axios.get(`/approvals`, {
+      const response = yield this.axios.get(`/${country}/${flag}/${store}/approvals`, {
         params
       });
       return response.data;
     });
   }
-  create(data) {
+  update(country, flag, store, id, data) {
     return __awaiter(this, void 0, void 0, function* () {
-      const response = yield this.axios.post(`/approvals`, data);
-      return response.data;
-    });
-  }
-  update(id, data) {
-    return __awaiter(this, void 0, void 0, function* () {
-      const response = yield this.axios.put(`/approvals/${id}`, data);
+      const response = yield this.axios.put(`/${country}/${flag}/${store}/approvals/${id}`, data);
       return response.data;
     });
   }
@@ -2660,18 +2654,18 @@ var Approval$3 = new Approval$2({
 });
 
 class User extends SDK.Clients.RESTClient {
-  getAll(params, signal) {
+  getAll(country, flag, store, params, signal) {
     return __awaiter(this, void 0, void 0, function* () {
-      const response = yield this.axios.get(`/users`, {
+      const response = yield this.axios.get(`/${country}/${flag}/${store}/users`, {
         params,
         signal
       });
       return response.data;
     });
   }
-  update(provider, identifier, data) {
+  update(country, flag, store, provider, identifier, data) {
     return __awaiter(this, void 0, void 0, function* () {
-      const response = yield this.axios.put(`/users/${provider}/${identifier}`, data);
+      const response = yield this.axios.put(`/${country}/${flag}/${store}/users/${provider}/${identifier}`, data);
       return response.data;
     });
   }
@@ -2765,10 +2759,7 @@ const List = () => {
   const onBootHandler = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
       setViewMode('PENDING');
-      const newResult = yield Approval$3.getAll({
-        flag: context.flag,
-        store: context.store
-      });
+      const newResult = yield Approval$3.getAll(context.country, context.flag, context.store);
       setResult(newResult);
       setViewMode('COMPLETED');
     } catch (error) {
@@ -4166,7 +4157,7 @@ const Update = () => {
   const onBootHandler = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
       setViewMode('PENDING');
-      const [task, roles, sections] = yield Promise.all([Approval$3.get(taskId), Role$1.getAll(context.country, context.flag, context.store), Section$1.getAll(context.country, context.flag, context.store)]);
+      const [task, roles, sections] = yield Promise.all([Approval$3.get(context.country, context.flag, context.store, taskId), Role$1.getAll(context.country, context.flag, context.store), Section$1.getAll(context.country, context.flag, context.store)]);
       if (!context.draft || context.draft.id !== task.id) {
         context.setDraft(task);
       }
@@ -4193,7 +4184,7 @@ const Update = () => {
           Ramen.Api.loading.show({
             text: 'Procesando...'
           });
-          yield Approval$3.update(context.draft.id, Object.assign(Object.assign({}, context.draft), {
+          yield Approval$3.update(context.country, context.flag, context.store, context.draft.id, Object.assign(Object.assign({}, context.draft), {
             state: 'COMPLETED'
           }));
           Ramen.Api.snackbar.success({
@@ -4226,7 +4217,7 @@ const Update = () => {
           Ramen.Api.loading.show({
             text: 'Procesando...'
           });
-          yield Approval$3.update(context.draft.id, Object.assign(Object.assign({}, context.draft), {
+          yield Approval$3.update(context.country, context.flag, context.store, context.draft.id, Object.assign(Object.assign({}, context.draft), {
             state: 'REJECTED'
           }));
           Ramen.Api.snackbar.error({
@@ -5478,7 +5469,7 @@ const Users$1 = () => {
   const onBootHandler = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
       setViewMode('PENDING');
-      const [newResult, roles, sections] = yield Promise.all([User$1.getAll({
+      const [newResult, roles, sections] = yield Promise.all([User$1.getAll(context.country, context.flag, context.store, {
         offset: 0,
         limit: 10
       }), Role$1.getAll(context.country, context.flag, context.store), Section$1.getAll(context.country, context.flag, context.store)]);
@@ -5501,7 +5492,7 @@ const Users$1 = () => {
           searchCtrl.abort();
           searchCtrl = new AbortController();
         }
-        const newResult = yield User$1.getAll({
+        const newResult = yield User$1.getAll(context.country, context.flag, context.store, {
           offset: (result === null || result === void 0 ? void 0 : result.offset) || 0,
           limit: (result === null || result === void 0 ? void 0 : result.limit) || 10,
           search: text
@@ -5764,6 +5755,7 @@ const UpdateTask = () => {
   const {
     url
   } = Router.useRouteMatch();
+  const context = useContext();
   const location = Router.useLocation();
   const [roles, setRoles] = React.useState();
   const {
@@ -5799,8 +5791,7 @@ const UpdateTask = () => {
           Ramen.Api.loading.show({
             text: 'Procesando...'
           });
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          yield User$1.update(draft.provider, draft.identifier, draft);
+          yield User$1.update(context.country, context.flag, context.store, draft.provider, draft.identifier, draft);
           Ramen.Api.snackbar.success({
             text: `Datos de ${draft === null || draft === void 0 ? void 0 : draft.name} actualizados`,
             placement: 'top',
@@ -6556,31 +6547,30 @@ TwoSections.defaultProps = {};
 
 const Management = props => {
   const {
-    path: basePath
+    path
   } = useRouteMatch();
-  const withBasePath = path => [basePath, path].join('');
   return jsx(Context, Object.assign({
     extensions: props.extensions
   }, {
     children: jsxs(Switch, {
       children: [jsx(Route, {
-        path: withBasePath('/'),
+        path: `${path}/`,
         exact: true,
         component: Users$1
       }), jsx(Route, {
-        path: withBasePath('/:userId'),
+        path: `${path}/:userId`,
         exact: true,
         component: UpdateTask
       }), jsx(Route, {
-        path: withBasePath('/:userId/update/roles'),
+        path: `${path}/:userId/update/roles`,
         exact: true,
         component: Roles
       }), jsx(Route, {
-        path: withBasePath('/:userId/update/sections'),
+        path: `${path}/:userId/update/sections`,
         exact: true,
         component: Sections
       }), jsx(Route, {
-        path: withBasePath('/:userId/update/two-sections'),
+        path: `${path}/:userId/update/two-sections`,
         exact: true,
         component: TwoSections
       })]
