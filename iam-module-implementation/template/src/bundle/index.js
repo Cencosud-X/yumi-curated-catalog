@@ -2591,8 +2591,8 @@ const Login$1 = props => {
   return jsxs(Ramen.XPage, Object.assign({
     backgroundImage: img$4
   }, {
-    children: [jsxs(Ramen.XBody, {
-      children: [jsxs(Ramen.XBox, Object.assign({
+    children: [jsx(Ramen.XBody, {
+      children: jsxs(Ramen.XBox, Object.assign({
         gap: "s",
         height: "full",
         verticalAlign: "end"
@@ -2607,13 +2607,7 @@ const Login$1 = props => {
         }, {
           children: "La nueva app para facilitar todas tus tareas"
         }))]
-      })), jsx(Ramen.XVSpace, {
-        size: "xl"
-      }), jsx(Ramen.XVSpace, {
-        size: "xl"
-      }), jsx(Ramen.XVSpace, {
-        size: "xl"
-      })]
+      }))
     }), jsx(Ramen.XFooter, {
       children: loginButtons.map(button => jsx(Ramen.XButton, {
         size: "xl",
@@ -2715,14 +2709,25 @@ const useContext$1 = () => {
   return context;
 };
 const Context$1 = props => {
+  var _a, _b;
   const location = Router.useLocation();
   const [draft, setDraft] = React.useState(null);
-  const [flag] = React.useState(location.state.flag);
-  const [store] = React.useState(location.state.store);
+  const [flag] = React.useState((_a = location.state) === null || _a === void 0 ? void 0 : _a.flag);
+  const [store] = React.useState((_b = location.state) === null || _b === void 0 ? void 0 : _b.store);
+  if (!flag || !store) {
+    return jsx(Ramen.XPage, {
+      children: jsx(Ramen.XBody, {
+        children: jsx(Ramen.XAlert, {
+          title: "Flag and Store must be provided in the router location state",
+          type: "error"
+        })
+      })
+    });
+  }
   const value = {
     country: props.extensions.country,
-    flag,
-    store,
+    flag: flag.toLowerCase(),
+    store: store.toLowerCase(),
     draft,
     setDraft
   };
@@ -4145,6 +4150,7 @@ const Update = () => {
   const [showApproveConfirm, setShowApproveConfirm] = React.useState(false);
   const [showRejectConfirm, setShowRejectConfirm] = React.useState(false);
   const [showWarningModal, setShowWarningModal] = React.useState(false);
+  const [areTheySectors, setAreTheySectors] = React.useState(false);
   const onGoBackHandler = () => {
     const changed = thereAreChanges$1(task, context.draft);
     if (changed) {
@@ -4164,6 +4170,12 @@ const Update = () => {
       setTask(task);
       setRoles(roles);
       setSections(sections);
+      // if there are suboptions in any section, then
+      // we are working with sectors, the backend controll this
+      setAreTheySectors(sections.some(s => {
+        var _a;
+        return ((_a = s.subOptions) === null || _a === void 0 ? void 0 : _a.length) > 0;
+      }));
       setViewMode('COMPLETED');
     } catch (error) {
       logger$2.error('Unexpected error booting update task page', error);
@@ -4353,10 +4365,15 @@ const Update = () => {
     id: 'roles',
     label: 'Roles'
   }];
-  {
+  if (areTheySectors) {
     scopes.push({
       id: 'two-sections',
       label: 'Sectores'
+    });
+  } else {
+    scopes.push({
+      id: 'sections',
+      label: 'Secciones'
     });
   }
   const selectedRoles = context.draft.user.roles;
@@ -5426,14 +5443,25 @@ const useContext = () => {
   return context;
 };
 const Context = props => {
+  var _a, _b;
   const location = Router.useLocation();
   const [draft, setDraft] = React.useState(null);
-  const [flag] = React.useState(location.state.flag);
-  const [store] = React.useState(location.state.store);
+  const [flag] = React.useState((_a = location.state) === null || _a === void 0 ? void 0 : _a.flag);
+  const [store] = React.useState((_b = location.state) === null || _b === void 0 ? void 0 : _b.store);
+  if (!flag || !store) {
+    return jsx(Ramen.XPage, {
+      children: jsx(Ramen.XBody, {
+        children: jsx(Ramen.XAlert, {
+          title: "Flag and Store must be provided in the router location state",
+          type: "error"
+        })
+      })
+    });
+  }
   const value = {
     country: props.extensions.country,
-    flag,
-    store,
+    flag: flag.toLowerCase(),
+    store: store.toLowerCase(),
     draft,
     setDraft
   };
@@ -5764,6 +5792,12 @@ const UpdateTask = () => {
   } = useContext();
   const [confirmModal, setConfirmModal] = React.useState(false);
   const [warningModal, setWarningModal] = React.useState(false);
+  // if there are suboptions in any section, then
+  // we are working with sectors, the backend controll this
+  const [areTheySectors] = React.useState(location.state.sections.some(s => {
+    var _a;
+    return ((_a = s.subOptions) === null || _a === void 0 ? void 0 : _a.length) > 0;
+  }));
   const onGoBackHandler = () => {
     const changed = thereAreChanges(location.state.user, draft);
     if (changed) {
@@ -5850,10 +5884,15 @@ const UpdateTask = () => {
     id: 'roles',
     label: 'Roles'
   }];
-  {
+  if (areTheySectors) {
     scopes.push({
       id: 'two-sections',
       label: 'Sectores'
+    });
+  } else {
+    scopes.push({
+      id: 'sections',
+      label: 'Secciones'
     });
   }
   const selectedRoles = draft.roles;
