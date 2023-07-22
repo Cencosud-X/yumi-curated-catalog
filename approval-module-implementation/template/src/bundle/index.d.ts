@@ -1,14 +1,13 @@
-import { IHomePageExtension } from './flow/home-page';
 import { Components } from './sdk';
-export interface IHelloWorldModuleOverride extends Components.IModuleOverride {
-    extensions?: {
-        home_page: IHomePageExtension;
-    };
-    routes?: Components.IModuleRoute[];
-}
+import CardApprovalCenter from './components/card-approval';
+import CardChildrenExemple from './components/card-test';
+import { IApprovalModuleOverride } from './interfaces/IExtensions';
+export { CardApprovalCenter, CardChildrenExemple };
 export interface IModuleProps extends Components.IModuleProps {
 }
-export default abstract class HelloWorldModule extends Components.Module<IHelloWorldModuleOverride> {
+export default abstract class ApprovalModule extends Components.Module<IApprovalModuleOverride> {
     static route: string;
-    constructor(props: IModuleProps, override: IHelloWorldModuleOverride);
+    componentDidMount(): void;
+    componentWillUnmount(): void;
+    constructor(props: IModuleProps, override: IApprovalModuleOverride);
 }
