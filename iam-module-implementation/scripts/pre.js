@@ -40,64 +40,64 @@ module.exports = async (runner, args) => {
         in the seki product settings
     */
 
-    const workspacePath = rc.workspace_path;
+    // const workspacePath = rc.workspace_path;
 
-    // Get the YUMI Setting from seki settings.json
-    const settingsJSONPath = path.join(workspacePath, '.seki', 'settings.json');
-    const settingsJSON = JSON.parse(fs.readFileSync(settingsJSONPath, 'utf8'));
+    // // Get the YUMI Setting from seki settings.json
+    // const settingsJSONPath = path.join(workspacePath, '.seki', 'settings.json');
+    // const settingsJSON = JSON.parse(fs.readFileSync(settingsJSONPath, 'utf8'));
 
-    const YUMI_MAIN_FILE_PATH = settingsJSON['meta_data']['YUMI_MAIN_FILE_PATH'];
+    // const YUMI_MAIN_FILE_PATH = settingsJSON['meta_data']['YUMI_MAIN_FILE_PATH'];
 
-    // Get the npmScope from nx.json (we need this variable to "build" the import path)
-    const nxPath = path.join(workspacePath, 'nx.json');
-    const nxJSON = JSON.parse(fs.readFileSync(nxPath, 'utf8'));
-    const npmScope = nxJSON.npmScope;
+    // // Get the npmScope from nx.json (we need this variable to "build" the import path)
+    // const nxPath = path.join(workspacePath, 'nx.json');
+    // const nxJSON = JSON.parse(fs.readFileSync(nxPath, 'utf8'));
+    // const npmScope = nxJSON.npmScope;
 
-    // Get the App.tsx file path for start the injection process
-    const appTsxPathToInject = path.join(workspacePath, YUMI_MAIN_FILE_PATH);
+    // // Get the App.tsx file path for start the injection process
+    // const appTsxPathToInject = path.join(workspacePath, YUMI_MAIN_FILE_PATH);
 
-    if (!fs.existsSync(appTsxPathToInject)) {
-      console.warn('THE INJECTION PROCCESS DOESNT OCCURRS BECAUSE THE App.tsx WASNT FOUND');
-      console.warn(`> ${appTsxPathToInject}`);
-      return;
-    }
+    // if (!fs.existsSync(appTsxPathToInject)) {
+    //   console.warn('THE INJECTION PROCCESS DOESNT OCCURRS BECAUSE THE App.tsx WASNT FOUND');
+    //   console.warn(`> ${appTsxPathToInject}`);
+    //   return;
+    // }
 
-    /*
-      - if the file exists (App.tsx), we need to inject the module implementation,
-    */
-    const moduleOverrideName = `${toPascalCase(rc.name)}OverrideModule`;
-    const modifiedAppTsx = [];
+    // /*
+    //   - if the file exists (App.tsx), we need to inject the module implementation,
+    // */
+    // const moduleOverrideName = `${toPascalCase(rc.name)}OverrideModule`;
+    // const modifiedAppTsx = [];
 
-    // Read the original App.tsx to find the "special keywords"
-    var lineReader = readline.createInterface({ input: fs.createReadStream(appTsxPathToInject) });
+    // // Read the original App.tsx to find the "special keywords"
+    // var lineReader = readline.createInterface({ input: fs.createReadStream(appTsxPathToInject) });
 
-    lineReader.on('line', function (line) {
-      /*
-        We need to put a "keyword inside the App.tsx" which pattern is:
-          // END_YUMMI_IMPORT_INJECTION (DONT REMOVE THIS COMMENT) <-- we need to get this line!
-        In this "part" we need to put the IMPORT clause
-      */
-      if (line.indexOf('END_YUMMI_IMPORT_INJECTION') >= 0) {
-        modifiedAppTsx.push(`import {${moduleOverrideName}} from '@${npmScope}/${rc.path}'`);
-      }
+    // lineReader.on('line', function (line) {
+    //   /*
+    //     We need to put a "keyword inside the App.tsx" which pattern is:
+    //       // END_YUMMI_IMPORT_INJECTION (DONT REMOVE THIS COMMENT) <-- we need to get this line!
+    //     In this "part" we need to put the IMPORT clause
+    //   */
+    //   if (line.indexOf('END_YUMMI_IMPORT_INJECTION') >= 0) {
+    //     modifiedAppTsx.push(`import {${moduleOverrideName}} from '@${npmScope}/${rc.path}'`);
+    //   }
 
-      /*
-        We need to put a "keyword inside the App.tsx" which pattern is:
-        {END_YUMMI_ROUTE_INJECTION (DONT REMOVE THIS COMMENT)/} <-- we need to get this line!
-        In this "part" we need to put the ROUTE clause
-      */
-      if (line.indexOf('END_YUMMI_ROUTE_INJECTION') >= 0) {
-        modifiedAppTsx.push(
-          `<Route path={${moduleOverrideName}.route} component={${moduleOverrideName}} />`
-        );
-      }
+    //   /*
+    //     We need to put a "keyword inside the App.tsx" which pattern is:
+    //     {END_YUMMI_ROUTE_INJECTION (DONT REMOVE THIS COMMENT)/} <-- we need to get this line!
+    //     In this "part" we need to put the ROUTE clause
+    //   */
+    //   if (line.indexOf('END_YUMMI_ROUTE_INJECTION') >= 0) {
+    //     modifiedAppTsx.push(
+    //       `<Route path={${moduleOverrideName}.route} component={${moduleOverrideName}} />`
+    //     );
+    //   }
 
-      modifiedAppTsx.push(line);
-    });
+    //   modifiedAppTsx.push(line);
+    // });
 
-    lineReader.on('close', function () {
-      fs.writeFileSync(appTsxPathToInject, modifiedAppTsx.join('\n'));
-    });
+    // lineReader.on('close', function () {
+    //   fs.writeFileSync(appTsxPathToInject, modifiedAppTsx.join('\n'));
+    // });
 
     console.log('> PRE: requisites ✅ DONE');
   } catch (ex) {
