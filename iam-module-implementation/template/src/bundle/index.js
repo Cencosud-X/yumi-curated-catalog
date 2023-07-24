@@ -2780,6 +2780,7 @@ const List = () => {
   };
   React__default.useEffect(() => {
     onBootHandler();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   if (viewMode === 'PENDING') {
     return jsxs(Ramen.XPage, Object.assign({
@@ -2902,7 +2903,7 @@ const List = () => {
                   weight: "bold",
                   fontSize: 11
                 }, {
-                  children: approval.user.name
+                  children: approval.user.unique_name
                 }))
               })), jsx("div", Object.assign({
                 className: Styles$6['icon']
@@ -4635,8 +4636,8 @@ const thereAreChanges$1 = (country, flag, store, approval, draft) => {
   }
   // Check diferences in sections
   if (!thereAreChanges) {
-    const userSections = ((approval === null || approval === void 0 ? void 0 : approval.user.scopes) || []).filter(scope => scope.startsWith(`country:${country}=>flag:${flag}=>store:${store}=>section`));
-    const draftSections = ((draft === null || draft === void 0 ? void 0 : draft.user.scopes) || []).filter(scope => scope.startsWith(`country:${country}=>flag:${flag}=>store:${store}=>section`));
+    const userSections = ((approval === null || approval === void 0 ? void 0 : approval.user.scope) || []).filter(scope => scope.startsWith(`country:${country}=>flag:${flag}=>store:${store}=>section`));
+    const draftSections = ((draft === null || draft === void 0 ? void 0 : draft.user.scope) || []).filter(scope => scope.startsWith(`country:${country}=>flag:${flag}=>store:${store}=>section`));
     if (userSections.length !== draftSections.length) {
       thereAreChanges = true;
     }
@@ -4893,7 +4894,7 @@ const Update = () => {
     });
   }
   const selectedRoles = context.draft.user.roles;
-  const selectedSections = context.draft.user.scopes.filter(scope => scope.startsWith(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>section`));
+  const selectedSections = context.draft.user.scope.filter(scope => scope.startsWith(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>section`));
   const rolesText = context.draft.user.roles.reduce((text, role, index, array) => {
     const id = role.replace(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role:`, '');
     const match = roles.find(o => o.id === id);
@@ -4924,7 +4925,7 @@ const Update = () => {
             weight: "bold",
             fontSize: 9
           }, {
-            children: context.draft.user.name
+            children: context.draft.user.unique_name
           })), jsx(Ramen.XText, Object.assign({
             weight: "lighter",
             fontSize: 12
@@ -5295,7 +5296,7 @@ const Roles$1 = () => {
         children: jsx(Ramen.XSelectMultiple, {
           ref: ref,
           title: "Seleccionar roles",
-          subtitle: `Asigná un rol a ${draft.user.name}`,
+          subtitle: `Asigná un rol a ${draft.user.unique_name}`,
           options: location.state.roles.map(role => ({
             label: role.label,
             value: role.id
@@ -5367,11 +5368,11 @@ const Sections$1 = () => {
       return;
     }
     const scopeKey = `country:${context.country}=>flag:${context.flag}=>store:${context.store}=>section`;
-    const otherScopes = draft.user.scopes.filter(scope => !scope.startsWith(scopeKey));
-    const newScopes = options.map(option => `${scopeKey}:${option.value}`);
+    const otherScope = draft.user.scope.filter(scope => !scope.startsWith(scopeKey));
+    const newScope = options.map(option => `${scopeKey}:${option.value}`);
     setDraft(Object.assign(Object.assign({}, draft), {
       user: Object.assign(Object.assign({}, draft.user), {
-        scopes: [...otherScopes, ...newScopes]
+        scope: [...otherScope, ...newScope]
       })
     }));
   };
@@ -5385,7 +5386,7 @@ const Sections$1 = () => {
         const scopeKey = `country:${context.country}=>flag:${context.flag}=>store:${context.store}=>section`;
         setDraft(Object.assign(Object.assign({}, draft), {
           user: Object.assign(Object.assign({}, draft.user), {
-            scopes: draft.user.scopes.filter(scope => scope !== `${scopeKey}:${pendingToRemove === null || pendingToRemove === void 0 ? void 0 : pendingToRemove.id}`)
+            scope: draft.user.scope.filter(scope => scope !== `${scopeKey}:${pendingToRemove === null || pendingToRemove === void 0 ? void 0 : pendingToRemove.id}`)
           })
         }));
       }
@@ -5401,7 +5402,7 @@ const Sections$1 = () => {
   }, [location.state.task, draft]);
   if (!draft) return jsx(Ramen.XPage, {});
   const scopeKey = `country:${context.country}=>flag:${context.flag}=>store:${context.store}=>section`;
-  const selection = ((draft === null || draft === void 0 ? void 0 : draft.user.scopes) || []).filter(scope => scope.startsWith(scopeKey)).map(scope => {
+  const selection = ((draft === null || draft === void 0 ? void 0 : draft.user.scope) || []).filter(scope => scope.startsWith(scopeKey)).map(scope => {
     const keyValue = scope.split('=>').pop();
     const id = keyValue.split(':')[1];
     const match = location.state.sections.find(section => section.id === id);
@@ -5483,7 +5484,7 @@ const Sections$1 = () => {
         children: jsx(Ramen.XSelectMultiple, {
           ref: ref,
           title: "Seleccionar secciones",
-          subtitle: `Asigná una sección a ${draft.user.name}`,
+          subtitle: `Asigná una sección a ${draft.user.unique_name}`,
           options: location.state.sections.map(section => ({
             label: section.label,
             value: section.id
@@ -5709,16 +5710,16 @@ const TwoSections$1 = () => {
       return;
     }
     const scopeKey = `country:${context.country}=>flag:${context.flag}=>store:${context.store}=>section`;
-    const otherScopes = draft.user.scopes.filter(scope => !scope.startsWith(scopeKey));
-    const newScopes = [];
+    const otherScope = draft.user.scope.filter(scope => !scope.startsWith(scopeKey));
+    const newScope = [];
     options.forEach(option => {
       option.subOptions.forEach(subOption => {
-        newScopes.push(`${scopeKey}:${option.id}|${subOption.id}`);
+        newScope.push(`${scopeKey}:${option.id}|${subOption.id}`);
       });
     });
     setDraft(Object.assign(Object.assign({}, draft), {
       user: Object.assign(Object.assign({}, draft.user), {
-        scopes: [...otherScopes, ...newScopes]
+        scope: [...otherScope, ...newScope]
       })
     }));
     setModalVisible(false);
@@ -5740,7 +5741,7 @@ const TwoSections$1 = () => {
           }
         }
         const scopeKey = `country:${context.country}=>flag:${context.flag}=>store:${context.store}=>section`;
-        const otherScope = draft.user.scopes.filter(scope => !scope.startsWith(scopeKey));
+        const otherScope = draft.user.scope.filter(scope => !scope.startsWith(scopeKey));
         const newScope = [];
         newSelection.forEach(option => {
           option.subOptions.forEach(subOption => {
@@ -5749,7 +5750,7 @@ const TwoSections$1 = () => {
         });
         setDraft(Object.assign(Object.assign({}, draft), {
           user: Object.assign(Object.assign({}, draft.user), {
-            scopes: [...otherScope, ...newScope]
+            scope: [...otherScope, ...newScope]
           })
         }));
       }
@@ -5766,7 +5767,7 @@ const TwoSections$1 = () => {
   if (!draft) return jsx(Ramen.XPage, {});
   const scopeKey = `country:${context.country}=>flag:${context.flag}=>store:${context.store}=>section`;
   const selection = [];
-  ((draft === null || draft === void 0 ? void 0 : draft.user.scopes) || []).filter(scope => scope.startsWith(scopeKey)).forEach(scope => {
+  ((draft === null || draft === void 0 ? void 0 : draft.user.scope) || []).filter(scope => scope.startsWith(scopeKey)).forEach(scope => {
     const keyValue = scope.split('=>').pop();
     const value = keyValue.split(':').pop();
     const [sectionId, twoSectionId] = value.split('|');
@@ -5879,7 +5880,7 @@ const TwoSections$1 = () => {
       }), jsx(Components.XTwoSelectMultiple, {
         visible: modalVisible,
         title: "Seleccionar sectores",
-        subtitle: `Asigná un sector a ${draft.user.name}`,
+        subtitle: `Asigná un sector a ${draft.user.unique_name}`,
         twoSubtitle: "Asign\u00E1 las secciones correspondientes.",
         values: selection,
         options: location.state.sections,
@@ -6061,7 +6062,7 @@ const Users$1 = () => {
         logger$1.error('Unexpected error searching users', error);
       }
     }), 300);
-  }, [result === null || result === void 0 ? void 0 : result.limit, result === null || result === void 0 ? void 0 : result.offset]);
+  }, [context.country, context.flag, context.store, result === null || result === void 0 ? void 0 : result.limit, result === null || result === void 0 ? void 0 : result.offset]);
   const onSelectUserHandler = user => {
     history.push(`${url}/${user.identifier}`, {
       user,

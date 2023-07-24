@@ -99,8 +99,6 @@ module.exports = async (runner, args) => {
     //   fs.writeFileSync(appTsxPathToInject, modifiedAppTsx.join('\n'));
     // });
 
-    console.log('> PRE: QUE BOLA ASERE');
-
     console.log('> PRE: requisites ✅ DONE');
   } catch (ex) {
     console.error(ex);

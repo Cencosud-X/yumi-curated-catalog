@@ -1,11 +1,11 @@
-import * as User from './User';
+import * as SDK from '@team_yumi/sdk';
 export interface TModel {
     id: string;
     state: 'PENDING' | 'COMPLETED' | 'REJECTED';
     country: string;
     flag: string;
     store: string;
-    user: User.TModel;
+    user: SDK.Models.IAM.IJwtEntity;
     updated_at: string;
     created_at: string;
 }
