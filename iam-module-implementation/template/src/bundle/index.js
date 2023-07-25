@@ -4623,8 +4623,8 @@ const logger$2 = SDK.Lib.ChariotConsole({
 });
 const thereAreChanges$1 = (country, flag, store, approval, draft) => {
   let thereAreChanges = false;
-  const userRoles = (approval === null || approval === void 0 ? void 0 : approval.user.roles) || [];
-  const draftRoles = (draft === null || draft === void 0 ? void 0 : draft.user.roles) || [];
+  const userRoles = ((approval === null || approval === void 0 ? void 0 : approval.user.scope) || []).filter(scope => scope.startsWith(`country:${country}=>flag:${flag}=>store:${store}=>role`));
+  const draftRoles = ((draft === null || draft === void 0 ? void 0 : draft.user.scope) || []).filter(scope => scope.startsWith(`country:${country}=>flag:${flag}=>store:${store}=>role`));
   // Check diferences in roles
   if (userRoles.length !== draftRoles.length) {
     thereAreChanges = true;
@@ -4893,9 +4893,9 @@ const Update = () => {
       label: 'Secciones'
     });
   }
-  const selectedRoles = context.draft.user.roles;
+  const selectedRoles = context.draft.user.scope.filter(scope => scope.startsWith(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role`));
   const selectedSections = context.draft.user.scope.filter(scope => scope.startsWith(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>section`));
-  const rolesText = context.draft.user.roles.reduce((text, role, index, array) => {
+  const rolesText = context.draft.user.scope.filter(scope => scope.startsWith(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role`)).reduce((text, role, index, array) => {
     const id = role.replace(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role:`, '');
     const match = roles.find(o => o.id === id);
     const label = (match === null || match === void 0 ? void 0 : match.label) || role.toUpperCase();
@@ -5184,10 +5184,12 @@ const Roles$1 = () => {
     if (!draft) {
       return;
     }
-    const newRoles = options.map(option => `country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role:${option.value}`);
+    const scopeKey = `country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role`;
+    const otherScope = draft.user.scope.filter(scope => !scope.startsWith(scopeKey));
+    const newScope = options.map(option => `country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role:${option.value}`);
     setDraft(Object.assign(Object.assign({}, draft), {
       user: Object.assign(Object.assign({}, draft.user), {
-        roles: newRoles
+        scope: [...otherScope, ...newScope]
       })
     }));
   };
@@ -5200,7 +5202,7 @@ const Roles$1 = () => {
         }
         setDraft(Object.assign(Object.assign({}, draft), {
           user: Object.assign(Object.assign({}, draft.user), {
-            roles: draft.user.roles.filter(role => role !== `country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role:${pendingToRemove === null || pendingToRemove === void 0 ? void 0 : pendingToRemove.id}`)
+            scope: draft.user.scope.filter(scope => scope !== `country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role:${pendingToRemove === null || pendingToRemove === void 0 ? void 0 : pendingToRemove.id}`)
           })
         }));
       }
@@ -5215,12 +5217,12 @@ const Roles$1 = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.state.task, draft]);
   if (!draft) return jsx(Ramen.XPage, {});
-  const selection = ((draft === null || draft === void 0 ? void 0 : draft.user.roles) || []).map(role => {
-    const id = role.replace(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role:`, '');
+  const selection = ((draft === null || draft === void 0 ? void 0 : draft.user.scope) || []).filter(scope => scope.startsWith(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role`)).map(scope => {
+    const id = scope.replace(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role:`, '');
     const match = location.state.roles.find(r => r.id === id);
     return {
       id,
-      label: (match === null || match === void 0 ? void 0 : match.label) || role.toUpperCase()
+      label: (match === null || match === void 0 ? void 0 : match.label) || scope.toUpperCase()
     };
   });
   let content = jsxs(Ramen.XBox, Object.assign({
@@ -6184,7 +6186,7 @@ const Users$1 = () => {
       }), jsx(Ramen.XList, {
         dataSource: (result === null || result === void 0 ? void 0 : result.items) || [],
         renderItem: user => {
-          const rolesText = user.roles.reduce((text, role, index, array) => {
+          const rolesText = user.scopes.filter(scope => scope.startsWith(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role`)).reduce((text, role, index, array) => {
             const id = role.replace(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role:`, '');
             const match = roles.find(r => r.id === id);
             const label = (match === null || match === void 0 ? void 0 : match.label) || role.toUpperCase();
@@ -6281,8 +6283,8 @@ const logger = SDK.Lib.ChariotConsole({
 });
 const thereAreChanges = (country, flag, store, user, draft) => {
   let thereAreChanges = false;
-  const userRoles = user.roles;
-  const draftRoles = (draft === null || draft === void 0 ? void 0 : draft.roles) || [];
+  const userRoles = user.scopes.filter(scope => scope.startsWith(`country:${country}=>flag:${flag}=>store:${store}=>role`));
+  const draftRoles = ((draft === null || draft === void 0 ? void 0 : draft.scopes) || []).filter(scope => scope.startsWith(`country:${country}=>flag:${flag}=>store:${store}=>role`));
   // Check diferences in roles
   if (userRoles.length !== draftRoles.length) {
     thereAreChanges = true;
@@ -6399,7 +6401,7 @@ const UpdateTask = () => {
   // Create roles text. If not find a match with
   // the options the app show the id in uppercase
   React.useEffect(() => {
-    const newRoles = ((draft === null || draft === void 0 ? void 0 : draft.roles) || []).reduce((text, role, index, array) => {
+    const newRoles = ((draft === null || draft === void 0 ? void 0 : draft.scopes) || []).filter(scope => scope.startsWith(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role`)).reduce((text, role, index, array) => {
       const id = role.replace(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role:`, '');
       const match = location.state.roles.find(o => o.id === id);
       const label = (match === null || match === void 0 ? void 0 : match.label) || role.toUpperCase();
@@ -6410,7 +6412,7 @@ const UpdateTask = () => {
       return newText;
     }, '');
     setRoles(newRoles);
-  }, [location.state.roles, draft === null || draft === void 0 ? void 0 : draft.roles, context.country, context.flag, context.store]);
+  }, [location.state.roles, draft === null || draft === void 0 ? void 0 : draft.scopes, context.country, context.flag, context.store]);
   if (!draft) return jsx(Ramen.XPage, {});
   const scopes = [{
     id: 'roles',
@@ -6427,7 +6429,7 @@ const UpdateTask = () => {
       label: 'Secciones'
     });
   }
-  const selectedRoles = draft.roles;
+  const selectedRoles = draft.scopes.filter(scope => scope.startsWith(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role`));
   const selectedSections = draft.scopes.filter(scope => scope.startsWith(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>section`));
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
@@ -6556,9 +6558,11 @@ const Roles = () => {
     if (!draft) {
       return;
     }
-    const newRoles = options.map(option => `country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role:${option.value}`);
+    const scopeKey = `country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role`;
+    const otherScope = draft.scopes.filter(scope => !scope.startsWith(scopeKey));
+    const newScope = options.map(option => `country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role:${option.value}`);
     setDraft(Object.assign(Object.assign({}, draft), {
-      roles: newRoles
+      scopes: [...otherScope, ...newScope]
     }));
   };
   const onRemoveConfirmActionClickHandler = action => {
@@ -6569,7 +6573,7 @@ const Roles = () => {
           return;
         }
         setDraft(Object.assign(Object.assign({}, draft), {
-          roles: draft.roles.filter(role => role !== `country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role:${pendingToRemove === null || pendingToRemove === void 0 ? void 0 : pendingToRemove.id}`)
+          scopes: draft.scopes.filter(scope => scope !== `country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role:${pendingToRemove === null || pendingToRemove === void 0 ? void 0 : pendingToRemove.id}`)
         }));
       }
     }, 400);
@@ -6583,12 +6587,12 @@ const Roles = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.state.user, draft]);
   if (!draft) return jsx(Ramen.XPage, {});
-  const selection = ((draft === null || draft === void 0 ? void 0 : draft.roles) || []).map(role => {
-    const id = role.replace(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role:`, '');
+  const selection = ((draft === null || draft === void 0 ? void 0 : draft.scopes) || []).filter(scope => scope.startsWith(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role`)).map(scope => {
+    const id = scope.replace(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role:`, '');
     const match = location.state.roles.find(r => r.id === id);
     return {
       id,
-      label: (match === null || match === void 0 ? void 0 : match.label) || role.toUpperCase()
+      label: (match === null || match === void 0 ? void 0 : match.label) || scope.toUpperCase()
     };
   });
   let content = jsxs(Ramen.XBox, Object.assign({

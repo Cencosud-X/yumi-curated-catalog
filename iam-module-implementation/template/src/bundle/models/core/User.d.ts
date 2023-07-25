@@ -5,7 +5,6 @@ export interface TModel {
     avatar: string;
     email: string;
     locale: string;
-    roles: string[];
     scopes: string[];
     created_at: string;
 }
