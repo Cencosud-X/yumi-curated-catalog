@@ -5013,7 +5013,7 @@ const Update = () => {
         size: "xl",
         type: "solid",
         text: "Aprobar solicitud",
-        disabled: !changed,
+        disabled: !changed || selectedRoles.length === 0,
         onClick: onApproveHandler
       }), jsx(Ramen.XButton, {
         size: "xl",
