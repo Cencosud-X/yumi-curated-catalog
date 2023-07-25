@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { InventoryTypeEnum, ProductInterface } from "../../../../../../core/models";
+import { InventoryTypeEnum, ProductInterface } from '../../../../../../core/models';
 interface IProps {
     product: ProductInterface | undefined;
     inventoryType: InventoryTypeEnum | undefined;

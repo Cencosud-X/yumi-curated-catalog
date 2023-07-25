@@ -1,15 +1,17 @@
-import { BaseResponse } from "./base.response";
+import { BaseResponse } from './base.response';
 export interface SaveProductResponse extends BaseResponse {
     data: {
-        base_unit: string;
+        uom: string;
         description: string;
         ean: string;
-        image_url: string;
-        scan_continue: number;
-        scan_last_continue: number;
-        scan_last_quantity: number;
-        scan_quantity: number;
-        scan_total: number;
+        imageUrl: string;
+        scanTotalContinue: number;
+        scanLastContinue: number;
+        scanLastQuantity: number;
+        scanTotalQuantity: number;
+        scanTotal: number;
         sku: string;
+        keySearcher: string;
+        metaData: any;
     };
 }

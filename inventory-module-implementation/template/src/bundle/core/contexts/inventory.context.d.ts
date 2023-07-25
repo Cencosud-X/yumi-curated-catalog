@@ -33,7 +33,7 @@ export declare type InventoryContextData = {
     setUserSelected: (data: any) => void;
     furnituresSelected: any;
     setFurnituresSelected: (data: any) => void;
-    sendListProductsBySavedZonification: (zonifications: any) => Promise<any>;
+    sendListInventory: (zonifications: any) => Promise<any>;
     inventoriesSelectedSaved: any;
     setInventoriesSelectedSaved: (data: any) => void;
     editProductCount: (amount: string) => Promise<ApiResponse>;

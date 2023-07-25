@@ -7,9 +7,10 @@
   "types": "./index.d.ts",
   "dependencies": {},
   "peerDependencies": {
-    "react": "16.14.0",
+    "react": "^16.14.0",
     "@ionic/react": "^7.0.0",
     "react-router-dom": "^5.3.4",
+    "@team_yumi/ramen": "^0.0.3-next.1688753932673",
     "styled-components": "^5.3.10",
     "@team_eureka/eureka-ionic-core": "^1.0.7",
     "@capacitor-community/barcode-scanner": "^3.0.3",

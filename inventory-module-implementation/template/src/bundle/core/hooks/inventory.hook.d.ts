@@ -24,6 +24,7 @@ export declare const useInventory: () => {
     actionListProductsByZonification: (id: string) => Promise<any>;
     actionEditProductCount: (amount: string) => Promise<void>;
     getTotalFurniture: () => Promise<import("../models").ApiResponse>;
+    actionSendListInventory: (inventories: any[]) => Promise<any>;
     routeToInventoryMenu: () => Promise<void>;
     routeToLoadZone: () => void;
     routeToScanZone: () => void;
@@ -41,7 +42,6 @@ export declare const useInventory: () => {
     setUserSelected: (data: any) => void;
     furnituresSelected: any;
     setFurnituresSelected: (data: any) => void;
-    actionSendProductsByZonification: (inventories: any[]) => Promise<any>;
     inventoriesSelectedSaved: any;
     setInventoriesSelectedSaved: (data: any) => void;
     productIdSelected: string | undefined;
