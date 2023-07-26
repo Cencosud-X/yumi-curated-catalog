@@ -1,5 +1,6 @@
 import { IApprovalAccountability } from '../../interfaces/IAccountability';
-import { IApprovalFB60, IApprovalFB60File, IApprovalFB60FileStream } from '../../interfaces/IFb60';
+import { EGenericApprovalAction, IApprovalAction, IApprovalGenericFile, IApprovalGenericFileStream, IGenericApproval } from '../../interfaces/IApprovalTypes';
+import { IApprovalFB60 } from '../../interfaces/IFb60';
 import { IApprovalPaymentProposal } from '../../interfaces/IPaymentProposal';
 import { IApprovalPurchaseOrder } from '../../interfaces/IPurchaseOrder';
 import AxiosProvider from './axios/axios.provider';
@@ -13,10 +14,16 @@ declare class FioriAPI extends AxiosProvider {
         companyDescription: string;
         documentId: string;
         exerciseYear: string;
-    }): Promise<IApprovalFB60File[]>;
-    getFB60FileStream(fileId: string): Promise<IApprovalFB60FileStream>;
+    }): Promise<IApprovalGenericFile[]>;
+    getFB60FileStream(fileId: string): Promise<IApprovalGenericFileStream>;
     getPaymentProposal(userAd: string): Promise<IApprovalPaymentProposal[]>;
     getPurchaseOrder(userAd: string): Promise<IApprovalPurchaseOrder[]>;
     getPurchaseOrderDetail(orderId: string): Promise<string[]>;
+    getAccountabilityFiles(data: {
+        pernr: string;
+        reinr: string;
+    }): Promise<IApprovalGenericFile[]>;
+    getAccountabilityFileStream(fileId: string): Promise<IApprovalGenericFileStream>;
+    approvalAction(data: IGenericApproval, action: EGenericApprovalAction, userAd: string): Promise<IApprovalAction>;
 }
 export default FioriAPI;

@@ -4,5 +4,5 @@ interface IProps {
     title?: string;
     subTitle?: string;
 }
-declare function Index(props: IProps): JSX.Element;
-export default Index;
+declare const ApprovalCenterButton: (props: IProps) => JSX.Element;
+export default ApprovalCenterButton;

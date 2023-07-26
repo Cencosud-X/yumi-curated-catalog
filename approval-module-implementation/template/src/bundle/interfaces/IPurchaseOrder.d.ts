@@ -23,7 +23,3 @@ export interface IApprovalPurchaseOrder {
     items: IPurchaseOrderItems[];
     details?: string[];
 }
-export interface IApprovalPurchaseOrderModal {
-    show?: boolean;
-    action?: 'approve' | 'discard';
-}

@@ -1,8 +1,8 @@
-import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
+import { jsx, Fragment, jsxs } from 'react/jsx-runtime';
 import { IonRouterOutlet } from '@ionic/react';
 import * as React from 'react';
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Route, useHistory } from 'react-router-dom';
+import { useState, useEffect, useMemo, useCallback, createContext, useContext } from 'react';
+import { Route, useHistory, useLocation } from 'react-router-dom';
 import Ramen from '@team_yumi/ramen';
 import { Preferences } from '@capacitor/preferences';
 import { WithBootedClient, i18 } from '@team_eureka/eureka-ionic-core';
@@ -10,9 +10,10 @@ import { App } from '@capacitor/app';
 import axios from 'axios';
 import { getAuthFromCache } from '@team_eureka/eureka-ionic-core/clients/AuthenticationClient';
 import { setLocale } from '@team_eureka/eureka-ionic-core/lib/i18n';
-import { Capacitor } from '@capacitor/core';
+import { createHash } from 'crypto';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { FileOpener } from '@capacitor-community/file-opener';
+import { Capacitor } from '@capacitor/core';
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -1025,6 +1026,83 @@ var _export = function (options, source) {
   }
 };
 
+var internalObjectKeys = objectKeysInternal;
+var enumBugKeys$1 = enumBugKeys$3;
+
+// `Object.keys` method
+// https://tc39.es/ecma262/#sec-object.keys
+// eslint-disable-next-line es/no-object-keys -- safe
+var objectKeys$2 = Object.keys || function keys(O) {
+  return internalObjectKeys(O, enumBugKeys$1);
+};
+
+var DESCRIPTORS$a = descriptors;
+var uncurryThis$m = functionUncurryThis;
+var call$k = functionCall;
+var fails$n = fails$w;
+var objectKeys$1 = objectKeys$2;
+var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
+var propertyIsEnumerableModule = objectPropertyIsEnumerable;
+var toObject$6 = toObject$8;
+var IndexedObject$1 = indexedObject;
+
+// eslint-disable-next-line es/no-object-assign -- safe
+var $assign = Object.assign;
+// eslint-disable-next-line es/no-object-defineproperty -- required for testing
+var defineProperty$5 = Object.defineProperty;
+var concat$1 = uncurryThis$m([].concat);
+
+// `Object.assign` method
+// https://tc39.es/ecma262/#sec-object.assign
+var objectAssign = !$assign || fails$n(function () {
+  // should have correct order of operations (Edge bug)
+  if (DESCRIPTORS$a && $assign({ b: 1 }, $assign(defineProperty$5({}, 'a', {
+    enumerable: true,
+    get: function () {
+      defineProperty$5(this, 'b', {
+        value: 3,
+        enumerable: false
+      });
+    }
+  }), { b: 2 })).b !== 1) return true;
+  // should work with symbols and should have deterministic property order (V8 bug)
+  var A = {};
+  var B = {};
+  // eslint-disable-next-line es/no-symbol -- safe
+  var symbol = Symbol();
+  var alphabet = 'abcdefghijklmnopqrst';
+  A[symbol] = 7;
+  alphabet.split('').forEach(function (chr) { B[chr] = chr; });
+  return $assign({}, A)[symbol] != 7 || objectKeys$1($assign({}, B)).join('') != alphabet;
+}) ? function assign(target, source) { // eslint-disable-line no-unused-vars -- required for `.length`
+  var T = toObject$6(target);
+  var argumentsLength = arguments.length;
+  var index = 1;
+  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+  var propertyIsEnumerable = propertyIsEnumerableModule.f;
+  while (argumentsLength > index) {
+    var S = IndexedObject$1(arguments[index++]);
+    var keys = getOwnPropertySymbols ? concat$1(objectKeys$1(S), getOwnPropertySymbols(S)) : objectKeys$1(S);
+    var length = keys.length;
+    var j = 0;
+    var key;
+    while (length > j) {
+      key = keys[j++];
+      if (!DESCRIPTORS$a || call$k(propertyIsEnumerable, S, key)) T[key] = S[key];
+    }
+  } return T;
+} : $assign;
+
+var $$h = _export;
+var assign$1 = objectAssign;
+
+// `Object.assign` method
+// https://tc39.es/ecma262/#sec-object.assign
+// eslint-disable-next-line es/no-object-assign -- required for testing
+$$h({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign$1 }, {
+  assign: assign$1
+});
+
 var wellKnownSymbol$l = wellKnownSymbol$n;
 
 var TO_STRING_TAG$4 = wellKnownSymbol$l('toStringTag');
@@ -1091,13 +1169,13 @@ var regexpFlags$1 = function () {
   return result;
 };
 
-var fails$n = fails$w;
+var fails$m = fails$w;
 var global$k = global$v;
 
 // babel-minify and Closure Compiler transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError
 var $RegExp$2 = global$k.RegExp;
 
-var UNSUPPORTED_Y$2 = fails$n(function () {
+var UNSUPPORTED_Y$2 = fails$m(function () {
   var re = $RegExp$2('a', 'y');
   re.lastIndex = 2;
   return re.exec('abcd') != null;
@@ -1105,11 +1183,11 @@ var UNSUPPORTED_Y$2 = fails$n(function () {
 
 // UC Browser bug
 // https://github.com/zloirock/core-js/issues/1008
-var MISSED_STICKY$1 = UNSUPPORTED_Y$2 || fails$n(function () {
+var MISSED_STICKY$1 = UNSUPPORTED_Y$2 || fails$m(function () {
   return !$RegExp$2('a', 'y').sticky;
 });
 
-var BROKEN_CARET = UNSUPPORTED_Y$2 || fails$n(function () {
+var BROKEN_CARET = UNSUPPORTED_Y$2 || fails$m(function () {
   // https://bugzilla.mozilla.org/show_bug.cgi?id=773687
   var re = $RegExp$2('^r', 'gy');
   re.lastIndex = 2;
@@ -1124,30 +1202,20 @@ var regexpStickyHelpers = {
 
 var objectDefineProperties = {};
 
-var internalObjectKeys = objectKeysInternal;
-var enumBugKeys$1 = enumBugKeys$3;
-
-// `Object.keys` method
-// https://tc39.es/ecma262/#sec-object.keys
-// eslint-disable-next-line es/no-object-keys -- safe
-var objectKeys$2 = Object.keys || function keys(O) {
-  return internalObjectKeys(O, enumBugKeys$1);
-};
-
-var DESCRIPTORS$a = descriptors;
+var DESCRIPTORS$9 = descriptors;
 var V8_PROTOTYPE_DEFINE_BUG = v8PrototypeDefineBug;
 var definePropertyModule$2 = objectDefineProperty;
 var anObject$e = anObject$i;
 var toIndexedObject$2 = toIndexedObject$6;
-var objectKeys$1 = objectKeys$2;
+var objectKeys = objectKeys$2;
 
 // `Object.defineProperties` method
 // https://tc39.es/ecma262/#sec-object.defineproperties
 // eslint-disable-next-line es/no-object-defineproperties -- safe
-objectDefineProperties.f = DESCRIPTORS$a && !V8_PROTOTYPE_DEFINE_BUG ? Object.defineProperties : function defineProperties(O, Properties) {
+objectDefineProperties.f = DESCRIPTORS$9 && !V8_PROTOTYPE_DEFINE_BUG ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject$e(O);
   var props = toIndexedObject$2(Properties);
-  var keys = objectKeys$1(Properties);
+  var keys = objectKeys(Properties);
   var length = keys.length;
   var index = 0;
   var key;
@@ -1244,24 +1312,24 @@ var objectCreate = Object.create || function create(O, Properties) {
   return Properties === undefined ? result : definePropertiesModule.f(result, Properties);
 };
 
-var fails$m = fails$w;
+var fails$l = fails$w;
 var global$j = global$v;
 
 // babel-minify and Closure Compiler transpiles RegExp('.', 's') -> /./s and it causes SyntaxError
 var $RegExp$1 = global$j.RegExp;
 
-var regexpUnsupportedDotAll = fails$m(function () {
+var regexpUnsupportedDotAll = fails$l(function () {
   var re = $RegExp$1('.', 's');
   return !(re.dotAll && re.exec('\n') && re.flags === 's');
 });
 
-var fails$l = fails$w;
+var fails$k = fails$w;
 var global$i = global$v;
 
 // babel-minify and Closure Compiler transpiles RegExp('(?<a>b)', 'g') -> /(?<a>b)/g and it causes SyntaxError
 var $RegExp = global$i.RegExp;
 
-var regexpUnsupportedNcg = fails$l(function () {
+var regexpUnsupportedNcg = fails$k(function () {
   var re = $RegExp('(?<a>b)', 'g');
   return re.exec('b').groups.a !== 'b' ||
     'b'.replace(re, '$<a>c') !== 'bc';
@@ -1269,8 +1337,8 @@ var regexpUnsupportedNcg = fails$l(function () {
 
 /* eslint-disable regexp/no-empty-capturing-group, regexp/no-empty-group, regexp/no-lazy-ends -- testing */
 /* eslint-disable regexp/no-useless-quantifier -- testing */
-var call$k = functionCall;
-var uncurryThis$m = functionUncurryThis;
+var call$j = functionCall;
+var uncurryThis$l = functionUncurryThis;
 var toString$8 = toString$9;
 var regexpFlags = regexpFlags$1;
 var stickyHelpers$1 = regexpStickyHelpers;
@@ -1283,16 +1351,16 @@ var UNSUPPORTED_NCG$1 = regexpUnsupportedNcg;
 var nativeReplace = shared('native-string-replace', String.prototype.replace);
 var nativeExec = RegExp.prototype.exec;
 var patchedExec = nativeExec;
-var charAt$7 = uncurryThis$m(''.charAt);
-var indexOf = uncurryThis$m(''.indexOf);
-var replace$6 = uncurryThis$m(''.replace);
-var stringSlice$6 = uncurryThis$m(''.slice);
+var charAt$7 = uncurryThis$l(''.charAt);
+var indexOf = uncurryThis$l(''.indexOf);
+var replace$6 = uncurryThis$l(''.replace);
+var stringSlice$6 = uncurryThis$l(''.slice);
 
 var UPDATES_LAST_INDEX_WRONG = (function () {
   var re1 = /a/;
   var re2 = /b*/g;
-  call$k(nativeExec, re1, 'a');
-  call$k(nativeExec, re2, 'a');
+  call$j(nativeExec, re1, 'a');
+  call$j(nativeExec, re2, 'a');
   return re1.lastIndex !== 0 || re2.lastIndex !== 0;
 })();
 
@@ -1313,14 +1381,14 @@ if (PATCH) {
 
     if (raw) {
       raw.lastIndex = re.lastIndex;
-      result = call$k(patchedExec, raw, str);
+      result = call$j(patchedExec, raw, str);
       re.lastIndex = raw.lastIndex;
       return result;
     }
 
     var groups = state.groups;
     var sticky = UNSUPPORTED_Y$1 && re.sticky;
-    var flags = call$k(regexpFlags, re);
+    var flags = call$j(regexpFlags, re);
     var source = re.source;
     var charsAdded = 0;
     var strCopy = str;
@@ -1348,7 +1416,7 @@ if (PATCH) {
     }
     if (UPDATES_LAST_INDEX_WRONG) lastIndex = re.lastIndex;
 
-    match = call$k(nativeExec, sticky ? reCopy : re, strCopy);
+    match = call$j(nativeExec, sticky ? reCopy : re, strCopy);
 
     if (sticky) {
       if (match) {
@@ -1363,7 +1431,7 @@ if (PATCH) {
     if (NPCG_INCLUDED && match && match.length > 1) {
       // Fix browsers whose `exec` methods don't consistently return `undefined`
       // for NPCG, like IE8. NOTE: This doesn't work for /(.?)?/
-      call$k(nativeReplace, match[0], reCopy, function () {
+      call$j(nativeReplace, match[0], reCopy, function () {
         for (i = 1; i < arguments.length - 2; i++) {
           if (arguments[i] === undefined) match[i] = undefined;
         }
@@ -1384,31 +1452,31 @@ if (PATCH) {
 
 var regexpExec$2 = patchedExec;
 
-var $$h = _export;
+var $$g = _export;
 var exec$5 = regexpExec$2;
 
 // `RegExp.prototype.exec` method
 // https://tc39.es/ecma262/#sec-regexp.prototype.exec
-$$h({ target: 'RegExp', proto: true, forced: /./.exec !== exec$5 }, {
+$$g({ target: 'RegExp', proto: true, forced: /./.exec !== exec$5 }, {
   exec: exec$5
 });
 
 var classofRaw = classofRaw$2;
-var uncurryThis$l = functionUncurryThis;
+var uncurryThis$k = functionUncurryThis;
 
 var functionUncurryThisClause = function (fn) {
   // Nashorn bug:
   //   https://github.com/zloirock/core-js/issues/1128
   //   https://github.com/zloirock/core-js/issues/1130
-  if (classofRaw(fn) === 'Function') return uncurryThis$l(fn);
+  if (classofRaw(fn) === 'Function') return uncurryThis$k(fn);
 };
 
 // TODO: Remove from `core-js@4` since it's moved to entry points
 
-var uncurryThis$k = functionUncurryThisClause;
+var uncurryThis$j = functionUncurryThisClause;
 var defineBuiltIn$b = defineBuiltIn$d;
 var regexpExec$1 = regexpExec$2;
-var fails$k = fails$w;
+var fails$j = fails$w;
 var wellKnownSymbol$j = wellKnownSymbol$n;
 var createNonEnumerableProperty$6 = createNonEnumerableProperty$9;
 
@@ -1418,14 +1486,14 @@ var RegExpPrototype$3 = RegExp.prototype;
 var fixRegexpWellKnownSymbolLogic = function (KEY, exec, FORCED, SHAM) {
   var SYMBOL = wellKnownSymbol$j(KEY);
 
-  var DELEGATES_TO_SYMBOL = !fails$k(function () {
+  var DELEGATES_TO_SYMBOL = !fails$j(function () {
     // String methods call symbol-named RegEp methods
     var O = {};
     O[SYMBOL] = function () { return 7; };
     return ''[KEY](O) != 7;
   });
 
-  var DELEGATES_TO_EXEC = DELEGATES_TO_SYMBOL && !fails$k(function () {
+  var DELEGATES_TO_EXEC = DELEGATES_TO_SYMBOL && !fails$j(function () {
     // Symbol-named RegExp methods call .exec
     var execCalled = false;
     var re = /a/;
@@ -1454,9 +1522,9 @@ var fixRegexpWellKnownSymbolLogic = function (KEY, exec, FORCED, SHAM) {
     !DELEGATES_TO_EXEC ||
     FORCED
   ) {
-    var uncurriedNativeRegExpMethod = uncurryThis$k(/./[SYMBOL]);
+    var uncurriedNativeRegExpMethod = uncurryThis$j(/./[SYMBOL]);
     var methods = exec(SYMBOL, ''[KEY], function (nativeMethod, regexp, str, arg2, forceStringMethod) {
-      var uncurriedNativeMethod = uncurryThis$k(nativeMethod);
+      var uncurriedNativeMethod = uncurryThis$j(nativeMethod);
       var $exec = regexp.exec;
       if ($exec === regexpExec$1 || $exec === RegExpPrototype$3.exec) {
         if (DELEGATES_TO_SYMBOL && !forceStringMethod) {
@@ -1477,14 +1545,14 @@ var fixRegexpWellKnownSymbolLogic = function (KEY, exec, FORCED, SHAM) {
   if (SHAM) createNonEnumerableProperty$6(RegExpPrototype$3[SYMBOL], 'sham', true);
 };
 
-var uncurryThis$j = functionUncurryThis;
+var uncurryThis$i = functionUncurryThis;
 var toIntegerOrInfinity$4 = toIntegerOrInfinity$7;
 var toString$7 = toString$9;
 var requireObjectCoercible$4 = requireObjectCoercible$7;
 
-var charAt$6 = uncurryThis$j(''.charAt);
-var charCodeAt$1 = uncurryThis$j(''.charCodeAt);
-var stringSlice$5 = uncurryThis$j(''.slice);
+var charAt$6 = uncurryThis$i(''.charAt);
+var charCodeAt$1 = uncurryThis$i(''.charCodeAt);
+var stringSlice$5 = uncurryThis$i(''.slice);
 
 var createMethod$2 = function (CONVERT_TO_STRING) {
   return function ($this, pos) {
@@ -1522,7 +1590,7 @@ var advanceStringIndex$2 = function (S, index, unicode) {
   return index + (unicode ? charAt$5(S, index).length : 1);
 };
 
-var call$j = functionCall;
+var call$i = functionCall;
 var anObject$c = anObject$i;
 var isCallable$e = isCallable$q;
 var classof$a = classofRaw$2;
@@ -1535,15 +1603,15 @@ var $TypeError$9 = TypeError;
 var regexpExecAbstract = function (R, S) {
   var exec = R.exec;
   if (isCallable$e(exec)) {
-    var result = call$j(exec, R, S);
+    var result = call$i(exec, R, S);
     if (result !== null) anObject$c(result);
     return result;
   }
-  if (classof$a(R) === 'RegExp') return call$j(regexpExec, R, S);
+  if (classof$a(R) === 'RegExp') return call$i(regexpExec, R, S);
   throw $TypeError$9('RegExp#exec called on incompatible receiver');
 };
 
-var call$i = functionCall;
+var call$h = functionCall;
 var fixRegExpWellKnownSymbolLogic$1 = fixRegexpWellKnownSymbolLogic;
 var anObject$b = anObject$i;
 var isNullOrUndefined$3 = isNullOrUndefined$6;
@@ -1562,7 +1630,7 @@ fixRegExpWellKnownSymbolLogic$1('match', function (MATCH, nativeMatch, maybeCall
     function match(regexp) {
       var O = requireObjectCoercible$3(this);
       var matcher = isNullOrUndefined$3(regexp) ? undefined : getMethod$3(regexp, MATCH);
-      return matcher ? call$i(matcher, regexp, O) : new RegExp(regexp)[MATCH](toString$6(O));
+      return matcher ? call$h(matcher, regexp, O) : new RegExp(regexp)[MATCH](toString$6(O));
     },
     // `RegExp.prototype[@@match]` method
     // https://tc39.es/ecma262/#sec-regexp.prototype-@@match
@@ -1593,7 +1661,7 @@ fixRegExpWellKnownSymbolLogic$1('match', function (MATCH, nativeMatch, maybeCall
 
 var wellKnownSymbol$i = wellKnownSymbol$n;
 var create$3 = objectCreate;
-var defineProperty$5 = objectDefineProperty.f;
+var defineProperty$4 = objectDefineProperty.f;
 
 var UNSCOPABLES = wellKnownSymbol$i('unscopables');
 var ArrayPrototype$1 = Array.prototype;
@@ -1601,7 +1669,7 @@ var ArrayPrototype$1 = Array.prototype;
 // Array.prototype[@@unscopables]
 // https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
 if (ArrayPrototype$1[UNSCOPABLES] == undefined) {
-  defineProperty$5(ArrayPrototype$1, UNSCOPABLES, {
+  defineProperty$4(ArrayPrototype$1, UNSCOPABLES, {
     configurable: true,
     value: create$3(null)
   });
@@ -1614,9 +1682,9 @@ var addToUnscopables$2 = function (key) {
 
 var iterators = {};
 
-var fails$j = fails$w;
+var fails$i = fails$w;
 
-var correctPrototypeGetter = !fails$j(function () {
+var correctPrototypeGetter = !fails$i(function () {
   function F() { /* empty */ }
   F.prototype.constructor = null;
   // eslint-disable-next-line es/no-object-getprototypeof -- required for testing
@@ -1625,7 +1693,7 @@ var correctPrototypeGetter = !fails$j(function () {
 
 var hasOwn$8 = hasOwnProperty_1;
 var isCallable$d = isCallable$q;
-var toObject$6 = toObject$8;
+var toObject$5 = toObject$8;
 var sharedKey = sharedKey$3;
 var CORRECT_PROTOTYPE_GETTER = correctPrototypeGetter;
 
@@ -1637,7 +1705,7 @@ var ObjectPrototype$2 = $Object.prototype;
 // https://tc39.es/ecma262/#sec-object.getprototypeof
 // eslint-disable-next-line es/no-object-getprototypeof -- safe
 var objectGetPrototypeOf = CORRECT_PROTOTYPE_GETTER ? $Object.getPrototypeOf : function (O) {
-  var object = toObject$6(O);
+  var object = toObject$5(O);
   if (hasOwn$8(object, IE_PROTO)) return object[IE_PROTO];
   var constructor = object.constructor;
   if (isCallable$d(constructor) && object instanceof constructor) {
@@ -1645,7 +1713,7 @@ var objectGetPrototypeOf = CORRECT_PROTOTYPE_GETTER ? $Object.getPrototypeOf : f
   } return object instanceof $Object ? ObjectPrototype$2 : null;
 };
 
-var fails$i = fails$w;
+var fails$h = fails$w;
 var isCallable$c = isCallable$q;
 var isObject$9 = isObject$f;
 var getPrototypeOf$3 = objectGetPrototypeOf;
@@ -1670,7 +1738,7 @@ if ([].keys) {
   }
 }
 
-var NEW_ITERATOR_PROTOTYPE = !isObject$9(IteratorPrototype$2) || fails$i(function () {
+var NEW_ITERATOR_PROTOTYPE = !isObject$9(IteratorPrototype$2) || fails$h(function () {
   var test = {};
   // FF44- legacy iterators case
   return IteratorPrototype$2[ITERATOR$8].call(test) !== test;
@@ -1691,7 +1759,7 @@ var iteratorsCore = {
   BUGGY_SAFARI_ITERATORS: BUGGY_SAFARI_ITERATORS$1
 };
 
-var defineProperty$4 = objectDefineProperty.f;
+var defineProperty$3 = objectDefineProperty.f;
 var hasOwn$7 = hasOwnProperty_1;
 var wellKnownSymbol$g = wellKnownSymbol$n;
 
@@ -1700,7 +1768,7 @@ var TO_STRING_TAG$2 = wellKnownSymbol$g('toStringTag');
 var setToStringTag$6 = function (target, TAG, STATIC) {
   if (target && !STATIC) target = target.prototype;
   if (target && !hasOwn$7(target, TO_STRING_TAG$2)) {
-    defineProperty$4(target, TO_STRING_TAG$2, { configurable: true, value: TAG });
+    defineProperty$3(target, TO_STRING_TAG$2, { configurable: true, value: TAG });
   }
 };
 
@@ -1720,13 +1788,13 @@ var iteratorCreateConstructor = function (IteratorConstructor, NAME, next, ENUME
   return IteratorConstructor;
 };
 
-var uncurryThis$i = functionUncurryThis;
+var uncurryThis$h = functionUncurryThis;
 var aCallable$7 = aCallable$9;
 
 var functionUncurryThisAccessor = function (object, key, method) {
   try {
     // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-    return uncurryThis$i(aCallable$7(Object.getOwnPropertyDescriptor(object, key)[method]));
+    return uncurryThis$h(aCallable$7(Object.getOwnPropertyDescriptor(object, key)[method]));
   } catch (error) { /* empty */ }
 };
 
@@ -1768,8 +1836,8 @@ var objectSetPrototypeOf = Object.setPrototypeOf || ('__proto__' in {} ? functio
   };
 }() : undefined);
 
-var $$g = _export;
-var call$h = functionCall;
+var $$f = _export;
+var call$g = functionCall;
 var FunctionName$1 = functionName;
 var isCallable$a = isCallable$q;
 var createIteratorConstructor$1 = iteratorCreateConstructor;
@@ -1838,7 +1906,7 @@ var iteratorDefine = function (Iterable, NAME, IteratorConstructor, next, DEFAUL
       createNonEnumerableProperty$5(IterablePrototype, 'name', VALUES);
     } else {
       INCORRECT_VALUES_NAME = true;
-      defaultIterator = function values() { return call$h(nativeIterator, this); };
+      defaultIterator = function values() { return call$g(nativeIterator, this); };
     }
   }
 
@@ -1853,7 +1921,7 @@ var iteratorDefine = function (Iterable, NAME, IteratorConstructor, next, DEFAUL
       if (BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME || !(KEY in IterablePrototype)) {
         defineBuiltIn$9(IterablePrototype, KEY, methods[KEY]);
       }
-    } else $$g({ target: NAME, proto: true, forced: BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME }, methods);
+    } else $$f({ target: NAME, proto: true, forced: BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME }, methods);
   }
 
   // define iterator
@@ -1875,10 +1943,10 @@ var toIndexedObject$1 = toIndexedObject$6;
 var addToUnscopables$1 = addToUnscopables$2;
 var Iterators$2 = iterators;
 var InternalStateModule$7 = internalState;
-var defineProperty$3 = objectDefineProperty.f;
+var defineProperty$2 = objectDefineProperty.f;
 var defineIterator$1 = iteratorDefine;
 var createIterResultObject$1 = createIterResultObject$2;
-var DESCRIPTORS$9 = descriptors;
+var DESCRIPTORS$8 = descriptors;
 
 var ARRAY_ITERATOR = 'Array Iterator';
 var setInternalState$6 = InternalStateModule$7.set;
@@ -1928,8 +1996,8 @@ addToUnscopables$1('values');
 addToUnscopables$1('entries');
 
 // V8 ~ Chrome 45- bug
-if (DESCRIPTORS$9 && values.name !== 'values') try {
-  defineProperty$3(values, 'name', { value: 'values' });
+if (DESCRIPTORS$8 && values.name !== 'values') try {
+  defineProperty$2(values, 'name', { value: 'values' });
 } catch (error) { /* empty */ }
 
 // iterable DOM collections
@@ -2014,73 +2082,6 @@ for (var COLLECTION_NAME in DOMIterables) {
 }
 
 handlePrototype(DOMTokenListPrototype, 'DOMTokenList');
-
-var DESCRIPTORS$8 = descriptors;
-var uncurryThis$h = functionUncurryThis;
-var call$g = functionCall;
-var fails$h = fails$w;
-var objectKeys = objectKeys$2;
-var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
-var propertyIsEnumerableModule = objectPropertyIsEnumerable;
-var toObject$5 = toObject$8;
-var IndexedObject$1 = indexedObject;
-
-// eslint-disable-next-line es/no-object-assign -- safe
-var $assign = Object.assign;
-// eslint-disable-next-line es/no-object-defineproperty -- required for testing
-var defineProperty$2 = Object.defineProperty;
-var concat$1 = uncurryThis$h([].concat);
-
-// `Object.assign` method
-// https://tc39.es/ecma262/#sec-object.assign
-var objectAssign = !$assign || fails$h(function () {
-  // should have correct order of operations (Edge bug)
-  if (DESCRIPTORS$8 && $assign({ b: 1 }, $assign(defineProperty$2({}, 'a', {
-    enumerable: true,
-    get: function () {
-      defineProperty$2(this, 'b', {
-        value: 3,
-        enumerable: false
-      });
-    }
-  }), { b: 2 })).b !== 1) return true;
-  // should work with symbols and should have deterministic property order (V8 bug)
-  var A = {};
-  var B = {};
-  // eslint-disable-next-line es/no-symbol -- safe
-  var symbol = Symbol();
-  var alphabet = 'abcdefghijklmnopqrst';
-  A[symbol] = 7;
-  alphabet.split('').forEach(function (chr) { B[chr] = chr; });
-  return $assign({}, A)[symbol] != 7 || objectKeys($assign({}, B)).join('') != alphabet;
-}) ? function assign(target, source) { // eslint-disable-line no-unused-vars -- required for `.length`
-  var T = toObject$5(target);
-  var argumentsLength = arguments.length;
-  var index = 1;
-  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
-  var propertyIsEnumerable = propertyIsEnumerableModule.f;
-  while (argumentsLength > index) {
-    var S = IndexedObject$1(arguments[index++]);
-    var keys = getOwnPropertySymbols ? concat$1(objectKeys(S), getOwnPropertySymbols(S)) : objectKeys(S);
-    var length = keys.length;
-    var j = 0;
-    var key;
-    while (length > j) {
-      key = keys[j++];
-      if (!DESCRIPTORS$8 || call$g(propertyIsEnumerable, S, key)) T[key] = S[key];
-    }
-  } return T;
-} : $assign;
-
-var $$f = _export;
-var assign$1 = objectAssign;
-
-// `Object.assign` method
-// https://tc39.es/ecma262/#sec-object.assign
-// eslint-disable-next-line es/no-object-assign -- required for testing
-$$f({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign$1 }, {
-  assign: assign$1
-});
 
 const toSnakeCase = str => {
   const matches = str.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g) || [];
@@ -2722,14 +2723,8 @@ var SETTINGS_ENUM;
   SETTINGS_ENUM[SETTINGS_ENUM["MODULE_PENDING"] = 0] = "MODULE_PENDING";
   SETTINGS_ENUM[SETTINGS_ENUM["EXTENSION_PENDING"] = 1] = "EXTENSION_PENDING";
   SETTINGS_ENUM[SETTINGS_ENUM["USER_AD"] = 2] = "USER_AD";
-  SETTINGS_ENUM[SETTINGS_ENUM["LOCALE_DATE"] = 3] = "LOCALE_DATE";
-  SETTINGS_ENUM[SETTINGS_ENUM["LOCALE_COUNTRY"] = 4] = "LOCALE_COUNTRY";
-  SETTINGS_ENUM[SETTINGS_ENUM["PURCHASE_REQUISITION_PENDING"] = 5] = "PURCHASE_REQUISITION_PENDING";
-  SETTINGS_ENUM[SETTINGS_ENUM["ACCOUNTABILITY_PENDING"] = 6] = "ACCOUNTABILITY_PENDING";
-  SETTINGS_ENUM[SETTINGS_ENUM["FB60_PENDING"] = 7] = "FB60_PENDING";
-  SETTINGS_ENUM[SETTINGS_ENUM["PAYMENT_PROPOSAL_PENDING"] = 8] = "PAYMENT_PROPOSAL_PENDING";
-  SETTINGS_ENUM[SETTINGS_ENUM["PURCHASE_ORDER_PENDING"] = 9] = "PURCHASE_ORDER_PENDING";
-  SETTINGS_ENUM[SETTINGS_ENUM["CENTRAL_ACTION_FETCH"] = 10] = "CENTRAL_ACTION_FETCH";
+  SETTINGS_ENUM[SETTINGS_ENUM["CENTRAL_ACTION_FETCH"] = 3] = "CENTRAL_ACTION_FETCH";
+  SETTINGS_ENUM[SETTINGS_ENUM["DISCARTED"] = 4] = "DISCARTED";
 })(SETTINGS_ENUM || (SETTINGS_ENUM = {}));
 const storageName = '@approvalmodule';
 class ApprovalSettingsClient extends WithBootedClient {
@@ -2783,34 +2778,39 @@ class ApprovalSettingsClient extends WithBootedClient {
     });
   }
 }
-var SettingsClient = new ApprovalSettingsClient();
+var ApprovalSettingsClient$1 = new ApprovalSettingsClient();
 
-function Index$1(props) {
+const ApprovalCenterButton = props => {
   const [pending, setPending] = useState(0);
+  const [show, setShow] = useState(false);
   const history = useHistory();
   const title = props.title || 'Central de Aprovações';
-  const onClick = () => __awaiter(this, void 0, void 0, function* () {
-    yield SettingsClient.set('CENTRAL_ACTION_FETCH', true);
+  const onClick = () => __awaiter(void 0, void 0, void 0, function* () {
+    yield ApprovalSettingsClient$1.set('CENTRAL_ACTION_FETCH', true);
     history.push(props.pathModule);
   });
-  const getPendingCounter = () => __awaiter(this, void 0, void 0, function* () {
-    yield SettingsClient.boot();
-    const _modulePending = SettingsClient.get('MODULE_PENDING', 0);
-    const _extensionPending = SettingsClient.get('EXTENSION_PENDING', 0);
+  const getPendingCounter = () => __awaiter(void 0, void 0, void 0, function* () {
+    yield ApprovalSettingsClient$1.boot();
+    const _modulePending = ApprovalSettingsClient$1.get('MODULE_PENDING', 0);
+    const _extensionPending = ApprovalSettingsClient$1.get('EXTENSION_PENDING', 0);
+    yield ApprovalSettingsClient$1.set('USER_AD', 'FMMARTINS');
+    setShow(ApprovalSettingsClient$1.get('USER_AD', null) !== null);
     return _modulePending + _extensionPending;
   });
   useEffect(() => {
     getPendingCounter().then(p => setPending(p));
   }, []);
-  return jsx(Ramen.XCard, {
+  return show ? jsx(Ramen.XCard, {
     symbol: "fit-stock-neutral",
     title: title,
     count: pending,
     onClick: onClick
-  });
-}
+  }) :
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  jsx(Fragment, {});
+};
 
-function Index(props) {
+const ApprovalCardExemple = props => {
   const [pending, setPending] = useState(0);
   const history = useHistory();
   const title = 'Children';
@@ -2826,7 +2826,7 @@ function Index(props) {
     count: pending,
     onClick: onClick
   });
-}
+};
 
 var APPROVAL_TYPES;
 (function (APPROVAL_TYPES) {
@@ -3956,6 +3956,14 @@ $$6({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR }, {
   }
 });
 
+var EGenericApprovalAction;
+(function (EGenericApprovalAction) {
+  EGenericApprovalAction["APPROVE"] = "approve";
+  EGenericApprovalAction["REJECT"] = "reject";
+  EGenericApprovalAction["GIVEBACK"] = "giveback";
+  EGenericApprovalAction["DISCARD"] = "discard";
+})(EGenericApprovalAction || (EGenericApprovalAction = {}));
+
 /**
  *
  * @param error * Interceptor for success request.
@@ -4092,6 +4100,14 @@ class FicoAPI extends AxiosProvider {
       return yield this.get(`/v1/${this.countryCode}/purchaseRequisition/get/file/${fileId}`);
     });
   }
+  approvalAction(data, action, userAd) {
+    return __awaiter(this, void 0, void 0, function* () {
+      return yield this.post(`/v1/${this.countryCode}/${data.category}/action/${action}`, {
+        userAd: userAd,
+        approval: data
+      });
+    });
+  }
 }
 
 const config = {
@@ -4139,6 +4155,24 @@ class FioriAPI extends AxiosProvider {
   getPurchaseOrderDetail(orderId) {
     return __awaiter(this, void 0, void 0, function* () {
       return yield this.get(`/v1/${this.countryCode}/purchaseOrder/list/approvals/detail/${orderId}`);
+    });
+  }
+  getAccountabilityFiles(data) {
+    return __awaiter(this, void 0, void 0, function* () {
+      return yield this.post(`/v1/${this.countryCode}/accountability/list/files`, data);
+    });
+  }
+  getAccountabilityFileStream(fileId) {
+    return __awaiter(this, void 0, void 0, function* () {
+      return yield this.get(`/v1/${this.countryCode}/accountability/get/file/${fileId}`);
+    });
+  }
+  approvalAction(data, action, userAd) {
+    return __awaiter(this, void 0, void 0, function* () {
+      return yield this.post(`/v1/${this.countryCode}/${data.category}/action/${action}`, {
+        userAd: userAd,
+        approval: data
+      });
     });
   }
 }
@@ -4201,197 +4235,14 @@ class ApprovalAPI {
 }
 const approvalAPI = new ApprovalAPI();
 
-function ApprovalCenter(props) {
-  var _a;
-  const [loading, setLoading] = useState(false);
-  const [purchaseRequisition, setPurchaseRequisition] = useState([]);
-  const [accountability, setAccountability] = useState([]);
-  const [fb60, setFB60] = useState([]);
-  const [paymentProposal, setPaymentProposal] = useState([]);
-  const [purchaseOrder, setPurchaseOrder] = useState([]);
-  const findAD = () => __awaiter(this, void 0, void 0, function* () {
-    SettingsClient.get('USER_AD', null);
-    return 'FMMARTINS';
-    // if (!_ad) {
-    //   adAPI.setBaseUrl(props.extensions?.env?.adApi ?? '');
-    //   adAPI.setApiKey(props.extensions?.env?.adApiKey ?? '');
-    //   const _adRequest = await adAPI.getAdByEmail();
-    //   await ApprovalSettingsClient.set('USER_AD', _adRequest);
-    //   return _adRequest;
-    // }
-    // return _ad;
-  });
-
-  const getData = useCallback(() => __awaiter(this, void 0, void 0, function* () {
-    var _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
-    const _types = (_b = props.extensions) === null || _b === void 0 ? void 0 : _b.approval_types;
-    approvalAPI.fico.setBaseUrl((_e = (_d = (_c = props.extensions) === null || _c === void 0 ? void 0 : _c.env) === null || _d === void 0 ? void 0 : _d.approvalFicoApi) !== null && _e !== void 0 ? _e : '');
-    approvalAPI.fico.setApiKey((_g = (_f = props.extensions) === null || _f === void 0 ? void 0 : _f.env.approvalApiKey) !== null && _g !== void 0 ? _g : '');
-    approvalAPI.fiori.setBaseUrl((_k = (_j = (_h = props.extensions) === null || _h === void 0 ? void 0 : _h.env) === null || _j === void 0 ? void 0 : _j.approvalFioriApi) !== null && _k !== void 0 ? _k : '');
-    approvalAPI.fiori.setApiKey((_m = (_l = props.extensions) === null || _l === void 0 ? void 0 : _l.env.approvalApiKey) !== null && _m !== void 0 ? _m : '');
-    approvalAPI.setCountryCode((_q = (_p = (_o = props.extensions) === null || _o === void 0 ? void 0 : _o.env) === null || _p === void 0 ? void 0 : _p.country.toLowerCase()) !== null && _q !== void 0 ? _q : '');
-    if (!SettingsClient.get('CENTRAL_ACTION_FETCH', false)) {
-      const _pR = SettingsClient.get('PURCHASE_REQUISITION_PENDING', []);
-      const _aCC = SettingsClient.get('ACCOUNTABILITY_PENDING', []);
-      const _fB = SettingsClient.get('FB60_PENDING', []);
-      const _pP = SettingsClient.get('PAYMENT_PROPOSAL_PENDING', []);
-      const _pO = SettingsClient.get('PURCHASE_ORDER_PENDING', []);
-      setPurchaseRequisition(_pR);
-      setAccountability(_aCC);
-      setFB60(_fB);
-      setPaymentProposal(_pP);
-      setPurchaseOrder(_pO);
-      yield SettingsClient.set('MODULE_PENDING', _pR.length + _aCC.length + _fB.length + _pP.length + _pO.length);
-      return;
-    }
-    setLoading(true);
-    let _pending = 0;
-    const _promisses = [];
-    const _approvalsInPromisses = [];
-    const userAD = yield findAD();
-    if (userAD) {
-      if (_types === null || _types === void 0 ? void 0 : _types.includes(APPROVAL_TYPES.PURCHASE_REQUISITION)) {
-        _promisses.push(approvalAPI.getApprovals({
-          type: APPROVAL_TYPES.PURCHASE_REQUISITION,
-          userAd: userAD
-        }));
-        _approvalsInPromisses.push(APPROVAL_TYPES.PURCHASE_REQUISITION);
-      }
-      if (_types === null || _types === void 0 ? void 0 : _types.includes(APPROVAL_TYPES.ACCOUNTABILITY)) {
-        _promisses.push(approvalAPI.getApprovals({
-          type: APPROVAL_TYPES.ACCOUNTABILITY,
-          userAd: userAD
-        }));
-        _approvalsInPromisses.push(APPROVAL_TYPES.ACCOUNTABILITY);
-      }
-      if (_types === null || _types === void 0 ? void 0 : _types.includes(APPROVAL_TYPES.FB60)) {
-        _promisses.push(approvalAPI.getApprovals({
-          type: APPROVAL_TYPES.FB60,
-          userAd: userAD
-        }));
-        _approvalsInPromisses.push(APPROVAL_TYPES.FB60);
-      }
-      if (_types === null || _types === void 0 ? void 0 : _types.includes(APPROVAL_TYPES.PAYMENT_PROPOSAL)) {
-        _promisses.push(approvalAPI.getApprovals({
-          type: APPROVAL_TYPES.PAYMENT_PROPOSAL,
-          userAd: userAD
-        }));
-        _approvalsInPromisses.push(APPROVAL_TYPES.PAYMENT_PROPOSAL);
-      }
-      if (_types === null || _types === void 0 ? void 0 : _types.includes(APPROVAL_TYPES.PURCHASE_ORDER)) {
-        _promisses.push(approvalAPI.getApprovals({
-          type: APPROVAL_TYPES.PURCHASE_ORDER,
-          userAd: userAD
-        }));
-        _approvalsInPromisses.push(APPROVAL_TYPES.PURCHASE_ORDER);
-      }
-      const result = yield Promise.all(_promisses);
-      for (const [index, value] of result.entries()) {
-        const _data = value.success && value.data.length > 0 ? value.data : [];
-        if (_approvalsInPromisses[index] === APPROVAL_TYPES.PURCHASE_REQUISITION) {
-          setPurchaseRequisition(_data);
-          _pending = _pending + _data.length;
-          yield SettingsClient.set('PURCHASE_REQUISITION_PENDING', _data);
-        } else if (_approvalsInPromisses[index] === APPROVAL_TYPES.ACCOUNTABILITY) {
-          setAccountability(_data);
-          _pending = _pending + _data.length;
-          yield SettingsClient.set('ACCOUNTABILITY_PENDING', _data);
-        } else if (_approvalsInPromisses[index] === APPROVAL_TYPES.FB60) {
-          setFB60(_data);
-          _pending = _pending + _data.length;
-          yield SettingsClient.set('FB60_PENDING', _data);
-        } else if (_approvalsInPromisses[index] === APPROVAL_TYPES.PAYMENT_PROPOSAL) {
-          setPaymentProposal(_data);
-          _pending = _pending + _data.length;
-          yield SettingsClient.set('PAYMENT_PROPOSAL_PENDING', _data);
-        } else if (_approvalsInPromisses[index] === APPROVAL_TYPES.PURCHASE_ORDER) {
-          setPurchaseOrder(_data);
-          _pending = _pending + _data.length;
-          yield SettingsClient.set('PURCHASE_ORDER_PENDING', _data);
-        }
-      }
-      setLoading(false);
-      yield SettingsClient.set('MODULE_PENDING', _pending);
-      yield SettingsClient.set('CENTRAL_ACTION_FETCH', false);
-    }
-  }), [props.extensions]);
-  useEffect(() => {
-    SettingsClient.boot().then(() => getData());
-  }, [getData]);
-  return jsxs(Ramen.XPage, {
-    children: [jsx(Ramen.XHeader, {
-      onBack: () => props.history.goBack(),
-      sticky: true,
-      tags: [],
-      title: "Central de Aprova\u00E7\u00F5es",
-      skeleton: loading
-    }), jsx(Ramen.XBody, {
-      children: jsxs(Ramen.XBox, Object.assign({
-        gap: "l"
-      }, {
-        children: [loading ? jsxs(Fragment, {
-          children: [jsx(Ramen.XSkeleton, {
-            size: "l",
-            type: "image",
-            width: "xl"
-          }), jsx(Ramen.XSkeleton, {
-            size: "l",
-            type: "image",
-            width: "xl"
-          }), jsx(Ramen.XSkeleton, {
-            size: "l",
-            type: "image",
-            width: "xl"
-          }), jsx(Ramen.XSkeleton, {
-            size: "l",
-            type: "image",
-            width: "xl"
-          }), jsx(Ramen.XSkeleton, {
-            size: "l",
-            type: "image",
-            width: "xl"
-          })]
-        }) : jsxs(Fragment, {
-          children: [accountability.length > 0 && jsx(Ramen.XCard, {
-            symbol: "cyclical-inventory-neutral",
-            title: 'Prestação de Contas',
-            count: accountability.length,
-            onClick: () => props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.ACCOUNTABILITY}`)
-          }), purchaseRequisition.length > 0 && jsx(Ramen.XCard, {
-            symbol: "customers-bag-neutral",
-            title: 'Requisição de Compra',
-            count: purchaseRequisition.length,
-            onClick: () => props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.PURCHASE_REQUISITION}`)
-          }), fb60.length > 0 && jsx(Ramen.XCard, {
-            symbol: "user-sales-neutral",
-            title: 'Contas a Pagar (FB60)',
-            count: fb60.length,
-            onClick: () => props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.FB60}`)
-          }), purchaseOrder.length > 0 && jsx(Ramen.XCard, {
-            symbol: "fit-stock-neutral",
-            title: 'Pedido Fico',
-            count: purchaseOrder.length,
-            onClick: () => props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.PURCHASE_ORDER}`)
-          }), paymentProposal.length > 0 && jsx(Ramen.XCard, {
-            symbol: "user-sales-neutral",
-            title: 'Proposta de Pagamento',
-            count: paymentProposal.length,
-            onClick: () => props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.PAYMENT_PROPOSAL}`)
-          })]
-        }), ((_a = props.extensions) === null || _a === void 0 ? void 0 : _a.children) && props.extensions.children(), jsx(Ramen.XBox, {
-          padding: "s"
-        })]
-      }))
-    })]
-  });
-}
-
 const locale$2 = {
+  // BUTTON HOME
+  MENU_TITLE: 'Central de aprovações',
   // MENU TITLE
   PURCHASE_REQUISITION_MENU_TITLE: 'Requisição de Compra',
   ACCOUNTABILITY_MENU_TITLE: 'Prestação de Contas',
   FB60_MENU_TITLE: 'Contas a Pagar (FB60)',
-  PURCHASE_ORDER_MENU_TITLE: 'Pedidos Fico',
+  PURCHASE_ORDER_MENU_TITLE: 'Pedido Fico',
   PAYMENT_PROPOSAL_MENU_TITLE: 'Proposta de Pagamento',
   // MENU TITLE SHORT
   PURCHASE_REQUISITION_MENU_TITLE_SHORT: 'Requisição',
@@ -4399,6 +4250,11 @@ const locale$2 = {
   FB60_MENU_TITLE_SHORT: 'Conta',
   PURCHASE_ORDER_MENU_TITLE_SHORT: 'Pedido',
   PAYMENT_PROPOSAL_MENU_TITLE_SHORT: 'Proposta',
+  // SEARCH
+  LABEL_SEARCH: 'Pesquisar',
+  TXT_TITLE_NOTHING_TODO: 'Nenhuma aprovação pendente',
+  TXT_TITLE_SEARCH_NOT_FOUND: 'Nenhum resultado encontrado',
+  TXT_SUBTITLE_SEARCH_NOT_FOUND: 'No momento não podemos exibir as informações que você estava procurando.',
   // LABEL
   LABEL_CREATED_AT: 'Criado em',
   LABEL_CREATED_BY: 'Criado por',
@@ -4412,13 +4268,27 @@ const locale$2 = {
   LABEL_DELIVERY_DATE: 'Entrega',
   LABEL_DOC_EXERC: 'Doc./Exerc.',
   LABEL_EXPIRATION_DATE: 'Vencimento',
+  LABEL_PAYMENT_METHOD: 'Forma de pagamento',
+  LABEL_BANK_COMPANY: 'Banco empresa',
+  LABEL_DATE_TO_PAY: 'Data de pagamento',
+  LABEL_ACCOUNT_ID: 'Identificador conta',
+  LABEL_PAYMENT_ID: 'Identificador',
+  LABEL_PAYMENT_AMOUNT: 'Quant. pagamentos',
+  LABEL_START_DATE: 'Início',
+  LABEL_END_DATE: 'Fim',
+  LABEL_JUSTIFY: 'Motivo',
+  LABEL_NOT_INFORM: 'Não informado',
+  LABEL_OBSERVATION: 'Observações',
   // ACTIONS
+  LABEL_ACCEPT: 'Aceitar',
   LABEL_APPROVE: 'Aprovar',
   LABEL_REJECT: 'Rejeitar',
   LABEL_GIVEBACK: 'Devolver',
   LABEL_DISCARD: 'Descartar',
   LABEL_CANCEL: 'Cancelar',
+  // LOADING
   LOADING: 'Carregando...',
+  // FILES
   ERROR_MIME: 'Formato de arquivo inválido',
   ERROR_0_BYTE: 'Arquivo corrompido!',
   ERROR_OPEN_FILE: 'Ocorreu um erro ao abrir o arquivo',
@@ -4426,265 +4296,296 @@ const locale$2 = {
   QUESTION_MODAL_PR_APPROVE: 'Deseja aprovar esta requisição de compra?',
   QUESTION_MODAL_PR_REJECT: 'Deseja rejeitar esta requisição de compra?',
   // ACCOUNTABILITY
-  QUESTION_MODAL_APPROVE: 'Deseja aprovar esta prestação de contas?',
-  QUESTION_MODAL_REJECT: 'Deseja rejeitar esta prestação de contas?',
-  QUESTION_MODAL_GIVEBACK: 'Deseja devolver esta prestação de contas?',
+  QUESTION_MODAL_ACCOUNTABILIY_APPROVE: 'Deseja aprovar esta prestação de contas no valor de {{s}}?',
+  QUESTION_MODAL_ACCOUNTABILIY_REJECT: 'Deseja rejeitar esta prestação de contas no valor de {{s}}?',
+  QUESTION_MODAL_ACCOUNTABILIY_GIVEBACK: 'Deseja devolver esta prestação de contas no valor de {{s}}?',
   // FB60
   QUESTION_MODAL_FB60_APPROVE: 'Deseja aprovar o documento no valor de {{s}}?',
   QUESTION_MODAL_FB60_REJECT: 'Deseja rejeitar o documento no valor de {{s}}?',
   // PURCHASE_ORDER
   QUESTION_MODAL_PURCHASE_ORDER_APPROVE: 'Deseja aprovar este pedido de compra fico?',
-  QUESTION_MODAL_PURCHASE_ORDER_REJECT: 'Deseja descartar de Arcus este pedido de compra fico?',
+  QUESTION_MODAL_PURCHASE_ORDER_REJECT: 'Deseja rejeitar este pedido de compra fico?',
   QUESTION_MODAL_PURCHASE_ORDER_TRASH: 'Deseja descartar de Arcus este pedido de compra fico?',
+  // PAYMENT PROPOSAL
+  QUESTION_MODAL_PAYMENT_PROPOSAL_APPROVE: 'Deseja aprovar a proposta de pagamento no valor de {{s}}?',
+  QUESTION_MODAL_PAYMENT_PROPOSAL_REJECT: 'Deseja rejeitar esta proposta de pagamento?',
+  QUESTION_MODAL_PAYMENT_PROPOSAL_TRASH: 'Deseja descartar de Arcus esta proposta de pagamento?',
   // ANOTHER TEXTS
   LABEL_EXPANSION_OPENED: 'Ver menos',
   LABEL_EXPANSION_CLOSED: 'Ver mais',
+  // ACTIONS CALLBACKS
   //
-  //
-  //
-  MENU_TITLE: 'Central de aprovações',
-  // card title
-  RETAIL: 'Ordem',
-  SALE: 'Ordem',
-  FB60: 'Contas a Pagar (FB60)',
-  PURCHASE_ORDER: 'Pedido',
-  PAYMENT_PROPOSAL: 'Proposta',
-  QUESTION_MODAL_PAYMENT_PROPOSAL_APPROVE: 'Deseja aprovar a proposta de pagamento no valor de {{s}}?',
-  QUESTION_MODAL_PAYMENT_PROPOSAL_REJECT: 'Deseja descartar de Arcus esta proposta de pagamento?',
-  QUESTION_MODAL_PAYMENT_PROPOSAL_TRASH: 'Deseja descartar de Arcus esta proposta de pagamento?',
-  QUESTION_MODAL_RETAIL_APPROVE: 'Deseja aprovar esta ordem de compra?',
-  QUESTION_MODAL_RETAIL_REJECT: 'Deseja rejeitar esta ordem de compra?',
-  QUESTION_MODAL_SALE_APPROVE: 'Deseja aprovar esta ordem de venda?',
-  QUESTION_MODAL_SALE_REJECT: 'Deseja rejeitar esta ordem de venda?',
-  APPROVE_BUTTON_LABEL: 'Aprovar',
-  REJECT_BUTTON_LABEL: 'Rejeitar',
-  TRASH_BUTTON_LABEL: 'Descartar',
-  GIVEBACK_BUTTON_LABEL: 'Devolver',
-  APPROVE_DONE_MSG: 'Aprovado com sucesso',
-  DISCARDTED_DONE_MSG: 'Descartado com sucesso',
-  REJECT_DONE_MSG: 'Rejeitado com sucesso',
-  GIVEBACK_DONE_MSG: 'Retorno com sucesso',
-  START_DATE_LABEL: 'Início',
-  END_DATE_LABEL: 'Fim',
-  JUSTIFY_LABEL: 'Motivo',
-  NOT_INFORM: 'Não informado',
-  OBSERVATION_LABEL: 'Observações',
-  PAYMENT_METHOD_LABEL: 'Forma de pagamento',
-  BANK_COMPANY_LABEL: 'Banco empresa',
-  DATE_TO_PAY: 'Data de pagamento',
-  ACCOUNT_ID: 'Identificador conta',
-  PAYMENT_ID: 'Identificador',
-  PAYMENT_AMOUNT: 'Quant. pagamentos',
-  QUANTITY: 'Quant.',
-  QUANTITY_LABEL: 'Qtd Itens',
-  DATE_REM_LABEL: 'Data Rem',
-  CREATED_AT_LABEL: 'Criado',
-  COMPANY_LABEL: 'Empresa',
-  TOTAL_SALE_LABEL: 'T. Venda',
-  TOTAL_DISCOUNT_LABEL: 'T. Dcto.',
-  PERCENT_DISCOUNT_LABEL: '% Dcto.',
-  DETAIL_TOTAL_SALE: 'Total venda',
-  DETAIL_TOTAL_DISCOUNT: 'Total desconto',
-  DETAIL_PERCENT_DISCOUNT: '% Desconto',
-  DETAIL_PAYMENT_CONDITION: 'Cond. Pagto',
-  DETAIL_DDE_ORDER: 'DDE Pedido',
-  DETAIL_DDE_YEARLY: 'DDE Anual',
-  DETAIL_QTD: 'Qtd',
-  DETAIL_VALUE: 'Valor',
-  DETAIL_TOTAL: 'Total',
-  DETAIL_TOTAL_WITH_DISCOUNT: 'Total c/Desc',
-  DETAIL_QUANTITY_ITEMS: 'Quant. itens',
-  DETAIL_PAYMENT_COND: 'Prazo pagamento',
-  DETAIL_UNIT_VALUE_ITEM: 'Valor Unit.',
-  DETAIL_CCPEP: 'CC/PEP',
-  SEARCH_PLACEHOLDER: 'Buscar',
-  DOWNLOADING: 'Baixando arquivo...',
-  ERROR_DOWNLOADING: 'Erro ao baixar arquivo',
-  ERROR_FORMAT: 'Formato de arquivo inválido',
-  ALL_IN_ORDER: 'Você tem tudo em ordem!',
-  ERROR_REQUEST: 'Erro ao verifica aprovações pendentes em FICO',
-  ERROR_REQUEST_SUMARY: 'Erro ao verificar aprovações pendentes',
-  ERROR_REQUEST_SALES: 'Erro ao verificar vendas atacado pendentes',
-  ERROR_REQUEST_RETAIL: 'Erro ao verificar pedidos retails pendentes',
-  ERROR_REQUEST_ACCOUNTABILITY: 'Erro ao verificar prestações de contas pendentes',
-  ERROR_REQUEST_RC: 'Erro ao verificar requisições de compra pendentes',
-  ERROR_REQUEST_FB60: 'Erro ao verificar contas a pagar (FB60) pendentes',
-  ERROR_REQUEST_PURCHASE_ORDER: 'Erro ao verificar pedidos de compra pendentes',
-  ERROR_REQUEST_PURCHASE_ORDER_DETAILS: 'Erro ao verificar os detalhes do pedido de compra',
-  ERROR_REQUEST_PAYMENT_PROPOSAL: 'Erro ao verificar propostas de pagamento pendentes',
-  ERROR_REQUEST_SALES_ACTION: 'Erro ao efetuar a ação para a ordem de venda',
-  ERROR_PERMISSION_SALES: 'Você não possui permissão para aprovar uma ordem de venda',
-  ERROR_PERMISSION_RETAIL: 'Você não possui permissão para aprovar uma ordem de compra',
-  ERROR_REQUEST_ACCOUNTABILITY_FILES: 'Erro ao buscar a lista de anexos da prestação de contas',
-  ERROR_REQUEST_RC_FILES: 'Erro ao buscar a lista de anexos da requisição de compra',
-  ERROR_REQUEST_ACCOUNTABILITY_ACTION: 'Erro ao efetuar a ação para a prestação de contas',
-  ERROR_REQUEST_FB60_ACTION: 'Erro ao efetuar a ação para a conta a pagar (FB60)',
-  ERROR_REQUEST_RETAIL_ACTION: 'Erro ao efetuar a ação para o ordem de compra',
-  ERROR_REQUEST_PURCHASE_ACTION: 'Erro ao efetuar a ação para o pedido de compra',
-  ERROR_REQUEST_PAYMENTPROPOSAL_ACTION: 'Erro ao efetuar a ação para a proposta de pagamento',
-  ERROR_REQUEST_RC_ACTION: 'Erro ao efetuar a ação para a requisição de compra',
-  LOADING_ACCOUNTABILITY: 'Carregando prestação de contas'
+  // PURCHASE ORDER
+  SUCCESS_ACTION_APPROVE_PURCHASE_ORDER: 'Pedido de compra aprovado com sucesso',
+  SUCCESS_ACTION_DISCARD_PURCHASE_ORDER: 'Pedido de compra descartado com sucesso',
+  ERROR_ACTION_PURCHASE_ORDER: 'Erro ao executar a ação para o pedido de compra',
+  // PURCHASE REQUISITION
+  SUCCESS_ACTION_APPROVE_PURCHASE_REQUISITION: 'Requisição de compra aprovada com sucesso',
+  SUCCESS_ACTION_REJECT_PURCHASE_REQUISITION: 'Requisição de compra rejeitada com sucesso',
+  ERROR_ACTION_PURCHASE_REQUISITION: 'Erro ao executar a ação para a requisição de compra',
+  // PAYMENT PROPOSAL
+  SUCCESS_ACTION_APPROVE_PAYMENT_PROPOSAL: 'Proposta de pagamento aprovada com sucesso',
+  SUCCESS_ACTION_DISCARD_PAYMENT_PROPOSAL: 'Proposta de pagamento descartada com sucesso',
+  ERROR_ACTION_PAYMENT_PROPOSAL: 'Erro ao executar a ação para a proposta de pagamento',
+  // FB60
+  SUCCESS_ACTION_APPROVE_FB60: 'Conta a pagar aprovada com sucesso',
+  SUCCESS_ACTION_REJECT_FB60: 'Conta a pagar rejeitada com sucesso',
+  ERROR_ACTION_FB60: 'Erro ao executar a ação para a conta a pagar',
+  // ACCOUNTABILITY
+  SUCCESS_ACTION_APPROVE_ACCOUNTABILITY: 'Prestação de contas aprovada com sucesso',
+  SUCCESS_ACTION_REJECT_ACCOUNTABILITY: 'Prestação de contas rejeitada com sucesso',
+  SUCCESS_ACTION_GIVEBACK_ACCOUNTABILITY: 'Prestação de contas devolvida com sucesso',
+  ERROR_ACTION_ACCOUNTABILITY: 'Erro ao executar a ação para a prestação de contas'
 };
 
 const locale$1 = {
-  SALE_MENU_TITLE: 'Sales',
-  RETAIL_ORDER_MENU_TITLE: 'Retail Order',
-  RC_ORDER_MENU_TITLE: 'Purchase Requisition',
-  ACCOUNTABILITY_MENU_TITLE: 'Accountability',
+  // BUTTON HOME
   MENU_TITLE: 'Approval Center',
-  // card title
-  PROVISION: 'Provision',
-  RETAIL: 'Order',
-  SALE: 'Order',
-  RC: 'Requisition',
-  FB60: 'FB60',
-  QUESTION_MODAL_APPROVE: 'Do you want to approve this rendering of accounts?',
-  QUESTION_MODAL_REJECT: 'Do you want to reject this rendering of accounts?',
-  QUESTION_MODAL_GIVEBACK: 'Do you want to return this rendering of accounts?',
-  QUESTION_MODAL_RC_APPROVE: 'Do you want to approve this purchase requisition?',
-  QUESTION_MODAL_RC_REJECT: 'Do you want to reject this purchase requisition?',
-  QUESTION_MODAL_RETAIL_APPROVE: 'Do you want to approve this purchase order?',
-  QUESTION_MODAL_RETAIL_REJECT: 'Do you want to reject this purchase order?',
-  QUESTION_MODAL_SALE_APPROVE: 'Do you want to approve this sales order?',
-  QUESTION_MODAL_SALE_REJECT: 'Do you want to reject this sales order?',
-  APPROVE_BUTTON_LABEL: 'Approve',
-  REJECT_BUTTON_LABEL: 'Reject',
-  GIVEBACK_BUTTON_LABEL: 'Give Back',
-  APPROVE_DONE_MSG: 'Successfully approved',
-  REJECT_DONE_MSG: 'Successfully rejected',
-  GIVEBACK_DONE_MSG: 'Successfully returned',
-  START_DATE_LABEL: 'Start',
-  END_DATE_LABEL: 'End',
-  JUSTIFY_LABEL: 'Justify',
-  NOT_INFORM: 'Not informed',
-  OBSERVATION_LABEL: 'Observation',
-  STORE_LABEL: 'Store',
-  QUANTITY_LABEL: 'Qty Itens',
-  DATE_REM_LABEL: 'Date Rem',
-  CREATED_AT_LABEL: 'Created',
-  TOTAL_SALE_LABEL: 'T. Sale',
-  TOTAL_DISCOUNT_LABEL: 'T. Disc.',
-  PERCENT_DISCOUNT_LABEL: '% Disc.',
-  DETAIL_CREATED_AT: 'Created at',
-  DETAIL_CREATED_BY: 'Created by',
-  DETAIL_TOTAL_SALE: 'Total sale',
-  DETAIL_TOTAL_DISCOUNT: 'Total discount',
-  DETAIL_PERCENT_DISCOUNT: '% Discount',
-  DETAIL_PAYMENT_CONDITION: 'Payterms',
-  DETAIL_DDE_ORDER: 'DDE Order',
-  DETAIL_DDE_YEARLY: 'DDE Yearly',
-  DETAIL_QTD: 'Qty',
-  DETAIL_VALUE: 'Value',
-  DETAIL_TOTAL: 'Total',
-  DETAIL_TOTAL_WITH_DISCOUNT: 'Total c/Disc',
-  DETAIL_LAST_APPROVER: 'Last approver',
-  DETAIL_QUANTITY: 'Quantity',
-  DETAIL_UNIT_VALUE: 'Unit value',
-  DETAIL_CCPEP: 'CC/PEP',
-  DETAIL_SUPPLY: 'Supplier',
-  SEARCH_PLACEHOLDER: 'Search',
-  DOWNLOADING: 'Downloading file...',
-  ERROR_DOWNLOADING: 'Error downloading file',
-  ERROR_FORMAT: 'Invalid file format',
-  ALL_IN_ORDER: 'You have everything in order!',
-  ERROR_REQUEST_SUMARY: 'Error when checking pending approvals',
-  ERROR_REQUEST_SALES: 'Error when fetching pending sales',
-  ERROR_REQUEST_RC: 'Error when verifying purchase requisition',
-  ERROR_REQUEST_SALES_ACTION: 'Error when executing the action for the sales order',
-  ERROR_PERMISSION_SALES: 'You do not have permission to approve a sales order',
-  ERROR_PERMISSION_RETAIL: 'You do not have permission to approve a purchase order',
-  ERROR_REQUEST_ACCOUNTABILITY: 'Error when fetching pending accountabilities',
-  ERROR_REQUEST_ACCOUNTABILITY_FILES: 'Error when fetching the list of accountability attachments',
-  ERROR_REQUEST_RC_FILES: 'Error fetching list of purchase requisition attachments',
-  ERROR_REQUEST_ACCOUNTABILITY_ACTION: 'Error when performing the action for the rendering of accounts',
-  ERROR_REQUEST_RETAIL: 'Error when fetching pending purchase orders',
-  ERROR_REQUEST_RETAIL_ACTION: 'Error when performing the action for the purchase order',
-  ERROR_REQUEST_RC_ACTION: 'Error performing action for purchase requisition',
-  LOADING_ACCOUNTABILITY: 'Loading accountability approvals'
+  // MENU TITLE
+  PURCHASE_REQUISITION_MENU_TITLE: 'Purchase Requisition',
+  ACCOUNTABILITY_MENU_TITLE: 'Accountability',
+  FB60_MENU_TITLE: 'Accounts Payable (FB60)',
+  PURCHASE_ORDER_MENU_TITLE: 'Fico Order',
+  PAYMENT_PROPOSAL_MENU_TITLE: 'Payment Proposal',
+  // MENU TITLE SHORT
+  PURCHASE_REQUISITION_MENU_TITLE_SHORT: 'Requisition',
+  ACCOUNTABILITY_MENU_TITLE_SHORT: 'Accountability',
+  FB60_MENU_TITLE_SHORT: 'Account',
+  PURCHASE_ORDER_MENU_TITLE_SHORT: 'Order',
+  PAYMENT_PROPOSAL_MENU_TITLE_SHORT: 'Proposal',
+  // SEARCH
+  LABEL_SEARCH: 'Search',
+  TXT_TITLE_NOTHING_TODO: 'No pending approvals',
+  TXT_TITLE_SEARCH_NOT_FOUND: 'No results found',
+  TXT_SUBTITLE_SEARCH_NOT_FOUND: "At the moment, we can't display the information you were looking for.",
+  // LABEL
+  LABEL_CREATED_AT: 'Created at',
+  LABEL_CREATED_BY: 'Created by',
+  LABEL_QUANTITY: 'Quantity',
+  LABEL_LAST_APPROVER: 'Last approver',
+  LABEL_UNIT_VALUE: 'Unit value',
+  LABEL_STORE: 'Store',
+  LABEL_SUPPLY: 'Supplier',
+  LABEL_CCPEP: 'CC/PEP',
+  LABEL_PAYMENT_COND: 'Payment terms',
+  LABEL_DELIVERY_DATE: 'Delivery date',
+  LABEL_DOC_EXERC: 'Doc./Exerc.',
+  LABEL_EXPIRATION_DATE: 'Expiration date',
+  LABEL_PAYMENT_METHOD: 'Payment method',
+  LABEL_BANK_COMPANY: 'Company bank',
+  LABEL_DATE_TO_PAY: 'Payment date',
+  LABEL_ACCOUNT_ID: 'Account identifier',
+  LABEL_PAYMENT_ID: 'Identifier',
+  LABEL_PAYMENT_AMOUNT: 'Payment quantity',
+  LABEL_START_DATE: 'Start',
+  LABEL_END_DATE: 'End',
+  LABEL_JUSTIFY: 'Reason',
+  LABEL_NOT_INFORM: 'Not informed',
+  LABEL_OBSERVATION: 'Observations',
+  // ACTIONS
+  LABEL_ACCEPT: 'Accept',
+  LABEL_APPROVE: 'Approve',
+  LABEL_REJECT: 'Reject',
+  LABEL_GIVEBACK: 'Giveback',
+  LABEL_DISCARD: 'Discard',
+  LABEL_CANCEL: 'Cancel',
+  // LOADING
+  LOADING: 'Loading...',
+  // FILES
+  ERROR_MIME: 'Invalid file format',
+  ERROR_0_BYTE: 'Corrupted file!',
+  ERROR_OPEN_FILE: 'An error occurred while opening the file',
+  // PURCHASE REQUISITION
+  QUESTION_MODAL_PR_APPROVE: 'Do you want to approve this purchase requisition?',
+  QUESTION_MODAL_PR_REJECT: 'Do you want to reject this purchase requisition?',
+  // ACCOUNTABILITY
+  QUESTION_MODAL_ACCOUNTABILIY_APPROVE: 'Do you want to approve this accountability in the amount of {{s}}?',
+  QUESTION_MODAL_ACCOUNTABILIY_REJECT: 'Do you want to reject this accountability in the amount of {{s}}?',
+  QUESTION_MODAL_ACCOUNTABILIY_GIVEBACK: 'Do you want to give back this accountability in the amount of {{s}}?',
+  // FB60
+  QUESTION_MODAL_FB60_APPROVE: 'Do you want to approve the document in the amount of {{s}}?',
+  QUESTION_MODAL_FB60_REJECT: 'Do you want to reject the document in the amount of {{s}}?',
+  // PURCHASE_ORDER
+  QUESTION_MODAL_PURCHASE_ORDER_APPROVE: 'Do you want to approve this Fico purchase order?',
+  QUESTION_MODAL_PURCHASE_ORDER_REJECT: 'Do you want to reject this Fico purchase order?',
+  QUESTION_MODAL_PURCHASE_ORDER_TRASH: 'Do you want to discard this Fico purchase order from Arcus?',
+  // PAYMENT PROPOSAL
+  QUESTION_MODAL_PAYMENT_PROPOSAL_APPROVE: 'Do you want to approve the payment proposal in the amount of {{s}}?',
+  QUESTION_MODAL_PAYMENT_PROPOSAL_REJECT: 'Do you want to reject this payment proposal?',
+  QUESTION_MODAL_PAYMENT_PROPOSAL_TRASH: 'Do you want to discard this payment proposal from Arcus?',
+  // OTHER TEXTS
+  LABEL_EXPANSION_OPENED: 'See less',
+  LABEL_EXPANSION_CLOSED: 'See more',
+  // ACTIONS CALLBACKS
+  //
+  // PURCHASE ORDER
+  SUCCESS_ACTION_APPROVE_PURCHASE_ORDER: 'Purchase order approved successfully',
+  SUCCESS_ACTION_DISCARD_PURCHASE_ORDER: 'Purchase order discarded successfully',
+  ERROR_ACTION_PURCHASE_ORDER: 'Error while executing the action for the purchase order',
+  // PURCHASE REQUISITION
+  SUCCESS_ACTION_APPROVE_PURCHASE_REQUISITION: 'Purchase requisition approved successfully',
+  SUCCESS_ACTION_REJECT_PURCHASE_REQUISITION: 'Purchase requisition rejected successfully',
+  ERROR_ACTION_PURCHASE_REQUISITION: 'Error while executing the action for the purchase requisition',
+  // PAYMENT PROPOSAL
+  SUCCESS_ACTION_APPROVE_PAYMENT_PROPOSAL: 'Payment proposal approved successfully',
+  SUCCESS_ACTION_DISCARD_PAYMENT_PROPOSAL: 'Payment proposal discarded successfully',
+  ERROR_ACTION_PAYMENT_PROPOSAL: 'Error while executing the action for the payment proposal',
+  // FB60
+  SUCCESS_ACTION_APPROVE_FB60: 'Accounts payable approved successfully',
+  SUCCESS_ACTION_REJECT_FB60: 'Accounts payable rejected successfully',
+  ERROR_ACTION_FB60: 'Error while executing the action for the accounts payable',
+  // ACCOUNTABILITY
+  SUCCESS_ACTION_APPROVE_ACCOUNTABILITY: 'Accountability approved successfully',
+  SUCCESS_ACTION_REJECT_ACCOUNTABILITY: 'Accountability rejected successfully',
+  SUCCESS_ACTION_GIVEBACK_ACCOUNTABILITY: 'Accountability given back successfully',
+  ERROR_ACTION_ACCOUNTABILITY: 'Error while executing the action for the accountability'
 };
 
 const locale = {
-  SALE_MENU_TITLE: 'Ventas',
-  RETAIL_ORDER_MENU_TITLE: 'Pedidos al por menor',
-  RC_ORDER_MENU_TITLE: 'Requisición de compra',
-  ACCOUNTABILITY_MENU_TITLE: 'Prestación de cuentas',
-  MENU_TITLE: 'Centro de aprobación',
-  // card title
-  PROVISION: 'Prestación',
-  RETAIL: 'Orden',
-  SALE: 'Orden',
-  RC: 'Requisición',
-  FB60: 'FB60',
-  QUESTION_MODAL_APPROVE: '¿Quiere aprobar esta prestación de cuentas?',
-  QUESTION_MODAL_REJECT: '¿Desea rechazar esta prestación de cuentas?',
-  QUESTION_MODAL_GIVEBACK: '¿Quieres devolver esta prestación de cuentas?',
-  QUESTION_MODAL_RC_APPROVE: '¿Quieres aprobar esta solicitud de compra?',
-  QUESTION_MODAL_RC_REJECT: '¿Quiere devolver esta solicitud de compra?',
-  QUESTION_MODAL_RETAIL_APPROVE: '¿Desea aprobar esta orden de compra?',
-  QUESTION_MODAL_RETAIL_REJECT: '¿Desea rechazar esta orden de compra?',
-  QUESTION_MODAL_SALE_APPROVE: '¿Desea aprobar este pedido de venta?',
-  QUESTION_MODAL_SALE_REJECT: '¿Desea rechazar este pedido de venta?',
-  APPROVE_BUTTON_LABEL: 'Aprobar',
-  REJECT_BUTTON_LABEL: 'Rechazar',
-  GIVEBACK_BUTTON_LABEL: 'Devolver',
-  APPROVE_DONE_MSG: 'Aprobado con éxito',
-  REJECT_DONE_MSG: 'Rechazado con éxito',
-  GIVEBACK_DONE_MSG: 'Devuelto con éxito',
-  START_DATE_LABEL: 'Inicio',
-  END_DATE_LABEL: 'Fin',
-  JUSTIFY_LABEL: 'Razón',
-  NOT_INFORM: 'No informado',
-  OBSERVATION_LABEL: 'Comentários',
-  STORE_LABEL: 'Tienda',
-  QUANTITY_LABEL: 'Cant Artículos',
-  DATE_REM_LABEL: 'Día Rem',
-  CREATED_AT_LABEL: 'Creado',
-  TOTAL_SALE_LABEL: 'T. Venta',
-  TOTAL_DISCOUNT_LABEL: 'T. Dto.',
-  PERCENT_DISCOUNT_LABEL: '% Dto.',
-  DETAIL_CREATED_AT: 'Creado en',
-  DETAIL_CREATED_BY: 'Creado por',
-  DETAIL_TOTAL_SALE: 'Total venta',
-  DETAIL_TOTAL_DISCOUNT: 'Total descuento',
-  DETAIL_PERCENT_DISCOUNT: '% Descuento',
-  DETAIL_PAYMENT_CONDITION: 'Cond. de Pago',
-  DETAIL_DDE_ORDER: 'DDE Pedido',
-  DETAIL_DDE_YEARLY: 'DDE Anual',
-  DETAIL_QTD: 'Cant.',
-  DETAIL_VALUE: 'Valor',
-  DETAIL_TOTAL: 'Total',
-  DETAIL_TOTAL_WITH_DISCOUNT: 'Total c/Desc',
-  DETAIL_LAST_APPROVER: 'Último aprobador',
-  DETAIL_QUANTITY: 'Cantidad',
-  DETAIL_UNIT_VALUE: 'Valor Unitario',
-  DETAIL_CCPEP: 'CC/PEP',
-  DETAIL_SUPPLY: 'Proveedor',
-  SEARCH_PLACEHOLDER: 'Búsqueda',
-  DOWNLOADING: 'Descargando archivo...',
-  ERROR_DOWNLOADING: 'Error al descargar el archivo',
-  ERROR_FORMAT: 'Formato de archivo inválido',
-  ALL_IN_ORDER: '¡Tienes todo en orden!',
-  ERROR_REQUEST_SUMARY: 'Error al verificar las aprobaciones pendientes',
-  ERROR_REQUEST_SALES: 'Error al buscar orden de ventas pendientes',
-  ERROR_REQUEST_RC: 'Error al verificar la solicitud de compra',
-  ERROR_REQUEST_SALES_ACTION: 'Error al ejecutar la acción para el orden de venta',
-  ERROR_PERMISSION_SALES: 'No tiene permiso para aprobar un pedido de ventas',
-  ERROR_PERMISSION_RETAIL: 'No tiene permiso para aprobar una orden de compra',
-  ERROR_REQUEST_ACCOUNTABILITY: 'Error al buscar prestación de cuentas pendientes',
-  ERROR_REQUEST_ACCOUNTABILITY_FILES: 'Error al obtener la lista de archivos adjuntos de la prestación de cuentas',
-  ERROR_REQUEST_RC_FILES: 'Error al obtener la lista de archivos adjuntos de solicitud de compra',
-  ERROR_REQUEST_ACCOUNTABILITY_ACTION: 'Error al realizar la acción para la prestación de cuentas',
-  ERROR_REQUEST_RETAIL: 'Error al obtener órdenes de compra pendientes',
-  ERROR_REQUEST_RETAIL_ACTION: 'Error al realizar la acción para la orden de compra',
-  ERROR_REQUEST_RC_ACTION: 'Error al realizar la acción para la solicitud de compra',
-  LOADING_ACCOUNTABILITY: 'Cargando prestación de cuentas'
+  // BOTÓN DE INICIO
+  MENU_TITLE: 'Central de aprobaciones',
+  // TÍTULO DEL MENÚ
+  PURCHASE_REQUISITION_MENU_TITLE: 'Solicitud de Compra',
+  ACCOUNTABILITY_MENU_TITLE: 'Rendición de Cuentas',
+  FB60_MENU_TITLE: 'Cuentas a Pagar (FB60)',
+  PURCHASE_ORDER_MENU_TITLE: 'Pedido Fico',
+  PAYMENT_PROPOSAL_MENU_TITLE: 'Propuesta de Pago',
+  // TÍTULO CORTO DEL MENÚ
+  PURCHASE_REQUISITION_MENU_TITLE_SHORT: 'Solicitud',
+  ACCOUNTABILITY_MENU_TITLE_SHORT: 'Rendición',
+  FB60_MENU_TITLE_SHORT: 'Cuenta',
+  PURCHASE_ORDER_MENU_TITLE_SHORT: 'Pedido',
+  PAYMENT_PROPOSAL_MENU_TITLE_SHORT: 'Propuesta',
+  // BÚSQUEDA
+  LABEL_SEARCH: 'Buscar',
+  TXT_TITLE_NOTHING_TODO: 'Ninguna aprobación pendiente',
+  TXT_TITLE_SEARCH_NOT_FOUND: 'Ningún resultado encontrado',
+  TXT_SUBTITLE_SEARCH_NOT_FOUND: 'Por el momento, no podemos mostrar la información que estabas buscando.',
+  // ETIQUETA
+  LABEL_CREATED_AT: 'Creado en',
+  LABEL_CREATED_BY: 'Creado por',
+  LABEL_QUANTITY: 'Cantidad',
+  LABEL_LAST_APPROVER: 'Último aprobador',
+  LABEL_UNIT_VALUE: 'Valor unitario',
+  LABEL_STORE: 'Tienda',
+  LABEL_SUPPLY: 'Proveedor',
+  LABEL_CCPEP: 'CC/PEP',
+  LABEL_PAYMENT_COND: 'Plazo pag',
+  LABEL_DELIVERY_DATE: 'Entrega',
+  LABEL_DOC_EXERC: 'Doc./Ejerc.',
+  LABEL_EXPIRATION_DATE: 'Vencimiento',
+  LABEL_PAYMENT_METHOD: 'Forma de pago',
+  LABEL_BANK_COMPANY: 'Banco empresa',
+  LABEL_DATE_TO_PAY: 'Fecha de pago',
+  LABEL_ACCOUNT_ID: 'Identificador de cuenta',
+  LABEL_PAYMENT_ID: 'Identificador',
+  LABEL_PAYMENT_AMOUNT: 'Cant. pagos',
+  LABEL_START_DATE: 'Inicio',
+  LABEL_END_DATE: 'Fin',
+  LABEL_JUSTIFY: 'Motivo',
+  LABEL_NOT_INFORM: 'No informado',
+  LABEL_OBSERVATION: 'Observaciones',
+  // ACCIONES
+  LABEL_ACCEPT: 'Aceptar',
+  LABEL_APPROVE: 'Aprobar',
+  LABEL_REJECT: 'Rechazar',
+  LABEL_GIVEBACK: 'Devolver',
+  LABEL_DISCARD: 'Descartar',
+  LABEL_CANCEL: 'Cancelar',
+  // CARGANDO
+  LOADING: 'Cargando...',
+  // ARCHIVOS
+  ERROR_MIME: 'Formato de archivo inválido',
+  ERROR_0_BYTE: 'Archivo corrupto',
+  ERROR_OPEN_FILE: 'Se produjo un error al abrir el archivo',
+  // REQUISICIÓN DE COMPRA
+  QUESTION_MODAL_PR_APPROVE: '¿Deseas aprobar esta solicitud de compra?',
+  QUESTION_MODAL_PR_REJECT: '¿Deseas rechazar esta solicitud de compra?',
+  // RENDICIÓN DE CUENTAS
+  QUESTION_MODAL_ACCOUNTABILIY_APPROVE: '¿Deseas aprobar esta rendición de cuentas por el valor de {{s}}?',
+  QUESTION_MODAL_ACCOUNTABILIY_REJECT: '¿Deseas rechazar esta rendición de cuentas por el valor de {{s}}?',
+  QUESTION_MODAL_ACCOUNTABILIY_GIVEBACK: '¿Deseas devolver esta rendición de cuentas por el valor de {{s}}?',
+  // FB60
+  QUESTION_MODAL_FB60_APPROVE: '¿Deseas aprobar el documento por el valor de {{s}}?',
+  QUESTION_MODAL_FB60_REJECT: '¿Deseas rechazar el documento por el valor de {{s}}?',
+  // PEDIDO FICO
+  QUESTION_MODAL_PURCHASE_ORDER_APPROVE: '¿Deseas aprobar este pedido de compra Fico?',
+  QUESTION_MODAL_PURCHASE_ORDER_REJECT: '¿Deseas rechazar este pedido de compra Fico?',
+  QUESTION_MODAL_PURCHASE_ORDER_TRASH: '¿Deseas descartar de Arcus este pedido de compra Fico?',
+  // PROPUESTA DE PAGO
+  QUESTION_MODAL_PAYMENT_PROPOSAL_APPROVE: '¿Deseas aprobar la propuesta de pago por el valor de {{s}}?',
+  QUESTION_MODAL_PAYMENT_PROPOSAL_REJECT: '¿Deseas rechazar esta propuesta de pago?',
+  QUESTION_MODAL_PAYMENT_PROPOSAL_TRASH: '¿Deseas descartar de Arcus esta propuesta de pago?',
+  // OTROS TEXTOS
+  LABEL_EXPANSION_OPENED: 'Ver menos',
+  LABEL_EXPANSION_CLOSED: 'Ver más',
+  // RESPUESTAS DE ACCIONES
+  //
+  // PEDIDO FICO
+  SUCCESS_ACTION_APPROVE_PURCHASE_ORDER: 'Pedido de compra aprobado exitosamente',
+  SUCCESS_ACTION_DISCARD_PURCHASE_ORDER: 'Pedido de compra descartado exitosamente',
+  ERROR_ACTION_PURCHASE_ORDER: 'Error al ejecutar la acción para el pedido de compra',
+  // REQUISICIÓN DE COMPRA
+  SUCCESS_ACTION_APPROVE_PURCHASE_REQUISITION: 'Requisición de compra aprobada exitosamente',
+  SUCCESS_ACTION_REJECT_PURCHASE_REQUISITION: 'Requisición de compra rechazada exitosamente',
+  ERROR_ACTION_PURCHASE_REQUISITION: 'Error al ejecutar la acción para la requisición de compra',
+  // PROPUESTA DE PAGO
+  SUCCESS_ACTION_APPROVE_PAYMENT_PROPOSAL: 'Propuesta de pago aprobada exitosamente',
+  SUCCESS_ACTION_DISCARD_PAYMENT_PROPOSAL: 'Propuesta de pago descartada exitosamente',
+  ERROR_ACTION_PAYMENT_PROPOSAL: 'Error al ejecutar la acción para la propuesta de pago',
+  // FB60
+  SUCCESS_ACTION_APPROVE_FB60: 'Cuenta a pagar aprobada exitosamente',
+  SUCCESS_ACTION_REJECT_FB60: 'Cuenta a pagar rechazada exitosamente',
+  ERROR_ACTION_FB60: 'Error al ejecutar la acción para la cuenta a pagar',
+  // RENDICIÓN DE CUENTAS
+  SUCCESS_ACTION_APPROVE_ACCOUNTABILITY: 'Rendición de cuentas aprobada exitosamente',
+  SUCCESS_ACTION_REJECT_ACCOUNTABILITY: 'Rendición de cuentas rechazada exitosamente',
+  SUCCESS_ACTION_GIVEBACK_ACCOUNTABILITY: 'Rendición de cuentas devuelta exitosamente',
+  ERROR_ACTION_ACCOUNTABILITY: 'Error al ejecutar la acción para la rendición de cuentas'
 };
 
 var locales = {
   br: locale$2,
   en: locale$1,
-  es: locale
+  es: locale,
+  ar: locale$1,
+  cl: locale$1,
+  pe: locale$1,
+  co: locale$1
 };
+
+var img$1 = "data:image/svg+xml,%3csvg width='32' height='29' viewBox='0 0 32 29' fill='none' xmlns='http://www.w3.org/2000/svg'%3e %3cpath fill-rule='evenodd' clip-rule='evenodd' d='M18.9255 2.06259L31.2864 23.4376C31.5867 23.9491 31.7463 24.5309 31.7489 25.124C31.7516 25.7171 31.5973 26.3003 31.3017 26.8145C31.006 27.3287 30.5796 27.7555 30.0656 28.0515C29.5517 28.3475 28.9686 28.5023 28.3755 28.5001H3.62547C3.03236 28.5023 2.44924 28.3475 1.9353 28.0515C1.42136 27.7555 0.994919 27.3287 0.699273 26.8145C0.403627 26.3003 0.249308 25.7171 0.251987 25.124C0.254667 24.5309 0.414248 23.9491 0.714528 23.4376L13.0755 2.06259C13.3714 1.54851 13.7976 1.1215 14.3111 0.824586C14.8246 0.527671 15.4073 0.371338 16.0005 0.371338C16.5936 0.371338 17.1763 0.527671 17.6898 0.824586C18.2034 1.1215 18.6295 1.54851 18.9255 2.06259ZM14.5155 16.5C14.5155 17.3284 15.1871 18 16.0155 18C16.8439 18 17.5155 17.3284 17.5155 16.5V10.5C17.5155 9.67157 16.8439 9 16.0155 9C15.1871 9 14.5155 9.67157 14.5155 10.5V16.5ZM16.0155 24C16.8439 24 17.5155 23.3284 17.5155 22.5C17.5155 21.6716 16.8439 21 16.0155 21H16.0005C15.1721 21 14.5005 21.6716 14.5005 22.5C14.5005 23.3284 15.1721 24 16.0005 24H16.0155Z' fill='%23DD4242' /%3e%3c/svg%3e";
+
+function Index(props) {
+  var _a;
+  return jsxs(Ramen.XModal, Object.assign({
+    visible: (_a = props.modalError.show) !== null && _a !== void 0 ? _a : false,
+    actions: [{
+      key: '',
+      text: props.title,
+      type: 'solid'
+    }],
+    onActionClick: () => props.setModalError(Object.assign(Object.assign({}, props.modalError), {
+      show: false
+    })),
+    onClose: () => props.setModalError(Object.assign(Object.assign({}, props.modalError), {
+      show: false
+    })),
+    size: "xs"
+  }, {
+    children: [jsx(Ramen.XImage, {
+      src: img$1
+    }), jsx(Ramen.XVSpace, {
+      size: "m"
+    }), jsx(Ramen.XText, Object.assign({
+      weight: "bold",
+      fontSize: 8,
+      colorThone: "darkest"
+    }, {
+      children: props.modalError.title
+    }))]
+  }));
+}
 
 const loading = (isActive, text = 'Cargando...') => {
   if (isActive) {
@@ -4723,50 +4624,709 @@ const formatDate = (usDate, localeDate) => {
   });
   return date ? convertToYY(date) : '';
 };
-const getMime = format => {
-  if (format === 'pdf') {
-    return 'application/pdf';
-  } else if (format === 'jpg' || format === 'jpeg') {
-    return 'image/jpeg';
-  } else if (format === 'png') {
-    return 'image/png';
-  } else if (format === 'bmp') {
-    return 'image/bmp';
-  } else if (format === 'xml') {
-    return 'application/xml';
-  } else if (format === 'xls') {
-    return 'application/vnd.ms-excel';
-  } else if (format === 'xlsx') {
-    return 'application/vnd.ms-excel';
-  } else if (format === 'doc') {
-    return 'application/msword';
-  } else if (format === 'docx') {
-    return 'application/msword';
-  } else if (format === 'ppt') {
-    return 'application/vnd.ms-powerpoint';
-  } else if (format === 'pptx') {
-    return 'application/vnd.ms-powerpoint';
-  } else if (format === 'zip') {
-    return 'application/zip';
-  }
-  return '';
+const getMime = extension => {
+  const mimeTypes = {
+    '7z': 'application/x-7z-compressed',
+    aac: 'audio/aac',
+    avi: 'video/x-msvideo',
+    bmp: 'image/bmp',
+    css: 'text/css',
+    csv: 'text/csv',
+    doc: 'application/msword',
+    docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    eot: 'application/vnd.ms-fontobject',
+    eps: 'application/postscript',
+    gif: 'image/gif',
+    gz: 'application/gzip',
+    html: 'text/html',
+    ico: 'image/x-icon',
+    ics: 'text/calendar',
+    ini: 'text/plain',
+    jar: 'application/java-archive',
+    js: 'application/javascript',
+    jpeg: 'image/jpeg',
+    jpg: 'image/jpeg',
+    json: 'application/json',
+    m4a: 'audio/m4a',
+    mkv: 'video/x-matroska',
+    mov: 'video/quicktime',
+    mp3: 'audio/mpeg',
+    mp4: 'video/mp4',
+    msg: 'application/vnd.ms-outlook',
+    ogg: 'audio/ogg',
+    odf: 'application/vnd.oasis.opendocument.formula',
+    ods: 'application/vnd.oasis.opendocument.spreadsheet',
+    odt: 'application/vnd.oasis.opendocument.text',
+    otf: 'font/otf',
+    pdf: 'application/pdf',
+    png: 'image/png',
+    ppt: 'application/vnd.ms-powerpoint',
+    pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    rar: 'application/x-rar-compressed',
+    svg: 'image/svg+xml',
+    tar: 'application/x-tar',
+    tif: 'image/tiff',
+    ttf: 'font/ttf',
+    txt: 'text/plain',
+    wav: 'audio/wav',
+    webm: 'video/webm',
+    wmv: 'video/x-ms-wmv',
+    woff: 'font/woff',
+    woff2: 'font/woff2',
+    xls: 'application/vnd.ms-excel',
+    xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    xml: 'application/xml',
+    zip: 'application/zip'
+  };
+  const lowercaseExtension = extension.toLowerCase();
+  return mimeTypes[lowercaseExtension] || '';
 };
 
-function PurchaseRequisitionCard(props) {
-  var _a, _b, _c, _d, _e, _f, _g;
+const ModalAction = () => {
+  var _a;
+  const {
+    localize,
+    approvalAction,
+    goBack,
+    setSelectedApproval,
+    setModalError,
+    selectedApproval,
+    modalAction,
+    setModalAction,
+    localeDate
+  } = useApproval();
+  const localization = useMemo(() => {
+    var _a;
+    const _aux = {
+      action: {
+        key: (_a = modalAction.action) !== null && _a !== void 0 ? _a : '',
+        type: 'solid',
+        text: ''
+      },
+      questions: {
+        title: '',
+        text: ''
+      },
+      success: '',
+      error: ''
+    };
+    if (modalAction.action === EGenericApprovalAction.APPROVE) {
+      _aux.action.icon = 'check-outline';
+      _aux.action.text = localize('LABEL_APPROVE', '');
+    } else if (modalAction.action === EGenericApprovalAction.DISCARD) {
+      _aux.action.icon = 'trash-outline';
+      _aux.action.text = localize('LABEL_DISCARD', '');
+    } else if (modalAction.action === EGenericApprovalAction.REJECT) {
+      _aux.action.icon = 'x-outline';
+      _aux.action.text = localize('LABEL_REJECT', '');
+    } else if (modalAction.action === EGenericApprovalAction.GIVEBACK) {
+      _aux.action.icon = 'refuse-extrabold';
+      _aux.action.text = localize('LABEL_GIVEBACK', '');
+    }
+    //
+    // PURCHASE ORDER
+    if ((selectedApproval === null || selectedApproval === void 0 ? void 0 : selectedApproval.category) === APPROVAL_TYPES.PURCHASE_ORDER) {
+      const _approvalAux = selectedApproval;
+      _aux.questions.text = `${localize('PURCHASE_ORDER_MENU_TITLE_SHORT', '')} ${_approvalAux === null || _approvalAux === void 0 ? void 0 : _approvalAux.orderId}`;
+      if (modalAction.action === EGenericApprovalAction.APPROVE) {
+        _aux.success = localize('SUCCESS_ACTION_APPROVE_PURCHASE_ORDER', '');
+        _aux.questions.title = localize('QUESTION_MODAL_PURCHASE_ORDER_APPROVE', '');
+      } else if (modalAction.action === EGenericApprovalAction.DISCARD) {
+        _aux.success = localize('SUCCESS_ACTION_DISCARD_PURCHASE_ORDER', '');
+        _aux.questions.title = localize('QUESTION_MODAL_PURCHASE_ORDER_TRASH', '');
+      }
+      _aux.error = localize('ERROR_ACTION_PURCHASE_ORDER', '');
+      //
+      // PURCHASE REQUISITION
+    } else if ((selectedApproval === null || selectedApproval === void 0 ? void 0 : selectedApproval.category) === APPROVAL_TYPES.PURCHASE_REQUISITION) {
+      const _approvalAux = selectedApproval;
+      _aux.questions.text = `${localize('PURCHASE_REQUISITION_MENU_TITLE_SHORT', '')} ${_approvalAux === null || _approvalAux === void 0 ? void 0 : _approvalAux.orderId}`;
+      if (modalAction.action === EGenericApprovalAction.APPROVE) {
+        _aux.success = localize('SUCCESS_ACTION_APPROVE_PURCHASE_REQUISITION', '');
+        _aux.questions.title = localize('QUESTION_MODAL_PR_APPROVE', '');
+      } else if (modalAction.action === EGenericApprovalAction.REJECT) {
+        _aux.success = localize('SUCCESS_ACTION_REJECT_PURCHASE_REQUISITION', '');
+        _aux.questions.title = localize('QUESTION_MODAL_PR_REJECT', '');
+      }
+      _aux.error = localize('ERROR_ACTION_PURCHASE_REQUISITION', '');
+      //
+      // PAYMENT PROPOSAL
+    } else if ((selectedApproval === null || selectedApproval === void 0 ? void 0 : selectedApproval.category) === APPROVAL_TYPES.PAYMENT_PROPOSAL) {
+      const _approvalAux = selectedApproval;
+      const _value = _approvalAux ? currencyApproval(_approvalAux.paymentValue, _approvalAux.currency, localeDate) : '';
+      _aux.questions.title = `${_approvalAux === null || _approvalAux === void 0 ? void 0 : _approvalAux.companyName} ∙ ${_approvalAux === null || _approvalAux === void 0 ? void 0 : _approvalAux.paymentId}`;
+      if (modalAction.action === EGenericApprovalAction.APPROVE) {
+        _aux.questions.text = localize('QUESTION_MODAL_PAYMENT_PROPOSAL_APPROVE', '').replace('{{s}}', _value);
+        _aux.success = localize('SUCCESS_ACTION_APPROVE_PAYMENT_PROPOSAL', '');
+      } else if (modalAction.action === EGenericApprovalAction.DISCARD) {
+        _aux.questions.text = localize('QUESTION_MODAL_PAYMENT_PROPOSAL_TRASH', '').replace('{{s}}', _value);
+        _aux.success = localize('SUCCESS_ACTION_DISCARD_PAYMENT_PROPOSAL', '');
+      }
+      _aux.error = localize('ERROR_ACTION_PAYMENT_PROPOSAL', '');
+      //
+      // FB60 WORKITEM
+    } else if ((selectedApproval === null || selectedApproval === void 0 ? void 0 : selectedApproval.category) === APPROVAL_TYPES.FB60) {
+      const _approvalAux = selectedApproval;
+      const _value = _approvalAux ? currencyApproval(_approvalAux.orderValue, _approvalAux.orderValueCurrency, localeDate) : '';
+      _aux.questions.title = `${_approvalAux === null || _approvalAux === void 0 ? void 0 : _approvalAux.clientDescription} ∙ ${_approvalAux === null || _approvalAux === void 0 ? void 0 : _approvalAux.clientId}`;
+      if (modalAction.action === EGenericApprovalAction.APPROVE) {
+        _aux.questions.text = localize('QUESTION_MODAL_FB60_APPROVE', '').replace('{{s}}', _value);
+        _aux.success = localize('SUCCESS_ACTION_APPROVE_FB60', '');
+      } else if (modalAction.action === EGenericApprovalAction.REJECT) {
+        _aux.questions.text = localize('QUESTION_MODAL_FB60_REJECT', '').replace('{{s}}', _value);
+        _aux.success = localize('SUCCESS_ACTION_REJECT_FB60', '');
+      }
+      _aux.error = localize('ERROR_ACTION_FB60', '');
+      //
+      // ACCOUNTABILITY
+    } else if ((selectedApproval === null || selectedApproval === void 0 ? void 0 : selectedApproval.category) === APPROVAL_TYPES.ACCOUNTABILITY) {
+      const _approvalAux = selectedApproval;
+      const _value = _approvalAux ? currencyApproval(_approvalAux.orderValue, _approvalAux.orderValueCurrency, localeDate) : '';
+      _aux.questions.title = `${_approvalAux === null || _approvalAux === void 0 ? void 0 : _approvalAux.person} ∙ ${_approvalAux === null || _approvalAux === void 0 ? void 0 : _approvalAux.reinr}`;
+      if (modalAction.action === EGenericApprovalAction.APPROVE) {
+        _aux.questions.text = localize('QUESTION_MODAL_ACCOUNTABILIY_APPROVE', '').replace('{{s}}', _value);
+        _aux.success = localize('SUCCESS_ACTION_APPROVE_ACCOUNTABILITY', '');
+      } else if (modalAction.action === EGenericApprovalAction.REJECT) {
+        _aux.questions.text = localize('QUESTION_MODAL_ACCOUNTABILIY_REJECT', '').replace('{{s}}', _value);
+        _aux.success = localize('SUCCESS_ACTION_REJECT_ACCOUNTABILITY', '');
+      } else if (modalAction.action === EGenericApprovalAction.GIVEBACK) {
+        _aux.questions.text = localize('QUESTION_MODAL_ACCOUNTABILIY_GIVEBACK', '').replace('{{s}}', _value);
+        _aux.success = localize('SUCCESS_ACTION_GIVEBACK_ACCOUNTABILITY', '');
+      }
+      _aux.error = localize('ERROR_ACTION_ACCOUNTABILITY', '');
+    }
+    return _aux;
+  }, [modalAction.action, selectedApproval, localize, localeDate]);
+  const handleAction = useCallback(key => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+      const needBack = modalAction.needBack;
+      loading(true, localize('LOADING', ''));
+      setModalAction(Object.assign(Object.assign({}, modalAction), {
+        show: false,
+        needBack: false
+      }));
+      yield approvalAction(selectedApproval, key);
+      Ramen.Api.snackbar['success']({
+        placement: 'top',
+        text: localization.success
+      });
+      loading(false, localize('LOADING', ''));
+      if (needBack) {
+        goBack();
+      }
+    } catch (error) {
+      setTimeout(() => {
+        loading(false, localize('LOADING', ''));
+        setModalError({
+          show: true,
+          title: localization.error
+        });
+      }, 1000);
+      console.error('Error when handle approval action: ', error);
+    } finally {
+      setSelectedApproval(undefined);
+    }
+  }), [approvalAction, goBack, localization.error, localization.success, localize, modalAction, selectedApproval, setModalAction, setModalError, setSelectedApproval]);
+  return jsx(Ramen.XModal, Object.assign({
+    visible: (_a = modalAction.show) !== null && _a !== void 0 ? _a : false,
+    actions: [localization.action],
+    icon: "alert-circle-outline",
+    onActionClick: handleAction,
+    onClose: () => {
+      setModalAction(Object.assign(Object.assign({}, modalAction), {
+        show: false
+      }));
+    },
+    size: "xs",
+    title: localization.questions.title
+  }, {
+    children: jsx(Ramen.XText, Object.assign({
+      colorThone: "dim",
+      lineHeight: "title"
+    }, {
+      children: localization.questions.text
+    }))
+  }));
+};
+
+const ApprovalContext = /*#__PURE__*/createContext({});
+const ApprovalProvider = ({
+  children,
+  historyData,
+  env,
+  approval_types,
+  handleAnalytics
+}) => {
+  var _a, _b;
   const [approvals, setApprovals] = useState([]);
-  const [approval, setApproval] = useState();
-  const [modal, setModal] = useState();
+  const [selectedApproval, setSelectedApproval] = useState();
+  const [modalAction, setModalAction] = useState({
+    show: false
+  });
+  const [envs, setEnvs] = useState();
+  const [approvalTypes, setApprovalTypes] = useState();
+  const [approvalCenterLoading, setApprovalCenterLoading] = useState(false);
+  const [modalError, setModalError] = useState({
+    show: false
+  });
+  const findAD = () => __awaiter(void 0, void 0, void 0, function* () {
+    const _ad = ApprovalSettingsClient$1.get('USER_AD', null);
+    return _ad;
+  });
+  // effect to update approval types
   useEffect(() => {
-    SettingsClient.boot().then(() => setApprovals(SettingsClient.get('PURCHASE_REQUISITION_PENDING', [])));
+    if (env) {
+      setEnvs(env);
+    }
+    if (approval_types) {
+      setApprovalTypes(approval_types);
+    }
+  }, [env, approval_types]);
+  // go back
+  const goBack = () => {
+    setSelectedApproval(undefined);
+    historyData.goBack();
+  };
+  // effect to set envs
+  useEffect(() => {
+    if (envs) {
+      approvalAPI.fico.setBaseUrl(envs.approvalFicoApi);
+      approvalAPI.fico.setApiKey(envs.approvalApiKey);
+      approvalAPI.fiori.setBaseUrl(envs.approvalFioriApi);
+      approvalAPI.fiori.setApiKey(envs.approvalApiKey);
+      approvalAPI.setCountryCode(envs.country.toLowerCase());
+    }
+  }, [envs]);
+  // generate md5
+  const genMD5 = approval => {
+    const md5 = createHash('md5');
+    return md5.update(JSON.stringify(approval)).digest('hex');
+  };
+  // update approval after action
+  const updateApprovalList = useCallback(approval => {
+    const _newApprovals = approvals === null || approvals === void 0 ? void 0 : approvals.filter(a => genMD5(a) !== genMD5(approval));
+    setApprovals(_newApprovals);
+    ApprovalSettingsClient$1.set('MODULE_PENDING', _newApprovals ? _newApprovals.length : 0);
+  }, [approvals]);
+  // check if already discard
+  const checkDiscard = useCallback(approval => {
+    const md5 = genMD5(approval);
+    const listDiscard = ApprovalSettingsClient$1.get('DISCARTED', []);
+    if (listDiscard.includes(md5)) return true;
+    return false;
   }, []);
-  const country = (_c = (_b = (_a = props.extensions) === null || _a === void 0 ? void 0 : _a.env) === null || _b === void 0 ? void 0 : _b.country.toLowerCase()) !== null && _c !== void 0 ? _c : 'br';
-  setLocale(country);
+  // send to discard
+  const sendToDiscard = useCallback(approval => __awaiter(void 0, void 0, void 0, function* () {
+    const md5 = genMD5(approval);
+    if (!checkDiscard(approval)) {
+      const listDiscard = ApprovalSettingsClient$1.get('DISCARTED', []);
+      listDiscard.push(md5);
+      yield ApprovalSettingsClient$1.set('DISCARTED', listDiscard);
+      updateApprovalList(approval);
+    }
+    return true;
+  }), [checkDiscard, updateApprovalList]);
+  // function to get approvals
+  const getApprovals = useCallback(() => __awaiter(void 0, void 0, void 0, function* () {
+    if (envs && approvalTypes) {
+      yield ApprovalSettingsClient$1.boot();
+      if (!ApprovalSettingsClient$1.get('CENTRAL_ACTION_FETCH', false)) {
+        return;
+      }
+      setApprovalCenterLoading(true);
+      const _promisses = [];
+      const _approvalsInPromisses = [];
+      const userAD = yield findAD();
+      if (userAD) {
+        if (approvalTypes === null || approvalTypes === void 0 ? void 0 : approvalTypes.includes(APPROVAL_TYPES.PURCHASE_REQUISITION)) {
+          _promisses.push(approvalAPI.getApprovals({
+            type: APPROVAL_TYPES.PURCHASE_REQUISITION,
+            userAd: userAD
+          }));
+          _approvalsInPromisses.push(APPROVAL_TYPES.PURCHASE_REQUISITION);
+        }
+        if (approvalTypes === null || approvalTypes === void 0 ? void 0 : approvalTypes.includes(APPROVAL_TYPES.ACCOUNTABILITY)) {
+          _promisses.push(approvalAPI.getApprovals({
+            type: APPROVAL_TYPES.ACCOUNTABILITY,
+            userAd: userAD
+          }));
+          _approvalsInPromisses.push(APPROVAL_TYPES.ACCOUNTABILITY);
+        }
+        if (approvalTypes === null || approvalTypes === void 0 ? void 0 : approvalTypes.includes(APPROVAL_TYPES.FB60)) {
+          _promisses.push(approvalAPI.getApprovals({
+            type: APPROVAL_TYPES.FB60,
+            userAd: userAD
+          }));
+          _approvalsInPromisses.push(APPROVAL_TYPES.FB60);
+        }
+        if (approvalTypes === null || approvalTypes === void 0 ? void 0 : approvalTypes.includes(APPROVAL_TYPES.PAYMENT_PROPOSAL)) {
+          _promisses.push(approvalAPI.getApprovals({
+            type: APPROVAL_TYPES.PAYMENT_PROPOSAL,
+            userAd: userAD
+          }));
+          _approvalsInPromisses.push(APPROVAL_TYPES.PAYMENT_PROPOSAL);
+        }
+        if (approvalTypes === null || approvalTypes === void 0 ? void 0 : approvalTypes.includes(APPROVAL_TYPES.PURCHASE_ORDER)) {
+          _promisses.push(approvalAPI.getApprovals({
+            type: APPROVAL_TYPES.PURCHASE_ORDER,
+            userAd: userAD
+          }));
+          _approvalsInPromisses.push(APPROVAL_TYPES.PURCHASE_ORDER);
+        }
+        const result = yield Promise.all(_promisses);
+        let _approvals = [];
+        for (const value of result) {
+          if (value.success) {
+            const _tempApproval = value.data.length > 0 ? value.data : [];
+            if (_tempApproval.length > 0 && [APPROVAL_TYPES.PURCHASE_ORDER, APPROVAL_TYPES.PAYMENT_PROPOSAL].includes(_tempApproval[0].category)) {
+              for (const t of _tempApproval) {
+                !checkDiscard(t) && _approvals.push(t);
+              }
+            } else {
+              _approvals = _approvals.concat(_tempApproval);
+            }
+          }
+        }
+        setApprovalCenterLoading(false);
+        setApprovals(_approvals);
+        yield ApprovalSettingsClient$1.set('MODULE_PENDING', _approvals.length);
+        yield ApprovalSettingsClient$1.set('CENTRAL_ACTION_FETCH', false);
+      }
+    }
+  }), [approvalTypes, checkDiscard, envs]);
+  // set localization
+  setLocale((_a = envs === null || envs === void 0 ? void 0 : envs.country.toLowerCase()) !== null && _a !== void 0 ? _a : 'br');
   const localize = i18(locales);
-  const localeDate = (_e = (_d = props.extensions) === null || _d === void 0 ? void 0 : _d.env.localeDate) !== null && _e !== void 0 ? _e : 'pt-BR';
+  const localeDate = (_b = envs === null || envs === void 0 ? void 0 : envs.localeDate) !== null && _b !== void 0 ? _b : 'pt-BR';
+  // get purchase order details
+  const getPurchaseOrderDetail = useCallback(orderId => __awaiter(void 0, void 0, void 0, function* () {
+    return approvalAPI.fiori.getPurchaseOrderDetail(orderId);
+  }), []);
+  // get purchase requisitions files
+  const getPurchaseRequisitionFiles = useCallback(orderId => __awaiter(void 0, void 0, void 0, function* () {
+    return approvalAPI.fico.getPurchaseRequisitionFiles(orderId);
+  }), []);
+  const getPurchaseRequisitionFileStream = useCallback(fileId => __awaiter(void 0, void 0, void 0, function* () {
+    return approvalAPI.fico.getPurchaseRequisitionFileStream(fileId);
+  }), []);
+  // get purchase fb60 files
+  const getFB60Files = useCallback(approval => __awaiter(void 0, void 0, void 0, function* () {
+    return approvalAPI.fiori.getFB60Files(approval);
+  }), []);
+  const getFB60FileStream = useCallback(fileId => __awaiter(void 0, void 0, void 0, function* () {
+    return approvalAPI.fiori.getFB60FileStream(fileId);
+  }), []);
+  // get purchase accountability files
+  const getAccountabilityFiles = useCallback(approval => __awaiter(void 0, void 0, void 0, function* () {
+    return approvalAPI.fiori.getAccountabilityFiles(approval);
+  }), []);
+  const getAccountabilityFileStream = useCallback(fileId => __awaiter(void 0, void 0, void 0, function* () {
+    return approvalAPI.fiori.getAccountabilityFileStream(fileId);
+  }), []);
+  // approval action
+  const approvalAction = useCallback((approval, action) => __awaiter(void 0, void 0, void 0, function* () {
+    if (action === EGenericApprovalAction.DISCARD) {
+      yield sendToDiscard(approval);
+      handleAnalytics && handleAnalytics(approval, action);
+      return;
+    }
+    const ad = yield findAD();
+    if (!ad) throw new Error('User AD not found');
+    if ([APPROVAL_TYPES.ACCOUNTABILITY, APPROVAL_TYPES.FB60, APPROVAL_TYPES.PAYMENT_PROPOSAL, APPROVAL_TYPES.PURCHASE_ORDER].includes(approval.category)) {
+      yield approvalAPI.fiori.approvalAction(approval, action, ad);
+      updateApprovalList(approval);
+    } else if (APPROVAL_TYPES.PURCHASE_REQUISITION === approval.category) {
+      yield approvalAPI.fico.approvalAction(approval, action, ad);
+      updateApprovalList(approval);
+    } else {
+      throw new Error('Approval category invalid!');
+    }
+  }), [sendToDiscard, updateApprovalList]);
+  return jsxs(ApprovalContext.Provider, Object.assign({
+    value: {
+      approvalTypes,
+      envs,
+      approvals,
+      setApprovals,
+      approvalCenterLoading,
+      getApprovals,
+      localize,
+      localeDate,
+      getPurchaseOrderDetail,
+      getPurchaseRequisitionFiles,
+      getPurchaseRequisitionFileStream,
+      getFB60Files,
+      getFB60FileStream,
+      getAccountabilityFiles,
+      getAccountabilityFileStream,
+      approvalAction,
+      goBack,
+      setModalError,
+      selectedApproval,
+      setSelectedApproval,
+      setModalAction,
+      modalAction
+    }
+  }, {
+    children: [children, jsx(Index, {
+      title: localize('LABEL_ACCEPT', ''),
+      modalError: modalError,
+      setModalError: setModalError
+    }), jsx(ModalAction, {})]
+  }));
+};
+
+const useApproval = () => {
+  const context = useContext(ApprovalContext);
+  return Object.assign({}, context);
+};
+
+function ApprovalCenter(props) {
+  var _a;
+  const {
+    getApprovals,
+    approvals,
+    approvalCenterLoading,
+    localize
+  } = useApproval();
+  useEffect(() => {
+    getApprovals();
+  }, [getApprovals]);
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
       onBack: () => props.history.goBack(),
+      sticky: true,
+      tags: [],
+      title: localize('MENU_TITLE', ''),
+      skeleton: approvalCenterLoading
+    }), jsx(Ramen.XBody, {
+      children: jsxs(Ramen.XBox, Object.assign({
+        gap: "l"
+      }, {
+        children: [approvalCenterLoading ? jsxs(Fragment, {
+          children: [jsx(Ramen.XSkeleton, {
+            size: "l",
+            type: "image",
+            width: "xl"
+          }), jsx(Ramen.XSkeleton, {
+            size: "l",
+            type: "image",
+            width: "xl"
+          }), jsx(Ramen.XSkeleton, {
+            size: "l",
+            type: "image",
+            width: "xl"
+          }), jsx(Ramen.XSkeleton, {
+            size: "l",
+            type: "image",
+            width: "xl"
+          }), jsx(Ramen.XSkeleton, {
+            size: "l",
+            type: "image",
+            width: "xl"
+          })]
+        }) : jsxs(Fragment, {
+          children: [approvals && approvals.filter(a => a.category === APPROVAL_TYPES.ACCOUNTABILITY).length > 0 && jsx(Ramen.XCard, {
+            symbol: "cyclical-inventory-neutral",
+            title: localize('ACCOUNTABILITY_MENU_TITLE', ''),
+            count: approvals.filter(a => a.category === APPROVAL_TYPES.ACCOUNTABILITY).length,
+            onClick: () => props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.ACCOUNTABILITY}`)
+          }), approvals && approvals.filter(a => a.category === APPROVAL_TYPES.PURCHASE_REQUISITION).length > 0 && jsx(Ramen.XCard, {
+            symbol: "customers-bag-neutral",
+            title: localize('PURCHASE_REQUISITION_MENU_TITLE', ''),
+            count: approvals.filter(a => a.category === APPROVAL_TYPES.PURCHASE_REQUISITION).length,
+            onClick: () => props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.PURCHASE_REQUISITION}`)
+          }), approvals && approvals.filter(a => a.category === APPROVAL_TYPES.FB60).length > 0 && jsx(Ramen.XCard, {
+            symbol: "user-sales-neutral",
+            title: localize('FB60_MENU_TITLE', ''),
+            count: approvals.filter(a => a.category === APPROVAL_TYPES.FB60).length,
+            onClick: () => props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.FB60}`)
+          }), approvals && approvals.filter(a => a.category === APPROVAL_TYPES.PURCHASE_ORDER).length > 0 && jsx(Ramen.XCard, {
+            symbol: "customers-bag-neutral",
+            title: localize('PURCHASE_ORDER_MENU_TITLE', ''),
+            count: approvals.filter(a => a.category === APPROVAL_TYPES.PURCHASE_ORDER).length,
+            onClick: () => props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.PURCHASE_ORDER}`)
+          }), approvals && approvals.filter(a => a.category === APPROVAL_TYPES.PAYMENT_PROPOSAL).length > 0 && jsx(Ramen.XCard, {
+            symbol: "user-sales-neutral",
+            title: localize('PAYMENT_PROPOSAL_MENU_TITLE', ''),
+            count: approvals.filter(a => a.category === APPROVAL_TYPES.PAYMENT_PROPOSAL).length,
+            onClick: () => props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.PAYMENT_PROPOSAL}`)
+          })]
+        }), ((_a = props.extensions) === null || _a === void 0 ? void 0 : _a.approval_extension) && props.extensions.approval_extension(), jsx(Ramen.XBox, {
+          padding: "s"
+        })]
+      }))
+    })]
+  });
+}
+
+var img = "data:image/svg+xml,%3csvg width='169' height='168' viewBox='0 0 169 168' fill='none' xmlns='http://www.w3.org/2000/svg'%3e %3cg clip-path='url(%23clip0_9973_87224)'%3e %3cg clip-path='url(%23clip1_9973_87224)'%3e %3cpath d='M257.712 0H-88.9805V167.85H257.712V0Z' fill='%23D6D6D6' /%3e %3cpath d='M258.1 0H-89.0996V110.32H258.1V0Z' fill='%23F5F5F5' /%3e %3cpath d='M258.09 111.277H-88.377V167.773H258.09V111.277Z' fill='%23EAEAEA' /%3e %3cpath d='M258.1 125.292H-88.9414V126.288H258.1V125.292Z' fill='%23D6D6D6' /%3e %3cpath d='M258.1 136.984H-88.9414V137.98H258.1V136.984Z' fill='%23D6D6D6' /%3e %3cpath d='M258.1 153.408H-88.9414V154.404H258.1V153.408Z' fill='%23D6D6D6' /%3e %3cpath d='M258.1 116.587H-88.9414V117.582H258.1V116.587Z' fill='%23D6D6D6' /%3e %3cpath d='M203.981 168L168.019 110.118L167.295 110.686L202.904 168H203.981Z' fill='%23D6D6D6' /%3e %3cpath d='M161.608 168L137.655 110.118L136.855 110.536L160.632 168H161.608Z' fill='%23D6D6D6' /%3e %3cpath d='M121.91 168L108.148 110.118L107.291 110.377L120.996 168H121.91Z' fill='%23D6D6D6' /%3e %3cpath d='M85.0217 110.118H84.1387V168H85.0217V110.118Z' fill='%23D6D6D6' /%3e %3cpath d='M48.1659 168L61.8665 110.377L61.0144 110.118L47.252 168H48.1659Z' fill='%23D6D6D6' /%3e %3cpath d='M8.53046 168L32.3067 110.536L31.5076 110.118L7.55469 168H8.53046Z' fill='%23D6D6D6' /%3e %3cpath d='M-33.7405 168L1.86871 110.686L1.14461 110.118L-34.8223 168H-33.7405Z' fill='%23D6D6D6' /%3e %3c/g%3e %3cpath d='M32.9805 46.9884C32.9805 38.3573 39.9774 31.3604 48.6085 31.3604L119.456 31.3604C128.087 31.3604 135.084 38.3573 135.084 46.9884V224.107C135.084 232.738 128.087 239.735 119.456 239.735H48.6085C39.9774 239.735 32.9805 232.738 32.9805 224.107L32.9805 46.9884Z' fill='%231F1F1F' /%3e %3cg clip-path='url(%23clip2_9973_87224)'%3e %3cpath d='M37.1484 49.0718C37.1484 42.1669 42.746 36.5693 49.6509 36.5693H118.414C125.319 36.5693 130.917 42.1669 130.917 49.0718V222.022C130.917 228.927 125.319 234.525 118.414 234.525H49.6509C42.746 234.525 37.1484 228.927 37.1484 222.022L37.1484 49.0718Z' fill='white' /%3e %3cpath d='M45.1445 86.5789C45.1445 85.428 46.0775 84.4951 47.2283 84.4951H63.8982C65.049 84.4951 65.982 85.428 65.982 86.5789V103.249C65.982 104.4 65.049 105.333 63.8982 105.333H47.2283C46.0775 105.333 45.1445 104.4 45.1445 103.249V86.5789Z' fill='%23F5F5F5' /%3e %3cpath d='M70.1504 86.5789C70.1504 85.428 71.0833 84.4951 72.2341 84.4951H88.9041C90.0549 84.4951 90.9878 85.428 90.9878 86.5789V103.249C90.9878 104.4 90.0549 105.333 88.9041 105.333H72.2341C71.0833 105.333 70.1504 104.4 70.1504 103.249V86.5789Z' fill='%23F5F5F5' /%3e %3cpath d='M95.1543 86.5789C95.1543 85.428 96.0872 84.4951 97.238 84.4951H113.908C115.059 84.4951 115.992 85.428 115.992 86.5789V103.249C115.992 104.4 115.059 105.333 113.908 105.333H97.238C96.0872 105.333 95.1543 104.4 95.1543 103.249V86.5789Z' fill='%23F5F5F5' /%3e %3cpath d='M120.16 86.5789C120.16 85.428 121.093 84.4951 122.244 84.4951H130.579V105.333H122.244C121.093 105.333 120.16 104.4 120.16 103.249V86.5789Z' fill='%23F5F5F5' /%3e %3cpath d='M45.1445 116.794C45.1445 115.067 46.5439 113.668 48.2701 113.668H120.159C121.885 113.668 123.285 115.067 123.285 116.794V131.38C123.285 133.106 121.885 134.505 120.159 134.505H48.2701C46.5439 134.505 45.1445 133.106 45.1445 131.38V116.794Z' fill='%23F5F5F5' /%3e %3cpath d='M45.1445 142.839C45.1445 141.113 46.5439 139.714 48.2701 139.714H120.159C121.885 139.714 123.285 141.113 123.285 142.839V157.426C123.285 159.152 121.885 160.551 120.159 160.551H48.2701C46.5439 160.551 45.1445 159.152 45.1445 157.426V142.839Z' fill='%23F5F5F5' /%3e %3cpath d='M45.1445 168.886C45.1445 167.16 46.5439 165.761 48.2701 165.761H120.159C121.885 165.761 123.285 167.16 123.285 168.886V183.473C123.285 185.199 121.885 186.598 120.159 186.598H48.2701C46.5439 186.598 45.1445 185.199 45.1445 183.473V168.886Z' fill='%23F5F5F5' /%3e %3cpath d='M45.1445 63.2583C45.1445 62.3282 45.8985 61.5742 46.8286 61.5742H81.1834C82.1135 61.5742 82.8675 62.3282 82.8675 63.2583C82.8675 64.1884 82.1135 64.9423 81.1834 64.9423H46.8286C45.8985 64.9423 45.1445 64.1884 45.1445 63.2583Z' fill='%23F5F5F5' /%3e %3cpath d='M45.1445 68.4233C45.1445 67.4932 45.8985 66.7393 46.8286 66.7393H68.16C69.0901 66.7393 69.8441 67.4932 69.8441 68.4233C69.8441 69.3534 69.0901 70.1074 68.16 70.1074H46.8286C45.8985 70.1074 45.1445 69.3534 45.1445 68.4233Z' fill='%23F5F5F5' /%3e %3cpath d='M122.242 65.0556C122.242 66.9777 120.684 68.536 118.762 68.536C116.839 68.536 115.281 66.9777 115.281 65.0556C115.281 63.1334 116.839 61.5752 118.762 61.5752C120.684 61.5752 122.242 63.1334 122.242 65.0556Z' fill='%23F5F5F5' /%3e %3cpath d='M52.1053 52.5527C52.1053 54.4748 50.5471 56.033 48.6249 56.033C46.7028 56.033 45.1445 54.4748 45.1445 52.5527C45.1445 50.6305 46.7028 49.0723 48.6249 49.0723C50.5471 49.0723 52.1053 50.6305 52.1053 52.5527Z' fill='%23F5F5F5' /%3e %3c/g%3e %3c/g%3e %3cdefs%3e %3cclipPath id='clip0_9973_87224'%3e %3crect x='0.5' width='168' height='168' rx='84' fill='white' /%3e %3c/clipPath%3e %3cclipPath id='clip1_9973_87224'%3e %3crect width='347.2' height='168' fill='white' transform='translate(-89.0996)' /%3e %3c/clipPath%3e %3cclipPath id='clip2_9973_87224'%3e %3crect width='93.7684' height='197.956' fill='white' transform='translate(37.1484 36.5693)' /%3e %3c/clipPath%3e %3c/defs%3e%3c/svg%3e";
+
+const NotFound = props => {
+  return jsxs(Fragment, {
+    children: [jsx(Ramen.XVSpace, {
+      size: "xxs"
+    }), jsxs(Ramen.XBox, Object.assign({
+      horizontalAlign: "center",
+      verticalAlign: "center",
+      height: 'full',
+      width: 'full',
+      orientation: "vertical",
+      gap: "m"
+    }, {
+      children: [jsx(Ramen.XImage, {
+        src: img,
+        padding: "xl"
+      }), jsx(Ramen.XText, Object.assign({
+        textAlign: "center",
+        fontSize: 8,
+        weight: "bold"
+      }, {
+        children: props.title
+      })), props.subtitle && jsx(Ramen.XText, Object.assign({
+        textAlign: "center",
+        fontSize: 10,
+        colorThone: "dim",
+        lineHeight: "title"
+      }, {
+        children: props.subtitle
+      }))]
+    }))]
+  });
+};
+
+const ApprovalItemCard = props => {
+  return jsx(Ramen.XCard, Object.assign({
+    size: "l",
+    borderType: "shadow",
+    onClick: props.onClick
+  }, {
+    children: jsxs(Ramen.XBox, Object.assign({
+      width: 'full',
+      gap: "m"
+    }, {
+      children: [jsxs(Ramen.XBox, Object.assign({
+        width: 'full',
+        orientation: "horizontal",
+        horizontalAlign: props.title ? 'between' : 'end',
+        verticalAlign: "center"
+      }, {
+        children: [props.title && jsx(Ramen.XTag, {
+          text: props.title
+        }), jsx(Ramen.XBox, Object.assign({
+          orientation: "horizontal",
+          verticalAlign: "center",
+          gap: "xs"
+        }, {
+          children: props.buttons.map((b, i) => {
+            return jsx(Ramen.XButtonIcon, {
+              type: b.type,
+              size: b.size,
+              icon: b.icon,
+              onClick: b.onClick
+            }, i);
+          })
+        }))]
+      })), jsxs(Ramen.XBox, Object.assign({
+        width: 'full',
+        orientation: "horizontal",
+        horizontalAlign: "between",
+        verticalAlign: "center",
+        gap: "m"
+      }, {
+        children: [jsx(Ramen.XBox, Object.assign({
+          width: 'flex',
+          orientation: "vertical",
+          gap: "xxs"
+        }, {
+          children: props.header.map((v, i) => {
+            return jsx(Ramen.XText, Object.assign({
+              weight: i === 0 ? 'bold' : 'normal',
+              textOverflow: "break-word",
+              fontSize: i === 0 ? 11 : 12
+            }, {
+              children: v
+            }), i);
+          })
+        })), jsx(Ramen.XTag, {
+          text: props.value,
+          color: "black"
+        })]
+      })), props.subtitle && jsx(Ramen.XBox, Object.assign({
+        width: 'full',
+        orientation: "horizontal",
+        horizontalAlign: "between",
+        verticalAlign: "center",
+        gap: "m"
+      }, {
+        children: jsx(Ramen.XText, Object.assign({
+          fontSize: 11,
+          colorThone: "darkest",
+          textOverflow: "break-word"
+        }, {
+          children: props.subtitle
+        }))
+      })), props.row.map((r, i) => {
+        return jsxs(Ramen.XBox, Object.assign({
+          width: 'full',
+          orientation: "horizontal",
+          horizontalAlign: "between",
+          verticalAlign: "center",
+          gap: "m"
+        }, {
+          children: [jsx(Ramen.XText, Object.assign({
+            fontSize: 11,
+            colorThone: "medium",
+            textOverflow: "break-word"
+          }, {
+            children: r.label
+          })), jsx(Ramen.XText, Object.assign({
+            fontSize: 11,
+            colorThone: "darkest",
+            textOverflow: "break-word",
+            textAlign: "right"
+          }, {
+            children: r.value
+          }))]
+        }), i);
+      }), jsx(Ramen.XBox, {})]
+    }))
+  }));
+};
+
+function PurchaseRequisitionCard() {
+  const {
+    approvals,
+    localize,
+    localeDate,
+    setSelectedApproval,
+    setModalAction,
+    goBack
+  } = useApproval();
+  const [search, setSearch] = useState();
+  const history = useHistory();
+  const location = useLocation();
+  const filterSearch = useCallback(approval => {
+    if (search) {
+      const _term = search.toLowerCase();
+      const orderValue = currencyApproval(approval.orderValue, approval.orderValueCurrency, localeDate).toLowerCase();
+      const createdAt = formatDate(approval.createdAt, localeDate).toLowerCase();
+      if (orderValue.includes(_term)) return true;
+      if (createdAt.includes(_term)) return true;
+      if (approval.clientDescription.toLowerCase().includes(_term)) return true;
+      if (approval.createdBy.toLowerCase().includes(_term)) return true;
+      if (approval.orderId.toLowerCase().includes(_term)) return true;
+      if (approval.createdByName && approval.createdByName.toLowerCase().includes(_term)) return true;
+      return false;
+    }
+    return true;
+  }, [localeDate, search]);
+  const purchaseRequisition = useMemo(() => {
+    return approvals ? approvals.filter(a => a.category === APPROVAL_TYPES.PURCHASE_REQUISITION && filterSearch(a)) : [];
+  }, [approvals, filterSearch]);
+  return jsxs(Ramen.XPage, {
+    children: [jsx(Ramen.XHeader, {
+      onBack: goBack,
       sticky: true,
       tags: [],
       title: localize('PURCHASE_REQUISITION_MENU_TITLE', '')
@@ -4774,174 +5334,69 @@ function PurchaseRequisitionCard(props) {
       children: jsxs(Ramen.XBox, Object.assign({
         gap: "l"
       }, {
-        children: [approvals.map((a, i) => {
+        children: [jsx(Ramen.XSearchInput, {
+          onChange: e => setSearch(e.target.value),
+          size: "l",
+          placeholder: localize('LABEL_SEARCH', '')
+        }), purchaseRequisition.length > 0 ? purchaseRequisition.map((a, i) => {
           const orderValue = currencyApproval(a.orderValue, a.orderValueCurrency, localeDate);
           const createdAt = formatDate(a.createdAt, localeDate);
-          return jsx(Ramen.XCard, Object.assign({
-            size: "l",
-            borderType: "shadow",
-            onClick: () => props.history.push(`${props.location.pathname}/detail`, a)
-          }, {
-            children: jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              gap: "m"
+          return jsx(ApprovalItemCard, {
+            onClick: () => {
+              setSelectedApproval(a);
+              history.push(`${location.pathname}/detail`);
+            },
+            title: `${localize('PURCHASE_REQUISITION_MENU_TITLE_SHORT', '')} ∙ ${a.orderId}`,
+            buttons: [{
+              type: 'tonal',
+              size: 's',
+              icon: 'check-bold',
+              onClick: e => {
+                e.stopPropagation();
+                setSelectedApproval(a);
+                setModalAction({
+                  show: true,
+                  action: EGenericApprovalAction.APPROVE,
+                  needBack: false
+                });
+              }
             }, {
-              children: [jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center"
-              }, {
-                children: [jsx(Ramen.XTag, {
-                  text: `${localize('PURCHASE_REQUISITION_MENU_TITLE_SHORT', '')} ∙ ${a.orderId}`
-                }), jsxs(Ramen.XBox, Object.assign({
-                  orientation: "horizontal",
-                  verticalAlign: "center",
-                  gap: "xs"
-                }, {
-                  children: [jsx(Ramen.XButtonIcon, {
-                    type: "tonal",
-                    size: "s",
-                    icon: "check-bold",
-                    onClick: e => {
-                      e.stopPropagation();
-                      setApproval(a);
-                      setModal({
-                        show: true,
-                        action: 'approve'
-                      });
-                    }
-                  }), jsx(Ramen.XButtonIcon, {
-                    type: "tonal",
-                    size: "s",
-                    icon: "close-outline",
-                    onClick: e => {
-                      e.stopPropagation();
-                      setApproval(a);
-                      setModal({
-                        show: true,
-                        action: 'reject'
-                      });
-                    }
-                  })]
-                }))]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XBox, Object.assign({
-                  width: 'flex'
-                }, {
-                  children: jsx(Ramen.XText, Object.assign({
-                    weight: "bold",
-                    textOverflow: "break-word",
-                    fontSize: 11
-                  }, {
-                    children: a.clientDescription
-                  }))
-                })), jsx(Ramen.XTag, {
-                  state: "dark",
-                  text: orderValue
-                })]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_CREATED_AT', '')
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word"
-                }, {
-                  children: createdAt
-                }))]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XBox, Object.assign({
-                  width: 'half'
-                }, {
-                  children: jsx(Ramen.XText, Object.assign({
-                    fontSize: 11,
-                    colorThone: "medium",
-                    textOverflow: "break-word"
-                  }, {
-                    children: localize('LABEL_CREATED_BY', '')
-                  }))
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word",
-                  textAlign: "right"
-                }, {
-                  children: `${a.createdByName ? a.createdByName : a.createdBy}`
-                }))]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_QUANTITY', '')
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word"
-                }, {
-                  children: a.orderProductsQuantity
-                }))]
-              })), jsx(Ramen.XBox, {})]
-            }))
-          }), i);
-        }), jsx(Ramen.XBox, {
-          padding: "s"
+              type: 'tonal',
+              size: 's',
+              icon: 'close-outline',
+              onClick: e => {
+                e.stopPropagation();
+                setSelectedApproval(a);
+                setModalAction({
+                  show: true,
+                  action: EGenericApprovalAction.REJECT,
+                  needBack: false
+                });
+              }
+            }],
+            header: [a.clientDescription],
+            value: orderValue,
+            row: [{
+              label: localize('LABEL_CREATED_AT', ''),
+              value: createdAt
+            }, {
+              label: localize('LABEL_CREATED_BY', ''),
+              value: `${a.createdByName ? a.createdByName : a.createdBy}`
+            }, {
+              label: localize('LABEL_QUANTITY', ''),
+              value: a.orderProductsQuantity
+            }]
+          }, i);
+        }) : search ? jsx(NotFound, {
+          title: localize('TXT_TITLE_SEARCH_NOT_FOUND', ''),
+          subtitle: localize('TXT_SUBTITLE_SEARCH_NOT_FOUND', '')
+        }) : jsx(NotFound, {
+          title: localize('TXT_TITLE_NOTHING_TODO', '')
+        }), jsx(Ramen.XVSpace, {
+          size: "xxs"
         })]
       }))
-    }), jsx(Ramen.XModal, Object.assign({
-      visible: (_f = modal === null || modal === void 0 ? void 0 : modal.show) !== null && _f !== void 0 ? _f : false,
-      actions: [{
-        icon: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? 'check-outline' : 'x-outline',
-        key: (_g = modal === null || modal === void 0 ? void 0 : modal.action) !== null && _g !== void 0 ? _g : '',
-        text: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? localize('LABEL_APPROVE', '') : localize('LABEL_REJECT', ''),
-        type: 'solid'
-      }],
-      icon: "alert-circle-outline",
-      onActionClick: key => setModal(Object.assign(Object.assign({}, modal), {
-        show: false
-      })),
-      onClose: () => setModal(Object.assign(Object.assign({}, modal), {
-        show: false
-      })),
-      size: "xs",
-      title: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? localize('QUESTION_MODAL_PR_APPROVE', '') : localize('QUESTION_MODAL_PR_REJECT', '')
-    }, {
-      children: jsx(Ramen.XText, Object.assign({
-        colorThone: "medium"
-      }, {
-        children: `${localize('PURCHASE_REQUISITION_MENU_TITLE_SHORT', '')} ${approval === null || approval === void 0 ? void 0 : approval.orderId}`
-      }))
-    }))]
+    })]
   });
 }
 
@@ -4986,6 +5441,160 @@ if (isCallable$2(NativePromiseConstructor)) {
     defineBuiltIn$4(NativePromisePrototype, 'finally', method, { unsafe: true });
   }
 }
+
+const ApprovalItemDetail = props => {
+  return jsx(Ramen.XCard, Object.assign({
+    borderType: "solid"
+  }, {
+    children: jsxs(Ramen.XBox, Object.assign({
+      width: 'full',
+      gap: "m"
+    }, {
+      children: [jsx(Ramen.XBox, {}), jsxs(Ramen.XBox, Object.assign({
+        width: 'full',
+        orientation: "horizontal",
+        horizontalAlign: "between",
+        verticalAlign: "center",
+        gap: "m"
+      }, {
+        children: [jsx(Ramen.XBox, Object.assign({
+          width: 'flex',
+          orientation: "vertical",
+          gap: "xxs"
+        }, {
+          children: props.header.map((v, i) => {
+            return jsx(Ramen.XText, Object.assign({
+              weight: i === 0 ? 'bold' : 'normal',
+              textOverflow: "break-word",
+              fontSize: i === 0 ? 11 : 12
+            }, {
+              children: v
+            }), i);
+          })
+        })), jsx(Ramen.XTag, {
+          text: props.value,
+          color: "black"
+        })]
+      })), props.subtitle && jsx(Ramen.XBox, Object.assign({
+        width: 'full',
+        orientation: "horizontal",
+        horizontalAlign: "between",
+        verticalAlign: "center",
+        gap: "m"
+      }, {
+        children: jsx(Ramen.XText, Object.assign({
+          fontSize: 11,
+          colorThone: "darkest",
+          textOverflow: "break-word"
+        }, {
+          children: props.subtitle
+        }))
+      })), props.row.map((r, i) => {
+        return jsxs(Ramen.XBox, Object.assign({
+          width: 'full',
+          orientation: "horizontal",
+          horizontalAlign: "between",
+          verticalAlign: "center",
+          gap: "m"
+        }, {
+          children: [jsx(Ramen.XText, Object.assign({
+            fontSize: 11,
+            colorThone: "medium",
+            textOverflow: "break-word"
+          }, {
+            children: r.label
+          })), jsx(Ramen.XText, Object.assign({
+            fontSize: 11,
+            colorThone: "darkest",
+            textOverflow: "break-word",
+            textAlign: "right"
+          }, {
+            children: r.value
+          }))]
+        }), i);
+      }), jsx(Ramen.XBox, {})]
+    }))
+  }));
+};
+
+const ApprovalItemContentDetail = props => {
+  return jsx(Ramen.XCard, Object.assign({
+    size: "l",
+    borderType: "shadow"
+  }, {
+    children: jsxs(Ramen.XBox, Object.assign({
+      width: 'full',
+      gap: "m"
+    }, {
+      children: [jsx(Ramen.XBox, {}), jsxs(Ramen.XBox, Object.assign({
+        width: 'full',
+        orientation: "horizontal",
+        horizontalAlign: "between",
+        verticalAlign: "center",
+        gap: "m"
+      }, {
+        children: [jsx(Ramen.XBox, Object.assign({
+          width: 'flex'
+        }, {
+          children: props.header.map((v, i) => {
+            return jsx(Ramen.XText, Object.assign({
+              weight: 'bold',
+              textOverflow: "break-word",
+              fontSize: i === 0 ? 11 : 12
+            }, {
+              children: v
+            }), i);
+          })
+        })), jsx(Ramen.XTag, {
+          text: props.value,
+          color: "black"
+        })]
+      })), props.row.map((r, i) => {
+        return jsxs(Ramen.XBox, Object.assign({
+          width: 'full',
+          orientation: "horizontal",
+          horizontalAlign: "between",
+          verticalAlign: "center",
+          gap: "m"
+        }, {
+          children: [jsx(Ramen.XText, Object.assign({
+            fontSize: 11,
+            colorThone: "medium",
+            textOverflow: "break-word"
+          }, {
+            children: r.label
+          })), jsx(Ramen.XText, Object.assign({
+            fontSize: 11,
+            colorThone: "darkest",
+            textOverflow: "break-word",
+            textAlign: "right"
+          }, {
+            children: r.value
+          }))]
+        }), i);
+      }), jsx(Ramen.XBox, {})]
+    }))
+  }), props.key);
+};
+
+const ApprovalItemDetailFooter = props => {
+  return jsx(Ramen.XFooter, {
+    children: jsx(Ramen.XBox, Object.assign({
+      orientation: "horizontal",
+      gap: props.buttons.length <= 2 ? 'xl' : 'm'
+    }, {
+      children: props.buttons.map((b, i) => {
+        return jsx(Ramen.XButton, {
+          size: b.size,
+          text: b.text,
+          type: b.type,
+          icon: b.icon,
+          onClick: b.onClick
+        }, i);
+      })
+    }))
+  });
+};
 
 // eslint-disable-next-line es/no-typed-arrays -- safe
 var arrayBufferBasicDetection = typeof ArrayBuffer != 'undefined' && typeof DataView != 'undefined';
@@ -8147,107 +8756,105 @@ $$1({ global: true, constructor: true, forced: !USE_NATIVE_URL, sham: !DESCRIPTO
   URL: URLConstructor
 });
 
-function PurchaseRequisitionDetail(props) {
-  var _a, _b, _c, _d, _e, _f, _g;
-  const [approval, setApproval] = useState();
+// download archive
+const handleDownloadArchive = props => __awaiter(void 0, void 0, void 0, function* () {
+  const mimetype = getMime(props.file.fileMime);
+  if (mimetype === '') {
+    snackbar('error', props.localize('ERROR_MIME', ''), 'top');
+    return;
+  }
+  try {
+    loading(true, props.localize('LOADING', ''));
+    // fetch a file array buffer
+    const bufferFile = yield props.download(props.file.fileId);
+    // create a blob with array buffer data
+    const blob = new Blob([new Uint8Array(bufferFile.data).buffer], {
+      type: mimetype
+    });
+    // check if a blob is valid or it is corrupted
+    if (blob.size === 0) {
+      snackbar('error', props.localize('ERROR_0_BYTE', ''), 'top');
+      return;
+    }
+    // check if is a native device
+    if (Capacitor.isNativePlatform()) {
+      // convert blob to string
+      const reader = new FileReader();
+      const dataUrlPromise = new Promise((resolve, reject) => {
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(blob);
+      });
+      const dataUrl = yield dataUrlPromise;
+      // write file on cache directory on device and open the file
+      Filesystem.writeFile({
+        path: props.file.fileName,
+        data: dataUrl,
+        directory: Directory.Cache
+      }).then(res => FileOpener.open({
+        filePath: res.uri,
+        contentType: mimetype
+      }));
+    } else {
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      if (link.download !== undefined) {
+        link.setAttribute('href', url);
+        link.setAttribute('download', props.file.fileName);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+  } catch (error) {
+    console.error('Error when try download a archive: ', error);
+    snackbar('error', props.localize('ERROR_OPEN_FILE', ''), 'top');
+  } finally {
+    loading(false, props.localize('LOADING', ''));
+  }
+});
+
+function PurchaseRequisitionDetail() {
+  var _a, _b;
+  const {
+    getPurchaseRequisitionFiles,
+    getPurchaseRequisitionFileStream,
+    localize,
+    localeDate,
+    setModalAction,
+    selectedApproval,
+    goBack
+  } = useApproval();
   const [fileList, setFileList] = useState([]);
-  const [modal, setModal] = useState();
   const [loadingFiles, setLoadingFiles] = useState(false);
-  useEffect(() => {
-    var _a, _b;
-    const _state = (_b = (_a = props.history) === null || _a === void 0 ? void 0 : _a.location) === null || _b === void 0 ? void 0 : _b.state;
-    setApproval(_state);
-  }, []);
-  const country = (_c = (_b = (_a = props.extensions) === null || _a === void 0 ? void 0 : _a.env) === null || _b === void 0 ? void 0 : _b.country.toLowerCase()) !== null && _c !== void 0 ? _c : 'br';
-  setLocale(country);
-  const localize = i18(locales);
-  const localeDate = (_e = (_d = props.extensions) === null || _d === void 0 ? void 0 : _d.env.localeDate) !== null && _e !== void 0 ? _e : 'pt-BR';
+  const approval = useMemo(() => {
+    return selectedApproval ? selectedApproval : undefined;
+  }, [selectedApproval]);
   const orderValue = useMemo(() => {
     if (approval) {
       return currencyApproval(approval.orderValue, approval.orderValueCurrency, localeDate);
     }
     return '';
-  }, [approval]);
+  }, [approval, localeDate]);
   const createdAt = useMemo(() => {
     if (approval) {
       return formatDate(approval.createdAt, localeDate);
     }
     return '';
-  }, [approval]);
+  }, [approval, localeDate]);
   // get file list
   useEffect(() => {
-    var _a, _b, _c, _d, _e;
     if (approval) {
       setLoadingFiles(true);
-      approvalAPI.fico.setCountryCode(country);
-      approvalAPI.fico.setBaseUrl((_c = (_b = (_a = props.extensions) === null || _a === void 0 ? void 0 : _a.env) === null || _b === void 0 ? void 0 : _b.approvalFicoApi) !== null && _c !== void 0 ? _c : '');
-      approvalAPI.fico.setApiKey((_e = (_d = props.extensions) === null || _d === void 0 ? void 0 : _d.env.approvalApiKey) !== null && _e !== void 0 ? _e : '');
-      approvalAPI.fico.getPurchaseRequisitionFiles(approval.orderId).then(f => {
+      getPurchaseRequisitionFiles(approval.orderId).then(f => {
         setFileList(f);
       }).finally(() => setLoadingFiles(false));
     }
-  }, [approval]);
-  // download archive
-  const handleDownloadArchive = file => __awaiter(this, void 0, void 0, function* () {
-    const mimetype = getMime(file.fileMime);
-    if (mimetype === '') {
-      snackbar('error', localize('ERROR_MIME', ''), 'top');
-      return;
-    }
-    try {
-      loading(true, localize('LOADING', ''));
-      // fetch a file array buffer
-      const bufferFile = yield approvalAPI.fico.getPurchaseRequisitionFileStream(file.fileId);
-      // create a blob with array buffer data
-      const blob = new Blob([new Uint8Array(bufferFile.data).buffer], {
-        type: mimetype
-      });
-      // check if a blob is valid or it is corrupted
-      if (blob.size === 0) {
-        snackbar('error', localize('ERROR_0_BYTE', ''), 'top');
-        return;
-      }
-      // check if is a native device
-      if (Capacitor.isNativePlatform()) {
-        // convert blob to string
-        const reader = new FileReader();
-        const dataUrlPromise = new Promise((resolve, reject) => {
-          reader.onloadend = () => resolve(reader.result);
-          reader.onerror = error => reject(error);
-          reader.readAsDataURL(blob);
-        });
-        const dataUrl = yield dataUrlPromise;
-        // write file on cache directory on device and open the file
-        Filesystem.writeFile({
-          path: file.fileName,
-          data: dataUrl,
-          directory: Directory.Cache
-        }).then(res => FileOpener.open({
-          filePath: res.uri,
-          contentType: mimetype
-        }));
-      } else {
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        if (link.download !== undefined) {
-          link.setAttribute('href', url);
-          link.setAttribute('download', file.fileName);
-          link.style.visibility = 'hidden';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        }
-      }
-    } catch (error) {
-      console.error('Error when try download a archive: ', error);
-      snackbar('error', localize('ERROR_OPEN_FILE', ''), 'top');
-    } finally {
-      loading(false, localize('LOADING', ''));
-    }
-  });
+  }, [approval, getPurchaseRequisitionFiles]);
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
-      onBack: () => props.history.goBack(),
+      onBack: goBack,
       sticky: true,
       tags: [],
       title: `${localize('PURCHASE_REQUISITION_MENU_TITLE_SHORT', '')} ∙ ${approval === null || approval === void 0 ? void 0 : approval.orderId}`
@@ -8255,267 +8862,46 @@ function PurchaseRequisitionDetail(props) {
       children: jsxs(Ramen.XBox, Object.assign({
         gap: "l"
       }, {
-        children: [jsx(Ramen.XCard, Object.assign({
-          size: "l",
-          borderType: "none",
-          backgroundColor: "light"
-        }, {
-          children: jsxs(Ramen.XBox, Object.assign({
-            width: 'full',
-            gap: "m",
-            padding: "xs"
+        children: [jsx(ApprovalItemDetail, {
+          value: orderValue,
+          header: [(_a = approval === null || approval === void 0 ? void 0 : approval.clientDescription) !== null && _a !== void 0 ? _a : ''],
+          row: [{
+            label: localize('LABEL_CREATED_AT', ''),
+            value: createdAt
           }, {
-            children: [jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              orientation: "horizontal",
-              horizontalAlign: "between",
-              verticalAlign: "center",
-              gap: "m"
-            }, {
-              children: [jsx(Ramen.XBox, Object.assign({
-                width: 'flex'
-              }, {
-                children: jsx(Ramen.XText, Object.assign({
-                  weight: "bold",
-                  textOverflow: "break-word",
-                  fontSize: 11
-                }, {
-                  children: approval === null || approval === void 0 ? void 0 : approval.clientDescription
-                }))
-              })), jsx(Ramen.XTag, {
-                state: "dark",
-                text: orderValue
-              })]
-            })), jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              orientation: "horizontal",
-              horizontalAlign: "between",
-              verticalAlign: "center",
-              gap: "m"
-            }, {
-              children: [jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "medium",
-                textOverflow: "break-word"
-              }, {
-                children: localize('LABEL_CREATED_AT', '')
-              })), jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "darkest",
-                textOverflow: "break-word"
-              }, {
-                children: createdAt
-              }))]
-            })), jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              orientation: "horizontal",
-              horizontalAlign: "between",
-              verticalAlign: "center",
-              gap: "m"
-            }, {
-              children: [jsx(Ramen.XBox, Object.assign({
-                width: 'half'
-              }, {
-                children: jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_CREATED_BY', '')
-                }))
-              })), jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "darkest",
-                textOverflow: "break-word",
-                textAlign: "right"
-              }, {
-                children: `${(approval === null || approval === void 0 ? void 0 : approval.createdByName) ? approval === null || approval === void 0 ? void 0 : approval.createdByName : approval === null || approval === void 0 ? void 0 : approval.createdBy}`
-              }))]
-            })), jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              orientation: "horizontal",
-              horizontalAlign: "between",
-              verticalAlign: "center",
-              gap: "m"
-            }, {
-              children: [jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "medium",
-                textOverflow: "break-word"
-              }, {
-                children: localize('LABEL_QUANTITY', '')
-              })), jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "darkest",
-                textOverflow: "break-word"
-              }, {
-                children: approval === null || approval === void 0 ? void 0 : approval.orderProductsQuantity
-              }))]
-            }))]
-          }))
-        })), approval === null || approval === void 0 ? void 0 : approval.products.map((p, i) => {
+            label: localize('LABEL_CREATED_BY', ''),
+            value: `${(approval === null || approval === void 0 ? void 0 : approval.createdByName) ? approval === null || approval === void 0 ? void 0 : approval.createdByName : approval === null || approval === void 0 ? void 0 : approval.createdBy}`
+          }, {
+            label: localize('LABEL_QUANTITY', ''),
+            value: (_b = approval === null || approval === void 0 ? void 0 : approval.orderProductsQuantity) !== null && _b !== void 0 ? _b : ''
+          }]
+        }), approval === null || approval === void 0 ? void 0 : approval.products.map((p, i) => {
+          var _a;
           const productValue = currencyApproval(p.productTotalValue, p.productCurrency, localeDate);
           const productUnitValue = currencyApproval(p.productUnitValue, p.productCurrency, localeDate);
-          return jsx(Ramen.XCard, Object.assign({
-            size: "l",
-            borderType: "shadow"
-          }, {
-            children: jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              gap: "m",
-              padding: "xs"
+          return jsx(ApprovalItemContentDetail, {
+            value: productValue,
+            header: [(_a = p === null || p === void 0 ? void 0 : p.productDescription) !== null && _a !== void 0 ? _a : ''],
+            row: [{
+              label: localize('LABEL_LAST_APPROVER', ''),
+              value: (p === null || p === void 0 ? void 0 : p.lastApprover) ? p === null || p === void 0 ? void 0 : p.lastApprover : localize('LABEL_NOT_INFORM', '')
             }, {
-              children: [jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XBox, Object.assign({
-                  width: 'flex'
-                }, {
-                  children: jsx(Ramen.XText, Object.assign({
-                    weight: "bold",
-                    textOverflow: "break-word",
-                    fontSize: 11
-                  }, {
-                    children: p === null || p === void 0 ? void 0 : p.productDescription
-                  }))
-                })), jsx(Ramen.XTag, {
-                  state: "dark",
-                  text: productValue
-                })]
-              })), p.lastApprover && jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_LAST_APPROVER', '')
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word"
-                }, {
-                  children: p.lastApprover
-                }))]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XBox, Object.assign({
-                  width: 'half'
-                }, {
-                  children: jsx(Ramen.XText, Object.assign({
-                    fontSize: 11,
-                    colorThone: "medium",
-                    textOverflow: "break-word"
-                  }, {
-                    children: localize('LABEL_QUANTITY', '')
-                  }))
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word",
-                  textAlign: "right"
-                }, {
-                  children: p.quantity
-                }))]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_UNIT_VALUE', '')
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word"
-                }, {
-                  children: productUnitValue
-                }))]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_STORE', '')
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word"
-                }, {
-                  children: p.store
-                }))]
-              })), p.costObject && jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_CCPEP', '')
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word",
-                  textAlign: "right"
-                }, {
-                  children: p.costObject
-                }))]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_SUPPLY', '')
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word",
-                  textAlign: "right"
-                }, {
-                  children: `${p.supplierId} ∙ ${p.supplierDescription}`
-                }))]
-              }))]
-            }))
-          }), i);
+              label: localize('LABEL_QUANTITY', ''),
+              value: p.quantity
+            }, {
+              label: localize('LABEL_UNIT_VALUE', ''),
+              value: productUnitValue
+            }, {
+              label: localize('LABEL_STORE', ''),
+              value: p.store
+            }, {
+              label: localize('LABEL_CCPEP', ''),
+              value: (p === null || p === void 0 ? void 0 : p.costObject) ? p === null || p === void 0 ? void 0 : p.costObject : localize('LABEL_NOT_INFORM', '')
+            }, {
+              label: localize('LABEL_SUPPLY', ''),
+              value: p.supplierId && p.supplierDescription ? `${p.supplierId} ∙ ${p.supplierDescription}` : localize('LABEL_NOT_INFORM', '')
+            }]
+          }, i);
         }), loadingFiles ? jsx(Ramen.XButton, {
           skeleton: true,
           size: "l"
@@ -8523,72 +8909,74 @@ function PurchaseRequisitionDetail(props) {
           return jsx(Ramen.XCard, {
             title: f.fileName,
             size: "l",
-            onClick: () => handleDownloadArchive(f)
+            onClick: () => handleDownloadArchive({
+              file: f,
+              localize: localize,
+              download: getPurchaseRequisitionFileStream
+            })
           }, i);
         })]
       }))
-    }), jsxs(Ramen.XFooter, {
-      children: [jsx(Ramen.XButton, {
-        size: "xl",
+    }), jsx(ApprovalItemDetailFooter, {
+      buttons: [{
+        size: 'l',
         text: localize('LABEL_APPROVE', ''),
-        type: "solid",
-        icon: "check-outline",
-        onClick: () => setModal({
+        type: 'solid',
+        icon: 'check-outline',
+        onClick: () => setModalAction({
           show: true,
-          action: 'approve'
+          action: EGenericApprovalAction.APPROVE,
+          needBack: true
         })
-      }), jsx(Ramen.XButton, {
-        size: "xl",
-        text: localize('LABEL_REJECT', ''),
-        type: "clear",
-        icon: "x-outline",
-        onClick: () => setModal({
-          show: true,
-          action: 'reject'
-        })
-      })]
-    }), jsx(Ramen.XModal, Object.assign({
-      visible: (_f = modal === null || modal === void 0 ? void 0 : modal.show) !== null && _f !== void 0 ? _f : false,
-      actions: [{
-        icon: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? 'check-outline' : 'x-outline',
-        key: (_g = modal === null || modal === void 0 ? void 0 : modal.action) !== null && _g !== void 0 ? _g : '',
-        text: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? localize('LABEL_APPROVE', '') : localize('LABEL_REJECT', ''),
-        type: 'solid'
-      }],
-      icon: "alert-circle-outline",
-      onActionClick: key => setModal(Object.assign(Object.assign({}, modal), {
-        show: false
-      })),
-      onClose: () => setModal(Object.assign(Object.assign({}, modal), {
-        show: false
-      })),
-      size: "xs",
-      title: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? localize('QUESTION_MODAL_PR_APPROVE', '') : localize('QUESTION_MODAL_PR_REJECT', '')
-    }, {
-      children: jsx(Ramen.XText, Object.assign({
-        colorThone: "medium"
       }, {
-        children: `${localize('PURCHASE_REQUISITION_MENU_TITLE_SHORT', '')} ${approval === null || approval === void 0 ? void 0 : approval.orderId}`
-      }))
-    }))]
+        size: 'l',
+        text: localize('LABEL_DISCARD', ''),
+        type: 'tonal',
+        icon: 'x-outline',
+        onClick: () => setModalAction({
+          show: true,
+          action: EGenericApprovalAction.REJECT,
+          needBack: true
+        })
+      }]
+    })]
   });
 }
 
-function PurchaseOrderCard(props) {
-  var _a, _b, _c, _d, _e, _f, _g;
-  const [approvals, setApprovals] = useState([]);
-  const [approval, setApproval] = useState();
-  const [modal, setModal] = useState();
-  useEffect(() => {
-    SettingsClient.boot().then(() => setApprovals(SettingsClient.get('PURCHASE_ORDER_PENDING', [])));
-  }, []);
-  const country = (_c = (_b = (_a = props.extensions) === null || _a === void 0 ? void 0 : _a.env) === null || _b === void 0 ? void 0 : _b.country.toLowerCase()) !== null && _c !== void 0 ? _c : 'br';
-  setLocale(country);
-  const localize = i18(locales);
-  const localeDate = (_e = (_d = props.extensions) === null || _d === void 0 ? void 0 : _d.env.localeDate) !== null && _e !== void 0 ? _e : 'pt-BR';
+function PurchaseOrderCard() {
+  const {
+    approvals,
+    localize,
+    localeDate,
+    setSelectedApproval,
+    setModalAction,
+    goBack
+  } = useApproval();
+  const [search, setSearch] = useState();
+  const history = useHistory();
+  const location = useLocation();
+  const filterSearch = useCallback(approval => {
+    if (search) {
+      const _term = search.toLowerCase();
+      const orderValue = currencyApproval(approval.orderValue, approval.currency, localeDate).toLowerCase();
+      const createdAt = formatDate(approval.createdAt, localeDate).toLowerCase();
+      if (orderValue.includes(_term)) return true;
+      if (createdAt.includes(_term)) return true;
+      if (approval.companyName && approval.companyName.toLowerCase().includes(_term)) return true;
+      if (approval.createdBy.toLowerCase().includes(_term)) return true;
+      if (approval.orderId.toLowerCase().includes(_term)) return true;
+      if (approval.supplierName.toLowerCase().includes(_term)) return true;
+      if (approval.supplierCod.toLowerCase().includes(_term)) return true;
+      return false;
+    }
+    return true;
+  }, [localeDate, search]);
+  const purchaseOrder = useMemo(() => {
+    return approvals ? approvals.filter(a => a.category === APPROVAL_TYPES.PURCHASE_ORDER && filterSearch(a)) : [];
+  }, [approvals, filterSearch]);
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
-      onBack: () => props.history.goBack(),
+      onBack: goBack,
       sticky: true,
       tags: [],
       title: localize('PURCHASE_ORDER_MENU_TITLE', '')
@@ -8596,263 +8984,176 @@ function PurchaseOrderCard(props) {
       children: jsxs(Ramen.XBox, Object.assign({
         gap: "l"
       }, {
-        children: [approvals.map((a, i) => {
+        children: [jsx(Ramen.XSearchInput, {
+          onChange: e => setSearch(e.target.value),
+          size: "l",
+          placeholder: localize('LABEL_SEARCH', '')
+        }), purchaseOrder.length > 0 ? purchaseOrder.map((a, i) => {
+          var _a;
           const orderValue = currencyApproval(a.orderValue, a.currency, localeDate);
           const createdAt = formatDate(a.createdAt, localeDate);
-          return jsx(Ramen.XCard, Object.assign({
-            size: "l",
-            borderType: "shadow",
-            onClick: () => props.history.push(`${props.location.pathname}/detail`, a)
-          }, {
-            children: jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              gap: "m"
+          return jsx(ApprovalItemCard, {
+            onClick: () => {
+              setSelectedApproval(a);
+              history.push(`${location.pathname}/detail`);
+            },
+            title: `${localize('PURCHASE_ORDER_MENU_TITLE_SHORT', '')} ∙ ${a.orderId}`,
+            buttons: [{
+              type: 'tonal',
+              size: 's',
+              icon: 'check-bold',
+              onClick: e => {
+                e.stopPropagation();
+                setSelectedApproval(a);
+                setModalAction({
+                  show: true,
+                  action: EGenericApprovalAction.APPROVE,
+                  needBack: false
+                });
+              }
             }, {
-              children: [jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center"
-              }, {
-                children: [jsx(Ramen.XTag, {
-                  text: `${localize('PURCHASE_ORDER_MENU_TITLE_SHORT', '')} ∙ ${a.orderId}`
-                }), jsxs(Ramen.XBox, Object.assign({
-                  orientation: "horizontal",
-                  verticalAlign: "center",
-                  gap: "xs"
-                }, {
-                  children: [jsx(Ramen.XButtonIcon, {
-                    type: "tonal",
-                    size: "s",
-                    icon: "check-bold",
-                    onClick: e => {
-                      e.stopPropagation();
-                      setApproval(a);
-                      setModal({
-                        show: true,
-                        action: 'approve'
-                      });
-                    }
-                  }), jsx(Ramen.XButtonIcon, {
-                    type: "tonal",
-                    size: "s",
-                    icon: "trash-outline",
-                    onClick: e => {
-                      e.stopPropagation();
-                      setApproval(a);
-                      setModal({
-                        show: true,
-                        action: 'discard'
-                      });
-                    }
-                  })]
-                }))]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsxs(Ramen.XBox, Object.assign({
-                  width: 'flex',
-                  orientation: "vertical",
-                  gap: "xxs"
-                }, {
-                  children: [jsx(Ramen.XText, Object.assign({
-                    weight: "bold",
-                    textOverflow: "break-word",
-                    fontSize: 11
-                  }, {
-                    children: a.supplierName
-                  })), jsx(Ramen.XText, Object.assign({
-                    weight: "normal",
-                    textOverflow: "break-word",
-                    fontSize: 12
-                  }, {
-                    children: a.supplierCod
-                  }))]
-                })), jsx(Ramen.XTag, {
-                  state: "dark",
-                  text: orderValue
-                })]
-              })), jsx(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word"
-                }, {
-                  children: a.companyName
-                }))
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_CREATED_AT', '')
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word"
-                }, {
-                  children: createdAt
-                }))]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XBox, Object.assign({
-                  width: 'half'
-                }, {
-                  children: jsx(Ramen.XText, Object.assign({
-                    fontSize: 11,
-                    colorThone: "medium",
-                    textOverflow: "break-word"
-                  }, {
-                    children: localize('LABEL_CREATED_BY', '')
-                  }))
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word",
-                  textAlign: "right"
-                }, {
-                  children: `${a.createdBy}`
-                }))]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_PAYMENT_COND', '')
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word"
-                }, {
-                  children: a.termOfPayment
-                }))]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_QUANTITY', '')
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word"
-                }, {
-                  children: a.items.length
-                }))]
-              })), jsx(Ramen.XBox, {})]
-            }))
-          }), i);
+              type: 'tonal',
+              size: 's',
+              icon: 'trash-outline',
+              onClick: e => {
+                e.stopPropagation();
+                setSelectedApproval(a);
+                setModalAction({
+                  show: true,
+                  action: EGenericApprovalAction.DISCARD,
+                  needBack: false
+                });
+              }
+            }],
+            header: [a.supplierName, a.supplierCod],
+            value: orderValue,
+            subtitle: (_a = a === null || a === void 0 ? void 0 : a.companyName) !== null && _a !== void 0 ? _a : '',
+            row: [{
+              label: localize('LABEL_CREATED_AT', ''),
+              value: createdAt
+            }, {
+              label: localize('LABEL_CREATED_BY', ''),
+              value: a.createdBy
+            }, {
+              label: localize('LABEL_PAYMENT_COND', ''),
+              value: a.termOfPayment
+            }, {
+              label: localize('LABEL_QUANTITY', ''),
+              value: a.items.length
+            }]
+          }, i);
+        }) : search ? jsx(NotFound, {
+          title: localize('TXT_TITLE_SEARCH_NOT_FOUND', ''),
+          subtitle: localize('TXT_SUBTITLE_SEARCH_NOT_FOUND', '')
+        }) : jsx(NotFound, {
+          title: localize('TXT_TITLE_NOTHING_TODO', '')
         }), jsx(Ramen.XBox, {
           padding: "s"
         })]
       }))
-    }), jsx(Ramen.XModal, Object.assign({
-      visible: (_f = modal === null || modal === void 0 ? void 0 : modal.show) !== null && _f !== void 0 ? _f : false,
-      actions: [{
-        icon: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? 'check-outline' : 'trash-outline',
-        key: (_g = modal === null || modal === void 0 ? void 0 : modal.action) !== null && _g !== void 0 ? _g : '',
-        text: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? localize('LABEL_APPROVE', '') : localize('LABEL_DISCARD', ''),
-        type: 'solid'
-      }],
-      icon: "alert-circle-outline",
-      onActionClick: key => setModal(Object.assign(Object.assign({}, modal), {
-        show: false
-      })),
-      onClose: () => setModal(Object.assign(Object.assign({}, modal), {
-        show: false
-      })),
-      size: "xs",
-      // subtitle={`${localize('PURCHASE_ORDER_MENU_TITLE_SHORT', '')} ${approval?.orderId}`}
-      title: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? localize('QUESTION_MODAL_PURCHASE_ORDER_APPROVE', '') : localize('QUESTION_MODAL_PURCHASE_ORDER_TRASH', '')
-    }, {
-      children: jsx(Ramen.XText, Object.assign({
-        colorThone: "medium"
-      }, {
-        children: `${localize('PURCHASE_ORDER_MENU_TITLE_SHORT', '')} ${approval === null || approval === void 0 ? void 0 : approval.orderId}`
-      }))
-    }))]
+    })]
   });
 }
 
-function PurchaseOrderDetail(props) {
-  var _a, _b, _c, _d, _e, _f, _g;
-  const [approval, setApproval] = useState();
-  const [modal, setModal] = useState();
+const ApprovalItemExpansionDetail = props => {
+  var _a, _b;
+  const {
+    localize
+  } = useApproval();
+  return jsxs(Ramen.XBox, Object.assign({
+    gap: "s"
+  }, {
+    children: [props.loadingDetail && jsxs(Fragment, {
+      children: [jsx(Ramen.XSkeleton, {
+        type: "text"
+      }), jsx(Ramen.XSkeleton, {
+        type: "text",
+        width: "s"
+      }), jsx(Ramen.XSkeleton, {
+        type: "text"
+      }), jsx(Ramen.XSkeleton, {
+        type: "text",
+        width: "s"
+      })]
+    }), (_a = props.txts) === null || _a === void 0 ? void 0 : _a.map((d, i) => {
+      if (i < 5) {
+        return jsx(Ramen.XText, Object.assign({
+          colorThone: "medium",
+          fontSize: 11
+        }, {
+          children: d
+        }), i);
+      } else {
+        // eslint-disable-next-line array-callback-return
+        return;
+      }
+    }), props.txts && props.txts.length > 5 && jsxs(Ramen.XExpansionPanel, Object.assign({
+      closedTitle: localize('LABEL_EXPANSION_CLOSED', ''),
+      openedTitle: localize('LABEL_EXPANSION_OPENED', '')
+    }, {
+      children: [jsx(Ramen.XBox, Object.assign({
+        gap: "s"
+      }, {
+        children: (_b = props.txts) === null || _b === void 0 ? void 0 : _b.map((d, i) => {
+          if (i >= 5) {
+            return jsx(Ramen.XText, Object.assign({
+              weight: "lighter",
+              colorThone: "medium",
+              fontSize: 11
+            }, {
+              children: d
+            }), i);
+          } else {
+            // eslint-disable-next-line array-callback-return
+            return;
+          }
+        })
+      })), jsx(Ramen.XVSpace, {
+        size: "s"
+      })]
+    }))]
+  }));
+};
+
+function PurchaseOrderDetail() {
+  var _a, _b, _c, _d, _e, _f;
+  const {
+    getPurchaseOrderDetail,
+    localize,
+    localeDate,
+    goBack,
+    selectedApproval,
+    setModalAction
+  } = useApproval();
   const [detail, setDetail] = useState();
   const [loadingDetail, setLoadingDetail] = useState(false);
-  useEffect(() => {
-    var _a, _b;
-    const _state = (_b = (_a = props.history) === null || _a === void 0 ? void 0 : _a.location) === null || _b === void 0 ? void 0 : _b.state;
-    setApproval(_state);
-  }, []);
-  const country = (_c = (_b = (_a = props.extensions) === null || _a === void 0 ? void 0 : _a.env) === null || _b === void 0 ? void 0 : _b.country.toLowerCase()) !== null && _c !== void 0 ? _c : 'br';
-  setLocale(country);
-  const localize = i18(locales);
-  const localeDate = (_e = (_d = props.extensions) === null || _d === void 0 ? void 0 : _d.env.localeDate) !== null && _e !== void 0 ? _e : 'pt-BR';
+  const approval = useMemo(() => {
+    return selectedApproval ? selectedApproval : undefined;
+  }, [selectedApproval]);
   const orderValue = useMemo(() => {
     if (approval) {
       return currencyApproval(approval.orderValue, approval.currency, localeDate);
     }
     return '';
-  }, [approval]);
+  }, [approval, localeDate]);
   const createdAt = useMemo(() => {
     if (approval) {
       return formatDate(approval.createdAt, localeDate);
     }
     return '';
-  }, [approval]);
-  // get file list
+  }, [approval, localeDate]);
+  // get approval details
   useEffect(() => {
-    var _a, _b, _c, _d, _e;
     if (approval) {
       setLoadingDetail(true);
-      approvalAPI.fiori.setCountryCode(country);
-      approvalAPI.fiori.setBaseUrl((_c = (_b = (_a = props.extensions) === null || _a === void 0 ? void 0 : _a.env) === null || _b === void 0 ? void 0 : _b.approvalFioriApi) !== null && _c !== void 0 ? _c : '');
-      approvalAPI.fiori.setApiKey((_e = (_d = props.extensions) === null || _d === void 0 ? void 0 : _d.env.approvalApiKey) !== null && _e !== void 0 ? _e : '');
-      approvalAPI.fiori.getPurchaseOrderDetail(approval.orderId).then(f => {
+      getPurchaseOrderDetail(approval.orderId).then(f => {
         setDetail(f);
       }).finally(() => setLoadingDetail(false));
     }
-  }, [approval]);
+  }, [approval, getPurchaseOrderDetail]);
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
-      onBack: () => props.history.goBack(),
+      onBack: goBack,
       sticky: true,
       tags: [],
       title: `${localize('PURCHASE_ORDER_MENU_TITLE_SHORT', '')} ∙ ${approval === null || approval === void 0 ? void 0 : approval.orderId}`
@@ -8860,367 +9161,73 @@ function PurchaseOrderDetail(props) {
       children: jsxs(Ramen.XBox, Object.assign({
         gap: "l"
       }, {
-        children: [jsx(Ramen.XCard, Object.assign({
-          size: "l",
-          borderType: "none",
-          backgroundColor: "light"
-        }, {
-          children: jsxs(Ramen.XBox, Object.assign({
-            width: 'full',
-            gap: "m",
-            padding: "xs"
+        children: [jsx(ApprovalItemDetail, {
+          value: orderValue,
+          header: [(_a = approval === null || approval === void 0 ? void 0 : approval.supplierName) !== null && _a !== void 0 ? _a : '', (_b = approval === null || approval === void 0 ? void 0 : approval.supplierCod) !== null && _b !== void 0 ? _b : ''],
+          subtitle: (_c = approval === null || approval === void 0 ? void 0 : approval.companyName) !== null && _c !== void 0 ? _c : '',
+          row: [{
+            label: localize('LABEL_CREATED_AT', ''),
+            value: createdAt
           }, {
-            children: [jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              orientation: "horizontal",
-              horizontalAlign: "between",
-              verticalAlign: "center",
-              gap: "m"
-            }, {
-              children: [jsxs(Ramen.XBox, Object.assign({
-                width: 'flex'
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  weight: "bold",
-                  textOverflow: "break-word",
-                  fontSize: 11
-                }, {
-                  children: approval === null || approval === void 0 ? void 0 : approval.supplierName
-                })), jsx(Ramen.XText, Object.assign({
-                  weight: "normal",
-                  textOverflow: "break-word",
-                  fontSize: 12
-                }, {
-                  children: approval === null || approval === void 0 ? void 0 : approval.supplierCod
-                }))]
-              })), jsx(Ramen.XTag, {
-                state: "dark",
-                text: orderValue
-              })]
-            })), jsx(Ramen.XBox, Object.assign({
-              width: 'full',
-              orientation: "horizontal",
-              horizontalAlign: "between",
-              verticalAlign: "center",
-              gap: "m"
-            }, {
-              children: jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "darkest",
-                textOverflow: "break-word"
-              }, {
-                children: approval === null || approval === void 0 ? void 0 : approval.companyName
-              }))
-            })), jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              orientation: "horizontal",
-              horizontalAlign: "between",
-              verticalAlign: "center",
-              gap: "m"
-            }, {
-              children: [jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "medium",
-                textOverflow: "break-word"
-              }, {
-                children: localize('LABEL_CREATED_AT', '')
-              })), jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "darkest",
-                textOverflow: "break-word"
-              }, {
-                children: createdAt
-              }))]
-            })), jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              orientation: "horizontal",
-              horizontalAlign: "between",
-              verticalAlign: "center",
-              gap: "m"
-            }, {
-              children: [jsx(Ramen.XBox, Object.assign({
-                width: 'half'
-              }, {
-                children: jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_CREATED_BY', '')
-                }))
-              })), jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "darkest",
-                textOverflow: "break-word",
-                textAlign: "right"
-              }, {
-                children: `${approval === null || approval === void 0 ? void 0 : approval.createdBy}`
-              }))]
-            })), jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              orientation: "horizontal",
-              horizontalAlign: "between",
-              verticalAlign: "center",
-              gap: "m"
-            }, {
-              children: [jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "medium",
-                textOverflow: "break-word"
-              }, {
-                children: localize('LABEL_PAYMENT_COND', '')
-              })), jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "darkest",
-                textOverflow: "break-word"
-              }, {
-                children: approval === null || approval === void 0 ? void 0 : approval.termOfPayment
-              }))]
-            })), jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              orientation: "horizontal",
-              horizontalAlign: "between",
-              verticalAlign: "center",
-              gap: "m"
-            }, {
-              children: [jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "medium",
-                textOverflow: "break-word"
-              }, {
-                children: localize('LABEL_QUANTITY', '')
-              })), jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "darkest",
-                textOverflow: "break-word"
-              }, {
-                children: approval === null || approval === void 0 ? void 0 : approval.items.length
-              }))]
-            }))]
-          }))
-        })), jsxs(Ramen.XBox, Object.assign({
-          gap: "s"
-        }, {
-          children: [loadingDetail && jsxs(Fragment, {
-            children: [jsx(Ramen.XSkeleton, {
-              type: "text"
-            }), jsx(Ramen.XSkeleton, {
-              type: "text",
-              width: "s"
-            }), jsx(Ramen.XSkeleton, {
-              type: "text"
-            }), jsx(Ramen.XSkeleton, {
-              type: "text",
-              width: "s"
-            })]
-          }), detail === null || detail === void 0 ? void 0 : detail.map((d, i) => {
-            if (i < 5) {
-              return jsx(Ramen.XText, Object.assign({
-                weight: "lighter",
-                colorThone: "medium",
-                fontSize: 11
-              }, {
-                children: d
-              }), i);
-            } else {
-              // eslint-disable-next-line array-callback-return
-              return;
-            }
-          }), detail && detail.length > 5 && jsxs(Ramen.XExpansionPanel, Object.assign({
-            closedTitle: localize('LABEL_EXPANSION_CLOSED', ''),
-            openedTitle: localize('LABEL_EXPANSION_OPENED', '')
+            label: localize('LABEL_CREATED_BY', ''),
+            value: (_d = approval === null || approval === void 0 ? void 0 : approval.createdBy) !== null && _d !== void 0 ? _d : ''
           }, {
-            children: [jsx(Ramen.XBox, Object.assign({
-              gap: "s"
-            }, {
-              children: detail === null || detail === void 0 ? void 0 : detail.map((d, i) => {
-                if (i >= 5) {
-                  return jsx(Ramen.XText, Object.assign({
-                    weight: "lighter",
-                    colorThone: "medium",
-                    fontSize: 11
-                  }, {
-                    children: d
-                  }), i);
-                } else {
-                  // eslint-disable-next-line array-callback-return
-                  return;
-                }
-              })
-            })), jsx(Ramen.XVSpace, {
-              size: "s"
-            })]
-          }))]
-        })), approval === null || approval === void 0 ? void 0 : approval.items.map((p, i) => {
+            label: localize('LABEL_PAYMENT_COND', ''),
+            value: (_e = approval === null || approval === void 0 ? void 0 : approval.termOfPayment) !== null && _e !== void 0 ? _e : ''
+          }, {
+            label: localize('LABEL_QUANTITY', ''),
+            value: (_f = approval === null || approval === void 0 ? void 0 : approval.items.length) !== null && _f !== void 0 ? _f : ''
+          }]
+        }), jsx(ApprovalItemExpansionDetail, {
+          loadingDetail: loadingDetail,
+          txts: detail
+        }), approval === null || approval === void 0 ? void 0 : approval.items.map((p, i) => {
+          var _a, _b;
           const itemTotalValue = currencyApproval(p.priceTotal, approval.currency, localeDate);
           const itemUnitValue = currencyApproval(p.priceUnit, approval.currency, localeDate);
           const deliveryDate = p.deliveryDate ? formatDate(p.deliveryDate, localeDate) : '';
-          return jsx(Ramen.XCard, Object.assign({
-            size: "l",
-            borderType: "shadow"
-          }, {
-            children: jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              gap: "m",
-              padding: "xs"
+          return jsx(ApprovalItemContentDetail, {
+            value: itemTotalValue,
+            header: [(_a = p === null || p === void 0 ? void 0 : p.productDescription) !== null && _a !== void 0 ? _a : '', (_b = p === null || p === void 0 ? void 0 : p.productId) !== null && _b !== void 0 ? _b : ''],
+            row: [{
+              label: localize('LABEL_QUANTITY', ''),
+              value: p.quantity
             }, {
-              children: [jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsxs(Ramen.XBox, Object.assign({
-                  width: 'flex'
-                }, {
-                  children: [jsx(Ramen.XText, Object.assign({
-                    weight: "bold",
-                    textOverflow: "break-word",
-                    fontSize: 11
-                  }, {
-                    children: p === null || p === void 0 ? void 0 : p.productDescription
-                  })), jsx(Ramen.XText, Object.assign({
-                    weight: "bold",
-                    textOverflow: "break-word",
-                    fontSize: 12
-                  }, {
-                    children: p === null || p === void 0 ? void 0 : p.productId
-                  }))]
-                })), jsx(Ramen.XTag, {
-                  state: "dark",
-                  text: itemTotalValue
-                })]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_QUANTITY', '')
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word"
-                }, {
-                  children: p.quantity
-                }))]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_UNIT_VALUE', '')
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word"
-                }, {
-                  children: itemUnitValue
-                }))]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_DELIVERY_DATE', '')
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word"
-                }, {
-                  children: deliveryDate
-                }))]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_STORE', '')
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word"
-                }, {
-                  children: p.store
-                }))]
-              }))]
-            }))
-          }), i);
+              label: localize('LABEL_UNIT_VALUE', ''),
+              value: itemUnitValue
+            }, {
+              label: localize('LABEL_DELIVERY_DATE', ''),
+              value: deliveryDate
+            }, {
+              label: localize('LABEL_STORE', ''),
+              value: p.store
+            }]
+          }, i);
         })]
       }))
-    }), jsxs(Ramen.XFooter, {
-      children: [jsx(Ramen.XButton, {
-        size: "xl",
+    }), jsx(ApprovalItemDetailFooter, {
+      buttons: [{
+        size: 'l',
         text: localize('LABEL_APPROVE', ''),
-        type: "solid",
-        icon: "check-outline",
-        onClick: () => setModal({
+        type: 'solid',
+        icon: 'check-outline',
+        onClick: () => setModalAction({
           show: true,
-          action: 'approve'
+          action: EGenericApprovalAction.APPROVE,
+          needBack: true
         })
-      }), jsx(Ramen.XButton, {
-        size: "xl",
-        text: localize('LABEL_DISCARD', ''),
-        type: "clear",
-        icon: "trash-outline",
-        onClick: () => setModal({
-          show: true,
-          action: 'discard'
-        })
-      })]
-    }), jsx(Ramen.XModal, Object.assign({
-      visible: (_f = modal === null || modal === void 0 ? void 0 : modal.show) !== null && _f !== void 0 ? _f : false,
-      actions: [{
-        icon: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? 'check-outline' : 'trash-outline',
-        key: (_g = modal === null || modal === void 0 ? void 0 : modal.action) !== null && _g !== void 0 ? _g : '',
-        text: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? localize('LABEL_APPROVE', '') : localize('LABEL_DISCARD', ''),
-        type: 'solid'
-      }],
-      icon: "alert-circle-outline",
-      onActionClick: key => setModal(Object.assign(Object.assign({}, modal), {
-        show: false
-      })),
-      onClose: () => setModal(Object.assign(Object.assign({}, modal), {
-        show: false
-      })),
-      size: "xs",
-      // subtitle={`${localize('PURCHASE_ORDER_MENU_TITLE_SHORT', '')} ${approval?.orderId}`}
-      title: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? localize('QUESTION_MODAL_PURCHASE_ORDER_APPROVE', '') : localize('QUESTION_MODAL_PURCHASE_ORDER_TRASH', '')
-    }, {
-      children: jsx(Ramen.XText, Object.assign({
-        colorThone: "medium"
       }, {
-        children: `${localize('PURCHASE_ORDER_MENU_TITLE_SHORT', '')} ${approval === null || approval === void 0 ? void 0 : approval.orderId}`
-      }))
-    }))]
+        size: 'l',
+        text: localize('LABEL_DISCARD', ''),
+        type: 'tonal',
+        icon: 'trash-outline',
+        onClick: () => setModalAction({
+          show: true,
+          action: EGenericApprovalAction.DISCARD,
+          needBack: true
+        })
+      }]
+    })]
   });
 }
 
@@ -9256,22 +9263,42 @@ $({ global: true, forced: parseInt != $parseInt }, {
   parseInt: $parseInt
 });
 
-function WorkItemCard(props) {
-  var _a, _b, _c, _d, _e, _f, _g;
-  const [approvals, setApprovals] = useState([]);
-  const [approval, setApproval] = useState();
-  const [modal, setModal] = useState();
-  useEffect(() => {
-    console.log(props);
-    SettingsClient.boot().then(() => setApprovals(SettingsClient.get('FB60_PENDING', [])));
-  }, []);
-  const country = (_c = (_b = (_a = props.extensions) === null || _a === void 0 ? void 0 : _a.env) === null || _b === void 0 ? void 0 : _b.country.toLowerCase()) !== null && _c !== void 0 ? _c : 'br';
-  setLocale(country);
-  const localize = i18(locales);
-  const localeDate = (_e = (_d = props.extensions) === null || _d === void 0 ? void 0 : _d.env.localeDate) !== null && _e !== void 0 ? _e : 'pt-BR';
+function FB60Card() {
+  const {
+    approvals,
+    localize,
+    localeDate,
+    setSelectedApproval,
+    setModalAction,
+    goBack
+  } = useApproval();
+  const [search, setSearch] = useState();
+  const history = useHistory();
+  const location = useLocation();
+  const filterSearch = useCallback(approval => {
+    if (search) {
+      const _term = search.toLowerCase();
+      const orderValue = currencyApproval(approval.orderValue, approval.orderValueCurrency, localeDate).toLowerCase();
+      const expirationDate = formatDate(approval.expirationDate, localeDate);
+      if (orderValue.includes(_term)) return true;
+      if (expirationDate.includes(_term)) return true;
+      if (approval.clientDescription.toLowerCase().includes(_term)) return true;
+      if (approval.companyDescription.toLowerCase().includes(_term)) return true;
+      if (approval.clientId.toLowerCase().includes(_term)) return true;
+      if (approval.orderId.toLowerCase().includes(_term)) return true;
+      if (approval.documentId.toLowerCase().includes(_term)) return true;
+      if (approval.exerciseYear.toLowerCase().includes(_term)) return true;
+      if (approval.store.toLowerCase().includes(_term)) return true;
+      return false;
+    }
+    return true;
+  }, [localeDate, search]);
+  const fb60 = useMemo(() => {
+    return approvals ? approvals.filter(a => a.category === APPROVAL_TYPES.FB60 && filterSearch(a)) : [];
+  }, [approvals, filterSearch]);
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
-      onBack: () => props.history.goBack(),
+      onBack: goBack,
       sticky: true,
       tags: [],
       title: localize('FB60_MENU_TITLE', '')
@@ -9279,301 +9306,113 @@ function WorkItemCard(props) {
       children: jsxs(Ramen.XBox, Object.assign({
         gap: "l"
       }, {
-        children: [approvals.map((a, i) => {
+        children: [jsx(Ramen.XSearchInput, {
+          onChange: e => setSearch(e.target.value),
+          size: "l",
+          placeholder: localize('LABEL_SEARCH', '')
+        }), fb60.length > 0 ? fb60.map((a, i) => {
           const orderValue = currencyApproval(a.orderValue, a.orderValueCurrency, localeDate);
           const expirationDate = formatDate(a.expirationDate, localeDate);
-          return jsx(Ramen.XCard, Object.assign({
-            size: "l",
-            borderType: "shadow",
-            onClick: () => props.history.push(`${props.location.pathname}/detail`, a)
-          }, {
-            children: jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              gap: "m"
+          return jsx(ApprovalItemCard, {
+            onClick: () => {
+              setSelectedApproval(a);
+              history.push(`${location.pathname}/detail`);
+            },
+            title: `${localize('FB60_MENU_TITLE_SHORT', '')} ∙ ${parseInt(a.orderId)}`,
+            buttons: [{
+              type: 'tonal',
+              size: 's',
+              icon: 'check-bold',
+              onClick: e => {
+                e.stopPropagation();
+                setSelectedApproval(a);
+                setModalAction({
+                  show: true,
+                  action: EGenericApprovalAction.APPROVE,
+                  needBack: false
+                });
+              }
             }, {
-              children: [jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center"
-              }, {
-                children: [jsx(Ramen.XTag, {
-                  text: `${localize('FB60_MENU_TITLE_SHORT', '')} ∙ ${parseInt(a.orderId)}`
-                }), jsxs(Ramen.XBox, Object.assign({
-                  orientation: "horizontal",
-                  verticalAlign: "center",
-                  gap: "xs"
-                }, {
-                  children: [jsx(Ramen.XButtonIcon, {
-                    type: "tonal",
-                    size: "s",
-                    icon: "check-bold",
-                    onClick: e => {
-                      e.stopPropagation();
-                      setApproval(a);
-                      setModal({
-                        show: true,
-                        action: 'approve'
-                      });
-                    }
-                  }), jsx(Ramen.XButtonIcon, {
-                    type: "tonal",
-                    size: "s",
-                    icon: "close-outline",
-                    onClick: e => {
-                      e.stopPropagation();
-                      setApproval(a);
-                      setModal({
-                        show: true,
-                        action: 'reject'
-                      });
-                    }
-                  })]
-                }))]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsxs(Ramen.XBox, Object.assign({
-                  width: 'flex',
-                  orientation: "vertical",
-                  gap: "xxs"
-                }, {
-                  children: [jsx(Ramen.XText, Object.assign({
-                    weight: "bold",
-                    textOverflow: "break-word",
-                    fontSize: 11
-                  }, {
-                    children: a.clientDescription
-                  })), jsx(Ramen.XText, Object.assign({
-                    weight: "normal",
-                    textOverflow: "break-word",
-                    fontSize: 12
-                  }, {
-                    children: a.clientId
-                  }))]
-                })), jsx(Ramen.XTag, {
-                  state: "dark",
-                  text: orderValue
-                })]
-              })), jsx(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word"
-                }, {
-                  children: a.companyDescription
-                }))
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_DOC_EXERC', '')
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word"
-                }, {
-                  children: `${a.documentId}/${a.exerciseYear}`
-                }))]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XBox, Object.assign({
-                  width: 'half'
-                }, {
-                  children: jsx(Ramen.XText, Object.assign({
-                    fontSize: 11,
-                    colorThone: "medium",
-                    textOverflow: "break-word"
-                  }, {
-                    children: localize('LABEL_STORE', '')
-                  }))
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word",
-                  textAlign: "right"
-                }, {
-                  children: `${a.store}`
-                }))]
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: "horizontal",
-                horizontalAlign: "between",
-                verticalAlign: "center",
-                gap: "m"
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_EXPIRATION_DATE', '')
-                })), jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "darkest",
-                  textOverflow: "break-word"
-                }, {
-                  children: expirationDate
-                }))]
-              })), jsx(Ramen.XBox, {})]
-            }))
-          }), i);
-        }), jsx(Ramen.XBox, {
-          padding: "s"
+              type: 'tonal',
+              size: 's',
+              icon: 'close-outline',
+              onClick: e => {
+                e.stopPropagation();
+                setSelectedApproval(a);
+                setModalAction({
+                  show: true,
+                  action: EGenericApprovalAction.REJECT,
+                  needBack: false
+                });
+              }
+            }],
+            header: [a.clientDescription, a.clientId],
+            value: orderValue,
+            subtitle: a.companyDescription,
+            row: [{
+              label: localize('LABEL_DOC_EXERC', ''),
+              value: `${a.documentId}/${a.exerciseYear}`
+            }, {
+              label: localize('LABEL_STORE', ''),
+              value: a.store
+            }, {
+              label: localize('LABEL_EXPIRATION_DATE', ''),
+              value: expirationDate
+            }]
+          }, i);
+        }) : search ? jsx(NotFound, {
+          title: localize('TXT_TITLE_SEARCH_NOT_FOUND', ''),
+          subtitle: localize('TXT_SUBTITLE_SEARCH_NOT_FOUND', '')
+        }) : jsx(NotFound, {
+          title: localize('TXT_TITLE_NOTHING_TODO', '')
+        }), jsx(Ramen.XVSpace, {
+          size: "xxs"
         })]
       }))
-    }), jsx(Ramen.XModal, Object.assign({
-      visible: (_f = modal === null || modal === void 0 ? void 0 : modal.show) !== null && _f !== void 0 ? _f : false,
-      actions: [{
-        icon: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? 'check-outline' : 'trash-outline',
-        key: (_g = modal === null || modal === void 0 ? void 0 : modal.action) !== null && _g !== void 0 ? _g : '',
-        text: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? localize('LABEL_APPROVE', '') : localize('LABEL_REJECT', ''),
-        type: 'solid'
-      }],
-      icon: "alert-circle-outline",
-      onActionClick: key => setModal(Object.assign(Object.assign({}, modal), {
-        show: false
-      })),
-      onClose: () => setModal(Object.assign(Object.assign({}, modal), {
-        show: false
-      })),
-      size: "xs",
-      title: `${approval === null || approval === void 0 ? void 0 : approval.clientDescription} ∙ ${approval === null || approval === void 0 ? void 0 : approval.clientId}`
-    }, {
-      children: jsx(Ramen.XText, Object.assign({
-        colorThone: "medium",
-        lineHeight: "title"
-      }, {
-        children: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? localize('QUESTION_MODAL_FB60_APPROVE', '').replace('{{s}}', approval ? currencyApproval(approval.orderValue, approval.orderValueCurrency, localeDate) : '') : localize('QUESTION_MODAL_FB60_REJECT', '').replace('{{s}}', approval ? currencyApproval(approval.orderValue, approval.orderValueCurrency, localeDate) : '')
-      }))
-    }))]
+    })]
   });
 }
 
-function WorkItemDetail(props) {
-  var _a, _b, _c, _d, _e, _f, _g;
-  const [approval, setApproval] = useState();
+function FB60Detail() {
+  var _a, _b, _c, _d;
+  const {
+    getFB60Files,
+    getFB60FileStream,
+    localize,
+    localeDate,
+    setModalAction,
+    selectedApproval,
+    goBack
+  } = useApproval();
   const [fileList, setFileList] = useState([]);
-  const [modal, setModal] = useState();
   const [loadingFiles, setLoadingFiles] = useState(false);
-  useEffect(() => {
-    var _a, _b;
-    const _state = (_b = (_a = props.history) === null || _a === void 0 ? void 0 : _a.location) === null || _b === void 0 ? void 0 : _b.state;
-    setApproval(_state);
-  }, []);
-  const country = (_c = (_b = (_a = props.extensions) === null || _a === void 0 ? void 0 : _a.env) === null || _b === void 0 ? void 0 : _b.country.toLowerCase()) !== null && _c !== void 0 ? _c : 'br';
-  setLocale(country);
-  const localize = i18(locales);
-  const localeDate = (_e = (_d = props.extensions) === null || _d === void 0 ? void 0 : _d.env.localeDate) !== null && _e !== void 0 ? _e : 'pt-BR';
+  const approval = useMemo(() => {
+    return selectedApproval ? selectedApproval : undefined;
+  }, [selectedApproval]);
   const orderValue = useMemo(() => {
     if (approval) {
       return currencyApproval(approval.orderValue, approval.orderValueCurrency, localeDate);
     }
     return '';
-  }, [approval]);
+  }, [approval, localeDate]);
   const expirationDate = useMemo(() => {
     if (approval) {
       return formatDate(approval.expirationDate, localeDate);
     }
     return '';
-  }, [approval]);
+  }, [approval, localeDate]);
   // get file list
   useEffect(() => {
-    var _a, _b, _c, _d, _e;
     if (approval) {
       setLoadingFiles(true);
-      approvalAPI.fiori.setCountryCode(country);
-      approvalAPI.fiori.setBaseUrl((_c = (_b = (_a = props.extensions) === null || _a === void 0 ? void 0 : _a.env) === null || _b === void 0 ? void 0 : _b.approvalFioriApi) !== null && _c !== void 0 ? _c : '');
-      approvalAPI.fiori.setApiKey((_e = (_d = props.extensions) === null || _d === void 0 ? void 0 : _d.env.approvalApiKey) !== null && _e !== void 0 ? _e : '');
-      approvalAPI.fiori.getFB60Files(approval).then(f => {
+      getFB60Files(approval).then(f => {
         setFileList(f);
       }).finally(() => setLoadingFiles(false));
     }
-  }, [approval]);
-  // download archive
-  const handleDownloadArchive = file => __awaiter(this, void 0, void 0, function* () {
-    const mimetype = getMime(file.fileMime);
-    if (mimetype === '') {
-      snackbar('error', localize('ERROR_MIME', ''), 'top');
-      return;
-    }
-    try {
-      loading(true, localize('LOADING', ''));
-      // fetch a file array buffer
-      const bufferFile = yield approvalAPI.fiori.getFB60FileStream(file.fileId);
-      // create a blob with array buffer data
-      const blob = new Blob([new Uint8Array(bufferFile.data).buffer], {
-        type: mimetype
-      });
-      // check if a blob is valid or it is corrupted
-      if (blob.size === 0) {
-        snackbar('error', localize('ERROR_0_BYTE', ''), 'top');
-        return;
-      }
-      // check if is a native device
-      if (Capacitor.isNativePlatform()) {
-        // convert blob to string
-        const reader = new FileReader();
-        const dataUrlPromise = new Promise((resolve, reject) => {
-          reader.onloadend = () => resolve(reader.result);
-          reader.onerror = error => reject(error);
-          reader.readAsDataURL(blob);
-        });
-        const dataUrl = yield dataUrlPromise;
-        // write file on cache directory on device and open the file
-        Filesystem.writeFile({
-          path: file.fileName,
-          data: dataUrl,
-          directory: Directory.Cache
-        }).then(res => FileOpener.open({
-          filePath: res.uri,
-          contentType: mimetype
-        }));
-      } else {
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        if (link.download !== undefined) {
-          link.setAttribute('href', url);
-          link.setAttribute('download', file.fileName);
-          link.style.visibility = 'hidden';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        }
-      }
-    } catch (error) {
-      console.error('Error when try download a archive: ', error);
-      snackbar('error', localize('ERROR_OPEN_FILE', ''), 'top');
-    } finally {
-      loading(false, localize('LOADING', ''));
-    }
-  });
+  }, [approval, getFB60Files]);
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
-      onBack: () => props.history.goBack(),
+      onBack: goBack,
       sticky: true,
       tags: [],
       title: `${localize('FB60_MENU_TITLE_SHORT', '')} ∙ ${approval ? parseInt(approval === null || approval === void 0 ? void 0 : approval.orderId) : ''}`
@@ -9581,182 +9420,402 @@ function WorkItemDetail(props) {
       children: jsxs(Ramen.XBox, Object.assign({
         gap: "l"
       }, {
-        children: [jsx(Ramen.XCard, Object.assign({
-          size: "l",
-          borderType: "none",
-          backgroundColor: "light"
-        }, {
-          children: jsxs(Ramen.XBox, Object.assign({
-            width: 'full',
-            gap: "m",
-            padding: "xs"
+        children: [jsx(ApprovalItemDetail, {
+          value: orderValue,
+          header: [(_a = approval === null || approval === void 0 ? void 0 : approval.clientDescription) !== null && _a !== void 0 ? _a : '', (_b = approval === null || approval === void 0 ? void 0 : approval.clientId) !== null && _b !== void 0 ? _b : ''],
+          subtitle: (_c = approval === null || approval === void 0 ? void 0 : approval.companyDescription) !== null && _c !== void 0 ? _c : '',
+          row: [{
+            label: localize('LABEL_DOC_EXERC', ''),
+            value: `${approval === null || approval === void 0 ? void 0 : approval.documentId}/${approval === null || approval === void 0 ? void 0 : approval.exerciseYear}`
           }, {
-            children: [jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              orientation: "horizontal",
-              horizontalAlign: "between",
-              verticalAlign: "center",
-              gap: "m"
-            }, {
-              children: [jsxs(Ramen.XBox, Object.assign({
-                width: 'flex',
-                orientation: "vertical",
-                gap: "xxs"
-              }, {
-                children: [jsx(Ramen.XText, Object.assign({
-                  weight: "bold",
-                  textOverflow: "break-word",
-                  fontSize: 11
-                }, {
-                  children: approval === null || approval === void 0 ? void 0 : approval.clientDescription
-                })), jsx(Ramen.XText, Object.assign({
-                  weight: "normal",
-                  textOverflow: "break-word",
-                  fontSize: 12
-                }, {
-                  children: approval === null || approval === void 0 ? void 0 : approval.clientId
-                }))]
-              })), jsx(Ramen.XTag, {
-                state: "dark",
-                text: orderValue
-              })]
-            })), jsx(Ramen.XBox, Object.assign({
-              width: 'full',
-              orientation: "horizontal",
-              horizontalAlign: "between",
-              verticalAlign: "center",
-              gap: "m"
-            }, {
-              children: jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "darkest",
-                textOverflow: "break-word"
-              }, {
-                children: approval === null || approval === void 0 ? void 0 : approval.companyDescription
-              }))
-            })), jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              orientation: "horizontal",
-              horizontalAlign: "between",
-              verticalAlign: "center",
-              gap: "m"
-            }, {
-              children: [jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "medium",
-                textOverflow: "break-word"
-              }, {
-                children: localize('LABEL_DOC_EXERC', '')
-              })), jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "darkest",
-                textOverflow: "break-word"
-              }, {
-                children: `${approval === null || approval === void 0 ? void 0 : approval.documentId}/${approval === null || approval === void 0 ? void 0 : approval.exerciseYear}`
-              }))]
-            })), jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              orientation: "horizontal",
-              horizontalAlign: "between",
-              verticalAlign: "center",
-              gap: "m"
-            }, {
-              children: [jsx(Ramen.XBox, Object.assign({
-                width: 'half'
-              }, {
-                children: jsx(Ramen.XText, Object.assign({
-                  fontSize: 11,
-                  colorThone: "medium",
-                  textOverflow: "break-word"
-                }, {
-                  children: localize('LABEL_STORE', '')
-                }))
-              })), jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "darkest",
-                textOverflow: "break-word",
-                textAlign: "right"
-              }, {
-                children: `${approval === null || approval === void 0 ? void 0 : approval.store}`
-              }))]
-            })), jsxs(Ramen.XBox, Object.assign({
-              width: 'full',
-              orientation: "horizontal",
-              horizontalAlign: "between",
-              verticalAlign: "center",
-              gap: "m"
-            }, {
-              children: [jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "medium",
-                textOverflow: "break-word"
-              }, {
-                children: localize('LABEL_EXPIRATION_DATE', '')
-              })), jsx(Ramen.XText, Object.assign({
-                fontSize: 11,
-                colorThone: "darkest",
-                textOverflow: "break-word"
-              }, {
-                children: expirationDate
-              }))]
-            }))]
-          }))
-        })), loadingFiles ? jsx(Ramen.XButton, {
+            label: localize('LABEL_STORE', ''),
+            value: (_d = approval === null || approval === void 0 ? void 0 : approval.store) !== null && _d !== void 0 ? _d : ''
+          }, {
+            label: localize('LABEL_EXPIRATION_DATE', ''),
+            value: expirationDate
+          }]
+        }), loadingFiles ? jsx(Ramen.XButton, {
           skeleton: true,
           size: "l"
         }) : fileList.map((f, i) => {
           return jsx(Ramen.XCard, {
             title: f.fileName,
             size: "l",
-            onClick: () => handleDownloadArchive(f)
+            onClick: () => handleDownloadArchive({
+              file: f,
+              localize: localize,
+              download: getFB60FileStream
+            })
           }, i);
         })]
       }))
-    }), jsxs(Ramen.XFooter, {
-      children: [jsx(Ramen.XButton, {
-        size: "xl",
+    }), jsx(ApprovalItemDetailFooter, {
+      buttons: [{
+        size: 'l',
         text: localize('LABEL_APPROVE', ''),
-        type: "solid",
-        icon: "check-outline",
-        onClick: () => setModal({
+        type: 'solid',
+        icon: 'check-outline',
+        onClick: () => setModalAction({
           show: true,
-          action: 'approve'
+          action: EGenericApprovalAction.APPROVE,
+          needBack: true
         })
-      }), jsx(Ramen.XButton, {
-        size: "xl",
-        text: localize('LABEL_REJECT', ''),
-        type: "clear",
-        icon: "x-outline",
-        onClick: () => setModal({
-          show: true,
-          action: 'reject'
-        })
-      })]
-    }), jsx(Ramen.XModal, Object.assign({
-      visible: (_f = modal === null || modal === void 0 ? void 0 : modal.show) !== null && _f !== void 0 ? _f : false,
-      actions: [{
-        icon: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? 'check-outline' : 'trash-outline',
-        key: (_g = modal === null || modal === void 0 ? void 0 : modal.action) !== null && _g !== void 0 ? _g : '',
-        text: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? localize('LABEL_APPROVE', '') : localize('LABEL_REJECT', ''),
-        type: 'solid'
-      }],
-      icon: "alert-circle-outline",
-      onActionClick: key => setModal(Object.assign(Object.assign({}, modal), {
-        show: false
-      })),
-      onClose: () => setModal(Object.assign(Object.assign({}, modal), {
-        show: false
-      })),
-      size: "xs",
-      title: `${approval === null || approval === void 0 ? void 0 : approval.clientDescription} ∙ ${approval === null || approval === void 0 ? void 0 : approval.clientId}`
-    }, {
-      children: jsx(Ramen.XText, Object.assign({
-        colorThone: "medium",
-        lineHeight: "title"
       }, {
-        children: (modal === null || modal === void 0 ? void 0 : modal.action) === 'approve' ? localize('QUESTION_MODAL_FB60_APPROVE', '').replace('{{s}}', approval ? currencyApproval(approval.orderValue, approval.orderValueCurrency, localeDate) : '') : localize('QUESTION_MODAL_FB60_REJECT', '').replace('{{s}}', approval ? currencyApproval(approval.orderValue, approval.orderValueCurrency, localeDate) : '')
+        size: 'l',
+        text: localize('LABEL_DISCARD', ''),
+        type: 'tonal',
+        icon: 'x-outline',
+        onClick: () => setModalAction({
+          show: true,
+          action: EGenericApprovalAction.REJECT,
+          needBack: true
+        })
+      }]
+    })]
+  });
+}
+
+function PaymentProposalCard() {
+  const {
+    approvals,
+    localize,
+    localeDate,
+    setSelectedApproval,
+    setModalAction,
+    goBack
+  } = useApproval();
+  const [search, setSearch] = useState();
+  const filterSearch = useCallback(approval => {
+    if (search) {
+      const _term = search.toLowerCase();
+      const orderValue = currencyApproval(approval.paymentValue, approval.currency, localeDate).toLowerCase();
+      const paymentDate = formatDate(approval.paymentDate, localeDate);
+      if (orderValue.includes(_term)) return true;
+      if (paymentDate.includes(_term)) return true;
+      if (approval.paymentForm.toLowerCase().includes(_term)) return true;
+      if (approval.companyBank.toLowerCase().includes(_term)) return true;
+      if (approval.accountId.toLowerCase().includes(_term)) return true;
+      if (approval.paymentId.toLowerCase().includes(_term)) return true;
+      return false;
+    }
+    return true;
+  }, [localeDate, search]);
+  const paymentProposal = useMemo(() => {
+    return approvals ? approvals.filter(a => a.category === APPROVAL_TYPES.PAYMENT_PROPOSAL && filterSearch(a)) : [];
+  }, [approvals, filterSearch]);
+  return jsxs(Ramen.XPage, {
+    children: [jsx(Ramen.XHeader, {
+      onBack: goBack,
+      sticky: true,
+      tags: [],
+      title: localize('PAYMENT_PROPOSAL_MENU_TITLE', '')
+    }), jsx(Ramen.XBody, {
+      children: jsxs(Ramen.XBox, Object.assign({
+        gap: "l"
+      }, {
+        children: [jsx(Ramen.XSearchInput, {
+          onChange: e => setSearch(e.target.value),
+          size: "l",
+          placeholder: localize('LABEL_SEARCH', '')
+        }), paymentProposal.length > 0 ? paymentProposal.map((a, i) => {
+          const orderValue = currencyApproval(a.paymentValue, a.currency, localeDate);
+          const paymentDate = formatDate(a.paymentDate, localeDate);
+          return jsx(ApprovalItemCard, {
+            onClick: () => null,
+            buttons: [{
+              type: 'tonal',
+              size: 's',
+              icon: 'check-bold',
+              onClick: e => {
+                e.stopPropagation();
+                setSelectedApproval(a);
+                setModalAction({
+                  show: true,
+                  action: EGenericApprovalAction.APPROVE
+                });
+              }
+            }, {
+              type: 'tonal',
+              size: 's',
+              icon: 'trash-outline',
+              onClick: e => {
+                e.stopPropagation();
+                setSelectedApproval(a);
+                setModalAction({
+                  show: true,
+                  action: EGenericApprovalAction.DISCARD
+                });
+              }
+            }],
+            header: [a.companyName, a.companyCode],
+            value: orderValue,
+            row: [{
+              label: localize('LABEL_PAYMENT_METHOD', ''),
+              value: a.paymentForm
+            }, {
+              label: localize('LABEL_BANK_COMPANY', ''),
+              value: a.companyBank
+            }, {
+              label: localize('LABEL_DATE_TO_PAY', ''),
+              value: paymentDate
+            }, {
+              label: localize('LABEL_ACCOUNT_ID', ''),
+              value: a.accountId
+            }, {
+              label: localize('LABEL_PAYMENT_ID', ''),
+              value: a.paymentId
+            }, {
+              label: localize('LABEL_PAYMENT_AMOUNT', ''),
+              value: a.paymentAmount
+            }]
+          }, i);
+        }) : search ? jsx(NotFound, {
+          title: localize('TXT_TITLE_SEARCH_NOT_FOUND', ''),
+          subtitle: localize('TXT_SUBTITLE_SEARCH_NOT_FOUND', '')
+        }) : jsx(NotFound, {
+          title: localize('TXT_TITLE_NOTHING_TODO', '')
+        }), jsx(Ramen.XBox, {
+          padding: "s"
+        })]
       }))
-    }))]
+    })]
+  });
+}
+
+function AccountabilityCard() {
+  const {
+    approvals,
+    localize,
+    localeDate,
+    setSelectedApproval,
+    setModalAction,
+    goBack
+  } = useApproval();
+  const history = useHistory();
+  const location = useLocation();
+  const [search, setSearch] = useState();
+  const filterSearch = useCallback(approval => {
+    if (search) {
+      const _term = search.toLowerCase();
+      const orderValue = currencyApproval(approval.orderValue, approval.orderValueCurrency, localeDate).toLowerCase();
+      const startDate = (approval.startDate ? formatDate(approval.startDate, localeDate) : '').toLowerCase();
+      const endDate = (approval.endDate ? formatDate(approval.endDate, localeDate) : '').toLowerCase();
+      if (orderValue.includes(_term)) return true;
+      if (startDate.includes(_term)) return true;
+      if (endDate.includes(_term)) return true;
+      if (approval.person.toLowerCase().includes(_term)) return true;
+      if (approval.reinr.toLowerCase().includes(_term)) return true;
+      return false;
+    }
+    return true;
+  }, [localeDate, search]);
+  const accountability = useMemo(() => {
+    return approvals ? approvals.filter(a => a.category === APPROVAL_TYPES.ACCOUNTABILITY && filterSearch(a)) : [];
+  }, [approvals, filterSearch]);
+  return jsxs(Ramen.XPage, {
+    children: [jsx(Ramen.XHeader, {
+      onBack: goBack,
+      sticky: true,
+      tags: [],
+      title: localize('ACCOUNTABILITY_MENU_TITLE', '')
+    }), jsx(Ramen.XBody, {
+      children: jsxs(Ramen.XBox, Object.assign({
+        gap: "l"
+      }, {
+        children: [jsx(Ramen.XSearchInput, {
+          onChange: e => setSearch(e.target.value),
+          size: "l",
+          placeholder: localize('LABEL_SEARCH', '')
+        }), accountability.length > 0 ? accountability.map((a, i) => {
+          const orderValue = currencyApproval(a.orderValue, a.orderValueCurrency, localeDate);
+          const startDate = a.startDate ? formatDate(a.startDate, localeDate) : '';
+          const endDate = a.endDate ? formatDate(a.endDate, localeDate) : '';
+          return jsx(ApprovalItemCard, {
+            onClick: () => {
+              setSelectedApproval(a);
+              history.push(`${location.pathname}/detail`);
+            },
+            title: `${localize('ACCOUNTABILITY_MENU_TITLE_SHORT', '')} ∙ ${parseInt(a.reinr)}`,
+            buttons: [{
+              type: 'tonal',
+              size: 's',
+              icon: 'check-bold',
+              onClick: e => {
+                e.stopPropagation();
+                setSelectedApproval(a);
+                setModalAction({
+                  show: true,
+                  action: EGenericApprovalAction.APPROVE,
+                  needBack: false
+                });
+              }
+            }, {
+              type: 'tonal',
+              size: 's',
+              icon: 'refuse-extrabold',
+              onClick: e => {
+                e.stopPropagation();
+                setSelectedApproval(a);
+                setModalAction({
+                  show: true,
+                  action: EGenericApprovalAction.GIVEBACK,
+                  needBack: false
+                });
+              }
+            }, {
+              type: 'tonal',
+              size: 's',
+              icon: 'close-outline',
+              onClick: e => {
+                e.stopPropagation();
+                setSelectedApproval(a);
+                setModalAction({
+                  show: true,
+                  action: EGenericApprovalAction.REJECT,
+                  needBack: false
+                });
+              }
+            }],
+            header: [a.person],
+            value: orderValue,
+            row: [{
+              label: localize('LABEL_START_DATE', ''),
+              value: startDate
+            }, {
+              label: localize('LABEL_END_DATE', ''),
+              value: endDate
+            }]
+          }, i);
+        }) : search ? jsx(NotFound, {
+          title: localize('TXT_TITLE_SEARCH_NOT_FOUND', ''),
+          subtitle: localize('TXT_SUBTITLE_SEARCH_NOT_FOUND', '')
+        }) : jsx(NotFound, {
+          title: localize('TXT_TITLE_NOTHING_TODO', '')
+        }), jsx(Ramen.XBox, {
+          padding: "s"
+        })]
+      }))
+    })]
+  });
+}
+
+function AccountabilityDetail() {
+  var _a;
+  const {
+    getAccountabilityFiles,
+    getAccountabilityFileStream,
+    localize,
+    localeDate,
+    setModalAction,
+    selectedApproval,
+    goBack
+  } = useApproval();
+  const [fileList, setFileList] = useState([]);
+  const [loadingFiles, setLoadingFiles] = useState(false);
+  const approval = useMemo(() => {
+    return selectedApproval ? selectedApproval : undefined;
+  }, [selectedApproval]);
+  const orderValue = useMemo(() => {
+    if (approval) {
+      return currencyApproval(approval.orderValue, approval.orderValueCurrency, localeDate);
+    }
+    return '';
+  }, [approval, localeDate]);
+  const startDate = useMemo(() => {
+    if (approval === null || approval === void 0 ? void 0 : approval.startDate) {
+      return formatDate(approval.startDate, localeDate);
+    }
+    return '';
+  }, [approval, localeDate]);
+  const endDate = useMemo(() => {
+    if (approval === null || approval === void 0 ? void 0 : approval.endDate) {
+      return formatDate(approval.endDate, localeDate);
+    }
+    return '';
+  }, [approval, localeDate]);
+  // get file list
+  useEffect(() => {
+    if (approval) {
+      setLoadingFiles(true);
+      getAccountabilityFiles(approval).then(f => {
+        setFileList(f);
+      }).finally(() => setLoadingFiles(false));
+    }
+  }, [approval, getAccountabilityFiles]);
+  return jsxs(Ramen.XPage, {
+    children: [jsx(Ramen.XHeader, {
+      onBack: goBack,
+      sticky: true,
+      tags: [],
+      title: `${localize('ACCOUNTABILITY_MENU_TITLE_SHORT', '')} ∙ ${approval ? parseInt(approval === null || approval === void 0 ? void 0 : approval.reinr) : ''}`
+    }), jsx(Ramen.XBody, {
+      children: jsxs(Ramen.XBox, Object.assign({
+        gap: "l"
+      }, {
+        children: [jsx(ApprovalItemDetail, {
+          value: orderValue,
+          header: [(_a = approval === null || approval === void 0 ? void 0 : approval.person) !== null && _a !== void 0 ? _a : ''],
+          row: [{
+            label: localize('LABEL_START_DATE', ''),
+            value: startDate
+          }, {
+            label: localize('LABEL_END_DATE', ''),
+            value: endDate
+          }, {
+            label: localize('LABEL_JUSTIFY', ''),
+            value: (approval === null || approval === void 0 ? void 0 : approval.justification) ? approval.justification : localize('LABEL_NOT_INFORM', '')
+          }, {
+            label: localize('LABEL_OBSERVATION', ''),
+            value: (approval === null || approval === void 0 ? void 0 : approval.observation) ? approval.observation : localize('LABEL_NOT_INFORM', '')
+          }]
+        }), loadingFiles ? jsx(Ramen.XButton, {
+          skeleton: true,
+          size: "l"
+        }) : fileList.map((f, i) => {
+          return jsx(Ramen.XCard, {
+            title: f.fileName,
+            size: "l",
+            onClick: () => handleDownloadArchive({
+              file: f,
+              localize: localize,
+              download: getAccountabilityFileStream
+            })
+          }, i);
+        })]
+      }))
+    }), jsx(ApprovalItemDetailFooter, {
+      buttons: [{
+        size: 'm',
+        text: localize('LABEL_APPROVE', ''),
+        type: 'solid',
+        icon: 'check-outline',
+        onClick: () => setModalAction({
+          show: true,
+          action: EGenericApprovalAction.APPROVE,
+          needBack: true
+        })
+      }, {
+        size: 'm',
+        text: localize('LABEL_GIVEBACK', ''),
+        type: 'tonal',
+        icon: 'refuse-extrabold',
+        onClick: () => setModalAction({
+          show: true,
+          action: EGenericApprovalAction.GIVEBACK,
+          needBack: true
+        })
+      }, {
+        size: 'm',
+        text: localize('LABEL_DISCARD', ''),
+        type: 'tonal',
+        icon: 'x-outline',
+        onClick: () => setModalAction({
+          show: true,
+          action: EGenericApprovalAction.REJECT,
+          needBack: true
+        })
+      }]
+    })]
   });
 }
 
@@ -9780,10 +9839,19 @@ class ApprovalModule extends Module {
         page: PurchaseOrderDetail
       }, {
         path: `/${APPROVAL_TYPES.FB60}`,
-        page: WorkItemCard
+        page: FB60Card
       }, {
         path: `/${APPROVAL_TYPES.FB60}/detail`,
-        page: WorkItemDetail
+        page: FB60Detail
+      }, {
+        path: `/${APPROVAL_TYPES.PAYMENT_PROPOSAL}`,
+        page: PaymentProposalCard
+      }, {
+        path: `/${APPROVAL_TYPES.ACCOUNTABILITY}`,
+        page: AccountabilityCard
+      }, {
+        path: `/${APPROVAL_TYPES.ACCOUNTABILITY}/detail`,
+        page: AccountabilityDetail
       }],
       override
     });
@@ -9797,7 +9865,23 @@ class ApprovalModule extends Module {
   componentWillUnmount() {
     App.removeAllListeners();
   }
+  render() {
+    var _a, _b, _c, _d;
+    return jsx(Ramen.XApp, {
+      children: jsx(Ramen.XConfigProvider, Object.assign({
+        theme: "arcus"
+      }, {
+        children: jsx(ApprovalProvider, Object.assign({
+          historyData: this.props.history,
+          env: (_b = (_a = this.descriptor.override.extensions) === null || _a === void 0 ? void 0 : _a.approval_center) === null || _b === void 0 ? void 0 : _b.env,
+          approval_types: (_d = (_c = this.descriptor.override.extensions) === null || _c === void 0 ? void 0 : _c.approval_center) === null || _d === void 0 ? void 0 : _d.approval_types
+        }, {
+          children: super.render()
+        }))
+      }))
+    });
+  }
 }
 ApprovalModule.route = '/approval-center';
 
-export { Index$1 as CardApprovalCenter, Index as CardChildrenExemple, ApprovalModule as default };
+export { ApprovalCardExemple, ApprovalCenterButton, ApprovalSettingsClient$1 as ApprovalSettingsClient, ApprovalModule as default };

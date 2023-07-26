@@ -1,12 +1,3 @@
-export interface IApprovalFB60File {
-    fileId: string;
-    fileName: string;
-    fileMime: string;
-}
-export interface IApprovalFB60FileStream {
-    type: string;
-    data: ArrayBuffer;
-}
 export interface IApprovalFB60 {
     type: string;
     category: string;
@@ -22,8 +13,4 @@ export interface IApprovalFB60 {
     exerciseYear: string;
     companyDescription: string;
     observation?: string;
-}
-export interface IApprovalFB60Modal {
-    show?: boolean;
-    action?: 'approve' | 'reject';
 }

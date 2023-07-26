@@ -1,12 +1,3 @@
-export interface IApprovalAccFile {
-    fileId: string;
-    fileName: string;
-    fileMime: string;
-}
-export interface IAccFileStreamDto {
-    type: string;
-    data: ArrayBuffer;
-}
 export interface IApprovalAccountability {
     type: string;
     category: string;

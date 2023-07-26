@@ -1,3 +1,3 @@
-import { ReactNode } from 'react';
-declare function Index(props: any): ReactNode;
-export default Index;
+/// <reference types="react" />
+declare const ApprovalCardExemple: (props: any) => JSX.Element;
+export default ApprovalCardExemple;

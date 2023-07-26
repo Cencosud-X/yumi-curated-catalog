@@ -26,16 +26,3 @@ export interface IApprovalPurchaseRequisition {
     orderProductsQuantity: number;
     orderValueCurrency: string;
 }
-export interface IApprovalPurchaseRequisitionFile {
-    fileId: string;
-    fileName: string;
-    fileMime: string;
-}
-export interface IApprovalPurchaseRequisitionFileStream {
-    type: string;
-    data: ArrayBuffer;
-}
-export interface IApprovalPurchaseRequisitionModal {
-    show?: boolean;
-    action?: 'approve' | 'reject';
-}

@@ -1,8 +1,10 @@
+/// <reference types="react" />
 import { Components } from './sdk';
-import CardApprovalCenter from './components/card-approval';
-import CardChildrenExemple from './components/card-test';
+import ApprovalCenterButton from './components/card-approval';
+import ApprovalCardExemple from './components/card-test';
 import { IApprovalModuleOverride } from './interfaces/IExtensions';
-export { CardApprovalCenter, CardChildrenExemple };
+import ApprovalSettingsClient from './clients/localStorage/localStorage';
+export { ApprovalCenterButton, ApprovalSettingsClient, ApprovalCardExemple };
 export interface IModuleProps extends Components.IModuleProps {
 }
 export default abstract class ApprovalModule extends Components.Module<IApprovalModuleOverride> {
@@ -10,4 +12,5 @@ export default abstract class ApprovalModule extends Components.Module<IApproval
     componentDidMount(): void;
     componentWillUnmount(): void;
     constructor(props: IModuleProps, override: IApprovalModuleOverride);
+    render(): JSX.Element;
 }
