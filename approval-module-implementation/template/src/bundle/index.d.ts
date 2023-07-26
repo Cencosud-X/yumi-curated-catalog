@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { Components } from './sdk';
 import ApprovalCenterButton from './components/card-approval';
 import ApprovalCardExemple from './components/card-test';
@@ -12,5 +11,5 @@ export default abstract class ApprovalModule extends Components.Module<IApproval
     componentDidMount(): void;
     componentWillUnmount(): void;
     constructor(props: IModuleProps, override: IApprovalModuleOverride);
-    render(): JSX.Element;
+    render(): import("react/jsx-runtime").JSX.Element;
 }

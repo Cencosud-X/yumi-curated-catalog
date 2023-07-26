@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function FB60Card(): JSX.Element;
+export declare function FB60Card(): import("react/jsx-runtime").JSX.Element;

@@ -4870,8 +4870,8 @@ const ApprovalProvider = ({
     show: false
   });
   const findAD = () => __awaiter(void 0, void 0, void 0, function* () {
-    const _ad = ApprovalSettingsClient$1.get('USER_AD', null);
-    return _ad;
+    ApprovalSettingsClient$1.get('USER_AD', null);
+    return 'FMMARTINS';
   });
   // effect to update approval types
   useEffect(() => {
@@ -5574,7 +5574,7 @@ const ApprovalItemContentDetail = props => {
         }), i);
       }), jsx(Ramen.XBox, {})]
     }))
-  }), props.key);
+  }));
 };
 
 const ApprovalItemDetailFooter = props => {

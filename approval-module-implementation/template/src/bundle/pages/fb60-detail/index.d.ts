@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function FB60Detail(): JSX.Element;
+export declare function FB60Detail(): import("react/jsx-runtime").JSX.Element;

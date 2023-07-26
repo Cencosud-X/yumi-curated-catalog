@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function AccountabilityDetail(): JSX.Element;
+export declare function AccountabilityDetail(): import("react/jsx-runtime").JSX.Element;

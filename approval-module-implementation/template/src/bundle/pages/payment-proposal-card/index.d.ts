@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function PaymentProposalCard(): JSX.Element;
+export declare function PaymentProposalCard(): import("react/jsx-runtime").JSX.Element;

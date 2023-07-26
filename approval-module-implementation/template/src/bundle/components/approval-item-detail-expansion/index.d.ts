@@ -1,7 +1,6 @@
-/// <reference types="react" />
 interface IApprovalItemDetail {
     loadingDetail: boolean;
     txts?: string[];
 }
-declare const ApprovalItemExpansionDetail: (props: IApprovalItemDetail) => JSX.Element;
+declare const ApprovalItemExpansionDetail: (props: IApprovalItemDetail) => import("react/jsx-runtime").JSX.Element;
 export default ApprovalItemExpansionDetail;

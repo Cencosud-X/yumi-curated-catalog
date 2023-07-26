@@ -17,5 +17,5 @@ interface IApprovalItemCard {
     }>;
     onClick: () => void;
 }
-declare const ApprovalItemCard: (props: IApprovalItemCard) => JSX.Element;
+declare const ApprovalItemCard: (props: IApprovalItemCard) => import("react/jsx-runtime").JSX.Element;
 export default ApprovalItemCard;

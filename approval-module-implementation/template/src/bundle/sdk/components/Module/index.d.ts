@@ -17,5 +17,5 @@ export declare type IModuleProps = RouteComponentProps;
 export declare class Module<IOverride extends IModuleOverride = {}> extends React.Component<IModuleProps> {
     descriptor: IModuleDescriptor<IOverride>;
     constructor(props: IModuleProps, descriptor: IModuleDescriptor<IOverride>);
-    render(): JSX.Element;
+    render(): import("react/jsx-runtime").JSX.Element;
 }

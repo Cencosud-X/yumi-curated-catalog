@@ -1,3 +1,2 @@
-/// <reference types="react" />
-declare const ModalAction: () => JSX.Element;
+declare const ModalAction: () => import("react/jsx-runtime").JSX.Element;
 export default ModalAction;

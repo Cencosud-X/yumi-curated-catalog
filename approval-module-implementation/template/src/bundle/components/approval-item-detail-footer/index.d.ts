@@ -1,4 +1,3 @@
-/// <reference types="react" />
 interface IApprovalItemDetail {
     buttons: Array<{
         size: 's' | 'xl' | 'xs' | 'm' | 'l' | undefined;
@@ -8,5 +7,5 @@ interface IApprovalItemDetail {
         onClick: () => void;
     }>;
 }
-declare const ApprovalItemDetailFooter: (props: IApprovalItemDetail) => JSX.Element;
+declare const ApprovalItemDetailFooter: (props: IApprovalItemDetail) => import("react/jsx-runtime").JSX.Element;
 export default ApprovalItemDetailFooter;

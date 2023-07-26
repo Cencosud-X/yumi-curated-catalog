@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function PurchaseOrderCard(): JSX.Element;
+export declare function PurchaseOrderCard(): import("react/jsx-runtime").JSX.Element;
