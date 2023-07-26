@@ -1,0 +1,13 @@
+{
+  "name": "@yumi-planograms-module/planograms-web-module-source",
+  "version": "0.0.1",
+  "module": "./index.js",
+  "main": "./index.js",
+  "type": "module",
+  "types": "./index.d.ts",
+  "dependencies": {},
+  "peerDependencies": {
+    "react": "18.2.0",
+    "react-router-dom": "^5.3.4"
+  }
+}
