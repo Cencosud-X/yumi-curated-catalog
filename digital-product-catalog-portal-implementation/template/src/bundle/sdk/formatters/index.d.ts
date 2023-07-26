@@ -1,2 +1,3 @@
-import StringFormatter from './StringFormatter';
-export { StringFormatter };
+import DniFormatter from "./DniFormatter";
+import NumberFormatter from "./NumberFormatter";
+export { DniFormatter, NumberFormatter, };
