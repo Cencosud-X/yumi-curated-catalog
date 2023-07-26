@@ -1,5 +1,6 @@
 import IOption from './IOption';
 import ITwoOption from './ITwoOption';
-import IExtensions from './IExtensions';
+import IStaticParams from './IStaticParams';
+import IConfig from './IConfig';
 import * as Core from './core';
-export { IOption, ITwoOption, IExtensions, Core };
+export { IOption, ITwoOption, IStaticParams, Core, IConfig };

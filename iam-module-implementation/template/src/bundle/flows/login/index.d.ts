@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import * as Models from '../../models';
 export interface IProps {
-    extensions: Models.IExtensions;
+    params: Models.IStaticParams;
     onAuthenticated: () => void;
 }
 declare const Login: React.FC<IProps>;

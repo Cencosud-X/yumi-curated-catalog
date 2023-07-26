@@ -1,5 +1,4 @@
-declare let config: {
-    IAM_API_BASE_URL: string;
-    BACKEND_BASE_URL: string;
-};
-export default config;
+import * as SDK from '@team_yumi/sdk';
+import * as models from '../models';
+declare const _default: SDK.Lib.ConfigManager<models.IConfig>;
+export default _default;

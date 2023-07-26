@@ -11,7 +11,7 @@ export declare const ModuleContext: React.Context<IModuleContext>;
 export declare const useContext: () => IModuleContext;
 interface IProps {
     children?: React.ReactNode;
-    extensions: Models.IExtensions;
+    params: Models.IStaticParams;
 }
 export declare const Context: React.FC<IProps>;
 export {};
