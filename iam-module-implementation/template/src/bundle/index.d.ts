@@ -6,7 +6,8 @@ export interface ILoginProps {
     onAuthenticated: () => void;
 }
 export default class Module extends SDK.Lib.BaseModule<IStaticParams> {
-    get Login(): React.FC<ILoginProps>;
-    get Approval(): React.FC;
-    get Users(): React.FC;
+    Login: React.FC<ILoginProps>;
+    Approval: React.FC;
+    Users: React.FC;
+    constructor(params: IStaticParams);
 }
