@@ -7,7 +7,9 @@ export interface ILoginProps {
 }
 export default class Module extends SDK.Lib.BaseModule<IStaticParams> {
     Login: React.FC<ILoginProps>;
+    approvalPath: string;
     Approval: React.FC;
+    usersPath: string;
     Users: React.FC;
     constructor(params: IStaticParams);
 }
