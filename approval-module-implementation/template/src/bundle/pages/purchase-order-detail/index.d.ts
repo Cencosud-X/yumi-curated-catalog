@@ -1,1 +1,2 @@
-export declare function PurchaseOrderDetail(): import("react/jsx-runtime").JSX.Element;
+/// <reference types="react" />
+export declare function PurchaseOrderDetail(): JSX.Element;

@@ -1,1 +1,2 @@
-export declare function AccountabilityCard(): import("react/jsx-runtime").JSX.Element;
+/// <reference types="react" />
+export declare function AccountabilityCard(): JSX.Element;

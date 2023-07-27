@@ -1,3 +1,4 @@
+/// <reference types="react" />
 interface IApprovalItemDetail {
     value: string;
     header: Array<string | number>;
@@ -7,5 +8,5 @@ interface IApprovalItemDetail {
     }>;
     key: number;
 }
-declare const ApprovalItemContentDetail: (props: IApprovalItemDetail) => import("react/jsx-runtime").JSX.Element;
+declare const ApprovalItemContentDetail: (props: IApprovalItemDetail) => JSX.Element;
 export default ApprovalItemContentDetail;

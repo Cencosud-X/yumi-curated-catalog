@@ -1,1 +1,2 @@
-export declare function PurchaseRequisitionCard(): import("react/jsx-runtime").JSX.Element;
+/// <reference types="react" />
+export declare function PurchaseRequisitionCard(): JSX.Element;
