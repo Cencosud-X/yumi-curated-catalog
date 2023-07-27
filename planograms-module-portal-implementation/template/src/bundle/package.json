@@ -7,7 +7,7 @@
   "types": "./index.d.ts",
   "dependencies": {},
   "peerDependencies": {
-    "react": "18.2.0",
+    "react": "^18.2.0",
     "@ionic/react": "^7.2.1",
     "react-router-dom": "^5.3.4"
   }

@@ -36,7 +36,7 @@ module.exports = async (runner, args) => {
         - We need to get the App.tsx which is inside the following path
           /apps/www/src/app/App.tsx
 
-        - An option to configure the app.tsx file, will be override the YUMI_MAIN_FILE_PATH
+        - An option to configure the app.tsx file, will be override the YUMI_MAIN_FILE_PATH_PORTAL
         in the seki product settings
     */
 
@@ -46,7 +46,7 @@ module.exports = async (runner, args) => {
     const settingsJSONPath = path.join(workspacePath, '.seki', 'settings.json');
     const settingsJSON = JSON.parse(fs.readFileSync(settingsJSONPath, 'utf8'));
 
-    const YUMI_MAIN_FILE_PATH = settingsJSON['meta_data']['YUMI_MAIN_FILE_PATH'];
+    const YUMI_MAIN_FILE_PATH_PORTAL = settingsJSON['meta_data']['YUMI_MAIN_FILE_PATH_PORTAL'];
 
 
     // Get the npmScope from nx.json (we need this variable to "build" the import path)
@@ -56,7 +56,7 @@ module.exports = async (runner, args) => {
 
 
     // Get the App.tsx file path for start the injection process
-    const appTsxPathToInject = path.join(workspacePath, YUMI_MAIN_FILE_PATH);
+    const appTsxPathToInject = path.join(workspacePath, YUMI_MAIN_FILE_PATH_PORTAL);
 
     if (!fs.existsSync(appTsxPathToInject)) {
       console.warn('THE INJECTION PROCCESS DOESNT OCCURRS BECAUSE THE App.tsx WASNT FOUND')
