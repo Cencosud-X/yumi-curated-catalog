@@ -18,8 +18,6 @@ module.exports = async (runner, args) => {
     await runner.execute(
       [
         `npx nx g @nrwl/react:lib ${rc.path}`,
-        'npm install @ionic/react@^7.0.0',
-        'npm install @ionic/react-router@^7.0.0',
         'npm install react@^16.14.0',
         'npm install react-dom@^16.14.0',
         'npm install react-router-dom@^5.3.0',
@@ -42,7 +40,7 @@ module.exports = async (runner, args) => {
 
     const workspacePath = rc.workspace_path;
 
-    // Get the YUMI Setting from seki settings.json 
+    // Get the YUMI Setting from seki settings.json
     const settingsJSONPath = path.join(workspacePath, '.seki', 'settings.json');
     const settingsJSON = JSON.parse(fs.readFileSync(settingsJSONPath, 'utf8'));
 
