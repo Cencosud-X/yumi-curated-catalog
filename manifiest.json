@@ -26,6 +26,7 @@
     "price-reduction-mobile-implementation/typerc.json",
     "approval-module-implementation/typerc.json",
     "digital-product-catalog-portal-implementation/typerc.json",
-    "planograms-module-mobile-implementation/typerc.json"
+    "planograms-module-mobile-implementation/typerc.json",
+    "planograms-module-portal-implementation/typerc.json"
   ]
 }
