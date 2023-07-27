@@ -2759,9 +2759,6 @@ const logger$3 = SDK.Lib.ChariotConsole({
 });
 const List = () => {
   const history = Router.useHistory();
-  const {
-    url
-  } = Router.useRouteMatch();
   const context = useContext$1();
   const [viewMode, setViewMode] = React__default.useState('PENDING');
   const [result, setResult] = React__default.useState();
@@ -2780,7 +2777,7 @@ const List = () => {
     }
   });
   const onSelectAccessRequestHandler = approval => {
-    history.push(`${url}/${approval.id}`, {
+    history.push(`${approval.id}`, {
       flag: context.flag,
       store: context.store
     });
@@ -4659,9 +4656,6 @@ const thereAreChanges$1 = (country, flag, store, approval, draft) => {
 const Update = () => {
   const history = Router.useHistory();
   const {
-    url
-  } = Router.useRouteMatch();
-  const {
     taskId
   } = Router.useParams();
   const context = useContext$1();
@@ -4779,7 +4773,7 @@ const Update = () => {
     }), 400);
   });
   const onOpenSelectorHandler = key => {
-    history.push(`${url}/update/${key}`, {
+    history.push(`${key}`, {
       task: context.draft,
       roles,
       sections
@@ -6020,9 +6014,6 @@ const logger$1 = SDK.Lib.ChariotConsole({
 });
 const Users = () => {
   const history = Router.useHistory();
-  const {
-    url
-  } = Router.useRouteMatch();
   const context = useContext();
   const [viewMode, setViewMode] = React__default.useState('PENDING');
   const [result, setResult] = React__default.useState();
@@ -6073,7 +6064,7 @@ const Users = () => {
     }), 300);
   }, [context.country, context.flag, context.store, result === null || result === void 0 ? void 0 : result.limit, result === null || result === void 0 ? void 0 : result.offset]);
   const onSelectUserHandler = user => {
-    history.push(`${url}/${user.identifier}`, {
+    history.push(`${user.identifier}`, {
       user,
       roles,
       sections
@@ -6318,9 +6309,6 @@ const thereAreChanges = (country, flag, store, user, draft) => {
 };
 const UpdateTask = () => {
   const history = Router.useHistory();
-  const {
-    url
-  } = Router.useRouteMatch();
   const context = useContext();
   const location = Router.useLocation();
   const [roles, setRoles] = React.useState();
@@ -6349,7 +6337,7 @@ const UpdateTask = () => {
     history.goBack();
   };
   const onOpenSelectorHandler = key => {
-    history.push(`${url}/update/${key}`, {
+    history.push(`${key}`, {
       user: draft,
       roles: location.state.roles,
       sections: location.state.sections

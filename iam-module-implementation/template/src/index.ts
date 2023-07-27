@@ -1,3 +1,6 @@
-import { Login, Approval, Users } from './Extensions';
+import Module from './bundle';
+import './bundle/index.css';
 
-export { Login, Approval, Users };
+export default new Module({
+  country: 'ar',
+});
