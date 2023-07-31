@@ -1,4 +1,4 @@
-import { Interfaces } from '@digital-product-catalog/models';
+import { Interfaces } from '../models';
 interface ICart {
     totalPrice: number;
     products: Interfaces.ProductsInterfaces.IProduct[];

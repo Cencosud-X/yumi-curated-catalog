@@ -8,6 +8,6 @@ declare const cartReducer: (state: ICart, action: IAction) => {
     totalPrice: number;
 } | {
     totalPrice: any;
-    products: import("dist/libs/models/src/interfaces/producstinterface").IProduct[];
+    products: import("../../models/interfaces/producstinterface").IProduct[];
 };
 export default cartReducer;

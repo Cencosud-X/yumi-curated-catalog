@@ -1,5 +1,5 @@
 import React from 'react';
-import { Interfaces } from '@digital-product-catalog/models';
+import { Interfaces } from '../../models';
 declare const CartContext: React.Context<any>;
 interface IProps {
     children: React.ReactNode;

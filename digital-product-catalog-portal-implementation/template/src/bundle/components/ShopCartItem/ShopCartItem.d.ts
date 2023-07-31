@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import './ShopCartItem.css';
-import { Interfaces } from '@digital-product-catalog/models';
+import { Interfaces } from '../../models';
 interface IProps {
     item: Interfaces.ProductsInterfaces.IProduct;
     showPrices?: boolean;

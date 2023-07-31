@@ -1,3 +1,3 @@
-import { Apis } from '@digital-product-catalog/models';
+import { Apis } from '../models';
 declare const _default: Apis.ProductsApi;
 export default _default;

@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import './ProductCard.css';
-import { Interfaces } from '@digital-product-catalog/models';
+import { Interfaces } from '../../models';
 interface Props {
     productData: Interfaces.ProductsInterfaces.IProduct;
 }
