@@ -24,6 +24,7 @@ module.exports = async (runner, args) => {
         'npm install react-dom@^16.14.0',
         'npm install react-router-dom@^5.3.0',
         'npm install zod', 
+        'npm install @team_yumi/sdk@^0.0.1-next.20230726-1b95187-dc6ce1615ad2c85339c9a70e70a13307', 
         'npm install i18next',
         'npm install react-i18next',
         'npm install @capacitor/filesystem@^4.1.5',
@@ -95,7 +96,7 @@ module.exports = async (runner, args) => {
         In this "part" we need to put the ROUTE clause
       */
       if (line.indexOf("END_YUMMI_ROUTE_INJECTION") >= 0) {
-        modifiedAppTsx.push(`<Route path='/price-reduction' component={${moduleOverrideName}} />`)
+        modifiedAppTsx.push(`<Route path='/price-reduction' component={${moduleOverrideName}.flow} />`)
       }
 
       modifiedAppTsx.push(line)

@@ -11,6 +11,7 @@ import { Capacitor } from '@capacitor/core';
 import { v4 } from 'uuid';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { Directory, Filesystem } from '@capacitor/filesystem';
+import * as SDK from '@team_yumi/sdk';
 
 var commonjsGlobal$1 = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -16584,13 +16585,20 @@ const XBody = props => {
   }, [props.children]);
   const styles = {};
   const availableBodyHeight = pageHeight - headerHeight - footerHeight - 48;
-  if (availableBodyHeight >= bodyHeight) {
-    // agregar min-height
-    styles.height = `${availableBodyHeight}px`;
-    styles.minHeight = `${availableBodyHeight}px`;
+  const sizingExecuted = availableBodyHeight > 0;
+  if (sizingExecuted) {
+    if (availableBodyHeight >= bodyHeight) {
+      // agregar min-height
+      styles.height = `${availableBodyHeight}px`;
+      styles.minHeight = `${availableBodyHeight}px`;
+      styles.opacity = 1;
+    } else {
+      // agregar padding bottom
+      styles.paddingBottom = `${footerHeight}px`;
+      styles.opacity = 1;
+    }
   } else {
-    // agregar padding
-    styles.paddingBottom = `${footerHeight}px`;
+    styles.opacity = 0;
   }
   const rootClass = classnames(Styles$a.xbody, {
     [Styles$a[`xbody--without-header`]]: headerHeight === 0
@@ -23682,5 +23690,13 @@ const Flow = props => {
   }));
 };
 Flow.defaultProps = {};
+class Module extends SDK.Lib.BaseModule {
+  constructor(extensions) {
+    super(extensions);
+    this.flow = () => jsx(Flow, {
+      extensions: extensions
+    });
+  }
+}
 
-export { Index$1 as CardTool, Flow };
+export { Index$1 as CardTool, Flow, Module as default };
