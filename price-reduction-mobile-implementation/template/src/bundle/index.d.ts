@@ -1,22 +1,14 @@
-import { IHomePageExtension } from './pages/home';
-import { Components } from './sdk';
-import CardTool from "./components/card-tool";
-import { IScannerPageExtension } from "./pages/scanner";
-import { IRequestPageExtension } from './pages/requests';
-import { IDetailPageExtension } from "./pages/detail";
+import React from 'react';
+import { IExtensions } from './models';
+import CardTool from './components/card-tool';
+import * as SDK from '@team_yumi/sdk';
 export { CardTool };
-export interface IHelloWorldModuleOverride extends Components.IModuleOverride {
-    extensions: {
-        home_page: IHomePageExtension;
-        detail_page: IDetailPageExtension;
-        scanner_page: IScannerPageExtension;
-        request_page: IRequestPageExtension;
-    };
-    routes?: Components.IModuleRoute[];
+export type { IExtensions };
+interface IProps {
+    extensions: IExtensions;
 }
-export interface IModuleProps extends Components.IModuleProps {
-}
-export default abstract class HelloWorldModule extends Components.Module<IHelloWorldModuleOverride> {
-    static route: string;
-    constructor(props: IModuleProps, override: IHelloWorldModuleOverride);
+export declare const Flow: React.FC<IProps>;
+export default class Module extends SDK.Lib.BaseModule<IExtensions> {
+    flow: React.FC<IProps>;
+    constructor(extensions: IExtensions);
 }

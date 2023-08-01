@@ -8,16 +8,18 @@
   "dependencies": {},
   "peerDependencies": {
     "react": "^16.14.0",
-    "@ionic/react": "^7.1.3",
     "react-router-dom": "^5.3.4",
     "@yumi/models": "0.0.1",
     "@capacitor/camera": "^4.1.5",
     "@capacitor/core": "4.8.0",
-    "@capacitor/filesystem": "^4.1.5",
+    "@team_yumi/sdk": "^0.0.1-next.20230726-1b95187-dc6ce1615ad2c85339c9a70e70a13307",
+    "axios": "^1.4.0",
     "mongoose": "^6.11.1",
     "zod": "^3.21.4",
+    "react-i18next": "^13.0.2",
+    "@capacitor/filesystem": "^4.1.5",
     "uuid": "^9.0.0",
-    "axios": "^1.4.0",
-    "@capacitor-community/barcode-scanner": "^3.0.3"
+    "@capacitor-community/barcode-scanner": "^3.0.3",
+    "i18next": "^23.2.11"
   }
 }
