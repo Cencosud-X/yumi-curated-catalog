@@ -23,6 +23,10 @@ module.exports = async (runner, args) => {
         'npm install react@^16.14.0',
         'npm install react-dom@^16.14.0',
         'npm install react-router-dom@^5.3.0',
+        'npm install zod', 
+        'npm install i18next',
+        'npm install react-i18next',
+        'npm install @capacitor/filesystem@^4.1.5',
       ],
       {
         cwd: rc.workspace_path,

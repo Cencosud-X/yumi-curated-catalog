@@ -1,3 +1,5 @@
 import { RequestPage } from './requests';
 import { ScannerPage } from './scanner';
-export { RequestPage, ScannerPage };
+import { HomePage } from './home';
+import { DetailPage } from './detail';
+export { RequestPage, ScannerPage, HomePage, DetailPage };

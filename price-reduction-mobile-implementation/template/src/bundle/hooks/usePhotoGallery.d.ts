@@ -1,4 +1,4 @@
-import { PriceReduction } from '@yumi/models';
+import { PriceReduction } from '../models';
 interface CustomProps {
     uploadImage?: (file: Blob, fileName: string) => Promise<PriceReduction.Files.FileResponse>;
 }
