@@ -86,7 +86,7 @@ module.exports = async (runner, args) => {
         In this "part" we need to put the IMPORT clause
       */
       if (line.indexOf("END_YUMMI_IMPORT_INJECTION") >= 0) {
-        modifiedAppTsx.push(`import {${moduleOverrideName}} from '@${npmScope}/${rc.path}'`)
+        modifiedAppTsx.push(`import ${moduleOverrideName} from '@${npmScope}/${rc.path}'`)
       }
 
       /*
@@ -95,7 +95,7 @@ module.exports = async (runner, args) => {
         In this "part" we need to put the ROUTE clause
       */
       if (line.indexOf("END_YUMMI_ROUTE_INJECTION") >= 0) {
-        modifiedAppTsx.push(`<Route path={${moduleOverrideName}.route} component={${moduleOverrideName}} />`)
+        modifiedAppTsx.push(`<Route path='/price-reduction' component={${moduleOverrideName}} />`)
       }
 
       modifiedAppTsx.push(line)
