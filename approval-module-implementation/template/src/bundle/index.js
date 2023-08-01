@@ -4874,14 +4874,6 @@ const ApprovalProvider = ({
     const _ad = ApprovalSettingsClient$1.get('USER_AD', null);
     return _ad;
   });
-  useEffect(() => {
-    ApprovalSettingsClient$1.set('TEMP_APPROVALS', approvals);
-  }, [approvals]);
-  useEffect(() => {
-    ApprovalSettingsClient$1.boot().then(() => {
-      ApprovalSettingsClient$1.get('TEMP_APPROVALS', []);
-    });
-  }, []);
   // effect to update approval types
   useEffect(() => {
     if (env) {
@@ -4916,6 +4908,7 @@ const ApprovalProvider = ({
     const _newApprovals = approvals === null || approvals === void 0 ? void 0 : approvals.filter(a => genMD5(a) !== genMD5(approval));
     setApprovals(_newApprovals);
     ApprovalSettingsClient$1.set('MODULE_PENDING', _newApprovals ? _newApprovals.length : 0);
+    ApprovalSettingsClient$1.set('TEMP_APPROVALS', _newApprovals);
   }, [approvals]);
   // check if already discard
   const checkDiscard = useCallback(approval => {
@@ -4940,6 +4933,7 @@ const ApprovalProvider = ({
     if (envs && approvalTypes) {
       yield ApprovalSettingsClient$1.boot();
       if (!ApprovalSettingsClient$1.get('CENTRAL_ACTION_FETCH', false)) {
+        setApprovals(ApprovalSettingsClient$1.get('TEMP_APPROVALS', []));
         return;
       }
       setApprovalCenterLoading(true);
@@ -4999,7 +4993,10 @@ const ApprovalProvider = ({
         setApprovalCenterLoading(false);
         setApprovals(_approvals);
         yield ApprovalSettingsClient$1.set('MODULE_PENDING', _approvals.length);
+        yield ApprovalSettingsClient$1.set('TEMP_APPROVALS', _approvals);
         yield ApprovalSettingsClient$1.set('CENTRAL_ACTION_FETCH', false);
+      } else {
+        setApprovalCenterLoading(false);
       }
     }
   }), [approvalTypes, checkDiscard, envs]);
@@ -5050,7 +5047,7 @@ const ApprovalProvider = ({
     } else {
       throw new Error('Approval category invalid!');
     }
-  }), [sendToDiscard, updateApprovalList]);
+  }), [handleAnalytics, sendToDiscard, updateApprovalList]);
   return jsxs(ApprovalContext.Provider, Object.assign({
     value: {
       approvalTypes,
