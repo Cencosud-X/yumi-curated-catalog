@@ -2721,10 +2721,11 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
 var SETTINGS_ENUM;
 (function (SETTINGS_ENUM) {
   SETTINGS_ENUM[SETTINGS_ENUM["MODULE_PENDING"] = 0] = "MODULE_PENDING";
-  SETTINGS_ENUM[SETTINGS_ENUM["EXTENSION_PENDING"] = 1] = "EXTENSION_PENDING";
-  SETTINGS_ENUM[SETTINGS_ENUM["USER_AD"] = 2] = "USER_AD";
-  SETTINGS_ENUM[SETTINGS_ENUM["CENTRAL_ACTION_FETCH"] = 3] = "CENTRAL_ACTION_FETCH";
-  SETTINGS_ENUM[SETTINGS_ENUM["DISCARTED"] = 4] = "DISCARTED";
+  SETTINGS_ENUM[SETTINGS_ENUM["TEMP_APPROVALS"] = 1] = "TEMP_APPROVALS";
+  SETTINGS_ENUM[SETTINGS_ENUM["EXTENSION_PENDING"] = 2] = "EXTENSION_PENDING";
+  SETTINGS_ENUM[SETTINGS_ENUM["USER_AD"] = 3] = "USER_AD";
+  SETTINGS_ENUM[SETTINGS_ENUM["CENTRAL_ACTION_FETCH"] = 4] = "CENTRAL_ACTION_FETCH";
+  SETTINGS_ENUM[SETTINGS_ENUM["DISCARTED"] = 5] = "DISCARTED";
 })(SETTINGS_ENUM || (SETTINGS_ENUM = {}));
 const storageName = '@approvalmodule';
 class ApprovalSettingsClient extends WithBootedClient {
@@ -2793,7 +2794,7 @@ const ApprovalCenterButton = props => {
     yield ApprovalSettingsClient$1.boot();
     const _modulePending = ApprovalSettingsClient$1.get('MODULE_PENDING', 0);
     const _extensionPending = ApprovalSettingsClient$1.get('EXTENSION_PENDING', 0);
-    yield ApprovalSettingsClient$1.set('USER_AD', 'FMMARTINS');
+    yield ApprovalSettingsClient$1.set('USER_AD', '');
     setShow(ApprovalSettingsClient$1.get('USER_AD', null) !== null);
     return _modulePending + _extensionPending;
   });
@@ -4873,6 +4874,14 @@ const ApprovalProvider = ({
     const _ad = ApprovalSettingsClient$1.get('USER_AD', null);
     return _ad;
   });
+  useEffect(() => {
+    ApprovalSettingsClient$1.set('TEMP_APPROVALS', approvals);
+  }, [approvals]);
+  useEffect(() => {
+    ApprovalSettingsClient$1.boot().then(() => {
+      ApprovalSettingsClient$1.get('TEMP_APPROVALS', []);
+    });
+  }, []);
   // effect to update approval types
   useEffect(() => {
     if (env) {
