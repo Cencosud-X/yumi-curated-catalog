@@ -4870,8 +4870,8 @@ const ApprovalProvider = ({
     show: false
   });
   const findAD = () => __awaiter(void 0, void 0, void 0, function* () {
-    ApprovalSettingsClient$1.get('USER_AD', null);
-    return 'FMMARTINS';
+    const _ad = ApprovalSettingsClient$1.get('USER_AD', null);
+    return _ad;
   });
   // effect to update approval types
   useEffect(() => {
