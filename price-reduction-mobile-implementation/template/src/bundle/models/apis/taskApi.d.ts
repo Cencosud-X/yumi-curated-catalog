@@ -1,5 +1,5 @@
-import { PriceReduction } from '..';
-import BaseRest from './baseRest';
+import { PriceReduction, Rest } from '..';
+import * as SDK from '@team_yumi/sdk';
 import { AxiosResponse } from 'axios';
 import { FilterQuery } from 'mongoose';
 interface IConfig {
@@ -9,11 +9,7 @@ interface IConfig {
 interface ITaskResponse {
     data: PriceReduction.Task.ITask;
 }
-interface IList {
-    data: PriceReduction.Task.ITask[];
-    total: number;
-}
-export default class TaskApi extends BaseRest {
+export default class TaskApi extends SDK.Lib.RESTClient {
     constructor(config: IConfig);
     /**
      * Save task
@@ -22,6 +18,6 @@ export default class TaskApi extends BaseRest {
      * @memberof TaskApi
      */
     save(task: PriceReduction.Task.ITask): Promise<AxiosResponse<ITaskResponse>>;
-    list(filterOrigin: FilterQuery<PriceReduction.Request.IRequest>): Promise<IList>;
+    list(filter: FilterQuery<PriceReduction.Request.IRequest>, keyTab: string, limit: number, offset: number, sort: Rest.ListParamsSort): Promise<PriceReduction.Task.ITask[]>;
 }
 export {};

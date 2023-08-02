@@ -96,7 +96,7 @@ module.exports = async (runner, args) => {
         In this "part" we need to put the ROUTE clause
       */
       if (line.indexOf("END_YUMMI_ROUTE_INJECTION") >= 0) {
-        modifiedAppTsx.push(`<Route path='/price-reduction' component={${moduleOverrideName}.flow} />`)
+        modifiedAppTsx.push(`<Route path={${moduleOverrideName}.defaultPath} component={${moduleOverrideName}.Flow} />`)
       }
 
       modifiedAppTsx.push(line)

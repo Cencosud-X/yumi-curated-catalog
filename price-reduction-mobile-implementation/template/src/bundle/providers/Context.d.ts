@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { AxiosInstance } from 'axios';
 import * as Models from '../models';
 import { PriceReduction } from '../models';
 import '../plugins/i18n';
@@ -10,7 +9,6 @@ export interface IModuleContext {
     store: string;
     storeName: string;
     responsible: PriceReduction.Request.IUser;
-    axiosBackend: AxiosInstance;
     homePage?: {
         pagination?: {
             rowsPerPage: number;

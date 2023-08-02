@@ -1,10 +1,10 @@
 import { PriceReduction } from '..';
 import { Rest } from '..';
-import BaseRest from './baseRest';
+import * as SDK from '@team_yumi/sdk';
 interface IConfig {
     baseURL: string;
 }
-export default class ValidityApi extends BaseRest {
+export default class ValidityApi extends SDK.Lib.RESTClient {
     constructor(config: IConfig);
     /**
      * list reason using params

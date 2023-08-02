@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import BaseRest from './baseRest';
+import * as SDK from '@team_yumi/sdk';
 interface IConfig {
     baseURL: string;
 }
@@ -10,7 +10,7 @@ export interface FileResponse {
     url: string;
     href: string;
 }
-export default class FilesApi extends BaseRest {
+export default class FilesApi extends SDK.Lib.RESTClient {
     constructor(config: IConfig);
     save(data: Blob, fileName: string): Promise<FileResponse | AxiosError>;
     delete(id: string): Promise<void | AxiosError>;

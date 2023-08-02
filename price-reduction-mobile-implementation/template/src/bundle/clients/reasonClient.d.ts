@@ -1,3 +1,3 @@
 import { Apis } from '../models';
-declare const _default: Apis.ReasonApi;
+declare const _default: () => Apis.ReasonApi;
 export default _default;
