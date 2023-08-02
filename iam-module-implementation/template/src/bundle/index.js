@@ -4900,16 +4900,18 @@ const Update = () => {
     id: 'roles',
     label: 'Roles'
   }];
-  if (areTheySectors) {
-    scopes.push({
-      id: 'two-sections',
-      label: 'Sectores'
-    });
-  } else {
-    scopes.push({
-      id: 'sections',
-      label: 'Secciones'
-    });
+  if (context.country !== 'ar') {
+    if (areTheySectors) {
+      scopes.push({
+        id: 'two-sections',
+        label: 'Sectores'
+      });
+    } else {
+      scopes.push({
+        id: 'sections',
+        label: 'Secciones'
+      });
+    }
   }
   const selectedRoles = context.draft.user.scope.filter(scope => scope.startsWith(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role`));
   const selectedSections = context.draft.user.scope.filter(scope => scope.startsWith(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>section`));
@@ -6058,7 +6060,7 @@ const Users = () => {
       setViewMode('PENDING');
       const [newResult, roles, sections] = yield Promise.all([User$1().getAll(context.country, context.flag, context.store, {
         offset: 0,
-        limit: 10
+        limit: 50
       }), Role$1().getAll(context.country, context.flag, context.store), Section$1().getAll(context.country, context.flag, context.store)]);
       setResult(Object.assign(Object.assign({}, newResult), {
         offset: newResult.offset + newResult.limit
@@ -6081,7 +6083,7 @@ const Users = () => {
         }
         const newResult = yield User$1().getAll(context.country, context.flag, context.store, {
           offset: (result === null || result === void 0 ? void 0 : result.offset) || 0,
-          limit: (result === null || result === void 0 ? void 0 : result.limit) || 10,
+          limit: (result === null || result === void 0 ? void 0 : result.limit) || 50,
           search: text
         }, searchCtrl.signal);
         setResult(newResult);
@@ -6447,16 +6449,18 @@ const UpdateTask = () => {
     id: 'roles',
     label: 'Roles'
   }];
-  if (areTheySectors) {
-    scopes.push({
-      id: 'two-sections',
-      label: 'Sectores'
-    });
-  } else {
-    scopes.push({
-      id: 'sections',
-      label: 'Secciones'
-    });
+  if (context.country !== 'ar') {
+    if (areTheySectors) {
+      scopes.push({
+        id: 'two-sections',
+        label: 'Sectores'
+      });
+    } else {
+      scopes.push({
+        id: 'sections',
+        label: 'Secciones'
+      });
+    }
   }
   const selectedRoles = draft.scopes.filter(scope => scope.startsWith(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>role`));
   const selectedSections = draft.scopes.filter(scope => scope.startsWith(`country:${context.country}=>flag:${context.flag}=>store:${context.store}=>section`));
