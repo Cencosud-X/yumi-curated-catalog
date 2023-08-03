@@ -1,10 +1,12 @@
 import { IToolPageExtension } from './flow/tool-page';
 import { Components } from './sdk';
 import { ISubTasksPageExtension } from './flow/sub-tasks';
+import { IControlTasksPageExtension } from './flow/control-tasks';
 export interface IInternalConsumptionModuleOverride extends Components.IModuleOverride {
     extensions?: {
         tool_page: IToolPageExtension;
         sub_tasks_page: ISubTasksPageExtension;
+        control_tasks_page: IControlTasksPageExtension;
     };
     routes?: Components.IModuleRoute[];
 }
