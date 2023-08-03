@@ -2963,7 +2963,7 @@ const ProductCard$1 = ({
   }));
 };
 
-const TaskCard$1 = ({
+const TaskCard = ({
   task,
   onDelete,
   onCountChange,
