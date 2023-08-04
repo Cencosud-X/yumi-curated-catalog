@@ -1,4 +1,4 @@
 /// <reference types="react" />
 import './NewProduct.css';
-declare const NewProduct: React.FC;
-export default NewProduct;
+declare const HomeLayout: React.FC;
+export default HomeLayout;

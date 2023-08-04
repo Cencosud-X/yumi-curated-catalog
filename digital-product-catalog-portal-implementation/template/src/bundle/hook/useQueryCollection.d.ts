@@ -1,15 +1,18 @@
-export interface IReturnHookQueryCollection {
-    queryParams: any;
+export interface IReturnHookQueryCollection<T> {
+    filters: any;
+    loading: boolean;
+    errors: any;
+    loadMoreLoading: boolean;
     total: number;
     limit: number;
     offset: number;
-    data: any[];
+    data: T[];
     hasNext: boolean;
-    setQueryParams: any;
-    setTotal: any;
-    setLimit: any;
-    setOffset: any;
+    setFilters: any;
     setData: any;
+    setErrors: any;
+    getData: any;
+    loadMore: any;
 }
-declare const _default: <T>(params: any) => IReturnHookQueryCollection;
+declare const _default: <T>(request: (filters?: any) => any, params: any) => IReturnHookQueryCollection<T>;
 export default _default;

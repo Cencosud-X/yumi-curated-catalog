@@ -1,5 +1,5 @@
 import { Footer, Header } from './Layout';
-import { ElevatorButton, LoaderScreen } from './components';
+import { DrawerCategories, ElevatorButton, LoaderScreen } from './components';
 import ModalCart from './components/ModalCart/ModalCart';
 import { CartContextProvider } from './context/Cart/CartContext';
 import { GlobalContextProvider } from './context/Global/GlobalContext';
@@ -19,7 +19,7 @@ export interface IPortalModuleOverride extends Components.IModuleOverride {
 }
 export interface IModuleProps extends Components.IModuleProps {
 }
-export { Footer, Header, CartContextProvider, GlobalContextProvider, ElevatorButton, LoaderScreen, ModalCart };
+export { Footer, Header, CartContextProvider, GlobalContextProvider, ElevatorButton, LoaderScreen, ModalCart, DrawerCategories };
 export default abstract class PortalModule extends Components.Module<IPortalModuleOverride> {
     static route: string;
     constructor(props: IModuleProps, override: IPortalModuleOverride);

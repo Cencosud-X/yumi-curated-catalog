@@ -1,8 +1,8 @@
 import { FC, ReactNode } from 'react';
-import './ProductsContainer.css';
+import './GridContainer.css';
 interface IProps {
     children: ReactNode;
     className?: string;
 }
-declare const ProductContainer: FC<IProps>;
-export default ProductContainer;
+declare const GridContainer: FC<IProps>;
+export default GridContainer;

@@ -9,6 +9,8 @@ interface IContext {
     categories: IMenuData[];
     categoriesNav: IMenuData[];
     setLoader: (status: boolean) => void;
+    isOpenModalCategories: boolean;
+    setIsOpenModalCategories: (open: boolean) => void;
 }
 declare const useGlobal: () => IContext;
 export { GlobalContextProvider, useGlobal };
