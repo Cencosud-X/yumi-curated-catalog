@@ -22025,8 +22025,20 @@ class RequestPageClass extends Component {
         if (!infoStore || !responsible) {
           throw new Error('not found infoStore or responsible');
         }
+        const newProducts = {
+          productName: products.productName,
+          section: products.section,
+          urlImage: products.urlImage,
+          ean: products.ean,
+          sku: products.sku,
+          stockDays: products.stockDays,
+          priceType: products.ean,
+          previousPrice: products.ean,
+          stockNRT: products.ean,
+          costoCppIva: products.ean
+        };
         this.setState({
-          resquest: Object.assign(Object.assign(Object.assign(Object.assign({}, infoStore), this.state.resquest), products), {
+          resquest: Object.assign(Object.assign(Object.assign(Object.assign({}, newProducts), infoStore), this.state.resquest), {
             createdBy: Object.assign({}, responsible)
           }),
           reasons,
@@ -22605,7 +22617,7 @@ fixRegExpWellKnownSymbolLogic('match', function (MATCH, nativeMatch, maybeCallNa
   ];
 });
 
-var img$2 = "data:image/svg+xml,%3csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 375 812' width='375' height='812'%3e %3cdefs%3e %3cclipPath clipPathUnits='userSpaceOnUse' id='cp1'%3e %3cpath d='m-3 0h378v812h-378z' /%3e %3c/clipPath%3e %3c/defs%3e %3cstyle%3e.a%7bopacity:.5%7d.b%7bfill:none%3bstroke:white%3bstroke-linecap:round%3bstroke-width:8%7d%3c/style%3e %3cg clip-path='url(%23cp1)'%3e %3cpath fill-rule='evenodd' class='a' d='m379 817c0 4.4-3.6 8-8 8h-371c-4.4 0-8-3.6-8-8v-822c0-4.4 3.6-8 8-8h371c4.4 0 8 3.6 8 8zm-36-593c0-4.4-3.6-8-8-8h-295c-4.4 0-8 3.6-8 8v194c0 4.4 3.6 8 8 8h295c4.4 0 8-3.6 8-8z' /%3e %3cpath class='b' d='m83 215h-42c-4.4 0-8 3.6-8 8v42' /%3e %3cpath class='b' d='m342 265v-42c0-4.4-3.6-8-8-8h-42' /%3e %3cpath class='b' d='m292 428h42c4.4 0 8-3.6 8-8v-42' /%3e %3cpath class='b' d='m33 378v42c0 4.4 3.6 8 8 8h42' /%3e %3c/g%3e%3c/svg%3e";
+var img$2 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXcAAAMsCAMAAACYyBLRAAAAulBMVEUAAAD///////////////////////////////////////////8AAAAqKiosLCwuLi4vLy8xMTEyMjJCQkJwcHBycnJ0dHR2dnb///+Tk5OVlZWVlZWXl5eXl5e8vLy+vr6+vr6/v7/AwMDOzs7////T09PU1NT////U1NTV1dX////////o6Ojp6enp6enq6ur////////////29vb39/f39/f4+Pj4+Pj5+fn5+fn9/f39/f3+/v7////wkkFkAAAAPXRSTlMADQ4PERImUVJTVFWAi4yMjY2Ok6SkpaattLS1tbbLy8zMzdbZ2tra29vb3Ovr7Ozu8fL39/j4+fn6/f7+9BgWWAAAAAFiS0dEPdBtUVkAAAZMSURBVHja7dzZVtNQAIbRilIcIhSqGAEnIg4oUIK0UMj7v5Zok+ueAUXD/h7gnJW9urLaXvyDQnfRAAF37uLOXdy5izt3cecu7ty5izt3cecu7tzFnbu4c+cu7tzFnbu4cxd37uLOXdy5cxd37uLOXdy5izt3cefOXdy5izt3cecu7tzFnTt3cecu7tzFnbu4cxd37uLOnbu4cxd37uLOXdy5izt37uLOXdy5izt3cecu7ty5izt3cecu7tzFnbu4cxd37tzFnbu4cxd37uLOXdy5cxd37uLOXdy5izt3cefOHQF37uLOXdy5izt3cecu7ty5izt3cecu7tzFnbu4c+cu7tzFnbu4cxd37uLOXdy5cxd37uLOXdy5izt3cefOXdy5izt3cecu7tzFnTt3cecu7tzFnbu4cxd37uLOnbu4cxd37uLOXdy5K9Z9a+/r8WUT3Kwa90hoXM3CH/3y+Ovu5i25j/bnTWRn/YEfn8U+/PzDxm24v5o28VW9ca8Snn66ne/+5rpJubk37imfuuZ6N9f9VRL7fXdvrrbz3Edp1zbloC+VaQDnG1nu+2m3Toa9cR9O0gje57hvzVOurMv+sN/Al3UKwnyU4b7XnfJx7cFAy1t5/Lkj28lw/9KxP0Ia2Opha3aQ4X7SnrHGM7inrdlxhnv3C3kFZ3APu39LMty7dxXNiDo07ty5c+fOnTt37ty5cxd37uLOnTt37ty5c+fOnTt3cecu7ty5c+fOnTt37ty5cxd37uLOnTt37ty5c+fOnfu9dm9Xf05hRnQaMjk1CBk1K2FGVIZM2w0CRvwmQ5gRLRaalkw5DpaNVtb9Wk/6K/BlXS+bLl26Y4gxqez9SITcuYs7d3Hnzp07d+7cuXPnzp27uHMXd+7cuXPnzp07d+7cuYs7d3HnLu7cuXPnzp07d+7cuXMXd+7izp07d+7cuXPnzp07d3HnLu7cuXPnzp07d+7cuXMXd+7izl3cuXPnzp07d+7cuXPnLu7cxZ07d+7cuXPnzp07d+7izl3cuXPnzp07d+7cuXPnLu7cxZ27uHPnzp07d+7/mvu4qutyiDGqYVnX1TjHfXzW3DQBH8U++YV2Ns5wr5rflTAjKhdoVYb7dHHEKcyIThdo0wz3pg1mRB0ad+7cuXPnzp07d+7cuYs7d3Hnzp07d+7cuXPnzp27uHMXd+7cuXPnzp07d+7cuYs7d3Hnzp07d+7cuXPnzv1eu8/aI1ZoBvewNZtluJ+0ZzzBGdyz1uwow/1Le8bnVZ6BrX5rzQ4y3He7d9XhE6+aoJfMs8OObCfDfXPeJNSvhaab9aQUhPkoZ+fqQ5NUjxaaFutJ8b3N2hfbmKbdWhV9qUoD+PE8b09v+yrp2mlv3NM+eFcvc3cM9665x7PvZO9HFtvn3jOxL5kXRb57sf4++lvNkhG//6nFlGPUN5l368VtuBfFaOfg+0X4xbOqP+y/pktn4Y9+cfTp9Sjk1EGhu4g7d+7izl3cuYs7d3HnLu7cuYs7d3HnLu7cxZ27uHPnLu7cxZ27uHMXd+7izl3cuXMXd+7izl3cuYs7d3Hnzl3cuYs7d3HnLu7cxZ07d3HnLu7cxZ27uHMXd+7izp27uHMXd+7izl3cuYs7d+7izl3cuYs7d3HnLu7cuYs7d3HnLu7cxZ27uHMXd+7cxZ27uHMXd+7izl3cuXMXd+7izl3cuYs7d3HnLu7cuYs7d3HnLu7cxZ27uHPnLu7cxZ27uHMXd+7izp27uHMXd+7izl3cuYs7d3Hnzl3cuYs7d3HnLu7cxZ07d3HnLu7cxZ27uHMXd+7cxZ27uHMXd+7izl3cuYs7d+7izl3cuYs7d3HnLu7cuYs7d3HnLu7cxZ27uHPnLu7cxZ27uHMXd+7izl3cuXMXd+7izl3cuYs7d3Hnzl3cuYs7d3HnLu7cxZ27uHPnLu7cxZ27uHMXd+7izp27uHMXd+7izl3cuYs7d+7izl3cuYs7d3HnLu7cxZ07d3HnLu7cxZ27uHMXd+7cxZ27uHMXd+7izl3cuXMXd+7izl3cuYs7d3HnLu7cuYs7d3HnLu7cxZ27uHPnLu7cxZ27uHMXd+7izp27uHMXd+7izl3cuYs7d3Hnzl3cuYs7d3HnLu7cxZ07d3Hnrj/VT131hnOqxXE0AAAAAElFTkSuQmCC";
 
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 var productClient = (() => new ProductApi({
@@ -22931,10 +22943,10 @@ function HomePage() {
       offset,
       sort
     });
-    const data = yield taskClient().list(filter, keyTab, limit, offset, sort);
-    const newData = dataRef.current.concat(data.map(task => task.meta_data));
+    const response = yield taskClient().list(filter, keyTab, limit, offset, sort);
+    const newData = dataRef.current.concat(response.data.map(task => task.meta_data));
     setData(newData);
-    setTotal(data.length);
+    setTotal(response.total);
     Ramen.Api.loading.hide();
     setLoading(false);
   });

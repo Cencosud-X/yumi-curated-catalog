@@ -9,6 +9,10 @@ interface IConfig {
 interface ITaskResponse {
     data: PriceReduction.Task.ITask;
 }
+export interface IList {
+    data: PriceReduction.Task.ITask[];
+    total: number;
+}
 export default class TaskApi extends SDK.Lib.RESTClient {
     constructor(config: IConfig);
     /**
@@ -18,6 +22,6 @@ export default class TaskApi extends SDK.Lib.RESTClient {
      * @memberof TaskApi
      */
     save(task: PriceReduction.Task.ITask): Promise<AxiosResponse<ITaskResponse>>;
-    list(filter: FilterQuery<PriceReduction.Request.IRequest>, keyTab: string, limit: number, offset: number, sort: Rest.ListParamsSort): Promise<PriceReduction.Task.ITask[]>;
+    list(filter: FilterQuery<PriceReduction.Request.IRequest>, keyTab: string, limit: number, offset: number, sort: Rest.ListParamsSort): Promise<IList>;
 }
 export {};
