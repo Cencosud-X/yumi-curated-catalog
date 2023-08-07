@@ -12680,7 +12680,7 @@ class CreatorSummaryPage extends Page {
     }
     const pendingTasks = () => taskClient.creatorPendingTasks();
     const rejectedTasks = () => taskClient.creatorRejectedTasks();
-    const expiredTasks = () => taskClient.creatorRejectedTasks();
+    const expiredTasks = () => taskClient.creatorExpiredTasks();
     return jsx(CreatorSummaryPageWrapper, {
       miniImageUrl: imgUrl,
       pendingTasksFn: pendingTasks,
