@@ -6,6 +6,10 @@ export interface ControlResponse {
     status: 'APPROVED' | 'REJECTED';
     user: User;
 }
+export interface ReleaseResponse {
+    status: 'APPROVED' | 'REJECTED';
+    user: User;
+}
 export interface CostCenter {
     id: string;
     name: string;
@@ -21,6 +25,7 @@ export interface TaskMetaData {
     product: Product;
     documentNumber: string;
     controlResponse?: ControlResponse;
+    releaseResponse?: ReleaseResponse;
     count: number;
     create: Create;
     store: NamedStore;

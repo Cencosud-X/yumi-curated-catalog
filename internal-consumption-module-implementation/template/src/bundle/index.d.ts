@@ -1,12 +1,14 @@
 import { IToolPageExtension } from './flow/tool-page';
 import { Components } from './sdk';
-import { ISubTasksPageExtension } from './flow/sub-tasks';
+import { IRevisorTasksPageExtension } from './flow/revisor-tasks';
 import { IControlTasksPageExtension } from './flow/control-tasks';
+import { ICreatorSummaryPageExtension } from './flow/creator-summary';
 export interface IInternalConsumptionModuleOverride extends Components.IModuleOverride {
     extensions?: {
         tool_page: IToolPageExtension;
-        sub_tasks_page: ISubTasksPageExtension;
+        revisor_tasks_page: IRevisorTasksPageExtension;
         control_tasks_page: IControlTasksPageExtension;
+        creator_summary_page: ICreatorSummaryPageExtension;
     };
     routes?: Components.IModuleRoute[];
 }
