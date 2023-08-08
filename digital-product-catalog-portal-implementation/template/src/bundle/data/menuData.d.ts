@@ -1,4 +1,5 @@
 export interface IMenuData {
+    id?: string;
     name: string;
     url: string;
     icon?: any;

@@ -9,10 +9,10 @@
   "peerDependencies": {
     "react": "^16.14.0",
     "react-router-dom": "^5.3.4",
+    "@team_yumi/ramen-web": "^0.0.3-next.1691419706173",
     "classnames": "^2.3.1",
     "swiper": "^8.1.4",
     "react-icons": "^4.3.1",
-    "@team_yumi/ramen-web": "^0.0.3-next.1688753982737",
     "axios": "^1.4.0",
     "rxjs": "^7.0.0"
   }
