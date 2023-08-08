@@ -7,9 +7,9 @@
   "types": "./index.d.ts",
   "dependencies": {},
   "peerDependencies": {
-    "@team_yumi/sdk": "^0.0.1-next.20230726-1b95187-dc6ce1615ad2c85339c9a70e70a13307",
+    "@team_yumi/sdk": "^0.0.1-next.20230802-d58df76-3af85eb6f1052a838bc33e5a984630ef",
     "react": "^16.14.0",
-    "@team_yumi/ramen": "^0.0.3-next.1690487908153",
+    "@team_yumi/ramen": "^0.0.3-next.1691526587013",
     "react-router-dom": "^5.3.4",
     "@awesome-cordova-plugins/in-app-browser": "^6.3.0",
     "lodash": "^4.17.21",

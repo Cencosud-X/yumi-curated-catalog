@@ -2583,13 +2583,13 @@ const Login = props => {
   const loginButtons = [];
   {
     // loginButtons.push({
-    //   id: 'saml',
+    //   id: 'gmail',
     //   label: 'Iniciar sesión',
-    //   icon: 'cencosud-filled',
-    //   provider: 'saml',
+    //   icon: 'google-filled',
+    //   provider: 'google_gmail',
     // });
     loginButtons.push({
-      id: 'gmail',
+      id: 'saml',
       label: 'Iniciar sesión',
       icon: 'cencosud-filled',
       provider: 'microsoft_saml'
