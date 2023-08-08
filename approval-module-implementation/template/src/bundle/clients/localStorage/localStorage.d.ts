@@ -4,11 +4,12 @@ interface IState {
 }
 declare enum SETTINGS_ENUM {
     'MODULE_PENDING' = 0,
-    'TEMP_APPROVALS' = 1,
+    'TEMP_MODULE_APPROVALS' = 1,
     'EXTENSION_PENDING' = 2,
-    'USER_AD' = 3,
-    'CENTRAL_ACTION_FETCH' = 4,
-    'DISCARTED' = 5
+    'TEMP_EXTENSION_APPROVALS' = 3,
+    'USER_AD' = 4,
+    'CENTRAL_ACTION_FETCH' = 5,
+    'DISCARTED' = 6
 }
 export declare type SettingTypes = keyof typeof SETTINGS_ENUM;
 declare class ApprovalSettingsClient extends WithBootedClient {

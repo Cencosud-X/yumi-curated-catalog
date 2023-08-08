@@ -6,7 +6,10 @@ export interface ApprovalProviderProps {
     historyData: H.History;
     env?: IApprovalEnvs;
     approval_types?: IApprovalTypes;
-    handleAnalytics?: (approval: IGenericApproval, action: 'approve' | 'reject' | 'giveback' | 'discard' | 'openCard' | 'openDetail' | 'openFile') => void;
+    callback_action?: IApprovalCallback;
+}
+export interface IApprovalCallback {
+    (view: 'central' | 'accountability' | 'fb60' | 'paymentProposal' | 'purchaseOrder' | 'purchaseRequisition', action: 'approve' | 'reject' | 'giveback' | 'discard' | 'list' | 'detail' | 'open_file', approvals?: IGenericApproval, userAd?: string): Promise<void>;
 }
 export declare type ApprovalContextData = {
     approvals?: IGenericApproval[];
@@ -29,6 +32,8 @@ export declare type ApprovalContextData = {
     getAccountabilityFiles: (approval: IApprovalAccountability) => Promise<IApprovalGenericFile[]>;
     getAccountabilityFileStream: (fileId: string) => Promise<IApprovalGenericFileStream>;
     approvalAction: (approval: IGenericApproval, action: EGenericApprovalAction) => Promise<void>;
-    goBack: () => void;
+    goBack: (n?: number) => void;
     setModalError: (modal: IModalError) => void;
+    callback_action?: IApprovalCallback;
+    findAD: () => string | undefined;
 };

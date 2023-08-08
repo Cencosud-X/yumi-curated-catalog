@@ -1,8 +1,8 @@
 /// <reference types="react" />
 import { IModalError } from '../../interfaces/IApprovalTypes';
-declare function Index(props: {
+declare const ModalError: (props: {
     title: string;
     modalError: IModalError;
     setModalError: (modalError: IModalError) => void;
-}): JSX.Element;
-export default Index;
+}) => JSX.Element;
+export default ModalError;

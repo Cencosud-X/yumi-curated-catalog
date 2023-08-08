@@ -1,6 +1,7 @@
 declare const _default: {
     br: {
         MENU_TITLE: string;
+        HOME_TITLE: string;
         PURCHASE_REQUISITION_MENU_TITLE: string;
         ACCOUNTABILITY_MENU_TITLE: string;
         FB60_MENU_TITLE: string;
@@ -38,6 +39,7 @@ declare const _default: {
         LABEL_JUSTIFY: string;
         LABEL_NOT_INFORM: string;
         LABEL_OBSERVATION: string;
+        LABEL_SEE_DETAIL: string;
         LABEL_ACCEPT: string;
         LABEL_APPROVE: string;
         LABEL_REJECT: string;
@@ -82,6 +84,7 @@ declare const _default: {
     };
     en: {
         MENU_TITLE: string;
+        HOME_TITLE: string;
         PURCHASE_REQUISITION_MENU_TITLE: string;
         ACCOUNTABILITY_MENU_TITLE: string;
         FB60_MENU_TITLE: string;
@@ -119,6 +122,7 @@ declare const _default: {
         LABEL_JUSTIFY: string;
         LABEL_NOT_INFORM: string;
         LABEL_OBSERVATION: string;
+        LABEL_SEE_DETAIL: string;
         LABEL_ACCEPT: string;
         LABEL_APPROVE: string;
         LABEL_REJECT: string;
@@ -163,6 +167,7 @@ declare const _default: {
     };
     es: {
         MENU_TITLE: string;
+        HOME_TITLE: string;
         PURCHASE_REQUISITION_MENU_TITLE: string;
         ACCOUNTABILITY_MENU_TITLE: string;
         FB60_MENU_TITLE: string;
@@ -200,6 +205,7 @@ declare const _default: {
         LABEL_JUSTIFY: string;
         LABEL_NOT_INFORM: string;
         LABEL_OBSERVATION: string;
+        LABEL_SEE_DETAIL: string;
         LABEL_ACCEPT: string;
         LABEL_APPROVE: string;
         LABEL_REJECT: string;
@@ -244,6 +250,7 @@ declare const _default: {
     };
     ar: {
         MENU_TITLE: string;
+        HOME_TITLE: string;
         PURCHASE_REQUISITION_MENU_TITLE: string;
         ACCOUNTABILITY_MENU_TITLE: string;
         FB60_MENU_TITLE: string;
@@ -281,6 +288,7 @@ declare const _default: {
         LABEL_JUSTIFY: string;
         LABEL_NOT_INFORM: string;
         LABEL_OBSERVATION: string;
+        LABEL_SEE_DETAIL: string;
         LABEL_ACCEPT: string;
         LABEL_APPROVE: string;
         LABEL_REJECT: string;
@@ -325,6 +333,7 @@ declare const _default: {
     };
     cl: {
         MENU_TITLE: string;
+        HOME_TITLE: string;
         PURCHASE_REQUISITION_MENU_TITLE: string;
         ACCOUNTABILITY_MENU_TITLE: string;
         FB60_MENU_TITLE: string;
@@ -362,6 +371,7 @@ declare const _default: {
         LABEL_JUSTIFY: string;
         LABEL_NOT_INFORM: string;
         LABEL_OBSERVATION: string;
+        LABEL_SEE_DETAIL: string;
         LABEL_ACCEPT: string;
         LABEL_APPROVE: string;
         LABEL_REJECT: string;
@@ -406,6 +416,7 @@ declare const _default: {
     };
     pe: {
         MENU_TITLE: string;
+        HOME_TITLE: string;
         PURCHASE_REQUISITION_MENU_TITLE: string;
         ACCOUNTABILITY_MENU_TITLE: string;
         FB60_MENU_TITLE: string;
@@ -443,6 +454,7 @@ declare const _default: {
         LABEL_JUSTIFY: string;
         LABEL_NOT_INFORM: string;
         LABEL_OBSERVATION: string;
+        LABEL_SEE_DETAIL: string;
         LABEL_ACCEPT: string;
         LABEL_APPROVE: string;
         LABEL_REJECT: string;
@@ -487,6 +499,7 @@ declare const _default: {
     };
     co: {
         MENU_TITLE: string;
+        HOME_TITLE: string;
         PURCHASE_REQUISITION_MENU_TITLE: string;
         ACCOUNTABILITY_MENU_TITLE: string;
         FB60_MENU_TITLE: string;
@@ -524,6 +537,7 @@ declare const _default: {
         LABEL_JUSTIFY: string;
         LABEL_NOT_INFORM: string;
         LABEL_OBSERVATION: string;
+        LABEL_SEE_DETAIL: string;
         LABEL_ACCEPT: string;
         LABEL_APPROVE: string;
         LABEL_REJECT: string;

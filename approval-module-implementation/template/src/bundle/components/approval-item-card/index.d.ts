@@ -12,10 +12,11 @@ interface IApprovalItemCard {
     buttons: Array<{
         size: 's' | 'xl' | 'xs' | 'm' | 'l' | undefined;
         type: 'solid' | 'tonal';
-        icon: 'check-bold' | 'trash-outline' | 'refuse-extrabold' | 'x-outline' | 'close-outline';
+        icon: 'check-bold' | 'trash-outline' | 'corner-up-left-outline' | 'x-outline' | 'close-outline';
         onClick: React.MouseEventHandler<HTMLButtonElement>;
     }>;
-    onClick: () => void;
+    onClick?: () => void;
+    seeMoreTitle?: string;
 }
 declare const ApprovalItemCard: (props: IApprovalItemCard) => JSX.Element;
 export default ApprovalItemCard;

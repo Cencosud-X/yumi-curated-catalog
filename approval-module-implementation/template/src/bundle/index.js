@@ -234,7 +234,6 @@ if (!version && userAgent$5) {
 var engineV8Version = version;
 
 /* eslint-disable es/no-symbol -- required for testing */
-
 var V8_VERSION$1 = engineV8Version;
 var fails$s = fails$w;
 var global$s = global$v;
@@ -254,7 +253,6 @@ var symbolConstructorDetection = !!Object.getOwnPropertySymbols && !fails$s(func
 });
 
 /* eslint-disable es/no-symbol -- required for testing */
-
 var NATIVE_SYMBOL$1 = symbolConstructorDetection;
 
 var useSymbolAsUid = NATIVE_SYMBOL$1
@@ -352,10 +350,10 @@ var store$2 = sharedStore;
 (shared$4.exports = function (key, value) {
   return store$2[key] || (store$2[key] = value !== undefined ? value : {});
 })('versions', []).push({
-  version: '3.31.1',
+  version: '3.32.0',
   mode: 'global',
   copyright: '© 2014-2023 Denis Pushkarev (zloirock.ru)',
-  license: 'https://github.com/zloirock/core-js/blob/v3.31.1/LICENSE',
+  license: 'https://github.com/zloirock/core-js/blob/v3.32.0/LICENSE',
   source: 'https://github.com/zloirock/core-js'
 });
 
@@ -1228,7 +1226,6 @@ var getBuiltIn$5 = getBuiltIn$8;
 var html$2 = getBuiltIn$5('document', 'documentElement');
 
 /* global ActiveXObject -- old IE, WSH */
-
 var anObject$d = anObject$i;
 var definePropertiesModule = objectDefineProperties;
 var enumBugKeys = enumBugKeys$3;
@@ -1809,7 +1806,6 @@ var aPossiblePrototype$1 = function (argument) {
 };
 
 /* eslint-disable no-proto -- safe */
-
 var uncurryThisAccessor = functionUncurryThisAccessor;
 var anObject$a = anObject$i;
 var aPossiblePrototype = aPossiblePrototype$1;
@@ -2721,11 +2717,12 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
 var SETTINGS_ENUM;
 (function (SETTINGS_ENUM) {
   SETTINGS_ENUM[SETTINGS_ENUM["MODULE_PENDING"] = 0] = "MODULE_PENDING";
-  SETTINGS_ENUM[SETTINGS_ENUM["TEMP_APPROVALS"] = 1] = "TEMP_APPROVALS";
+  SETTINGS_ENUM[SETTINGS_ENUM["TEMP_MODULE_APPROVALS"] = 1] = "TEMP_MODULE_APPROVALS";
   SETTINGS_ENUM[SETTINGS_ENUM["EXTENSION_PENDING"] = 2] = "EXTENSION_PENDING";
-  SETTINGS_ENUM[SETTINGS_ENUM["USER_AD"] = 3] = "USER_AD";
-  SETTINGS_ENUM[SETTINGS_ENUM["CENTRAL_ACTION_FETCH"] = 4] = "CENTRAL_ACTION_FETCH";
-  SETTINGS_ENUM[SETTINGS_ENUM["DISCARTED"] = 5] = "DISCARTED";
+  SETTINGS_ENUM[SETTINGS_ENUM["TEMP_EXTENSION_APPROVALS"] = 3] = "TEMP_EXTENSION_APPROVALS";
+  SETTINGS_ENUM[SETTINGS_ENUM["USER_AD"] = 4] = "USER_AD";
+  SETTINGS_ENUM[SETTINGS_ENUM["CENTRAL_ACTION_FETCH"] = 5] = "CENTRAL_ACTION_FETCH";
+  SETTINGS_ENUM[SETTINGS_ENUM["DISCARTED"] = 6] = "DISCARTED";
 })(SETTINGS_ENUM || (SETTINGS_ENUM = {}));
 const storageName = '@approvalmodule';
 class ApprovalSettingsClient extends WithBootedClient {
@@ -3280,7 +3277,6 @@ var global$d = global$v;
 var promiseNativeConstructor = global$d.Promise;
 
 /* global Deno -- Deno case */
-
 var engineIsDeno = typeof Deno == 'object' && Deno && typeof Deno.version == 'object';
 
 var IS_DENO$1 = engineIsDeno;
@@ -4239,6 +4235,7 @@ const approvalAPI = new ApprovalAPI();
 const locale$2 = {
   // BUTTON HOME
   MENU_TITLE: 'Central de aprovações',
+  HOME_TITLE: 'Início',
   // MENU TITLE
   PURCHASE_REQUISITION_MENU_TITLE: 'Requisição de Compra',
   ACCOUNTABILITY_MENU_TITLE: 'Prestação de Contas',
@@ -4280,6 +4277,7 @@ const locale$2 = {
   LABEL_JUSTIFY: 'Motivo',
   LABEL_NOT_INFORM: 'Não informado',
   LABEL_OBSERVATION: 'Observações',
+  LABEL_SEE_DETAIL: 'Ver detalhes',
   // ACTIONS
   LABEL_ACCEPT: 'Aceitar',
   LABEL_APPROVE: 'Aprovar',
@@ -4342,6 +4340,7 @@ const locale$2 = {
 const locale$1 = {
   // BUTTON HOME
   MENU_TITLE: 'Approval Center',
+  HOME_TITLE: 'Home',
   // MENU TITLE
   PURCHASE_REQUISITION_MENU_TITLE: 'Purchase Requisition',
   ACCOUNTABILITY_MENU_TITLE: 'Accountability',
@@ -4383,6 +4382,7 @@ const locale$1 = {
   LABEL_JUSTIFY: 'Reason',
   LABEL_NOT_INFORM: 'Not informed',
   LABEL_OBSERVATION: 'Observations',
+  LABEL_SEE_DETAIL: 'See details',
   // ACTIONS
   LABEL_ACCEPT: 'Accept',
   LABEL_APPROVE: 'Approve',
@@ -4445,6 +4445,7 @@ const locale$1 = {
 const locale = {
   // BOTÓN DE INICIO
   MENU_TITLE: 'Central de aprobaciones',
+  HOME_TITLE: 'Inicio',
   // TÍTULO DEL MENÚ
   PURCHASE_REQUISITION_MENU_TITLE: 'Solicitud de Compra',
   ACCOUNTABILITY_MENU_TITLE: 'Rendición de Cuentas',
@@ -4486,6 +4487,7 @@ const locale = {
   LABEL_JUSTIFY: 'Motivo',
   LABEL_NOT_INFORM: 'No informado',
   LABEL_OBSERVATION: 'Observaciones',
+  LABEL_SEE_DETAIL: 'Ver detalle',
   // ACCIONES
   LABEL_ACCEPT: 'Aceptar',
   LABEL_APPROVE: 'Aprobar',
@@ -4557,7 +4559,7 @@ var locales = {
 
 var img$1 = "data:image/svg+xml,%3csvg width='32' height='29' viewBox='0 0 32 29' fill='none' xmlns='http://www.w3.org/2000/svg'%3e %3cpath fill-rule='evenodd' clip-rule='evenodd' d='M18.9255 2.06259L31.2864 23.4376C31.5867 23.9491 31.7463 24.5309 31.7489 25.124C31.7516 25.7171 31.5973 26.3003 31.3017 26.8145C31.006 27.3287 30.5796 27.7555 30.0656 28.0515C29.5517 28.3475 28.9686 28.5023 28.3755 28.5001H3.62547C3.03236 28.5023 2.44924 28.3475 1.9353 28.0515C1.42136 27.7555 0.994919 27.3287 0.699273 26.8145C0.403627 26.3003 0.249308 25.7171 0.251987 25.124C0.254667 24.5309 0.414248 23.9491 0.714528 23.4376L13.0755 2.06259C13.3714 1.54851 13.7976 1.1215 14.3111 0.824586C14.8246 0.527671 15.4073 0.371338 16.0005 0.371338C16.5936 0.371338 17.1763 0.527671 17.6898 0.824586C18.2034 1.1215 18.6295 1.54851 18.9255 2.06259ZM14.5155 16.5C14.5155 17.3284 15.1871 18 16.0155 18C16.8439 18 17.5155 17.3284 17.5155 16.5V10.5C17.5155 9.67157 16.8439 9 16.0155 9C15.1871 9 14.5155 9.67157 14.5155 10.5V16.5ZM16.0155 24C16.8439 24 17.5155 23.3284 17.5155 22.5C17.5155 21.6716 16.8439 21 16.0155 21H16.0005C15.1721 21 14.5005 21.6716 14.5005 22.5C14.5005 23.3284 15.1721 24 16.0005 24H16.0155Z' fill='%23DD4242' /%3e%3c/svg%3e";
 
-function Index(props) {
+const ModalError = props => {
   var _a;
   return jsxs(Ramen.XModal, Object.assign({
     visible: (_a = props.modalError.show) !== null && _a !== void 0 ? _a : false,
@@ -4586,7 +4588,7 @@ function Index(props) {
       children: props.modalError.title
     }))]
   }));
-}
+};
 
 const loading = (isActive, text = 'Cargando...') => {
   if (isActive) {
@@ -4721,7 +4723,7 @@ const ModalAction = () => {
       _aux.action.icon = 'x-outline';
       _aux.action.text = localize('LABEL_REJECT', '');
     } else if (modalAction.action === EGenericApprovalAction.GIVEBACK) {
-      _aux.action.icon = 'refuse-extrabold';
+      _aux.action.icon = 'corner-up-left-outline';
       _aux.action.text = localize('LABEL_GIVEBACK', '');
     }
     //
@@ -4856,7 +4858,7 @@ const ApprovalProvider = ({
   historyData,
   env,
   approval_types,
-  handleAnalytics
+  callback_action
 }) => {
   var _a, _b;
   const [approvals, setApprovals] = useState([]);
@@ -4870,10 +4872,10 @@ const ApprovalProvider = ({
   const [modalError, setModalError] = useState({
     show: false
   });
-  const findAD = () => __awaiter(void 0, void 0, void 0, function* () {
-    const _ad = ApprovalSettingsClient$1.get('USER_AD', null);
+  const findAD = useCallback(() => {
+    const _ad = ApprovalSettingsClient$1.get('USER_AD', undefined);
     return _ad;
-  });
+  }, []);
   // effect to update approval types
   useEffect(() => {
     if (env) {
@@ -4884,9 +4886,13 @@ const ApprovalProvider = ({
     }
   }, [env, approval_types]);
   // go back
-  const goBack = () => {
+  const goBack = n => {
     setSelectedApproval(undefined);
-    historyData.goBack();
+    if (n) {
+      historyData.go(n);
+    } else {
+      historyData.goBack();
+    }
   };
   // effect to set envs
   useEffect(() => {
@@ -4908,7 +4914,7 @@ const ApprovalProvider = ({
     const _newApprovals = approvals === null || approvals === void 0 ? void 0 : approvals.filter(a => genMD5(a) !== genMD5(approval));
     setApprovals(_newApprovals);
     ApprovalSettingsClient$1.set('MODULE_PENDING', _newApprovals ? _newApprovals.length : 0);
-    ApprovalSettingsClient$1.set('TEMP_APPROVALS', _newApprovals);
+    ApprovalSettingsClient$1.set('TEMP_MODULE_APPROVALS', _newApprovals);
   }, [approvals]);
   // check if already discard
   const checkDiscard = useCallback(approval => {
@@ -4933,13 +4939,13 @@ const ApprovalProvider = ({
     if (envs && approvalTypes) {
       yield ApprovalSettingsClient$1.boot();
       if (!ApprovalSettingsClient$1.get('CENTRAL_ACTION_FETCH', false)) {
-        setApprovals(ApprovalSettingsClient$1.get('TEMP_APPROVALS', []));
+        setApprovals(ApprovalSettingsClient$1.get('TEMP_MODULE_APPROVALS', []));
         return;
       }
       setApprovalCenterLoading(true);
       const _promisses = [];
       const _approvalsInPromisses = [];
-      const userAD = yield findAD();
+      const userAD = findAD();
       if (userAD) {
         if (approvalTypes === null || approvalTypes === void 0 ? void 0 : approvalTypes.includes(APPROVAL_TYPES.PURCHASE_REQUISITION)) {
           _promisses.push(approvalAPI.getApprovals({
@@ -4993,13 +4999,14 @@ const ApprovalProvider = ({
         setApprovalCenterLoading(false);
         setApprovals(_approvals);
         yield ApprovalSettingsClient$1.set('MODULE_PENDING', _approvals.length);
-        yield ApprovalSettingsClient$1.set('TEMP_APPROVALS', _approvals);
+        yield ApprovalSettingsClient$1.set('TEMP_MODULE_APPROVALS', _approvals);
         yield ApprovalSettingsClient$1.set('CENTRAL_ACTION_FETCH', false);
+        callback_action && callback_action('central', 'list', undefined, findAD());
       } else {
         setApprovalCenterLoading(false);
       }
     }
-  }), [approvalTypes, checkDiscard, envs]);
+  }), [approvalTypes, callback_action, checkDiscard, envs, findAD]);
   // set localization
   setLocale((_a = envs === null || envs === void 0 ? void 0 : envs.country.toLowerCase()) !== null && _a !== void 0 ? _a : 'br');
   const localize = i18(locales);
@@ -5031,23 +5038,25 @@ const ApprovalProvider = ({
   }), []);
   // approval action
   const approvalAction = useCallback((approval, action) => __awaiter(void 0, void 0, void 0, function* () {
+    const ad = findAD();
+    if (!ad) throw new Error('User AD not found');
     if (action === EGenericApprovalAction.DISCARD) {
       yield sendToDiscard(approval);
-      handleAnalytics && handleAnalytics(approval, action);
+      callback_action && callback_action(approval.category, action, approval, ad);
       return;
     }
-    const ad = yield findAD();
-    if (!ad) throw new Error('User AD not found');
     if ([APPROVAL_TYPES.ACCOUNTABILITY, APPROVAL_TYPES.FB60, APPROVAL_TYPES.PAYMENT_PROPOSAL, APPROVAL_TYPES.PURCHASE_ORDER].includes(approval.category)) {
       yield approvalAPI.fiori.approvalAction(approval, action, ad);
       updateApprovalList(approval);
+      callback_action && callback_action(approval.category, action, approval, ad);
     } else if (APPROVAL_TYPES.PURCHASE_REQUISITION === approval.category) {
       yield approvalAPI.fico.approvalAction(approval, action, ad);
       updateApprovalList(approval);
+      callback_action && callback_action(approval.category, action, approval, ad);
     } else {
       throw new Error('Approval category invalid!');
     }
-  }), [handleAnalytics, sendToDiscard, updateApprovalList]);
+  }), [callback_action, findAD, sendToDiscard, updateApprovalList]);
   return jsxs(ApprovalContext.Provider, Object.assign({
     value: {
       approvalTypes,
@@ -5071,10 +5080,12 @@ const ApprovalProvider = ({
       selectedApproval,
       setSelectedApproval,
       setModalAction,
-      modalAction
+      modalAction,
+      callback_action,
+      findAD
     }
   }, {
-    children: [children, jsx(Index, {
+    children: [children, jsx(ModalError, {
       title: localize('LABEL_ACCEPT', ''),
       modalError: modalError,
       setModalError: setModalError
@@ -5093,7 +5104,9 @@ function ApprovalCenter(props) {
     getApprovals,
     approvals,
     approvalCenterLoading,
-    localize
+    localize,
+    callback_action,
+    findAD
   } = useApproval();
   useEffect(() => {
     getApprovals();
@@ -5136,27 +5149,42 @@ function ApprovalCenter(props) {
             symbol: "cyclical-inventory-neutral",
             title: localize('ACCOUNTABILITY_MENU_TITLE', ''),
             count: approvals.filter(a => a.category === APPROVAL_TYPES.ACCOUNTABILITY).length,
-            onClick: () => props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.ACCOUNTABILITY}`)
+            onClick: () => {
+              callback_action && callback_action(APPROVAL_TYPES.ACCOUNTABILITY, 'list', undefined, findAD());
+              props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.ACCOUNTABILITY}`);
+            }
           }), approvals && approvals.filter(a => a.category === APPROVAL_TYPES.PURCHASE_REQUISITION).length > 0 && jsx(Ramen.XCard, {
             symbol: "customers-bag-neutral",
             title: localize('PURCHASE_REQUISITION_MENU_TITLE', ''),
             count: approvals.filter(a => a.category === APPROVAL_TYPES.PURCHASE_REQUISITION).length,
-            onClick: () => props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.PURCHASE_REQUISITION}`)
+            onClick: () => {
+              callback_action && callback_action(APPROVAL_TYPES.PURCHASE_REQUISITION, 'list', undefined, findAD());
+              props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.PURCHASE_REQUISITION}`);
+            }
           }), approvals && approvals.filter(a => a.category === APPROVAL_TYPES.FB60).length > 0 && jsx(Ramen.XCard, {
             symbol: "user-sales-neutral",
             title: localize('FB60_MENU_TITLE', ''),
             count: approvals.filter(a => a.category === APPROVAL_TYPES.FB60).length,
-            onClick: () => props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.FB60}`)
+            onClick: () => {
+              callback_action && callback_action(APPROVAL_TYPES.FB60, 'list', undefined, findAD());
+              props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.FB60}`);
+            }
           }), approvals && approvals.filter(a => a.category === APPROVAL_TYPES.PURCHASE_ORDER).length > 0 && jsx(Ramen.XCard, {
             symbol: "customers-bag-neutral",
             title: localize('PURCHASE_ORDER_MENU_TITLE', ''),
             count: approvals.filter(a => a.category === APPROVAL_TYPES.PURCHASE_ORDER).length,
-            onClick: () => props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.PURCHASE_ORDER}`)
+            onClick: () => {
+              callback_action && callback_action(APPROVAL_TYPES.PURCHASE_ORDER, 'list', undefined, findAD());
+              props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.PURCHASE_ORDER}`);
+            }
           }), approvals && approvals.filter(a => a.category === APPROVAL_TYPES.PAYMENT_PROPOSAL).length > 0 && jsx(Ramen.XCard, {
             symbol: "user-sales-neutral",
             title: localize('PAYMENT_PROPOSAL_MENU_TITLE', ''),
             count: approvals.filter(a => a.category === APPROVAL_TYPES.PAYMENT_PROPOSAL).length,
-            onClick: () => props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.PAYMENT_PROPOSAL}`)
+            onClick: () => {
+              callback_action && callback_action(APPROVAL_TYPES.PAYMENT_PROPOSAL, 'list', undefined, findAD());
+              props.history.push(`${props.location.pathname}/${APPROVAL_TYPES.PAYMENT_PROPOSAL}`);
+            }
           })]
         }), ((_a = props.extensions) === null || _a === void 0 ? void 0 : _a.approval_extension) && props.extensions.approval_extension(), jsx(Ramen.XBox, {
           padding: "s"
@@ -5202,10 +5230,10 @@ const NotFound = props => {
 };
 
 const ApprovalItemCard = props => {
+  var _a;
   return jsx(Ramen.XCard, Object.assign({
     size: "l",
-    borderType: "shadow",
-    onClick: props.onClick
+    borderType: "shadow"
   }, {
     children: jsxs(Ramen.XBox, Object.assign({
       width: 'full',
@@ -5295,7 +5323,35 @@ const ApprovalItemCard = props => {
             children: r.value
           }))]
         }), i);
-      }), jsx(Ramen.XBox, {})]
+      }), props.onClick ? jsxs(Ramen.XBox, Object.assign({
+        onClick: props.onClick,
+        touchable: true
+      }, {
+        children: [jsx(Ramen.XDivider, {}), jsx(Ramen.XVSpace, {
+          size: "xs"
+        }), jsxs(Ramen.XBox, Object.assign({
+          width: 'full',
+          horizontalAlign: "center",
+          verticalAlign: "center",
+          gap: "xs",
+          orientation: "horizontal"
+        }, {
+          children: [jsx(Ramen.XText, Object.assign({
+            fontSize: 12,
+            weight: "bold",
+            lineHeight: "title"
+          }, {
+            children: (_a = props === null || props === void 0 ? void 0 : props.seeMoreTitle) !== null && _a !== void 0 ? _a : ''
+          })), jsx(Ramen.XIcon, {
+            size: "xs",
+            icon: "chevron-right-outline"
+          })]
+        })), jsx(Ramen.XVSpace, {
+          size: "xs"
+        })]
+      })) : jsx(Ramen.XVSpace, {
+        size: "xxs"
+      })]
     }))
   }));
 };
@@ -5307,7 +5363,9 @@ function PurchaseRequisitionCard() {
     localeDate,
     setSelectedApproval,
     setModalAction,
-    goBack
+    goBack,
+    callback_action,
+    findAD
   } = useApproval();
   const [search, setSearch] = useState();
   const history = useHistory();
@@ -5332,7 +5390,7 @@ function PurchaseRequisitionCard() {
   }, [approvals, filterSearch]);
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
-      onBack: goBack,
+      onBack: () => goBack(),
       sticky: true,
       tags: [],
       title: localize('PURCHASE_REQUISITION_MENU_TITLE', '')
@@ -5349,9 +5407,11 @@ function PurchaseRequisitionCard() {
           const createdAt = formatDate(a.createdAt, localeDate);
           return jsx(ApprovalItemCard, {
             onClick: () => {
+              callback_action && callback_action(APPROVAL_TYPES.PURCHASE_REQUISITION, 'detail', a, findAD());
               setSelectedApproval(a);
               history.push(`${location.pathname}/detail`);
             },
+            seeMoreTitle: localize('LABEL_SEE_DETAIL', ''),
             title: `${localize('PURCHASE_REQUISITION_MENU_TITLE_SHORT', '')} ∙ ${a.orderId}`,
             buttons: [{
               type: 'tonal',
@@ -5584,22 +5644,23 @@ const ApprovalItemContentDetail = props => {
 };
 
 const ApprovalItemDetailFooter = props => {
-  return jsx(Ramen.XFooter, {
-    children: jsx(Ramen.XBox, Object.assign({
-      orientation: "horizontal",
-      gap: props.buttons.length <= 2 ? 'xl' : 'm'
-    }, {
-      children: props.buttons.map((b, i) => {
-        return jsx(Ramen.XButton, {
-          size: b.size,
-          text: b.text,
-          type: b.type,
+  return jsx(Ramen.XTabBar, Object.assign({
+    border: "shadow"
+  }, {
+    children: jsxs(Ramen.XTabBarContent, {
+      children: [jsx(Ramen.XTabBarItem, {
+        icon: "home-outline",
+        label: props.homeLabel,
+        onClick: props.onClick
+      }), props.buttons.map((b, i) => {
+        return jsx(Ramen.XTabBarItem, {
           icon: b.icon,
+          label: b.text,
           onClick: b.onClick
         }, i);
-      })
-    }))
-  });
+      })]
+    })
+  }));
 };
 
 // eslint-disable-next-line es/no-typed-arrays -- safe
@@ -6272,7 +6333,6 @@ var arrayBufferViewCore = {
 };
 
 /* eslint-disable no-new -- required for testing */
-
 var global$8 = global$v;
 var fails$6 = fails$w;
 var checkCorrectnessOfIteration = checkCorrectnessOfIteration$2;
@@ -6324,6 +6384,13 @@ var toOffset$2 = function (it, BYTES) {
   var offset = toPositiveInteger(it);
   if (offset % BYTES) throw $RangeError$1('Wrong offset');
   return offset;
+};
+
+var round = Math.round;
+
+var toUint8Clamped$1 = function (it) {
+  var value = round(it);
+  return value < 0 ? 0 : value > 0xFF ? 0xFF : value & 0xFF;
 };
 
 var classof$4 = classof$c;
@@ -6516,6 +6583,7 @@ var isIntegralNumber = isIntegralNumber$1;
 var toLength = toLength$7;
 var toIndex = toIndex$2;
 var toOffset$1 = toOffset$2;
+var toUint8Clamped = toUint8Clamped$1;
 var toPropertyKey = toPropertyKey$4;
 var hasOwn$2 = hasOwnProperty_1;
 var classof$2 = classof$c;
@@ -6539,7 +6607,6 @@ var setInternalState$3 = InternalStateModule$3.set;
 var enforceInternalState = InternalStateModule$3.enforce;
 var nativeDefineProperty = definePropertyModule.f;
 var nativeGetOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
-var round = Math.round;
 var RangeError$2 = global$7.RangeError;
 var ArrayBuffer$1 = ArrayBufferModule.ArrayBuffer;
 var ArrayBufferPrototype = ArrayBuffer$1.prototype;
@@ -6640,8 +6707,7 @@ if (DESCRIPTORS$3) {
 
     var setter = function (that, index, value) {
       var data = getInternalState$1(that);
-      if (CLAMPED) value = (value = round(value)) < 0 ? 0 : value > 0xFF ? 0xFF : value & 0xFF;
-      data.view[SETTER](index * BYTES + data.byteOffset, value, true);
+      data.view[SETTER](index * BYTES + data.byteOffset, CLAMPED ? toUint8Clamped(value) : value, true);
     };
 
     var addElement = function (that, index) {
@@ -7035,22 +7101,25 @@ var ITERATOR$2 = wellKnownSymbol$1('iterator');
 var urlConstructorDetection = !fails$1(function () {
   // eslint-disable-next-line unicorn/relative-url-style -- required for testing
   var url = new URL('b?a=1&b=2&c=3', 'http://a');
-  var searchParams = url.searchParams;
-  var searchParams2 = new URLSearchParams('a=1&a=2');
+  var params = url.searchParams;
+  var params2 = new URLSearchParams('a=1&a=2&b=3');
   var result = '';
   url.pathname = 'c%20d';
-  searchParams.forEach(function (value, key) {
-    searchParams['delete']('b');
+  params.forEach(function (value, key) {
+    params['delete']('b');
     result += key + value;
   });
-  searchParams2['delete']('a', 2);
-  return (IS_PURE && (!url.toJSON || !searchParams2.has('a', 1) || searchParams2.has('a', 2)))
-    || (!searchParams.size && (IS_PURE || !DESCRIPTORS$2))
-    || !searchParams.sort
+  params2['delete']('a', 2);
+  // `undefined` case is a Chromium 117 bug
+  // https://bugs.chromium.org/p/v8/issues/detail?id=14222
+  params2['delete']('b', undefined);
+  return (IS_PURE && (!url.toJSON || !params2.has('a', 1) || params2.has('a', 2) || !params2.has('a', undefined) || params2.has('b')))
+    || (!params.size && (IS_PURE || !DESCRIPTORS$2))
+    || !params.sort
     || url.href !== 'http://a/c%20d?a=1&c=3'
-    || searchParams.get('c') !== '3'
+    || params.get('c') !== '3'
     || String(new URLSearchParams('?a=1')) !== 'a=1'
-    || !searchParams[ITERATOR$2]
+    || !params[ITERATOR$2]
     // throws in Edge
     || new URL('https://a@b').username !== 'a'
     || new URLSearchParams(new URLSearchParams('a=b')).get('a') !== 'b'
@@ -8830,7 +8899,9 @@ function PurchaseRequisitionDetail() {
     localeDate,
     setModalAction,
     selectedApproval,
-    goBack
+    goBack,
+    callback_action,
+    findAD
   } = useApproval();
   const [fileList, setFileList] = useState([]);
   const [loadingFiles, setLoadingFiles] = useState(false);
@@ -8860,7 +8931,7 @@ function PurchaseRequisitionDetail() {
   }, [approval, getPurchaseRequisitionFiles]);
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
-      onBack: goBack,
+      onBack: () => goBack(),
       sticky: true,
       tags: [],
       title: `${localize('PURCHASE_REQUISITION_MENU_TITLE_SHORT', '')} ∙ ${approval === null || approval === void 0 ? void 0 : approval.orderId}`
@@ -8915,19 +8986,22 @@ function PurchaseRequisitionDetail() {
           return jsx(Ramen.XCard, {
             title: f.fileName,
             size: "l",
-            onClick: () => handleDownloadArchive({
-              file: f,
-              localize: localize,
-              download: getPurchaseRequisitionFileStream
-            })
+            onClick: () => {
+              handleDownloadArchive({
+                file: f,
+                localize: localize,
+                download: getPurchaseRequisitionFileStream
+              });
+              callback_action && callback_action(APPROVAL_TYPES.PURCHASE_REQUISITION, 'open_file', approval, findAD());
+            }
           }, i);
         })]
       }))
     }), jsx(ApprovalItemDetailFooter, {
+      onClick: () => goBack(-2),
+      homeLabel: localize('HOME_TITLE', ''),
       buttons: [{
-        size: 'l',
         text: localize('LABEL_APPROVE', ''),
-        type: 'solid',
         icon: 'check-outline',
         onClick: () => setModalAction({
           show: true,
@@ -8935,9 +9009,7 @@ function PurchaseRequisitionDetail() {
           needBack: true
         })
       }, {
-        size: 'l',
         text: localize('LABEL_DISCARD', ''),
-        type: 'tonal',
         icon: 'x-outline',
         onClick: () => setModalAction({
           show: true,
@@ -8956,7 +9028,9 @@ function PurchaseOrderCard() {
     localeDate,
     setSelectedApproval,
     setModalAction,
-    goBack
+    goBack,
+    callback_action,
+    findAD
   } = useApproval();
   const [search, setSearch] = useState();
   const history = useHistory();
@@ -8982,7 +9056,7 @@ function PurchaseOrderCard() {
   }, [approvals, filterSearch]);
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
-      onBack: goBack,
+      onBack: () => goBack(),
       sticky: true,
       tags: [],
       title: localize('PURCHASE_ORDER_MENU_TITLE', '')
@@ -9000,9 +9074,11 @@ function PurchaseOrderCard() {
           const createdAt = formatDate(a.createdAt, localeDate);
           return jsx(ApprovalItemCard, {
             onClick: () => {
+              callback_action && callback_action(APPROVAL_TYPES.PURCHASE_ORDER, 'detail', a, findAD());
               setSelectedApproval(a);
               history.push(`${location.pathname}/detail`);
             },
+            seeMoreTitle: localize('LABEL_SEE_DETAIL', ''),
             title: `${localize('PURCHASE_ORDER_MENU_TITLE_SHORT', '')} ∙ ${a.orderId}`,
             buttons: [{
               type: 'tonal',
@@ -9063,9 +9139,6 @@ function PurchaseOrderCard() {
 
 const ApprovalItemExpansionDetail = props => {
   var _a, _b;
-  const {
-    localize
-  } = useApproval();
   return jsxs(Ramen.XBox, Object.assign({
     gap: "s"
   }, {
@@ -9094,8 +9167,8 @@ const ApprovalItemExpansionDetail = props => {
         return;
       }
     }), props.txts && props.txts.length > 5 && jsxs(Ramen.XExpansionPanel, Object.assign({
-      closedTitle: localize('LABEL_EXPANSION_CLOSED', ''),
-      openedTitle: localize('LABEL_EXPANSION_OPENED', '')
+      closedTitle: props.closedTitle,
+      openedTitle: props.openedTitle
     }, {
       children: [jsx(Ramen.XBox, Object.assign({
         gap: "s"
@@ -9159,7 +9232,7 @@ function PurchaseOrderDetail() {
   }, [approval, getPurchaseOrderDetail]);
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
-      onBack: goBack,
+      onBack: () => goBack(),
       sticky: true,
       tags: [],
       title: `${localize('PURCHASE_ORDER_MENU_TITLE_SHORT', '')} ∙ ${approval === null || approval === void 0 ? void 0 : approval.orderId}`
@@ -9186,7 +9259,9 @@ function PurchaseOrderDetail() {
           }]
         }), jsx(ApprovalItemExpansionDetail, {
           loadingDetail: loadingDetail,
-          txts: detail
+          txts: detail,
+          closedTitle: localize('LABEL_EXPANSION_CLOSED', ''),
+          openedTitle: localize('LABEL_EXPANSION_OPENED', '')
         }), approval === null || approval === void 0 ? void 0 : approval.items.map((p, i) => {
           var _a, _b;
           const itemTotalValue = currencyApproval(p.priceTotal, approval.currency, localeDate);
@@ -9212,10 +9287,10 @@ function PurchaseOrderDetail() {
         })]
       }))
     }), jsx(ApprovalItemDetailFooter, {
+      onClick: () => goBack(-2),
+      homeLabel: localize('HOME_TITLE', ''),
       buttons: [{
-        size: 'l',
         text: localize('LABEL_APPROVE', ''),
-        type: 'solid',
         icon: 'check-outline',
         onClick: () => setModalAction({
           show: true,
@@ -9223,9 +9298,7 @@ function PurchaseOrderDetail() {
           needBack: true
         })
       }, {
-        size: 'l',
         text: localize('LABEL_DISCARD', ''),
-        type: 'tonal',
         icon: 'trash-outline',
         onClick: () => setModalAction({
           show: true,
@@ -9276,7 +9349,9 @@ function FB60Card() {
     localeDate,
     setSelectedApproval,
     setModalAction,
-    goBack
+    goBack,
+    callback_action,
+    findAD
   } = useApproval();
   const [search, setSearch] = useState();
   const history = useHistory();
@@ -9304,7 +9379,7 @@ function FB60Card() {
   }, [approvals, filterSearch]);
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
-      onBack: goBack,
+      onBack: () => goBack(),
       sticky: true,
       tags: [],
       title: localize('FB60_MENU_TITLE', '')
@@ -9321,9 +9396,11 @@ function FB60Card() {
           const expirationDate = formatDate(a.expirationDate, localeDate);
           return jsx(ApprovalItemCard, {
             onClick: () => {
+              callback_action && callback_action(APPROVAL_TYPES.FB60, 'detail', a, findAD());
               setSelectedApproval(a);
               history.push(`${location.pathname}/detail`);
             },
+            seeMoreTitle: localize('LABEL_SEE_DETAIL', ''),
             title: `${localize('FB60_MENU_TITLE_SHORT', '')} ∙ ${parseInt(a.orderId)}`,
             buttons: [{
               type: 'tonal',
@@ -9388,7 +9465,9 @@ function FB60Detail() {
     localeDate,
     setModalAction,
     selectedApproval,
-    goBack
+    goBack,
+    callback_action,
+    findAD
   } = useApproval();
   const [fileList, setFileList] = useState([]);
   const [loadingFiles, setLoadingFiles] = useState(false);
@@ -9418,7 +9497,7 @@ function FB60Detail() {
   }, [approval, getFB60Files]);
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
-      onBack: goBack,
+      onBack: () => goBack(),
       sticky: true,
       tags: [],
       title: `${localize('FB60_MENU_TITLE_SHORT', '')} ∙ ${approval ? parseInt(approval === null || approval === void 0 ? void 0 : approval.orderId) : ''}`
@@ -9447,19 +9526,22 @@ function FB60Detail() {
           return jsx(Ramen.XCard, {
             title: f.fileName,
             size: "l",
-            onClick: () => handleDownloadArchive({
-              file: f,
-              localize: localize,
-              download: getFB60FileStream
-            })
+            onClick: () => {
+              handleDownloadArchive({
+                file: f,
+                localize: localize,
+                download: getFB60FileStream
+              });
+              callback_action && callback_action(APPROVAL_TYPES.FB60, 'open_file', approval, findAD());
+            }
           }, i);
         })]
       }))
     }), jsx(ApprovalItemDetailFooter, {
+      onClick: () => goBack(-2),
+      homeLabel: localize('HOME_TITLE', ''),
       buttons: [{
-        size: 'l',
         text: localize('LABEL_APPROVE', ''),
-        type: 'solid',
         icon: 'check-outline',
         onClick: () => setModalAction({
           show: true,
@@ -9467,9 +9549,7 @@ function FB60Detail() {
           needBack: true
         })
       }, {
-        size: 'l',
         text: localize('LABEL_DISCARD', ''),
-        type: 'tonal',
         icon: 'x-outline',
         onClick: () => setModalAction({
           show: true,
@@ -9511,7 +9591,7 @@ function PaymentProposalCard() {
   }, [approvals, filterSearch]);
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
-      onBack: goBack,
+      onBack: () => goBack(),
       sticky: true,
       tags: [],
       title: localize('PAYMENT_PROPOSAL_MENU_TITLE', '')
@@ -9527,7 +9607,6 @@ function PaymentProposalCard() {
           const orderValue = currencyApproval(a.paymentValue, a.currency, localeDate);
           const paymentDate = formatDate(a.paymentDate, localeDate);
           return jsx(ApprovalItemCard, {
-            onClick: () => null,
             buttons: [{
               type: 'tonal',
               size: 's',
@@ -9595,7 +9674,9 @@ function AccountabilityCard() {
     localeDate,
     setSelectedApproval,
     setModalAction,
-    goBack
+    goBack,
+    callback_action,
+    findAD
   } = useApproval();
   const history = useHistory();
   const location = useLocation();
@@ -9620,7 +9701,7 @@ function AccountabilityCard() {
   }, [approvals, filterSearch]);
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
-      onBack: goBack,
+      onBack: () => goBack(),
       sticky: true,
       tags: [],
       title: localize('ACCOUNTABILITY_MENU_TITLE', '')
@@ -9638,9 +9719,11 @@ function AccountabilityCard() {
           const endDate = a.endDate ? formatDate(a.endDate, localeDate) : '';
           return jsx(ApprovalItemCard, {
             onClick: () => {
+              callback_action && callback_action(APPROVAL_TYPES.ACCOUNTABILITY, 'detail', a, findAD());
               setSelectedApproval(a);
               history.push(`${location.pathname}/detail`);
             },
+            seeMoreTitle: localize('LABEL_SEE_DETAIL', ''),
             title: `${localize('ACCOUNTABILITY_MENU_TITLE_SHORT', '')} ∙ ${parseInt(a.reinr)}`,
             buttons: [{
               type: 'tonal',
@@ -9658,7 +9741,7 @@ function AccountabilityCard() {
             }, {
               type: 'tonal',
               size: 's',
-              icon: 'refuse-extrabold',
+              icon: 'corner-up-left-outline',
               onClick: e => {
                 e.stopPropagation();
                 setSelectedApproval(a);
@@ -9714,7 +9797,9 @@ function AccountabilityDetail() {
     localeDate,
     setModalAction,
     selectedApproval,
-    goBack
+    goBack,
+    callback_action,
+    findAD
   } = useApproval();
   const [fileList, setFileList] = useState([]);
   const [loadingFiles, setLoadingFiles] = useState(false);
@@ -9750,7 +9835,7 @@ function AccountabilityDetail() {
   }, [approval, getAccountabilityFiles]);
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
-      onBack: goBack,
+      onBack: () => goBack(),
       sticky: true,
       tags: [],
       title: `${localize('ACCOUNTABILITY_MENU_TITLE_SHORT', '')} ∙ ${approval ? parseInt(approval === null || approval === void 0 ? void 0 : approval.reinr) : ''}`
@@ -9781,19 +9866,22 @@ function AccountabilityDetail() {
           return jsx(Ramen.XCard, {
             title: f.fileName,
             size: "l",
-            onClick: () => handleDownloadArchive({
-              file: f,
-              localize: localize,
-              download: getAccountabilityFileStream
-            })
+            onClick: () => {
+              handleDownloadArchive({
+                file: f,
+                localize: localize,
+                download: getAccountabilityFileStream
+              });
+              callback_action && callback_action(APPROVAL_TYPES.ACCOUNTABILITY, 'open_file', approval, findAD());
+            }
           }, i);
         })]
       }))
     }), jsx(ApprovalItemDetailFooter, {
+      homeLabel: localize('HOME_TITLE', ''),
+      onClick: () => goBack(-2),
       buttons: [{
-        size: 'm',
         text: localize('LABEL_APPROVE', ''),
-        type: 'solid',
         icon: 'check-outline',
         onClick: () => setModalAction({
           show: true,
@@ -9801,19 +9889,15 @@ function AccountabilityDetail() {
           needBack: true
         })
       }, {
-        size: 'm',
         text: localize('LABEL_GIVEBACK', ''),
-        type: 'tonal',
-        icon: 'refuse-extrabold',
+        icon: 'corner-up-left-outline',
         onClick: () => setModalAction({
           show: true,
           action: EGenericApprovalAction.GIVEBACK,
           needBack: true
         })
       }, {
-        size: 'm',
         text: localize('LABEL_DISCARD', ''),
-        type: 'tonal',
         icon: 'x-outline',
         onClick: () => setModalAction({
           show: true,
@@ -9872,7 +9956,7 @@ class ApprovalModule extends Module {
     App.removeAllListeners();
   }
   render() {
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e, _f;
     return jsx(Ramen.XApp, {
       children: jsx(Ramen.XConfigProvider, Object.assign({
         theme: "arcus"
@@ -9880,7 +9964,8 @@ class ApprovalModule extends Module {
         children: jsx(ApprovalProvider, Object.assign({
           historyData: this.props.history,
           env: (_b = (_a = this.descriptor.override.extensions) === null || _a === void 0 ? void 0 : _a.approval_center) === null || _b === void 0 ? void 0 : _b.env,
-          approval_types: (_d = (_c = this.descriptor.override.extensions) === null || _c === void 0 ? void 0 : _c.approval_center) === null || _d === void 0 ? void 0 : _d.approval_types
+          approval_types: (_d = (_c = this.descriptor.override.extensions) === null || _c === void 0 ? void 0 : _c.approval_center) === null || _d === void 0 ? void 0 : _d.approval_types,
+          callback_action: (_f = (_e = this.descriptor.override.extensions) === null || _e === void 0 ? void 0 : _e.approval_center) === null || _f === void 0 ? void 0 : _f.callback_action
         }, {
           children: super.render()
         }))
@@ -9890,4 +9975,4 @@ class ApprovalModule extends Module {
 }
 ApprovalModule.route = '/approval-center';
 
-export { ApprovalCardExemple, ApprovalCenterButton, ApprovalSettingsClient$1 as ApprovalSettingsClient, ApprovalModule as default };
+export { ApprovalCardExemple, ApprovalCenterButton, ApprovalItemCard, ApprovalItemContentDetail, ApprovalItemDetail, ApprovalItemDetailFooter, ApprovalItemExpansionDetail, ModalError as ApprovalModalError, NotFound as ApprovalNotFound, ApprovalSettingsClient$1 as ApprovalSettingsClient, ApprovalModule as default };

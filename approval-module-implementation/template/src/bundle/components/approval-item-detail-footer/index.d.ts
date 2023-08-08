@@ -1,10 +1,10 @@
 /// <reference types="react" />
 interface IApprovalItemDetail {
+    homeLabel: string;
+    onClick: () => void;
     buttons: Array<{
-        size: 's' | 'xl' | 'xs' | 'm' | 'l' | undefined;
         text: string;
-        type: 'solid' | 'tonal';
-        icon: 'check-outline' | 'trash-outline' | 'refuse-extrabold' | 'x-outline';
+        icon: 'check-outline' | 'trash-outline' | 'corner-up-left-outline' | 'x-outline';
         onClick: () => void;
     }>;
 }

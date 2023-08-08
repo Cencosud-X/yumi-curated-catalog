@@ -1,5 +1,6 @@
 declare const locale: {
     MENU_TITLE: string;
+    HOME_TITLE: string;
     PURCHASE_REQUISITION_MENU_TITLE: string;
     ACCOUNTABILITY_MENU_TITLE: string;
     FB60_MENU_TITLE: string;
@@ -37,6 +38,7 @@ declare const locale: {
     LABEL_JUSTIFY: string;
     LABEL_NOT_INFORM: string;
     LABEL_OBSERVATION: string;
+    LABEL_SEE_DETAIL: string;
     LABEL_ACCEPT: string;
     LABEL_APPROVE: string;
     LABEL_REJECT: string;

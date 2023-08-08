@@ -19,6 +19,6 @@ export declare const useApproval: () => {
     getAccountabilityFiles: (approval: import("../interfaces/IAccountability").IApprovalAccountability) => Promise<import("../interfaces/IApprovalTypes").IApprovalGenericFile[]>;
     getAccountabilityFileStream: (fileId: string) => Promise<import("../interfaces/IApprovalTypes").IApprovalGenericFileStream>;
     approvalAction: (approval: import("../interfaces/IApprovalTypes").IGenericApproval, action: import("../interfaces/IApprovalTypes").EGenericApprovalAction) => Promise<void>;
-    goBack: () => void;
+    goBack: (n?: number | undefined) => void;
     setModalError: (modal: import("../interfaces/IApprovalTypes").IModalError) => void;
 };
