@@ -8,7 +8,7 @@
   "dependencies": {},
   "peerDependencies": {
     "react": "^16.14.0",
-    "react-router-dom": "^5.3.4",
-    "@team_yumi/sdk": "^0.0.1-next.20230802-d58df76-3af85eb6f1052a838bc33e5a984630ef"
+    "@team_yumi/sdk": "^0.0.1-next.20230802-d58df76-3af85eb6f1052a838bc33e5a984630ef",
+    "react-router-dom": "^5.3.4"
   }
 }
