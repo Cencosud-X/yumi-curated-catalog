@@ -1096,7 +1096,7 @@ const Flow = props => {
       exact: true
     }, {
       children: jsx("h1", {
-        children: "Digital checklist"
+        children: "Digital checklist "
       })
     }))
   });
