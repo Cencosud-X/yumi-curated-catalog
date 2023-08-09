@@ -1,11 +1,8 @@
 /// <reference types="react" />
 interface ICardExtendedProps {
-    nameGroup: string;
-    furniture: string;
-    skuCount: number;
-    selected: (e: any) => void;
-    onToggle: (e: boolean) => Promise<any[]>;
-    onClickProduct: () => void;
+    zonification: any;
+    inventoriesSelected: any;
+    setInventoriesSelected: any;
 }
-export declare const CardExtendedComponent: ({ nameGroup, furniture, skuCount, selected, onToggle, onClickProduct, }: ICardExtendedProps) => JSX.Element;
+export declare const CardExtendedComponent: ({ zonification, inventoriesSelected, setInventoriesSelected, }: ICardExtendedProps) => JSX.Element;
 export {};

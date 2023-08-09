@@ -17,6 +17,7 @@ export interface InventoryInterface {
     createdAt: string;
     updatedAt: string;
     updatedUserName: string;
+    updatedUserEmail: string;
     completedAt: string;
     completedUserName: string;
     totalProduct: number;

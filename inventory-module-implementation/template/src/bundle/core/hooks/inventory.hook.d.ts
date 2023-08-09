@@ -1,6 +1,7 @@
 import { InventoryPagesEnum, ScanProductTypesEnum } from '../models';
 export declare const useInventory: () => {
     inventory: import("../models").InventoryInterface | undefined;
+    setDataInventory: (value: any) => void;
     product: import("../models").ProductInterface | undefined;
     page: InventoryPagesEnum;
     inventoryType: import("../models").InventoryTypeEnum;
@@ -46,4 +47,8 @@ export declare const useInventory: () => {
     setInventoriesSelectedSaved: (data: any) => void;
     productIdSelected: string | undefined;
     setProductIdSelected: (id: string) => void;
+    uomShowType: string;
+    messages: {
+        sendInventory: string;
+    };
 };

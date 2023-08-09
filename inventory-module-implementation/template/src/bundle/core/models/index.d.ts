@@ -13,6 +13,7 @@ export { ScanProductTypesEnum } from './enums/scan-product-type.enum';
 export { NotificationTypeEnum } from './enums/notification-type.enum';
 export { PlacementTypeEnum } from './enums/placement-type.enum';
 export { InventoryStatusEnum } from './enums/inventory-status.enum';
+export { UomShowTypeEnum } from './enums/uom-show-type.enum';
 export type { ApiResponse } from './dto/responses/api.response';
 export type { GetZonificationRequest } from './dto/requests/get-zonification.request';
 export type { GetZonificationResponse } from './dto/responses/get-zonification.response';
