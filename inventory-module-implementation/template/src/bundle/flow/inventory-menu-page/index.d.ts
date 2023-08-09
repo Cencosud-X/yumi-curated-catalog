@@ -7,6 +7,10 @@ export interface IMenuPageExtension extends Components.IPageExtensions {
         country: string;
         inventoryApi: string;
         clientId: string;
+        uomShowType: 'INDIVIDUAL' | 'GENERAL';
+        messages: {
+            sendInventory: string;
+        };
     };
     triggers: {
         getStoreData: () => Promise<StoreInterface>;
