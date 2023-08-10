@@ -5113,7 +5113,12 @@ function ApprovalCenter(props) {
   }, [getApprovals]);
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
-      onBack: () => props.history.goBack(),
+      onBack: () => {
+        const route = props.location.pathname;
+        const index = route.indexOf(ApprovalModule.route);
+        const newString = route.slice(0, index);
+        props.history.push(newString ? newString : '/');
+      },
       sticky: true,
       tags: [],
       title: localize('MENU_TITLE', ''),
@@ -5644,23 +5649,25 @@ const ApprovalItemContentDetail = props => {
 };
 
 const ApprovalItemDetailFooter = props => {
-  return jsx(Ramen.XTabBar, Object.assign({
-    border: "shadow"
-  }, {
-    children: jsxs(Ramen.XTabBarContent, {
-      children: [jsx(Ramen.XTabBarItem, {
-        icon: "home-outline",
-        label: props.homeLabel,
-        onClick: props.onClick
-      }), props.buttons.map((b, i) => {
-        return jsx(Ramen.XTabBarItem, {
-          icon: b.icon,
-          label: b.text,
-          onClick: b.onClick
-        }, i);
-      })]
-    })
-  }));
+  return jsx(Ramen.XFooter, {
+    children: jsx(Ramen.XTabBar, Object.assign({
+      border: "shadow"
+    }, {
+      children: jsxs(Ramen.XTabBarContent, {
+        children: [jsx(Ramen.XTabBarItem, {
+          icon: "home-outline",
+          label: props.homeLabel,
+          onClick: props.onClick
+        }), props.buttons.map((b, i) => {
+          return jsx(Ramen.XTabBarItem, {
+            icon: b.icon,
+            label: b.text,
+            onClick: b.onClick
+          }, i);
+        })]
+      })
+    }))
+  });
 };
 
 // eslint-disable-next-line es/no-typed-arrays -- safe
@@ -8905,6 +8912,7 @@ function PurchaseRequisitionDetail() {
   } = useApproval();
   const [fileList, setFileList] = useState([]);
   const [loadingFiles, setLoadingFiles] = useState(false);
+  const history = useHistory();
   const approval = useMemo(() => {
     return selectedApproval ? selectedApproval : undefined;
   }, [selectedApproval]);
@@ -8998,7 +9006,7 @@ function PurchaseRequisitionDetail() {
         })]
       }))
     }), jsx(ApprovalItemDetailFooter, {
-      onClick: () => goBack(-2),
+      onClick: () => history.push('/'),
       homeLabel: localize('HOME_TITLE', ''),
       buttons: [{
         text: localize('LABEL_APPROVE', ''),
@@ -9206,6 +9214,7 @@ function PurchaseOrderDetail() {
   } = useApproval();
   const [detail, setDetail] = useState();
   const [loadingDetail, setLoadingDetail] = useState(false);
+  const history = useHistory();
   const approval = useMemo(() => {
     return selectedApproval ? selectedApproval : undefined;
   }, [selectedApproval]);
@@ -9287,7 +9296,7 @@ function PurchaseOrderDetail() {
         })]
       }))
     }), jsx(ApprovalItemDetailFooter, {
-      onClick: () => goBack(-2),
+      onClick: () => history.push('/'),
       homeLabel: localize('HOME_TITLE', ''),
       buttons: [{
         text: localize('LABEL_APPROVE', ''),
@@ -9471,6 +9480,7 @@ function FB60Detail() {
   } = useApproval();
   const [fileList, setFileList] = useState([]);
   const [loadingFiles, setLoadingFiles] = useState(false);
+  const history = useHistory();
   const approval = useMemo(() => {
     return selectedApproval ? selectedApproval : undefined;
   }, [selectedApproval]);
@@ -9538,7 +9548,7 @@ function FB60Detail() {
         })]
       }))
     }), jsx(ApprovalItemDetailFooter, {
-      onClick: () => goBack(-2),
+      onClick: () => history.push('/'),
       homeLabel: localize('HOME_TITLE', ''),
       buttons: [{
         text: localize('LABEL_APPROVE', ''),
@@ -9803,6 +9813,7 @@ function AccountabilityDetail() {
   } = useApproval();
   const [fileList, setFileList] = useState([]);
   const [loadingFiles, setLoadingFiles] = useState(false);
+  const history = useHistory();
   const approval = useMemo(() => {
     return selectedApproval ? selectedApproval : undefined;
   }, [selectedApproval]);
@@ -9879,7 +9890,7 @@ function AccountabilityDetail() {
       }))
     }), jsx(ApprovalItemDetailFooter, {
       homeLabel: localize('HOME_TITLE', ''),
-      onClick: () => goBack(-2),
+      onClick: () => history.push('/'),
       buttons: [{
         text: localize('LABEL_APPROVE', ''),
         icon: 'check-outline',
