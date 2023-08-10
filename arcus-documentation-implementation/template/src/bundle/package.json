@@ -1,0 +1,12 @@
+{
+  "name": "@arcus-documentation/mobile-module",
+  "version": "0.0.1",
+  "module": "./index.js",
+  "main": "./index.js",
+  "type": "module",
+  "types": "./index.d.ts",
+  "dependencies": {},
+  "peerDependencies": {
+    "react": "18.2.0"
+  }
+}
