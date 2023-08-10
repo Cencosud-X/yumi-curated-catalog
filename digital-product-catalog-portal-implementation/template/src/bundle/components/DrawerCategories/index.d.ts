@@ -6,6 +6,7 @@ export interface IDrawerCategories {
 export interface ICategoryItem {
     category: IMenuData;
     key?: any;
+    isActive?: boolean;
     onItemSelected?: (link: any) => void;
     onItemHover?: (show: boolean, link?: any) => void;
 }

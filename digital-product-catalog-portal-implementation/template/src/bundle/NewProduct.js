@@ -1,14 +1,12 @@
 import { _ as __awaiter, u as useWindowSize, a as useGlobal, p as productsClient, P as ProductsList } from './index2.js';
 import { jsx, Fragment as Fragment$1, jsxs } from 'react/jsx-runtime';
 import { useState, useRef, Fragment, useEffect } from 'react';
-import 'react-icons/md';
-import { useHistory } from 'react-router-dom';
 import Ramen from '@team_yumi/ramen-web';
 import 'react-icons/bi';
-import 'react-icons/gi';
+import { useHistory } from 'react-router-dom';
+import classnames from 'classnames';
 import 'react-icons/fi';
 import 'react-icons/ai';
-import classnames from 'classnames';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import 'swiper/css';
@@ -184,7 +182,16 @@ const CategorySlider = ({
   } = useWindowSize();
   const slidesPerView = width > 1024 ? 8 : width > 768 ? 5 : width > 425 ? 3 : 2;
   const handleItemRenderClick = item => {
-    history.push(item.url);
+    const categoryFilter = item.url.split('/');
+    const routes = categoryFilter.slice(2, categoryFilter.length);
+    const category = categoryFilter.slice(-1);
+    console.log(routes, item);
+    const keyCategory = routes.length > 2 ? 'typeProducts' : routes.length > 1 ? 'SubCategories' : 'Categories';
+    history.push('/products', Object.assign(Object.assign(Object.assign({}, history.state), {
+      [keyCategory]: category
+    }), {
+      routes
+    }));
   };
   return jsxs(Ramen.XBox, Object.assign({
     orientation: "vertical",

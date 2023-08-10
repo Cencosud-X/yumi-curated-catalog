@@ -2,6 +2,11 @@ import { PropsWithChildren } from 'react';
 import { ApiResponse, InventoryInterface, InventoryPagesEnum, InventoryTypeEnum, ProductInterface, StoreInterface } from '../models';
 import * as H from 'history';
 export declare type InventoryContextData = {
+    appClientID: string;
+    uomShowType: string;
+    messages: {
+        sendInventory: string;
+    };
     inventory: InventoryInterface | undefined;
     setDataInventory: (value: any) => void;
     product: ProductInterface | undefined;
@@ -46,6 +51,10 @@ declare type InventoryProviderProps = {
         country: string;
         inventoryApi: string;
         clientId: string;
+        uomShowType: string;
+        messages: {
+            sendInventory: string;
+        };
     } | null;
     getStoreData: (() => Promise<StoreInterface>) | undefined;
 };

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
+  "name": "Module Implementation",
+  "tags": [
+    "Globalization",
+    "Yumi",
+    "Module",
+    "experimental"
+  ],
+  "kind": "yumi-digital-checklist-mobile-implementation",
+  "folder": "libs",
+  "icons": {
+    "light": "icons/icon.svg",
+    "dark": "icons/icon.svg"
+  },
+  "descriptions": {
+    "en": "Digital Checklist is a new feature of Arcus that will allow generating multiple sets of activities to be carried out by specific roles in the sales room, in order to track and ensure the quality of the operation.",
+    "es": "Checklist Digital es un nuevo Feature de Arcus que permitirá generar múltiples conjunto de actividades a realizar por ciertos roles en sala de ventas, para dar seguimiento y asegurar la calidad de la operación."
+  },
+  "scripts": {
+    "pre": "scripts/pre.js",
+    "rollback": "scripts/rollback.js",
+    "post": "scripts/post.js"
+  },
+  "interpolations": {
+    "source": "template",
+    "substitutions": {}
+  },
+  "display_name": "Yumi Digital Checklist Mobile"
+}

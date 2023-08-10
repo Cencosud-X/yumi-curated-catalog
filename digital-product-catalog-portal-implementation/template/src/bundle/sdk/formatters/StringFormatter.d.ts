@@ -11,6 +11,7 @@ export declare class StringFormatter {
      * @returns {string}
      */
     toSnakeCase(text: string): string;
+    capitalizeLetter: ([first, ...rest]: any, lowerRest?: boolean) => string;
 }
 declare const _default: StringFormatter;
 export default _default;
