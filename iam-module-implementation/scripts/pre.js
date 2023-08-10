@@ -23,7 +23,7 @@ module.exports = async (runner, args) => {
         'npm install react-router-dom@^5.3.0',
         'npm install @awesome-cordova-plugins/in-app-browser@^6.3.0',
         'npm install @team_yumi/sdk@0.0.1-next.20230802-d58df76-3af85eb6f1052a838bc33e5a984630ef',
-        'npm install @team_yumi/ramen@0.0.3-next.1691526587013',
+        'npm install @team_yumi/ramen@0.0.3-next.1691622154314',
         'npm install @capacitor/core@^4.8.0',
       ],
       {

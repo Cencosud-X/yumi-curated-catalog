@@ -2598,7 +2598,16 @@ const Login = props => {
   return jsxs(Ramen.XPage, Object.assign({
     backgroundImage: img$4
   }, {
-    children: [jsx(Ramen.XBody, {
+    children: [jsx("div", Object.assign({
+      style: {
+        height: 'calc(100% - 130px)',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        textAlign: 'center',
+        padding: '24px'
+      }
+    }, {
       children: jsxs(Ramen.XBox, Object.assign({
         gap: "s",
         height: "full",
@@ -2615,7 +2624,7 @@ const Login = props => {
           children: "La nueva app para facilitar todas tus tareas"
         }))]
       }))
-    }), jsx(Ramen.XFooter, {
+    })), jsx(Ramen.XFooter, {
       children: loginButtons.map(button => jsx(Ramen.XButton, {
         size: "xl",
         icon: button.icon,
@@ -3253,17 +3262,30 @@ const Context$1 = props => {
   const [flag] = React.useState(() => {
     var _a;
     if (!((_a = location.state) === null || _a === void 0 ? void 0 : _a.flag)) {
-      return undefined;
+      // Resolve from settings to avoid failing on refresh
+      return SDK.Lib.Settings.get('IAM_FLOW:FLAG');
     }
     return location.state.flag.toLowerCase();
   });
   const [store] = React.useState(() => {
     var _a;
     if (!((_a = location.state) === null || _a === void 0 ? void 0 : _a.store)) {
-      return undefined;
+      // Resolve from settings to avoid failing on refresh
+      return SDK.Lib.Settings.get('IAM_FLOW:STORE');
     }
     return location.state.store.toLowerCase().replace(/\D/g, '');
   });
+  // Persist flag and store in settings
+  // The first time the flow is loaded
+  React.useEffect(() => {
+    if (flag) {
+      SDK.Lib.Settings.set('IAM_FLOW:FLAG', flag);
+    }
+    if (store) {
+      SDK.Lib.Settings.set('IAM_FLOW:STORE', store);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   if (!flag || !store) {
     return jsx(Ramen.XPage, {
       children: jsx(Ramen.XBody, {
@@ -5279,26 +5301,41 @@ const Roles$1 = () => {
         }
         return 0;
       }),
-      renderItem: option => jsx(Ramen.XCard, {
-        children: jsxs(Ramen.XBox, Object.assign({
-          width: "flex",
-          orientation: "horizontal",
-          verticalAlign: "center"
+      renderItem: option => {
+        var _a;
+        const disabled = ((_a = location.state.roles.find(r => r.id === option.id)) === null || _a === void 0 ? void 0 : _a.assignable) === false;
+        return jsx("div", Object.assign({
+          style: {
+            opacity: disabled ? 0.5 : 1
+          }
         }, {
-          children: [jsx(Ramen.XBox, Object.assign({
-            width: "flex"
-          }, {
-            children: jsx(Ramen.XText, {
-              children: option.label
-            })
-          })), jsx(Ramen.XButtonIcon, {
-            type: "clear",
-            size: "m",
-            icon: "trash-2-outline",
-            onClick: () => onRemoveHandler(option)
-          })]
-        }))
-      })
+          children: jsx(Ramen.XCard, {
+            children: jsxs(Ramen.XBox, Object.assign({
+              width: "flex",
+              orientation: "horizontal",
+              verticalAlign: "center"
+            }, {
+              children: [jsx(Ramen.XBox, Object.assign({
+                width: "flex"
+              }, {
+                children: jsx(Ramen.XText, {
+                  children: option.label
+                })
+              })), jsx(Ramen.XButtonIcon, {
+                type: "clear",
+                size: "m",
+                icon: "trash-2-outline",
+                onClick: () => {
+                  if (disabled) {
+                    return;
+                  }
+                  onRemoveHandler(option);
+                }
+              })]
+            }))
+          })
+        }));
+      }
     });
   }
   return jsxs(Ramen.XPage, {
@@ -5321,7 +5358,8 @@ const Roles$1 = () => {
           subtitle: `Asigná un rol a ${draft.user.unique_name}`,
           options: location.state.roles.map(role => ({
             label: role.label,
-            value: role.id
+            value: role.id,
+            disabled: !role.assignable
           })),
           values: selection.map(role => role.id),
           okText: "Guardar",
@@ -5998,17 +6036,30 @@ const Context = props => {
   const [flag] = React.useState(() => {
     var _a;
     if (!((_a = location.state) === null || _a === void 0 ? void 0 : _a.flag)) {
-      return undefined;
+      // Resolve from settings to avoid failing on refresh
+      return SDK.Lib.Settings.get('IAM_FLOW:FLAG');
     }
     return location.state.flag.toLowerCase();
   });
   const [store] = React.useState(() => {
     var _a;
     if (!((_a = location.state) === null || _a === void 0 ? void 0 : _a.store)) {
-      return undefined;
+      // Resolve from settings to avoid failing on refresh
+      return SDK.Lib.Settings.get('IAM_FLOW:STORE');
     }
     return location.state.store.toLowerCase().replace(/\D/g, '');
   });
+  // Persist flag and store in settings
+  // The first time the flow is loaded
+  React.useEffect(() => {
+    if (flag) {
+      SDK.Lib.Settings.set('IAM_FLOW:FLAG', flag);
+    }
+    if (store) {
+      SDK.Lib.Settings.set('IAM_FLOW:STORE', store);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   if (!flag || !store) {
     return jsx(Ramen.XPage, {
       children: jsx(Ramen.XBody, {
@@ -6662,26 +6713,41 @@ const Roles = () => {
         }
         return 0;
       }),
-      renderItem: option => jsx(Ramen.XCard, {
-        children: jsxs(Ramen.XBox, Object.assign({
-          width: "flex",
-          orientation: "horizontal",
-          verticalAlign: "center"
+      renderItem: option => {
+        var _a;
+        const disabled = ((_a = location.state.roles.find(r => r.id === option.id)) === null || _a === void 0 ? void 0 : _a.assignable) === false;
+        return jsx("div", Object.assign({
+          style: {
+            opacity: disabled ? 0.5 : 1
+          }
         }, {
-          children: [jsx(Ramen.XBox, Object.assign({
-            width: "flex"
-          }, {
-            children: jsx(Ramen.XText, {
-              children: option.label
-            })
-          })), jsx(Ramen.XButtonIcon, {
-            type: "clear",
-            size: "m",
-            icon: "trash-2-outline",
-            onClick: () => onRemoveHandler(option)
-          })]
-        }))
-      })
+          children: jsx(Ramen.XCard, {
+            children: jsxs(Ramen.XBox, Object.assign({
+              width: "flex",
+              orientation: "horizontal",
+              verticalAlign: "center"
+            }, {
+              children: [jsx(Ramen.XBox, Object.assign({
+                width: "flex"
+              }, {
+                children: jsx(Ramen.XText, {
+                  children: option.label
+                })
+              })), jsx(Ramen.XButtonIcon, {
+                type: "clear",
+                size: "m",
+                icon: "trash-2-outline",
+                onClick: () => {
+                  if (disabled) {
+                    return;
+                  }
+                  onRemoveHandler(option);
+                }
+              })]
+            }))
+          })
+        }));
+      }
     });
   }
   return jsxs(Ramen.XPage, {
@@ -6704,7 +6770,8 @@ const Roles = () => {
           subtitle: `Asigná un rol a ${draft.name}`,
           options: location.state.roles.map(role => ({
             label: role.label,
-            value: role.id
+            value: role.id,
+            disabled: !role.assignable
           })),
           values: selection.map(role => role.id),
           okText: "Guardar",
