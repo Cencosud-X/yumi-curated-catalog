@@ -10,6 +10,7 @@ export declare const productDetailsSchema: z.ZodObject<{
     ean: z.ZodString;
     sku: z.ZodString;
 }, "strip", z.ZodTypeAny, {
+    ean: string;
     price: number;
     ntrStock: number;
     averageSale: number;
@@ -17,9 +18,9 @@ export declare const productDetailsSchema: z.ZodObject<{
     name: string;
     provider: string;
     brand: string;
-    ean: string;
     sku: string;
 }, {
+    ean: string;
     price: number;
     ntrStock: number;
     averageSale: number;
@@ -27,7 +28,6 @@ export declare const productDetailsSchema: z.ZodObject<{
     name: string;
     provider: string;
     brand: string;
-    ean: string;
     sku: string;
 }>;
 export declare const unitDataSchema: z.ZodObject<{
@@ -72,8 +72,8 @@ export declare const usefulLifeSchema: z.ZodObject<{
     noticeLevel: z.ZodEnum<["info", "success", "warning", "error", "neutral"]>;
 }, "strip", z.ZodTypeAny, {
     usefulLifeLimit: Date;
-    noticeLevel: "error" | "warning" | "info" | "success" | "neutral";
+    noticeLevel: "info" | "success" | "warning" | "error" | "neutral";
 }, {
     usefulLifeLimit: Date;
-    noticeLevel: "error" | "warning" | "info" | "success" | "neutral";
+    noticeLevel: "info" | "success" | "warning" | "error" | "neutral";
 }>;

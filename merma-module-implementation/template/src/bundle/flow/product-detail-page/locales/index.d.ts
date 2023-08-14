@@ -27,10 +27,12 @@ declare const _default: {
         MODAL_BUTTON_INGRESS_PRODUCT: string;
         MODAL_BUTTON_OUT_PRODUCT: string;
         MODAL_TITLE: string;
-        ERROR_MODAL_TITLE: string;
-        ERROR_MODAL_SUBTITLE: string;
-        ERROR_MODAL_BACK_BUTTON: string;
-        ERROR_MODAL_RETRY_BUTTON: string;
+        KEY_TAG_CODE: string;
+        KEY_TOTAL_WEIGHT: string;
+        KEY_DATE_EXPIRATION: string;
+        COUNTRY_WEIGHT_UNIT: string;
+        INFO_CARD_TAG_EXPIRATION_DATE: string;
+        INFO_CARD_TAG_USEFUL_LIFE: string;
     };
 };
 export default _default;

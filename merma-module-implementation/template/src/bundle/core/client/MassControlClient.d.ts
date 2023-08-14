@@ -1,22 +1,27 @@
-import { InitialConfig, MassFlowResponse, MeatStockResponse, ProductEntryBody, ProductExitBody, ProductInfoResponse, ProductStockResponse, ProductUnitInformation } from './mass-control-bff-models';
+import { InitialConfig, MassFlowResponse, MeatStockResponse, ProductEntryBody, ProductExitBody, ProductInfoResponse, ProductStockResponse, ProductUnitInformation, ProductsInformationResponse } from './mass-control-bff-models';
+import { BarcodeExtractorResponse } from './mass-control-bff-models/barcode-extractor.models';
 export declare class MassControlClient {
     private url;
-    constructor();
+    private token;
+    private headers;
+    constructor(token: string);
     getMeatStock(): Promise<MeatStockResponse>;
-    getMassFlow(): Promise<MassFlowResponse>;
+    getMassFlow(action: string): Promise<MassFlowResponse>;
     getProductStock(ean: string): Promise<ProductStockResponse>;
     /**entry-flow */
     getProductInformation(params: {
         tally?: string | undefined;
         barcode?: string | undefined;
     }): Promise<ProductInfoResponse>;
-    postProductEntry(product: ProductEntryBody): Promise<void>;
+    postProductEntry(product: ProductEntryBody[]): Promise<void>;
     /**exit-flow */
-    getProductInformationExit(params: {
+    getProductUnitInformationExit(params: {
         tally?: string | undefined;
         barcode?: string | undefined;
     }): Promise<ProductUnitInformation>;
-    postProductExit(product: ProductExitBody): Promise<void>;
+    postProductExit(product: ProductExitBody[]): Promise<void>;
+    getProductsInformationExit(): Promise<ProductsInformationResponse>;
+    getBarcode(imageBase64: string): Promise<BarcodeExtractorResponse>;
     /**initial-config */
     getInitialConfig(): Promise<InitialConfig>;
 }

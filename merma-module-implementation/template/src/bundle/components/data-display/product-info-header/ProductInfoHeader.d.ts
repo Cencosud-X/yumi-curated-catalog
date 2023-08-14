@@ -6,5 +6,5 @@ interface IProps {
     totalWeight: number;
     totalBoxes: number;
 }
-declare const ProductInfoHeder: React.FC<IProps>;
-export default ProductInfoHeder;
+declare const ProductInfoHeader: React.FC<IProps>;
+export default ProductInfoHeader;

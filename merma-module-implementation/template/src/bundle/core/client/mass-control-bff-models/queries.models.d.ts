@@ -80,6 +80,31 @@ export declare const initialConfigSchema: z.ZodObject<{
     }[];
 }>;
 export declare type InitialConfig = z.infer<typeof initialConfigSchema>;
+export declare const itemMeatStockSchema: z.ZodObject<{
+    units: z.ZodNumber;
+    image: z.ZodString;
+    name: z.ZodString;
+    ean: z.ZodString;
+    sku: z.ZodString;
+    totalWeight: z.ZodNumber;
+    quantityOnWarning: z.ZodNumber;
+}, "strip", z.ZodTypeAny, {
+    ean: string;
+    image: string;
+    name: string;
+    sku: string;
+    units: number;
+    totalWeight: number;
+    quantityOnWarning: number;
+}, {
+    ean: string;
+    image: string;
+    name: string;
+    sku: string;
+    units: number;
+    totalWeight: number;
+    quantityOnWarning: number;
+}>;
 export declare const meatStockResponseSchema: z.ZodObject<{
     result: z.ZodArray<z.ZodObject<{
         units: z.ZodNumber;
@@ -88,80 +113,94 @@ export declare const meatStockResponseSchema: z.ZodObject<{
         ean: z.ZodString;
         sku: z.ZodString;
         totalWeight: z.ZodNumber;
-        nearestUsefulLifeLimit: z.ZodDate;
-        alertType: z.ZodEnum<["error", "warning", "info", "success", "neutral"]>;
+        quantityOnWarning: z.ZodNumber;
     }, "strip", z.ZodTypeAny, {
+        ean: string;
         image: string;
         name: string;
-        ean: string;
         sku: string;
         units: number;
         totalWeight: number;
-        nearestUsefulLifeLimit: Date;
-        alertType: "error" | "warning" | "info" | "success" | "neutral";
+        quantityOnWarning: number;
     }, {
+        ean: string;
         image: string;
         name: string;
-        ean: string;
         sku: string;
         units: number;
         totalWeight: number;
-        nearestUsefulLifeLimit: Date;
-        alertType: "error" | "warning" | "info" | "success" | "neutral";
+        quantityOnWarning: number;
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
     result: {
+        ean: string;
         image: string;
         name: string;
-        ean: string;
         sku: string;
         units: number;
         totalWeight: number;
-        nearestUsefulLifeLimit: Date;
-        alertType: "error" | "warning" | "info" | "success" | "neutral";
+        quantityOnWarning: number;
     }[];
 }, {
     result: {
+        ean: string;
         image: string;
         name: string;
-        ean: string;
         sku: string;
         units: number;
         totalWeight: number;
-        nearestUsefulLifeLimit: Date;
-        alertType: "error" | "warning" | "info" | "success" | "neutral";
+        quantityOnWarning: number;
     }[];
 }>;
+export declare type ItemMeatStock = z.infer<typeof itemMeatStockSchema>;
 export declare type MeatStockResponse = z.infer<typeof meatStockResponseSchema>;
-export declare const meatStockItemResponseSchema: z.ZodObject<{
-    units: z.ZodNumber;
+export declare const massFlowMovementSchema: z.ZodObject<{
+    movementType: z.ZodEnum<["entry", "exit"]>;
+    movementDate: z.ZodDate;
+    tally: z.ZodOptional<z.ZodString>;
+    barcode: z.ZodOptional<z.ZodString>;
     image: z.ZodString;
     name: z.ZodString;
-    ean: z.ZodString;
-    sku: z.ZodString;
-    totalWeight: z.ZodNumber;
-    nearestUsefulLifeLimit: z.ZodDate;
-    alertType: z.ZodEnum<["error", "warning", "info", "success", "neutral"]>;
+    responsible: z.ZodString;
+    netWeight: z.ZodNumber;
+    expirationDate: z.ZodDate;
+    usefulLifeLimit: z.ZodDate;
+    exitReason: z.ZodOptional<z.ZodString>;
+    usefulLifeDays: z.ZodNumber;
+    alertType: z.ZodEnum<["info", "success", "warning", "error", "neutral"]>;
+    movementEntryDate: z.ZodOptional<z.ZodDate>;
 }, "strip", z.ZodTypeAny, {
     image: string;
     name: string;
-    ean: string;
-    sku: string;
-    units: number;
-    totalWeight: number;
-    nearestUsefulLifeLimit: Date;
-    alertType: "error" | "warning" | "info" | "success" | "neutral";
+    netWeight: number;
+    expirationDate: Date;
+    usefulLifeLimit: Date;
+    usefulLifeDays: number;
+    movementType: "entry" | "exit";
+    movementDate: Date;
+    responsible: string;
+    alertType: "info" | "success" | "warning" | "error" | "neutral";
+    tally?: string | undefined;
+    barcode?: string | undefined;
+    exitReason?: string | undefined;
+    movementEntryDate?: Date | undefined;
 }, {
     image: string;
     name: string;
-    ean: string;
-    sku: string;
-    units: number;
-    totalWeight: number;
-    nearestUsefulLifeLimit: Date;
-    alertType: "error" | "warning" | "info" | "success" | "neutral";
+    netWeight: number;
+    expirationDate: Date;
+    usefulLifeLimit: Date;
+    usefulLifeDays: number;
+    movementType: "entry" | "exit";
+    movementDate: Date;
+    responsible: string;
+    alertType: "info" | "success" | "warning" | "error" | "neutral";
+    tally?: string | undefined;
+    barcode?: string | undefined;
+    exitReason?: string | undefined;
+    movementEntryDate?: Date | undefined;
 }>;
-export declare type MeatStockItemResponse = z.infer<typeof meatStockItemResponseSchema>;
+export declare type MassFlowResponseMovement = z.infer<typeof massFlowMovementSchema>;
 export declare const massFlowResponseSchema: z.ZodObject<{
     result: z.ZodArray<z.ZodObject<{
         movementType: z.ZodEnum<["entry", "exit"]>;
@@ -175,30 +214,39 @@ export declare const massFlowResponseSchema: z.ZodObject<{
         expirationDate: z.ZodDate;
         usefulLifeLimit: z.ZodDate;
         exitReason: z.ZodOptional<z.ZodString>;
+        usefulLifeDays: z.ZodNumber;
+        alertType: z.ZodEnum<["info", "success", "warning", "error", "neutral"]>;
+        movementEntryDate: z.ZodOptional<z.ZodDate>;
     }, "strip", z.ZodTypeAny, {
         image: string;
         name: string;
         netWeight: number;
         expirationDate: Date;
         usefulLifeLimit: Date;
+        usefulLifeDays: number;
         movementType: "entry" | "exit";
         movementDate: Date;
         responsible: string;
+        alertType: "info" | "success" | "warning" | "error" | "neutral";
         tally?: string | undefined;
         barcode?: string | undefined;
         exitReason?: string | undefined;
+        movementEntryDate?: Date | undefined;
     }, {
         image: string;
         name: string;
         netWeight: number;
         expirationDate: Date;
         usefulLifeLimit: Date;
+        usefulLifeDays: number;
         movementType: "entry" | "exit";
         movementDate: Date;
         responsible: string;
+        alertType: "info" | "success" | "warning" | "error" | "neutral";
         tally?: string | undefined;
         barcode?: string | undefined;
         exitReason?: string | undefined;
+        movementEntryDate?: Date | undefined;
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
     result: {
@@ -207,12 +255,15 @@ export declare const massFlowResponseSchema: z.ZodObject<{
         netWeight: number;
         expirationDate: Date;
         usefulLifeLimit: Date;
+        usefulLifeDays: number;
         movementType: "entry" | "exit";
         movementDate: Date;
         responsible: string;
+        alertType: "info" | "success" | "warning" | "error" | "neutral";
         tally?: string | undefined;
         barcode?: string | undefined;
         exitReason?: string | undefined;
+        movementEntryDate?: Date | undefined;
     }[];
 }, {
     result: {
@@ -221,53 +272,18 @@ export declare const massFlowResponseSchema: z.ZodObject<{
         netWeight: number;
         expirationDate: Date;
         usefulLifeLimit: Date;
+        usefulLifeDays: number;
         movementType: "entry" | "exit";
         movementDate: Date;
         responsible: string;
+        alertType: "info" | "success" | "warning" | "error" | "neutral";
         tally?: string | undefined;
         barcode?: string | undefined;
         exitReason?: string | undefined;
+        movementEntryDate?: Date | undefined;
     }[];
 }>;
 export declare type MassFlowResponse = z.infer<typeof massFlowResponseSchema>;
-export declare const massFlowResultResponseSchema: z.ZodObject<{
-    movementType: z.ZodEnum<["entry", "exit"]>;
-    movementDate: z.ZodDate;
-    tally: z.ZodOptional<z.ZodString>;
-    barcode: z.ZodOptional<z.ZodString>;
-    image: z.ZodString;
-    name: z.ZodString;
-    responsible: z.ZodString;
-    netWeight: z.ZodNumber;
-    expirationDate: z.ZodDate;
-    usefulLifeLimit: z.ZodDate;
-    exitReason: z.ZodOptional<z.ZodString>;
-}, "strip", z.ZodTypeAny, {
-    image: string;
-    name: string;
-    netWeight: number;
-    expirationDate: Date;
-    usefulLifeLimit: Date;
-    movementType: "entry" | "exit";
-    movementDate: Date;
-    responsible: string;
-    tally?: string | undefined;
-    barcode?: string | undefined;
-    exitReason?: string | undefined;
-}, {
-    image: string;
-    name: string;
-    netWeight: number;
-    expirationDate: Date;
-    usefulLifeLimit: Date;
-    movementType: "entry" | "exit";
-    movementDate: Date;
-    responsible: string;
-    tally?: string | undefined;
-    barcode?: string | undefined;
-    exitReason?: string | undefined;
-}>;
-export declare type MassControlResultResponse = z.infer<typeof massFlowResultResponseSchema>;
 export declare const range: z.ZodObject<{
     label: z.ZodString;
     from: z.ZodNumber;
@@ -283,6 +299,7 @@ export declare const range: z.ZodObject<{
 }>;
 declare const productStockUnit: z.ZodObject<{
     usefulLifeLimit: z.ZodDate;
+    usefulLifeDays: z.ZodNumber;
     alertType: z.ZodEnum<["none", "warning", "danger"]>;
     tally: z.ZodOptional<z.ZodString>;
     barcode: z.ZodOptional<z.ZodString>;
@@ -296,7 +313,8 @@ declare const productStockUnit: z.ZodObject<{
     netWeight: number;
     expirationDate: Date;
     usefulLifeLimit: Date;
-    alertType: "none" | "warning" | "danger";
+    usefulLifeDays: number;
+    alertType: "warning" | "none" | "danger";
     tally?: string | undefined;
     barcode?: string | undefined;
 }, {
@@ -305,11 +323,94 @@ declare const productStockUnit: z.ZodObject<{
     netWeight: number;
     expirationDate: Date;
     usefulLifeLimit: Date;
-    alertType: "none" | "warning" | "danger";
+    usefulLifeDays: number;
+    alertType: "warning" | "none" | "danger";
     tally?: string | undefined;
     barcode?: string | undefined;
 }>;
 export declare type ProductStockUnitsResponse = z.infer<typeof productStockUnit>;
+declare const productDetailResponseSchema: z.ZodObject<{
+    image: z.ZodString;
+    name: z.ZodString;
+    ean: z.ZodString;
+    sku: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    ean: string;
+    image: string;
+    name: string;
+    sku: string;
+}, {
+    ean: string;
+    image: string;
+    name: string;
+    sku: string;
+}>;
+declare const productResultResponseSchema: z.ZodObject<{
+    index: z.ZodNumber;
+    noticeLevel: z.ZodEnum<["info", "success", "warning", "error", "neutral"]>;
+    units: z.ZodArray<z.ZodObject<{
+        usefulLifeLimit: z.ZodDate;
+        usefulLifeDays: z.ZodNumber;
+        alertType: z.ZodEnum<["none", "warning", "danger"]>;
+        tally: z.ZodOptional<z.ZodString>;
+        barcode: z.ZodOptional<z.ZodString>;
+        ean: z.ZodString;
+        sku: z.ZodString;
+        netWeight: z.ZodNumber;
+        expirationDate: z.ZodDate;
+    }, "strip", z.ZodTypeAny, {
+        ean: string;
+        sku: string;
+        netWeight: number;
+        expirationDate: Date;
+        usefulLifeLimit: Date;
+        usefulLifeDays: number;
+        alertType: "warning" | "none" | "danger";
+        tally?: string | undefined;
+        barcode?: string | undefined;
+    }, {
+        ean: string;
+        sku: string;
+        netWeight: number;
+        expirationDate: Date;
+        usefulLifeLimit: Date;
+        usefulLifeDays: number;
+        alertType: "warning" | "none" | "danger";
+        tally?: string | undefined;
+        barcode?: string | undefined;
+    }>, "many">;
+    quantityDaysLimit: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    noticeLevel: "info" | "success" | "warning" | "error" | "neutral";
+    units: {
+        ean: string;
+        sku: string;
+        netWeight: number;
+        expirationDate: Date;
+        usefulLifeLimit: Date;
+        usefulLifeDays: number;
+        alertType: "warning" | "none" | "danger";
+        tally?: string | undefined;
+        barcode?: string | undefined;
+    }[];
+    index: number;
+    quantityDaysLimit: string;
+}, {
+    noticeLevel: "info" | "success" | "warning" | "error" | "neutral";
+    units: {
+        ean: string;
+        sku: string;
+        netWeight: number;
+        expirationDate: Date;
+        usefulLifeLimit: Date;
+        usefulLifeDays: number;
+        alertType: "warning" | "none" | "danger";
+        tally?: string | undefined;
+        barcode?: string | undefined;
+    }[];
+    index: number;
+    quantityDaysLimit: string;
+}>;
 export declare const productStockResponseSchema: z.ZodObject<{
     productDetails: z.ZodObject<{
         image: z.ZodString;
@@ -317,22 +418,22 @@ export declare const productStockResponseSchema: z.ZodObject<{
         ean: z.ZodString;
         sku: z.ZodString;
     }, "strip", z.ZodTypeAny, {
+        ean: string;
         image: string;
         name: string;
-        ean: string;
         sku: string;
     }, {
+        ean: string;
         image: string;
         name: string;
-        ean: string;
         sku: string;
     }>;
     result: z.ZodArray<z.ZodObject<{
         index: z.ZodNumber;
-        usefulLifeDays: z.ZodNumber;
         noticeLevel: z.ZodEnum<["info", "success", "warning", "error", "neutral"]>;
         units: z.ZodArray<z.ZodObject<{
             usefulLifeLimit: z.ZodDate;
+            usefulLifeDays: z.ZodNumber;
             alertType: z.ZodEnum<["none", "warning", "danger"]>;
             tally: z.ZodOptional<z.ZodString>;
             barcode: z.ZodOptional<z.ZodString>;
@@ -346,7 +447,8 @@ export declare const productStockResponseSchema: z.ZodObject<{
             netWeight: number;
             expirationDate: Date;
             usefulLifeLimit: Date;
-            alertType: "none" | "warning" | "danger";
+            usefulLifeDays: number;
+            alertType: "warning" | "none" | "danger";
             tally?: string | undefined;
             barcode?: string | undefined;
         }, {
@@ -355,83 +457,91 @@ export declare const productStockResponseSchema: z.ZodObject<{
             netWeight: number;
             expirationDate: Date;
             usefulLifeLimit: Date;
-            alertType: "none" | "warning" | "danger";
+            usefulLifeDays: number;
+            alertType: "warning" | "none" | "danger";
             tally?: string | undefined;
             barcode?: string | undefined;
         }>, "many">;
+        quantityDaysLimit: z.ZodString;
     }, "strip", z.ZodTypeAny, {
-        noticeLevel: "error" | "warning" | "info" | "success" | "neutral";
-        usefulLifeDays: number;
+        noticeLevel: "info" | "success" | "warning" | "error" | "neutral";
         units: {
             ean: string;
             sku: string;
             netWeight: number;
             expirationDate: Date;
             usefulLifeLimit: Date;
-            alertType: "none" | "warning" | "danger";
+            usefulLifeDays: number;
+            alertType: "warning" | "none" | "danger";
             tally?: string | undefined;
             barcode?: string | undefined;
         }[];
         index: number;
+        quantityDaysLimit: string;
     }, {
-        noticeLevel: "error" | "warning" | "info" | "success" | "neutral";
-        usefulLifeDays: number;
+        noticeLevel: "info" | "success" | "warning" | "error" | "neutral";
         units: {
             ean: string;
             sku: string;
             netWeight: number;
             expirationDate: Date;
             usefulLifeLimit: Date;
-            alertType: "none" | "warning" | "danger";
+            usefulLifeDays: number;
+            alertType: "warning" | "none" | "danger";
             tally?: string | undefined;
             barcode?: string | undefined;
         }[];
         index: number;
+        quantityDaysLimit: string;
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
+    productDetails: {
+        ean: string;
+        image: string;
+        name: string;
+        sku: string;
+    };
     result: {
-        noticeLevel: "error" | "warning" | "info" | "success" | "neutral";
-        usefulLifeDays: number;
+        noticeLevel: "info" | "success" | "warning" | "error" | "neutral";
         units: {
             ean: string;
             sku: string;
             netWeight: number;
             expirationDate: Date;
             usefulLifeLimit: Date;
-            alertType: "none" | "warning" | "danger";
+            usefulLifeDays: number;
+            alertType: "warning" | "none" | "danger";
             tally?: string | undefined;
             barcode?: string | undefined;
         }[];
         index: number;
+        quantityDaysLimit: string;
     }[];
-    productDetails: {
-        image: string;
-        name: string;
-        ean: string;
-        sku: string;
-    };
 }, {
+    productDetails: {
+        ean: string;
+        image: string;
+        name: string;
+        sku: string;
+    };
     result: {
-        noticeLevel: "error" | "warning" | "info" | "success" | "neutral";
-        usefulLifeDays: number;
+        noticeLevel: "info" | "success" | "warning" | "error" | "neutral";
         units: {
             ean: string;
             sku: string;
             netWeight: number;
             expirationDate: Date;
             usefulLifeLimit: Date;
-            alertType: "none" | "warning" | "danger";
+            usefulLifeDays: number;
+            alertType: "warning" | "none" | "danger";
             tally?: string | undefined;
             barcode?: string | undefined;
         }[];
         index: number;
+        quantityDaysLimit: string;
     }[];
-    productDetails: {
-        image: string;
-        name: string;
-        ean: string;
-        sku: string;
-    };
 }>;
+export declare type ProductDetailResponse = z.infer<typeof productDetailResponseSchema>;
+export declare type ProductResultResponse = z.infer<typeof productResultResponseSchema>;
 export declare type ProductStockResponse = z.infer<typeof productStockResponseSchema>;
 export {};
