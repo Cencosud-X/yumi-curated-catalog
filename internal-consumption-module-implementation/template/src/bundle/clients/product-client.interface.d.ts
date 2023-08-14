@@ -5,4 +5,10 @@ export interface IProductClient {
      * @param code sku or ean of product
      */
     search(code: string): Promise<Product | undefined>;
+    /**
+     * Validate a product code SKU/Ean
+     * @param code sku or ean of product
+     * @returns boolean
+     */
+    isCodeValid(code: string): boolean;
 }

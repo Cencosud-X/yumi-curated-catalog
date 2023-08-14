@@ -1,7 +1,7 @@
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import { IonRouterOutlet } from '@ionic/react';
 import * as React from 'react';
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { Route, useHistory } from 'react-router-dom';
 import Ramen from '@team_yumi/ramen';
 import { useScanner, ScannerHoC } from '@team_yumi/code-scanner';
@@ -2808,7 +2808,9 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
 
 const BarCodeScanner = ({
   searchDisabled,
-  onScan
+  autoFocused,
+  onScan,
+  isCodeValid
 }) => {
   const [barcodeNumber, setBarcodeNumber] = useState('');
   const barcodeInputRef = useRef(null);
@@ -2819,7 +2821,19 @@ const BarCodeScanner = ({
     startScan
   } = useScanner(printWhenMainClick);
   const handleChange = value => {
+    const oldCodeNumber = barcodeNumber;
     setBarcodeNumber(value);
+    if (
+    // Si el nuevo codigo es distinto al anterior
+    oldCodeNumber !== value
+    // Si tamaño de nuevo codigo es mayor que 1
+    && value.length > 1
+    // Si la diferencia entre los tamaños es mayor que 1 (significa que no se está borrando o escribiendo)
+    && Math.abs(value.length - oldCodeNumber.length) > 1 && onScan) {
+      console.log('Busca automatico');
+      onScan(value);
+      setBarcodeNumber("");
+    }
   };
   const handleCameraClick = () => {
     if (startScan) {
@@ -2836,6 +2850,11 @@ const BarCodeScanner = ({
       setBarcodeNumber("");
     }
   };
+  useEffect(() => {
+    if (autoFocused) {
+      barcodeInputRef.current && barcodeInputRef.current.focus();
+    }
+  }, [autoFocused]);
   return jsxs(Ramen.XBox, Object.assign({
     orientation: "horizontal",
     width: "flex",
@@ -2853,7 +2872,7 @@ const BarCodeScanner = ({
     }), jsx(Ramen.XButtonIcon, {
       icon: "arrow-right-extrabold",
       onClick: handleSearchCodeClick,
-      disabled: searchDisabled || barcodeNumber.length !== 7
+      disabled: searchDisabled || !isCodeValid(barcodeNumber)
     }), jsx(Ramen.XButtonIcon, {
       icon: "camera-outline",
       onClick: handleCameraClick
@@ -9301,6 +9320,8 @@ const ToolPageWrapper = props => {
               children: "Carga los productos que deseas solicitar"
             }), jsx(BarCodeScanner, {
               searchDisabled: !(selectedCostCenter === null || selectedCostCenter === void 0 ? void 0 : selectedCostCenter.id),
+              autoFocused: true,
+              isCodeValid: props.productClient.isCodeValid,
               onScan: code => __awaiter(void 0, void 0, void 0, function* () {
                 var _a, _b;
                 console.log('PCode', code);
