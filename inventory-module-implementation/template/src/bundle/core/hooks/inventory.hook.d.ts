@@ -26,6 +26,8 @@ export declare const useInventory: () => {
     actionEditProductCount: (amount: string) => Promise<void>;
     getTotalFurniture: () => Promise<import("../models").ApiResponse>;
     actionSendListInventory: (inventories: any[]) => Promise<any>;
+    actionListZonificationInProgress: (filters: any) => Promise<any>;
+    routeToRoot: () => Promise<void>;
     routeToInventoryMenu: () => Promise<void>;
     routeToLoadZone: () => void;
     routeToScanZone: () => void;
@@ -37,6 +39,7 @@ export declare const useInventory: () => {
     routeToInventorySavedFilters: () => void;
     routeToInventorySavedLoadSuccess: () => void;
     routeToInventorySavedList: () => void;
+    routeToInventorySummary: () => void;
     zoneSelected: any;
     setZoneSelected: (data: any) => void;
     userSelected: any;

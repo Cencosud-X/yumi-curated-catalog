@@ -7956,6 +7956,11 @@ class InventoryAPI extends AxiosProvider {
       return yield this.post(`/inventory/${this.countryCode}/${request.store}/list-saved`, request.zonifications);
     });
   }
+  getAllZonificationsInProgress(request) {
+    return __awaiter(this, void 0, void 0, function* () {
+      return yield this.post(`/inventory/${this.countryCode}/${request.store}/progress`, request.zonifications);
+    });
+  }
   getFiltersByZonification(request) {
     return __awaiter(this, void 0, void 0, function* () {
       return yield this.get(`/inventory/${this.countryCode}/${request.store}/filters`, request.zonifications);
@@ -7990,6 +7995,7 @@ var InventoryPagesEnum;
   InventoryPagesEnum["PAGE_INVENTORY_SAVED_FILTERS"] = "PAGE_INVENTORY_SAVED_FILTERS";
   InventoryPagesEnum["PAGE_INVENTORY_SAVED_EDIT"] = "PAGE_INVENTORY_SAVED_EDIT";
   InventoryPagesEnum["PAGE_INVENTORY_SAVED_LOAD_SUCCESS"] = "PAGE_INVENTORY_SAVED_LOAD_SUCCESS";
+  InventoryPagesEnum["PAGE_INVENTORY_SUMMARY_LOAD"] = "PAGE_INVENTORY_SUMMARY_LOAD";
 })(InventoryPagesEnum || (InventoryPagesEnum = {}));
 
 var InventoryTypeEnum;
@@ -8005,12 +8011,14 @@ var InventoryRoutesEnum;
   InventoryRoutesEnum["NEW_INVENTORY"] = "/tools/inventory/new";
   InventoryRoutesEnum["SAVED_INVENTORY"] = "/tools/inventory/saved";
   InventoryRoutesEnum["SAVED_FILTER_INVENTORY"] = "/tools/inventory/saved/filter";
+  InventoryRoutesEnum["SUMMARY"] = "/tools/inventory/summary";
 })(InventoryRoutesEnum || (InventoryRoutesEnum = {}));
 
 var TitlePagesEnum;
 (function (TitlePagesEnum) {
   TitlePagesEnum["INVENTORY_PERISHABLE"] = "Inventario de perecibles";
   TitlePagesEnum["INVENTORY_SAVED"] = "Inventario Guardado";
+  TitlePagesEnum["INVENTORY_SUMMARY"] = "Toma de inventario";
   TitlePagesEnum["FILTERS"] = "Filtros";
 })(TitlePagesEnum || (TitlePagesEnum = {}));
 
@@ -8390,6 +8398,23 @@ const InventoryProvider = ({
       loading(false);
     }
   });
+  const listInProgressZonification = filterZonification => __awaiter(void 0, void 0, void 0, function* () {
+    const request = {
+      store: userStore.code,
+      zonifications: filterZonification
+    };
+    try {
+      loading(true);
+      const {
+        data: response
+      } = yield inventoryAPI.getAllZonificationsInProgress(request);
+      return response;
+    } catch (error) {
+      return RESPONSE_ERROR_API;
+    } finally {
+      loading(false);
+    }
+  });
   const listFiltersZonification = () => __awaiter(void 0, void 0, void 0, function* () {
     const request = {
       store: userStore.code
@@ -8512,6 +8537,7 @@ const InventoryProvider = ({
       history,
       setHistory,
       listSavedZonification,
+      listInProgressZonification,
       listFiltersZonification,
       listProductsByZonification,
       zoneSelected,
@@ -8654,6 +8680,7 @@ const useInventory = () => {
     getTotalFurniture,
     finishInventory,
     listSavedZonification,
+    listInProgressZonification,
     listFiltersZonification,
     listProductsByZonification,
     zoneSelected,
@@ -8683,6 +8710,7 @@ const useInventory = () => {
   const routeToInventorySavedFilters = () => setPage(InventoryPagesEnum.PAGE_INVENTORY_SAVED_FILTERS);
   const routeToInventorySavedLoadSuccess = () => setPage(InventoryPagesEnum.PAGE_INVENTORY_SAVED_LOAD_SUCCESS);
   const routeToInventorySavedEdit = () => setPage(InventoryPagesEnum.PAGE_INVENTORY_SAVED_EDIT);
+  const routeToInventorySummary = () => setPage(InventoryPagesEnum.PAGE_INVENTORY_SUMMARY_LOAD);
   const routeToSavedInventory = () => __awaiter(void 0, void 0, void 0, function* () {
     yield stopScan();
     history === null || history === void 0 ? void 0 : history.push(InventoryRoutesEnum.SAVED_INVENTORY);
@@ -8690,6 +8718,10 @@ const useInventory = () => {
   const routeToInventoryMenu = () => __awaiter(void 0, void 0, void 0, function* () {
     yield stopScan();
     history === null || history === void 0 ? void 0 : history.push(InventoryRoutesEnum.MENU);
+  });
+  const routeToRoot = () => __awaiter(void 0, void 0, void 0, function* () {
+    yield stopScan();
+    history === null || history === void 0 ? void 0 : history.push(InventoryRoutesEnum.ROOT);
   });
   const actionScanZone = contentScan => __awaiter(void 0, void 0, void 0, function* () {
     if (contentScan) {
@@ -8803,6 +8835,9 @@ const useInventory = () => {
   const actionSendListInventory = inventories => __awaiter(void 0, void 0, void 0, function* () {
     return yield sendListInventory(inventories);
   });
+  const actionListZonificationInProgress = filters => __awaiter(void 0, void 0, void 0, function* () {
+    return yield listInProgressZonification(filters);
+  });
   return {
     inventory,
     setDataInventory,
@@ -8830,6 +8865,8 @@ const useInventory = () => {
     actionEditProductCount,
     getTotalFurniture,
     actionSendListInventory,
+    actionListZonificationInProgress,
+    routeToRoot,
     routeToInventoryMenu,
     routeToLoadZone,
     routeToScanZone,
@@ -8841,6 +8878,7 @@ const useInventory = () => {
     routeToInventorySavedFilters,
     routeToInventorySavedLoadSuccess,
     routeToInventorySavedList,
+    routeToInventorySummary,
     zoneSelected,
     setZoneSelected,
     userSelected,
@@ -9965,13 +10003,13 @@ const Success = () => {
   });
 };
 
-let _ = t => t,
-  _t,
+let _$1 = t => t,
+  _t$1,
   _t2,
   _t3,
   _t4,
   _t5;
-const ContainerBarcodeScanner = styled.div(_t || (_t = _`
+const ContainerBarcodeScanner = styled.div(_t$1 || (_t$1 = _$1`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 1.4fr 1fr;
@@ -9983,7 +10021,7 @@ const ContainerBarcodeScanner = styled.div(_t || (_t = _`
   margin: 0;
   box-sizing: border-box;
 `));
-const HeaderScanner = styled.div(_t2 || (_t2 = _`
+const HeaderScanner = styled.div(_t2 || (_t2 = _$1`
   svg {
     color: white !important;
   }
@@ -9992,11 +10030,11 @@ const HeaderScanner = styled.div(_t2 || (_t2 = _`
     color: white !important;
   }
 `));
-const ScannerBox = styled.div(_t3 || (_t3 = _`
+const ScannerBox = styled.div(_t3 || (_t3 = _$1`
   display: grid;
   place-items: center;
 `));
-const ScannerZone = styled.div(_t4 || (_t4 = _`
+const ScannerZone = styled.div(_t4 || (_t4 = _$1`
   position: absolute;
   margin: auto;
   top: 0;
@@ -10019,7 +10057,7 @@ const ScannerZone = styled.div(_t4 || (_t4 = _`
   box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.8);
   z-index: 2;
 `));
-const FooterScanner = styled.div(_t5 || (_t5 = _`
+const FooterScanner = styled.div(_t5 || (_t5 = _$1`
   button {
     background: white !important;
   }
@@ -11311,6 +11349,132 @@ class InventorySavedPage extends Page {
   }
 }
 
+const SummaryCard = props => {
+  return jsx(Ramen.XCard, {
+    onClick: () => {
+      var _a;
+      return (_a = props.history) === null || _a === void 0 ? void 0 : _a.push(InventoryRoutesEnum.SUMMARY);
+    },
+    size: "l",
+    symbol: "fit-stock-neutral",
+    title: "Toma de inventario",
+    borderType: "shadow"
+  });
+};
+
+let _ = t => t,
+  _t;
+const SummaryContainerCard = styled.div(_t || (_t = _`
+  width: 100%;
+  border-radius: 20px;
+  background: #fff;
+  padding: 4%;
+  box-shadow: 4px 4px 8px 4px rgba(24, 39, 75, 0.08);
+`));
+
+const InventorySummaryCard = props => {
+  return jsx(SummaryContainerCard, {
+    children: jsxs(Ramen.XBox, Object.assign({
+      orientation: "vertical",
+      gap: "xs"
+    }, {
+      children: [jsx(Ramen.XTagState, {
+        state: "success",
+        text: "En progreso"
+      }), jsxs(Ramen.XText, Object.assign({
+        weight: "bold"
+      }, {
+        children: ["Almac\u00E9n ", props.productInventory.storageCode, " - Mueble", ' ', props.productInventory.furnitureCode]
+      })), jsxs(Ramen.XText, Object.assign({
+        colorThone: "dim",
+        fontSize: 11
+      }, {
+        children: ["Iniciado ", formatDate(props.productInventory.createdAt)]
+      }))]
+    }))
+  });
+};
+
+const SummaryLoadComponent = () => {
+  const {
+    userStore,
+    userSelected,
+    actionListZonificationInProgress,
+    routeToRoot
+  } = useInventory();
+  const [inventories, setInventories] = useState([]);
+  useEffect(() => {
+    if (userStore === null || userStore === void 0 ? void 0 : userStore.name) {
+      (() => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield actionListZonificationInProgress({
+          zones: [],
+          furnitures: [],
+          users: userSelected
+        });
+        if (response) {
+          let data = [];
+          response === null || response === void 0 ? void 0 : response.storageList.forEach(storage => {
+            data = [...data, ...(storage === null || storage === void 0 ? void 0 : storage.zonifications)];
+          });
+          setInventories(data);
+        }
+      }))();
+    }
+  }, [userStore]);
+  return jsx(Ramen.XPage, {
+    children: jsxs(Fragment$1, {
+      children: [jsx(InventoryHeader, {
+        onBack: () => routeToRoot(),
+        title: TitlePagesEnum.INVENTORY_SUMMARY
+      }), jsx(Ramen.XBox, Object.assign({
+        orientation: "vertical",
+        gap: "m",
+        padding: "m"
+      }, {
+        children: inventories.map((inventory, index) => {
+          return jsx(InventorySummaryCard, {
+            productInventory: inventory
+          }, index);
+        })
+      }))]
+    })
+  });
+};
+
+const InventorySummaryMain = () => {
+  const {
+    page,
+    routeToInventorySummary
+  } = useInventory();
+  const renderPAGE_INVENTORY_SUMMARY_LOAD = () => jsx(SummaryLoadComponent, {});
+  const renders = {
+    [InventoryPagesEnum.PAGE_INVENTORY_SUMMARY_LOAD]: renderPAGE_INVENTORY_SUMMARY_LOAD
+  };
+  useEffect(() => {
+    routeToInventorySummary();
+  }, []);
+  return jsx(Ramen.XPage, {
+    children: (() => {
+      if (!renders[page]) {
+        return jsx("div", {
+          children: page
+        });
+      }
+      return renders[page]();
+    })()
+  });
+};
+
+class InventorySummaryPage extends Page {
+  constructor() {
+    super(...arguments);
+    this.state = {};
+  }
+  render() {
+    return jsx(InventorySummaryMain, {});
+  }
+}
+
 class InventoryModule extends Module {
   constructor(props, override) {
     super(props, {
@@ -11323,6 +11487,9 @@ class InventoryModule extends Module {
       }, {
         path: '/saved',
         page: InventorySavedPage
+      }, {
+        path: '/summary',
+        page: InventorySummaryPage
       }],
       override
     });
@@ -11345,5 +11512,6 @@ class InventoryModule extends Module {
   }
 }
 InventoryModule.route = '/tools/inventory';
+InventoryModule.summaryCard = SummaryCard;
 
 export { InventoryModule as default };

@@ -3,5 +3,6 @@ export declare enum InventoryRoutesEnum {
     MENU = "/tools/inventory",
     NEW_INVENTORY = "/tools/inventory/new",
     SAVED_INVENTORY = "/tools/inventory/saved",
-    SAVED_FILTER_INVENTORY = "/tools/inventory/saved/filter"
+    SAVED_FILTER_INVENTORY = "/tools/inventory/saved/filter",
+    SUMMARY = "/tools/inventory/summary"
 }

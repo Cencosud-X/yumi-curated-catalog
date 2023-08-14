@@ -13,6 +13,7 @@ declare class InventoryAPI extends AxiosProvider {
     finishInventory(request: FinishInventoryRequest): Promise<FinishInventoryResponse>;
     getTotalFurniture(request: GetTotalFurnitureRequest): Promise<GetTotalFurnitureResponse>;
     getAllZonificationsSaved(request: GetZonificationSavedRequest): Promise<GetZonificationResponse>;
+    getAllZonificationsInProgress(request: GetZonificationSavedRequest): Promise<GetZonificationResponse>;
     getFiltersByZonification(request: any): Promise<GetFiltersZonificationResponse>;
     getProductsByZonificationSaved(request: any): Promise<GetFiltersZonificationResponse>;
     sendProductsBySavedZonification(request: any): Promise<GetSendInventoryResponse>;

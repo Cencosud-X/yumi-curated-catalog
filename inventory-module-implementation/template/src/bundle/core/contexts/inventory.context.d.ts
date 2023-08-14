@@ -30,6 +30,7 @@ export declare type InventoryContextData = {
     history: H.History | undefined;
     setHistory: (data: H.History) => void;
     listSavedZonification: (filters: any) => Promise<any>;
+    listInProgressZonification: (filters: any) => Promise<any>;
     listFiltersZonification: () => Promise<any>;
     listProductsByZonification: (id: string) => Promise<any>;
     zoneSelected: any;

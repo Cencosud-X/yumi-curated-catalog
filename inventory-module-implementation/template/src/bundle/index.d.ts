@@ -15,6 +15,7 @@ export interface IModuleProps extends Components.IModuleProps {
 }
 export default abstract class InventoryModule extends Components.Module<IInventoryModuleOverride> {
     static route: string;
+    static summaryCard: import("react").FC<any>;
     constructor(props: IModuleProps, override: IInventoryModuleOverride);
     render(): JSX.Element;
 }
