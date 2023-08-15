@@ -1,5 +1,5 @@
 {
-  "name": "@arcus-documentation/mobile-module",
+  "name": "@yumi/mobile-module",
   "version": "0.0.1",
   "module": "./index.js",
   "main": "./index.js",
@@ -7,6 +7,11 @@
   "types": "./index.d.ts",
   "dependencies": {},
   "peerDependencies": {
-    "react": "18.2.0"
+    "react": "^16.14.0",
+    "react-router": "^5.2.0",
+    "lodash": "^4.17.21",
+    "react-router-dom": "^5.3.4",
+    "immer": "^10.0.2",
+    "@team_yumi/ramen": "^0.0.3-next.1691622154314"
   }
 }
