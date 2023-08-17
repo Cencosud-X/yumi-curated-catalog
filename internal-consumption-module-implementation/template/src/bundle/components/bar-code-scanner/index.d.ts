@@ -1,7 +1,7 @@
 /// <reference types="react" />
 interface IProps {
     searchDisabled: boolean;
-    onScan?: (code: string) => void;
+    onScan?: (code: string) => Promise<void>;
     isCodeValid: (code: string) => boolean;
     autoFocused?: boolean;
 }

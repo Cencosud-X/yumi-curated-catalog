@@ -2831,8 +2831,9 @@ const BarCodeScanner = ({
     // Si la diferencia entre los tamaños es mayor que 1 (significa que no se está borrando o escribiendo)
     && Math.abs(value.length - oldCodeNumber.length) > 1 && onScan) {
       console.log('Busca automatico');
-      onScan(value);
-      setBarcodeNumber("");
+      onScan(value).then(() => {
+        setBarcodeNumber("");
+      });
     }
   };
   const handleCameraClick = () => {
@@ -2840,14 +2841,17 @@ const BarCodeScanner = ({
       startScan(code => {
         console.log('se setea el codigo ' + code);
         setBarcodeNumber(code);
-        !searchDisabled && onScan && onScan(code);
+        !searchDisabled && onScan && onScan(code).then(() => {
+          setBarcodeNumber("");
+        });
       });
     }
   };
   const handleSearchCodeClick = () => {
     if (barcodeNumber && onScan) {
-      onScan(barcodeNumber);
-      setBarcodeNumber("");
+      onScan(barcodeNumber).then(() => {
+        setBarcodeNumber("");
+      });
     }
   };
   useEffect(() => {
@@ -2947,12 +2951,15 @@ const ProductAttr = ({
   }, {
     children: [jsx(Ramen.XText, Object.assign({
       weight: 'normal',
-      colorThone: 'dim'
+      colorThone: 'dim',
+      fontSize: 11
     }, {
       children: label
-    })), jsx(Ramen.XText, {
+    })), jsx(Ramen.XText, Object.assign({
+      fontSize: 11
+    }, {
       children: value
-    })]
+    }))]
   }));
 };
 const ProductCard$1 = ({
@@ -2980,7 +2987,8 @@ const ProductCard$1 = ({
     }, {
       children: [jsx(Ramen.XText, Object.assign({
         weight: 'bold',
-        lineHeight: 'title'
+        lineHeight: 'title',
+        fontSize: 11
       }, {
         children: product.description
       })), jsx(ProductAttr, {
@@ -3041,7 +3049,7 @@ const ConfirmModal = ({
   const onActionClick = action => __awaiter(void 0, void 0, void 0, function* () {
     console.log(`Action2 ${action} clicked.`);
     if (action === "ok") {
-      onClose();
+      yield onClose();
       yield onConfirm();
     } else if (action === 'close') {
       onClose();
@@ -3216,8 +3224,8 @@ const ProductListModal = ({
     });
   };
   const onConfirmSend = () => __awaiter(void 0, void 0, void 0, function* () {
-    onClose === null || onClose === void 0 ? void 0 : onClose();
-    onSend();
+    yield onClose === null || onClose === void 0 ? void 0 : onClose();
+    yield onSend();
   });
   const onActionClick = action => {
     console.log(`Action ${action} clicked.`);
@@ -9326,6 +9334,15 @@ const ToolPageWrapper = props => {
                 var _a, _b;
                 console.log('PCode', code);
                 if ((code === null || code === void 0 ? void 0 : code.length) > 0) {
+                  if (!selectedCostCenter) {
+                    Ramen.Api.snackbar.warning({
+                      placement: 'top',
+                      duration: 5,
+                      closable: true,
+                      text: 'Debe seleccionar el centro de costo.'
+                    });
+                    return;
+                  }
                   const productInList = tasks.find(item => item.product.sku === parseInt(code) || item.product.ean === parseInt(code));
                   if (productInList) {
                     console.log('Exist p', productInList);
@@ -9343,6 +9360,12 @@ const ToolPageWrapper = props => {
                       }
                     });
                     setTasks(newTasks);
+                    Ramen.Api.snackbar.success({
+                      placement: 'top',
+                      duration: 5,
+                      closable: true,
+                      text: 'Producto adicionado.'
+                    });
                   } else {
                     try {
                       Ramen.Api.loading.show({
@@ -9350,16 +9373,26 @@ const ToolPageWrapper = props => {
                       });
                       const product = yield props.productClient.search(code);
                       console.log(product);
-                      if (product && selectedCostCenter) {
+                      if (product) {
                         const data = {
                           id: `${new Date().getTime()}}`,
                           product: product,
                           count: 1
                         };
                         setTasks([...tasks, data]);
+                        Ramen.Api.snackbar.success({
+                          placement: 'top',
+                          duration: 5,
+                          closable: true,
+                          text: 'Producto adicionado.'
+                        });
                       } else {
-                        // TODO: no se encuentra el producto
-                        // TODO: no hay centro costo
+                        Ramen.Api.snackbar.warning({
+                          placement: 'top',
+                          duration: 5,
+                          closable: true,
+                          text: 'El Producto no ha podido ser adicionado.'
+                        });
                       }
                       Ramen.Api.loading.hide();
                     } catch (error) {
@@ -9447,6 +9480,7 @@ const ToolPageWrapper = props => {
               data: declarationsDTO
             });
             setTasks([]);
+            setSelectedCostCenter(undefined);
             Ramen.Api.snackbar.success({
               placement: 'top',
               duration: 5,
@@ -9564,12 +9598,15 @@ const TaskAttr$1 = ({
   }, {
     children: [jsx(Ramen.XText, Object.assign({
       weight: "normal",
-      colorThone: "dim"
+      colorThone: "dim",
+      fontSize: 11
     }, {
       children: label
-    })), jsx(Ramen.XText, {
+    })), jsx(Ramen.XText, Object.assign({
+      fontSize: 11
+    }, {
       children: value
-    })]
+    }))]
   }));
 };
 const ProductCard = ({
@@ -9647,7 +9684,8 @@ const ProductCard = ({
         }, {
           children: [jsx(Ramen.XText, Object.assign({
             weight: "bold",
-            lineHeight: "title"
+            lineHeight: "title",
+            fontSize: 11
           }, {
             children: task.meta_data.product.description
           })), jsx(TaskAttr$1, {
@@ -11394,7 +11432,6 @@ const CardList = ({
   const [taskStates, setStaskStates] = useState([]);
   const [modalType, setModalType] = useState();
   const onMarkTask = (task, state) => {
-    console.log('marcando tarea');
     setStaskStates(stateList => {
       const index = stateList.findIndex(st => st.task.id === task.id);
       if (index > -1) {
@@ -11412,6 +11449,14 @@ const CardList = ({
       return [...stateList];
     });
   };
+  const onBulkTaskRequest = () => __awaiter(void 0, void 0, void 0, function* () {
+    yield bulkTaskRequest(taskStates.map(t => ({
+      task: t.task,
+      qty: t.task.meta_data.count,
+      action: t.state === 'FREE' ? 'APPROVED' : 'REJECTED'
+    })));
+    setStaskStates([]);
+  });
   const getTaskMark = useCallback(task => {
     var _a;
     return (_a = taskStates.find(t => t.task.id === task.id)) === null || _a === void 0 ? void 0 : _a.state;
@@ -11476,16 +11521,19 @@ const CardList = ({
         onClick: () => handleConfirm()
       })
     }), jsx(ConfirmModal, {
-      visible: modalType === 'UNIQUE' || modalType === 'MIX',
-      title: modalType === 'UNIQUE' ? "¿Deseas confirmar la solicitud?" : "¿Deseas continuar con el proceso?",
-      btnActionText: modalType === 'UNIQUE' ? "Confirmar" : "Continuar",
+      visible: modalType === 'UNIQUE',
+      title: "\u00BFDeseas confirmar la solicitud?",
+      btnActionText: "Confirmar",
       onClose: () => setModalType(undefined),
-      onConfirm: () => bulkTaskRequest(taskStates.map(t => ({
-        task: t.task,
-        qty: t.task.meta_data.count,
-        action: t.state === 'FREE' ? 'APPROVED' : 'REJECTED'
-      }))),
-      ImageCmp: modalType === 'UNIQUE' ? jsx(Image$2, {}) : jsx(Image$1, {})
+      onConfirm: onBulkTaskRequest,
+      ImageCmp: jsx(Image$2, {})
+    }), jsx(ConfirmModal, {
+      visible: modalType === 'MIX',
+      title: "\u00BFDeseas continuar con el proceso?",
+      btnActionText: "Continuar",
+      onClose: () => setModalType(undefined),
+      onConfirm: onBulkTaskRequest,
+      ImageCmp: jsx(Image$1, {})
     })]
   }));
 };
@@ -12299,12 +12347,15 @@ const TaskAttr = ({
     }, {
       children: [jsx(Ramen.XText, Object.assign({
         weight: "normal",
-        colorThone: "dim"
+        colorThone: "dim",
+        fontSize: 11
       }, {
         children: label
-      })), jsx(Ramen.XText, {
+      })), jsx(Ramen.XText, Object.assign({
+        fontSize: 11
+      }, {
         children: value
-      })]
+      }))]
     }));
   } else {
     return null;
@@ -12363,7 +12414,8 @@ const TaskCard = ({
         }, {
           children: [jsx(Ramen.XText, Object.assign({
             weight: "bold",
-            lineHeight: "title"
+            lineHeight: "title",
+            fontSize: 11
           }, {
             children: task.meta_data.product.description
           })), _fields.includes('sku') && jsx(TaskAttr, {
@@ -12521,6 +12573,7 @@ const CreatorSummaryPageWrapper = _a => {
     } = _a,
     props = __rest(_a, ["pendingTasksFn", "rejectedTasksFn", "expiredTasksFn"]);
   const [skeleton, setSkeleton] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [activeTab, setActiveTab] = useState();
   const [currentTasks, setCurrentTasks] = useState([]);
@@ -12533,9 +12586,7 @@ const CreatorSummaryPageWrapper = _a => {
     }
   }, [history]);
   const loadTasks = useCallback(tab => __awaiter(void 0, void 0, void 0, function* () {
-    Ramen.Api.loading.show({
-      text: 'Cargando'
-    });
+    setLoading(true);
     try {
       if (tab === 'PENDING') {
         const tasks = yield pendingTasksFn();
@@ -12552,8 +12603,17 @@ const CreatorSummaryPageWrapper = _a => {
     } catch (error) {
       setError(true);
     }
-    Ramen.Api.loading.hide();
+    setLoading(false);
   }), [rejectedTasksFn, expiredTasksFn, pendingTasksFn]);
+  useEffect(() => {
+    if (loading) {
+      Ramen.Api.loading.show({
+        text: 'Cargando'
+      });
+    } else {
+      Ramen.Api.loading.hide();
+    }
+  }, [loading]);
   useEffect(() => {
     if (activeTab) {
       setCurrentTasks([]);
@@ -12649,7 +12709,7 @@ const CreatorSummaryPageWrapper = _a => {
             })]
           }))]
         }))
-      })), activeTab && currentTasks.length === 0 && jsx(EmptyList, {
+      })), !loading && activeTab && currentTasks.length === 0 && jsx(EmptyList, {
         text: '\u00A1Tienes todo en orden!'
       }), activeTab && currentTasks.length > 0 && jsx(Ramen.XBox, Object.assign({
         gap: "s"
