@@ -375,6 +375,7 @@
 
 .shop-cart__item__data{
   width: 170px;
+  cursor: pointer;
 }
 
 .shop-cart__item__actions{
@@ -1006,6 +1007,252 @@
   margin: 4px;
 }
 
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600;700&display=swap");
+:root {
+/* fonts */
+--semibold-body-m-14: "Open Sans";
+
+/* font sizes */
+--semibold-body-m-14-size: 14px;
+--bold-subtitle-s-20-size: 20px;
+--bold-body-l-16-size: 16px;
+--bold-title-m-36-size: 36px;
+
+/* Colors */
+--global-neutral-white: #fff;
+--global-neutral-dark-30: #d6d6d6;
+--global-neutral-dark-70: #5c5c5c;
+--color-black: #000;
+--global-neutral-dark-60: #7a7a7a;
+--global-neutral-dark-90: #1f1f1f;
+--global-neutral-dark-20: #f5f5f5;
+--arcus-accent-arcus-green: #2cdfa6;
+
+/* Gaps */
+--gap-5xl: 24px;
+--gap-base: 16px;
+--gap-5xs: 8px;
+--gap-9xs: 4px;
+
+/* Paddings */
+--padding-5xl: 24px;
+--padding-9xs: 4px;
+--padding-6xs: 7px;
+--padding-6xs-5: 6.5px;
+--padding-13xl: 32px;
+--padding-151xl: 170px;
+--padding-29xl: 48px;
+
+/* border radiuses */
+--br-5xl: 24px;
+--br-81xl: 100px;
+--br-smi: 13px;
+}
+
+.BannerHome-module_blurIcon__MpZ38 {
+  position: relative;
+  width: 462.77px;
+}
+.BannerHome-module_xboxBlur__WgCkB {
+  margin: 0 !important;
+  position: absolute;
+  top: 0;
+  left: 0.5px;
+  width: 389px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  z-index: 0;
+}
+.BannerHome-module_manBaseIcon__aN66O{
+  position: relative;
+  margin-left: -20px;
+  z-index: 1;
+}
+.BannerHome-module_eIllustrationEasy__rURze {
+  align-self: stretch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 1;
+}
+.BannerHome-module_xtext__np8-O,
+.BannerHome-module_xtitle__ZD3Fh {
+  align-self: stretch;
+  position: relative;
+  letter-spacing: -0.05em;
+  line-height: 100%;
+}
+.BannerHome-module_xtext__np8-O {
+  font-size: var(--bold-subtitle-s-20-size);
+  font-weight: 600;
+  color: var(--global-neutral-dark-60);
+}
+.BannerHome-module_saludo__58ZaQ,
+.BannerHome-module_xbox__lyxlh {
+  align-self: stretch;
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.BannerHome-module_saludo__58ZaQ {
+  flex-direction: column;
+  padding: var(--padding-13xl) var(--padding-13xl) var(--padding-13xl) 80px;
+  gap: var(--gap-base);
+  z-index: 2;
+}
+.BannerHome-module_xbox__lyxlh {
+  border-radius: 32px;
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 34px #f6f6f6;
+  -webkit-backdrop-filter: blur(16px);
+          backdrop-filter: blur(16px);
+  border: 1px solid var(--global-neutral-dark-20);
+  overflow: hidden;
+  flex-direction: row;
+  position: relative;
+  gap: var(--gap-5xl);
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 1;
+}
+.BannerHome-module_filledsystemsupportChild__j7b5I,
+.BannerHome-module_pathIcon1__YTyJX {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.BannerHome-module_pathIcon1__YTyJX {
+  height: 83.33%;
+  width: 83.33%;
+  top: 8.33%;
+  right: 8.33%;
+  bottom: 8.33%;
+  left: 8.33%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+.BannerHome-module_filledsystemsupport__XIWPc {
+  position: relative;
+  width: 32.5px;
+  height: 32.5px;
+}
+.BannerHome-module_xboxSymbol__Z9YbH {
+  border-radius: var(--br-smi);
+  background-color: var(--global-neutral-dark-20);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  flex-direction: row;
+  padding: var(--padding-6xs-5);
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+}
+.BannerHome-module_xtitle1__swabC {
+  position: relative;
+  letter-spacing: -0.05em;
+  line-height: 100%;
+}
+.BannerHome-module_xbadge__-uiEd {
+  border-radius: var(--br-81xl);
+  background-color: var(--global-neutral-dark-90);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: var(--padding-9xs) var(--padding-6xs);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: var(--bold-body-l-16-size);
+  color: var(--global-neutral-white);
+}
+.BannerHome-module_xboxTitle__hbTCs,
+.BannerHome-module_xboxTitle1__Jb0-t {
+  display: flex;
+  justify-content: flex-start;
+}
+.BannerHome-module_xboxTitle1__Jb0-t {
+  align-self: stretch;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: var(--gap-5xs);
+}
+.BannerHome-module_xboxTitle__hbTCs {
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-9xs);
+}
+.BannerHome-module_xbox2__MbmkI,
+.BannerHome-module_xtext2__9nqLE {
+  align-self: stretch;
+}
+.BannerHome-module_xbox2__MbmkI {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-5xs);
+}
+.BannerHome-module_xtext2__9nqLE {
+  position: relative;
+  font-size: var(--semibold-body-m-14-size);
+  letter-spacing: -0.05em;
+  line-height: 100%;
+  font-weight: 600;
+  color: var(--global-neutral-dark-70);
+}
+.BannerHome-module_xbox1__Ndkb6 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-base);
+  z-index: 0;
+}
+.BannerHome-module_eBannerhome__jfsYq,
+.BannerHome-module_xitemCardSolicitudes__HQJNn {
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.BannerHome-module_xitemCardSolicitudes__HQJNn {
+  border-radius: var(--br-5xl);
+  background-color: var(--global-neutral-white);
+  box-shadow: var(--shadow-standard-small);
+  border: 1px solid var(--global-neutral-dark-30);
+  box-sizing: border-box;
+  width: 360px;
+  display: none;
+  padding: var(--padding-5xl);
+  align-items: center;
+  z-index: 0;
+  font-size: var(--bold-subtitle-s-20-size);
+  color: var(--color-black);
+}
+.BannerHome-module_eBannerhome__jfsYq {
+  position: relative;
+  width: 100%;
+  min-height: 257px;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--gap-5xl);
+  text-align: left;
+  font-size: var(--bold-title-m-36-size);
+  color: var(--global-neutral-dark-90);
+  font-family: var(--semibold-body-m-14);
+}
+
 .product-slider {
   display: flex;
   flex-direction: row-reverse;
@@ -1104,6 +1351,12 @@
   text-decoration: none;
   color: rgb(255, 255, 255);
   font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+  .footer__content {
+    padding: 2rem;
+  }
 }
 
 .product-page {
