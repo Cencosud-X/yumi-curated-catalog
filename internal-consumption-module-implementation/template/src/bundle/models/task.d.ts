@@ -39,4 +39,5 @@ export interface Task {
     created_by: User;
     created_at: string;
     store: Store;
+    state: 'PENDING' | 'COMPLETED';
 }

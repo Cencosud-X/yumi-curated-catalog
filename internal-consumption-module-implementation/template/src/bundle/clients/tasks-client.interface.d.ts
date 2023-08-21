@@ -39,5 +39,13 @@ export interface ITaskClient {
      * Retrieve current Creator Expired Tasks
      */
     creatorExpiredTasks(): Promise<Task[]>;
+    /**
+     * Retrieve completed tasks
+     */
+    processedTasks(): Promise<Task[]>;
+    /**
+     * Retrieve expired tasks
+     */
+    expiredTasks(): Promise<Task[]>;
 }
 export {};

@@ -1,6 +1,6 @@
 /// <reference types="react" />
-import { Task } from '../../../../models/task';
 import './index.less';
+import { Task } from '../../models/task';
 declare const ControlTag: React.FC<{
     task: Task;
 }>;

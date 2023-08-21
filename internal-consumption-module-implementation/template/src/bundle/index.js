@@ -1,7 +1,7 @@
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import { IonRouterOutlet } from '@ionic/react';
 import * as React from 'react';
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { Route, useHistory } from 'react-router-dom';
 import Ramen from '@team_yumi/ramen';
 import { useScanner, ScannerHoC } from '@team_yumi/code-scanner';
@@ -14,7 +14,7 @@ function commonjsRequire (path) {
 	throw new Error('Could not dynamically require "' + path + '". Please configure the dynamicRequireTargets or/and ignoreDynamicRequires option of @rollup/plugin-commonjs appropriately for this require call to work.');
 }
 
-var fails$m = function (exec) {
+var fails$o = function (exec) {
   try {
     return !!exec();
   } catch (error) {
@@ -22,66 +22,66 @@ var fails$m = function (exec) {
   }
 };
 
-var fails$l = fails$m;
+var fails$n = fails$o;
 
-var functionBindNative = !fails$l(function () {
+var functionBindNative = !fails$n(function () {
   // eslint-disable-next-line es/no-function-prototype-bind -- safe
   var test = (function () { /* empty */ }).bind();
   // eslint-disable-next-line no-prototype-builtins -- safe
   return typeof test != 'function' || test.hasOwnProperty('prototype');
 });
 
-var NATIVE_BIND$2 = functionBindNative;
+var NATIVE_BIND$3 = functionBindNative;
 
 var FunctionPrototype$2 = Function.prototype;
-var call$d = FunctionPrototype$2.call;
-var uncurryThisWithBind = NATIVE_BIND$2 && FunctionPrototype$2.bind.bind(call$d, call$d);
+var call$k = FunctionPrototype$2.call;
+var uncurryThisWithBind = NATIVE_BIND$3 && FunctionPrototype$2.bind.bind(call$k, call$k);
 
-var functionUncurryThis = NATIVE_BIND$2 ? uncurryThisWithBind : function (fn) {
+var functionUncurryThis = NATIVE_BIND$3 ? uncurryThisWithBind : function (fn) {
   return function () {
-    return call$d.apply(fn, arguments);
+    return call$k.apply(fn, arguments);
   };
 };
 
-var uncurryThis$o = functionUncurryThis;
+var uncurryThis$r = functionUncurryThis;
 
-var toString$e = uncurryThis$o({}.toString);
-var stringSlice$9 = uncurryThis$o(''.slice);
+var toString$e = uncurryThis$r({}.toString);
+var stringSlice$9 = uncurryThis$r(''.slice);
 
 var classofRaw$2 = function (it) {
   return stringSlice$9(toString$e(it), 8, -1);
 };
 
-var uncurryThis$n = functionUncurryThis;
-var fails$k = fails$m;
-var classof$4 = classofRaw$2;
+var uncurryThis$q = functionUncurryThis;
+var fails$m = fails$o;
+var classof$7 = classofRaw$2;
 
 var $Object$4 = Object;
-var split = uncurryThis$n(''.split);
+var split = uncurryThis$q(''.split);
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var indexedObject = fails$k(function () {
+var indexedObject = fails$m(function () {
   // throws an error in rhino, see https://github.com/mozilla/rhino/issues/346
   // eslint-disable-next-line no-prototype-builtins -- safe
   return !$Object$4('z').propertyIsEnumerable(0);
 }) ? function (it) {
-  return classof$4(it) == 'String' ? split(it, '') : $Object$4(it);
+  return classof$7(it) == 'String' ? split(it, '') : $Object$4(it);
 } : $Object$4;
 
 // we can't use just `it == null` since of `document.all` special case
 // https://tc39.es/ecma262/#sec-IsHTMLDDA-internal-slot-aec
-var isNullOrUndefined$5 = function (it) {
+var isNullOrUndefined$7 = function (it) {
   return it === null || it === undefined;
 };
 
-var isNullOrUndefined$4 = isNullOrUndefined$5;
+var isNullOrUndefined$6 = isNullOrUndefined$7;
 
-var $TypeError$8 = TypeError;
+var $TypeError$e = TypeError;
 
 // `RequireObjectCoercible` abstract operation
 // https://tc39.es/ecma262/#sec-requireobjectcoercible
 var requireObjectCoercible$a = function (it) {
-  if (isNullOrUndefined$4(it)) throw $TypeError$8("Can't call method on " + it);
+  if (isNullOrUndefined$6(it)) throw $TypeError$e("Can't call method on " + it);
   return it;
 };
 
@@ -98,7 +98,7 @@ var check = function (it) {
 };
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-var global$i =
+var global$n =
   // eslint-disable-next-line es/no-global-this -- safe
   check(typeof globalThis == 'object' && globalThis) ||
   check(typeof window == 'object' && window) ||
@@ -110,24 +110,24 @@ var global$i =
 
 var shared$4 = {exports: {}};
 
-var global$h = global$i;
+var global$m = global$n;
 
 // eslint-disable-next-line es/no-object-defineproperty -- safe
 var defineProperty$7 = Object.defineProperty;
 
 var defineGlobalProperty$3 = function (key, value) {
   try {
-    defineProperty$7(global$h, key, { value: value, configurable: true, writable: true });
+    defineProperty$7(global$m, key, { value: value, configurable: true, writable: true });
   } catch (error) {
-    global$h[key] = value;
+    global$m[key] = value;
   } return value;
 };
 
-var global$g = global$i;
+var global$l = global$n;
 var defineGlobalProperty$2 = defineGlobalProperty$3;
 
 var SHARED = '__core-js_shared__';
-var store$3 = global$g[SHARED] || defineGlobalProperty$2(SHARED, {});
+var store$3 = global$l[SHARED] || defineGlobalProperty$2(SHARED, {});
 
 var sharedStore = store$3;
 
@@ -153,10 +153,10 @@ var toObject$4 = function (argument) {
   return $Object$3(requireObjectCoercible$8(argument));
 };
 
-var uncurryThis$m = functionUncurryThis;
+var uncurryThis$p = functionUncurryThis;
 var toObject$3 = toObject$4;
 
-var hasOwnProperty = uncurryThis$m({}.hasOwnProperty);
+var hasOwnProperty = uncurryThis$p({}.hasOwnProperty);
 
 // `HasOwnProperty` abstract operation
 // https://tc39.es/ecma262/#sec-hasownproperty
@@ -165,11 +165,11 @@ var hasOwnProperty_1 = Object.hasOwn || function hasOwn(it, key) {
   return hasOwnProperty(toObject$3(it), key);
 };
 
-var uncurryThis$l = functionUncurryThis;
+var uncurryThis$o = functionUncurryThis;
 
 var id = 0;
 var postfix = Math.random();
-var toString$d = uncurryThis$l(1.0.toString);
+var toString$d = uncurryThis$o(1.0.toString);
 
 var uid$2 = function (key) {
   return 'Symbol(' + (key === undefined ? '' : key) + ')_' + toString$d(++id + postfix, 36);
@@ -177,12 +177,12 @@ var uid$2 = function (key) {
 
 var engineUserAgent = typeof navigator != 'undefined' && String(navigator.userAgent) || '';
 
-var global$f = global$i;
-var userAgent = engineUserAgent;
+var global$k = global$n;
+var userAgent$3 = engineUserAgent;
 
-var process = global$f.process;
-var Deno = global$f.Deno;
-var versions = process && process.versions || Deno && Deno.version;
+var process$4 = global$k.process;
+var Deno$1 = global$k.Deno;
+var versions = process$4 && process$4.versions || Deno$1 && Deno$1.version;
 var v8 = versions && versions.v8;
 var match, version;
 
@@ -195,10 +195,10 @@ if (v8) {
 
 // BrowserFS NodeJS `process` polyfill incorrectly set `.v8` to `0.0`
 // so check `userAgent` even if `.v8` exists, but 0
-if (!version && userAgent) {
-  match = userAgent.match(/Edge\/(\d+)/);
+if (!version && userAgent$3) {
+  match = userAgent$3.match(/Edge\/(\d+)/);
   if (!match || match[1] >= 74) {
-    match = userAgent.match(/Chrome\/(\d+)/);
+    match = userAgent$3.match(/Chrome\/(\d+)/);
     if (match) version = +match[1];
   }
 }
@@ -207,14 +207,14 @@ var engineV8Version = version;
 
 /* eslint-disable es/no-symbol -- required for testing */
 
-var V8_VERSION = engineV8Version;
-var fails$j = fails$m;
-var global$e = global$i;
+var V8_VERSION$1 = engineV8Version;
+var fails$l = fails$o;
+var global$j = global$n;
 
-var $String$6 = global$e.String;
+var $String$6 = global$j.String;
 
 // eslint-disable-next-line es/no-object-getownpropertysymbols -- required for testing
-var symbolConstructorDetection = !!Object.getOwnPropertySymbols && !fails$j(function () {
+var symbolConstructorDetection = !!Object.getOwnPropertySymbols && !fails$l(function () {
   var symbol = Symbol();
   // Chrome 38 Symbol has incorrect toString conversion
   // `get-own-property-symbols` polyfill symbols converted to object are not Symbol instances
@@ -222,7 +222,7 @@ var symbolConstructorDetection = !!Object.getOwnPropertySymbols && !fails$j(func
   // of course, fail.
   return !$String$6(symbol) || !(Object(symbol) instanceof Symbol) ||
     // Chrome 38-40 symbols are not inherited from DOM collections prototypes to instances
-    !Symbol.sham && V8_VERSION && V8_VERSION < 41;
+    !Symbol.sham && V8_VERSION$1 && V8_VERSION$1 < 41;
 });
 
 /* eslint-disable es/no-symbol -- required for testing */
@@ -233,20 +233,20 @@ var useSymbolAsUid = NATIVE_SYMBOL$2
   && !Symbol.sham
   && typeof Symbol.iterator == 'symbol';
 
-var global$d = global$i;
+var global$i = global$n;
 var shared$3 = shared$4.exports;
-var hasOwn$b = hasOwnProperty_1;
+var hasOwn$c = hasOwnProperty_1;
 var uid$1 = uid$2;
 var NATIVE_SYMBOL$1 = symbolConstructorDetection;
 var USE_SYMBOL_AS_UID$1 = useSymbolAsUid;
 
-var Symbol$2 = global$d.Symbol;
+var Symbol$2 = global$i.Symbol;
 var WellKnownSymbolsStore = shared$3('wks');
 var createWellKnownSymbol = USE_SYMBOL_AS_UID$1 ? Symbol$2['for'] || Symbol$2 : Symbol$2 && Symbol$2.withoutSetter || uid$1;
 
-var wellKnownSymbol$e = function (name) {
-  if (!hasOwn$b(WellKnownSymbolsStore, name)) {
-    WellKnownSymbolsStore[name] = NATIVE_SYMBOL$1 && hasOwn$b(Symbol$2, name)
+var wellKnownSymbol$j = function (name) {
+  if (!hasOwn$c(WellKnownSymbolsStore, name)) {
+    WellKnownSymbolsStore[name] = NATIVE_SYMBOL$1 && hasOwn$c(Symbol$2, name)
       ? Symbol$2[name]
       : createWellKnownSymbol('Symbol.' + name);
   } return WellKnownSymbolsStore[name];
@@ -269,50 +269,50 @@ var documentAll$1 = $documentAll$1.all;
 
 // `IsCallable` abstract operation
 // https://tc39.es/ecma262/#sec-iscallable
-var isCallable$j = $documentAll$1.IS_HTMLDDA ? function (argument) {
+var isCallable$o = $documentAll$1.IS_HTMLDDA ? function (argument) {
   return typeof argument == 'function' || argument === documentAll$1;
 } : function (argument) {
   return typeof argument == 'function';
 };
 
-var isCallable$i = isCallable$j;
+var isCallable$n = isCallable$o;
 var $documentAll = documentAll_1;
 
 var documentAll = $documentAll.all;
 
-var isObject$8 = $documentAll.IS_HTMLDDA ? function (it) {
-  return typeof it == 'object' ? it !== null : isCallable$i(it) || it === documentAll;
+var isObject$a = $documentAll.IS_HTMLDDA ? function (it) {
+  return typeof it == 'object' ? it !== null : isCallable$n(it) || it === documentAll;
 } : function (it) {
-  return typeof it == 'object' ? it !== null : isCallable$i(it);
+  return typeof it == 'object' ? it !== null : isCallable$n(it);
 };
 
-var isObject$7 = isObject$8;
+var isObject$9 = isObject$a;
 
 var $String$5 = String;
-var $TypeError$7 = TypeError;
+var $TypeError$d = TypeError;
 
 // `Assert: Type(argument) is Object`
-var anObject$b = function (argument) {
-  if (isObject$7(argument)) return argument;
-  throw $TypeError$7($String$5(argument) + ' is not an object');
+var anObject$g = function (argument) {
+  if (isObject$9(argument)) return argument;
+  throw $TypeError$d($String$5(argument) + ' is not an object');
 };
 
 var objectDefineProperties = {};
 
-var fails$i = fails$m;
+var fails$k = fails$o;
 
 // Detect IE8's incomplete defineProperty implementation
-var descriptors = !fails$i(function () {
+var descriptors = !fails$k(function () {
   // eslint-disable-next-line es/no-object-defineproperty -- required for testing
   return Object.defineProperty({}, 1, { get: function () { return 7; } })[1] != 7;
 });
 
 var DESCRIPTORS$c = descriptors;
-var fails$h = fails$m;
+var fails$j = fails$o;
 
 // V8 ~ Chrome 36-
 // https://bugs.chromium.org/p/v8/issues/detail?id=3334
-var v8PrototypeDefineBug = DESCRIPTORS$c && fails$h(function () {
+var v8PrototypeDefineBug = DESCRIPTORS$c && fails$j(function () {
   // eslint-disable-next-line es/no-object-defineproperty -- required for testing
   return Object.defineProperty(function () { /* empty */ }, 'prototype', {
     value: 42,
@@ -322,55 +322,55 @@ var v8PrototypeDefineBug = DESCRIPTORS$c && fails$h(function () {
 
 var objectDefineProperty = {};
 
-var global$c = global$i;
-var isObject$6 = isObject$8;
+var global$h = global$n;
+var isObject$8 = isObject$a;
 
-var document$1 = global$c.document;
+var document$3 = global$h.document;
 // typeof document.createElement is 'object' in old IE
-var EXISTS$1 = isObject$6(document$1) && isObject$6(document$1.createElement);
+var EXISTS$1 = isObject$8(document$3) && isObject$8(document$3.createElement);
 
 var documentCreateElement$2 = function (it) {
-  return EXISTS$1 ? document$1.createElement(it) : {};
+  return EXISTS$1 ? document$3.createElement(it) : {};
 };
 
 var DESCRIPTORS$b = descriptors;
-var fails$g = fails$m;
-var createElement = documentCreateElement$2;
+var fails$i = fails$o;
+var createElement$1 = documentCreateElement$2;
 
 // Thanks to IE8 for its funny defineProperty
-var ie8DomDefine = !DESCRIPTORS$b && !fails$g(function () {
+var ie8DomDefine = !DESCRIPTORS$b && !fails$i(function () {
   // eslint-disable-next-line es/no-object-defineproperty -- required for testing
-  return Object.defineProperty(createElement('div'), 'a', {
+  return Object.defineProperty(createElement$1('div'), 'a', {
     get: function () { return 7; }
   }).a != 7;
 });
 
-var NATIVE_BIND$1 = functionBindNative;
+var NATIVE_BIND$2 = functionBindNative;
 
-var call$c = Function.prototype.call;
+var call$j = Function.prototype.call;
 
-var functionCall = NATIVE_BIND$1 ? call$c.bind(call$c) : function () {
-  return call$c.apply(call$c, arguments);
+var functionCall = NATIVE_BIND$2 ? call$j.bind(call$j) : function () {
+  return call$j.apply(call$j, arguments);
 };
 
-var global$b = global$i;
-var isCallable$h = isCallable$j;
+var global$g = global$n;
+var isCallable$m = isCallable$o;
 
 var aFunction = function (argument) {
-  return isCallable$h(argument) ? argument : undefined;
+  return isCallable$m(argument) ? argument : undefined;
 };
 
-var getBuiltIn$4 = function (namespace, method) {
-  return arguments.length < 2 ? aFunction(global$b[namespace]) : global$b[namespace] && global$b[namespace][method];
+var getBuiltIn$7 = function (namespace, method) {
+  return arguments.length < 2 ? aFunction(global$g[namespace]) : global$g[namespace] && global$g[namespace][method];
 };
 
-var uncurryThis$k = functionUncurryThis;
+var uncurryThis$n = functionUncurryThis;
 
-var objectIsPrototypeOf = uncurryThis$k({}.isPrototypeOf);
+var objectIsPrototypeOf = uncurryThis$n({}.isPrototypeOf);
 
-var getBuiltIn$3 = getBuiltIn$4;
-var isCallable$g = isCallable$j;
-var isPrototypeOf$3 = objectIsPrototypeOf;
+var getBuiltIn$6 = getBuiltIn$7;
+var isCallable$l = isCallable$o;
+var isPrototypeOf$5 = objectIsPrototypeOf;
 var USE_SYMBOL_AS_UID = useSymbolAsUid;
 
 var $Object$2 = Object;
@@ -378,13 +378,13 @@ var $Object$2 = Object;
 var isSymbol$2 = USE_SYMBOL_AS_UID ? function (it) {
   return typeof it == 'symbol';
 } : function (it) {
-  var $Symbol = getBuiltIn$3('Symbol');
-  return isCallable$g($Symbol) && isPrototypeOf$3($Symbol.prototype, $Object$2(it));
+  var $Symbol = getBuiltIn$6('Symbol');
+  return isCallable$l($Symbol) && isPrototypeOf$5($Symbol.prototype, $Object$2(it));
 };
 
 var $String$4 = String;
 
-var tryToString$1 = function (argument) {
+var tryToString$4 = function (argument) {
   try {
     return $String$4(argument);
   } catch (error) {
@@ -392,64 +392,64 @@ var tryToString$1 = function (argument) {
   }
 };
 
-var isCallable$f = isCallable$j;
-var tryToString = tryToString$1;
+var isCallable$k = isCallable$o;
+var tryToString$3 = tryToString$4;
 
-var $TypeError$6 = TypeError;
+var $TypeError$c = TypeError;
 
 // `Assert: IsCallable(argument) is true`
-var aCallable$2 = function (argument) {
-  if (isCallable$f(argument)) return argument;
-  throw $TypeError$6(tryToString(argument) + ' is not a function');
+var aCallable$8 = function (argument) {
+  if (isCallable$k(argument)) return argument;
+  throw $TypeError$c(tryToString$3(argument) + ' is not a function');
 };
 
-var aCallable$1 = aCallable$2;
-var isNullOrUndefined$3 = isNullOrUndefined$5;
+var aCallable$7 = aCallable$8;
+var isNullOrUndefined$5 = isNullOrUndefined$7;
 
 // `GetMethod` abstract operation
 // https://tc39.es/ecma262/#sec-getmethod
-var getMethod$4 = function (V, P) {
+var getMethod$6 = function (V, P) {
   var func = V[P];
-  return isNullOrUndefined$3(func) ? undefined : aCallable$1(func);
+  return isNullOrUndefined$5(func) ? undefined : aCallable$7(func);
 };
 
-var call$b = functionCall;
-var isCallable$e = isCallable$j;
-var isObject$5 = isObject$8;
+var call$i = functionCall;
+var isCallable$j = isCallable$o;
+var isObject$7 = isObject$a;
 
-var $TypeError$5 = TypeError;
+var $TypeError$b = TypeError;
 
 // `OrdinaryToPrimitive` abstract operation
 // https://tc39.es/ecma262/#sec-ordinarytoprimitive
 var ordinaryToPrimitive$1 = function (input, pref) {
   var fn, val;
-  if (pref === 'string' && isCallable$e(fn = input.toString) && !isObject$5(val = call$b(fn, input))) return val;
-  if (isCallable$e(fn = input.valueOf) && !isObject$5(val = call$b(fn, input))) return val;
-  if (pref !== 'string' && isCallable$e(fn = input.toString) && !isObject$5(val = call$b(fn, input))) return val;
-  throw $TypeError$5("Can't convert object to primitive value");
+  if (pref === 'string' && isCallable$j(fn = input.toString) && !isObject$7(val = call$i(fn, input))) return val;
+  if (isCallable$j(fn = input.valueOf) && !isObject$7(val = call$i(fn, input))) return val;
+  if (pref !== 'string' && isCallable$j(fn = input.toString) && !isObject$7(val = call$i(fn, input))) return val;
+  throw $TypeError$b("Can't convert object to primitive value");
 };
 
-var call$a = functionCall;
-var isObject$4 = isObject$8;
+var call$h = functionCall;
+var isObject$6 = isObject$a;
 var isSymbol$1 = isSymbol$2;
-var getMethod$3 = getMethod$4;
+var getMethod$5 = getMethod$6;
 var ordinaryToPrimitive = ordinaryToPrimitive$1;
-var wellKnownSymbol$d = wellKnownSymbol$e;
+var wellKnownSymbol$i = wellKnownSymbol$j;
 
-var $TypeError$4 = TypeError;
-var TO_PRIMITIVE = wellKnownSymbol$d('toPrimitive');
+var $TypeError$a = TypeError;
+var TO_PRIMITIVE = wellKnownSymbol$i('toPrimitive');
 
 // `ToPrimitive` abstract operation
 // https://tc39.es/ecma262/#sec-toprimitive
 var toPrimitive$1 = function (input, pref) {
-  if (!isObject$4(input) || isSymbol$1(input)) return input;
-  var exoticToPrim = getMethod$3(input, TO_PRIMITIVE);
+  if (!isObject$6(input) || isSymbol$1(input)) return input;
+  var exoticToPrim = getMethod$5(input, TO_PRIMITIVE);
   var result;
   if (exoticToPrim) {
     if (pref === undefined) pref = 'default';
-    result = call$a(exoticToPrim, input, pref);
-    if (!isObject$4(result) || isSymbol$1(result)) return result;
-    throw $TypeError$4("Can't convert object to primitive value");
+    result = call$h(exoticToPrim, input, pref);
+    if (!isObject$6(result) || isSymbol$1(result)) return result;
+    throw $TypeError$a("Can't convert object to primitive value");
   }
   if (pref === undefined) pref = 'number';
   return ordinaryToPrimitive(input, pref);
@@ -468,10 +468,10 @@ var toPropertyKey$2 = function (argument) {
 var DESCRIPTORS$a = descriptors;
 var IE8_DOM_DEFINE$1 = ie8DomDefine;
 var V8_PROTOTYPE_DEFINE_BUG$1 = v8PrototypeDefineBug;
-var anObject$a = anObject$b;
+var anObject$f = anObject$g;
 var toPropertyKey$1 = toPropertyKey$2;
 
-var $TypeError$3 = TypeError;
+var $TypeError$9 = TypeError;
 // eslint-disable-next-line es/no-object-defineproperty -- safe
 var $defineProperty = Object.defineProperty;
 // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
@@ -483,9 +483,9 @@ var WRITABLE = 'writable';
 // `Object.defineProperty` method
 // https://tc39.es/ecma262/#sec-object.defineproperty
 objectDefineProperty.f = DESCRIPTORS$a ? V8_PROTOTYPE_DEFINE_BUG$1 ? function defineProperty(O, P, Attributes) {
-  anObject$a(O);
+  anObject$f(O);
   P = toPropertyKey$1(P);
-  anObject$a(Attributes);
+  anObject$f(Attributes);
   if (typeof O === 'function' && P === 'prototype' && 'value' in Attributes && WRITABLE in Attributes && !Attributes[WRITABLE]) {
     var current = $getOwnPropertyDescriptor$1(O, P);
     if (current && current[WRITABLE]) {
@@ -498,13 +498,13 @@ objectDefineProperty.f = DESCRIPTORS$a ? V8_PROTOTYPE_DEFINE_BUG$1 ? function de
     }
   } return $defineProperty(O, P, Attributes);
 } : $defineProperty : function defineProperty(O, P, Attributes) {
-  anObject$a(O);
+  anObject$f(O);
   P = toPropertyKey$1(P);
-  anObject$a(Attributes);
+  anObject$f(Attributes);
   if (IE8_DOM_DEFINE$1) try {
     return $defineProperty(O, P, Attributes);
   } catch (error) { /* empty */ }
-  if ('get' in Attributes || 'set' in Attributes) throw $TypeError$3('Accessors not supported');
+  if ('get' in Attributes || 'set' in Attributes) throw $TypeError$9('Accessors not supported');
   if ('value' in Attributes) O[P] = Attributes.value;
   return O;
 };
@@ -557,19 +557,19 @@ var toLength$3 = toLength$4;
 
 // `LengthOfArrayLike` abstract operation
 // https://tc39.es/ecma262/#sec-lengthofarraylike
-var lengthOfArrayLike$1 = function (obj) {
+var lengthOfArrayLike$2 = function (obj) {
   return toLength$3(obj.length);
 };
 
 var toIndexedObject$4 = toIndexedObject$5;
 var toAbsoluteIndex = toAbsoluteIndex$1;
-var lengthOfArrayLike = lengthOfArrayLike$1;
+var lengthOfArrayLike$1 = lengthOfArrayLike$2;
 
 // `Array.prototype.{ indexOf, includes }` methods implementation
 var createMethod$2 = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIndexedObject$4($this);
-    var length = lengthOfArrayLike(O);
+    var length = lengthOfArrayLike$1(O);
     var index = toAbsoluteIndex(fromIndex, length);
     var value;
     // Array#includes uses SameValueZero equality algorithm
@@ -596,22 +596,22 @@ var arrayIncludes = {
 
 var hiddenKeys$4 = {};
 
-var uncurryThis$j = functionUncurryThis;
-var hasOwn$a = hasOwnProperty_1;
+var uncurryThis$m = functionUncurryThis;
+var hasOwn$b = hasOwnProperty_1;
 var toIndexedObject$3 = toIndexedObject$5;
 var indexOf$1 = arrayIncludes.indexOf;
 var hiddenKeys$3 = hiddenKeys$4;
 
-var push$1 = uncurryThis$j([].push);
+var push$1 = uncurryThis$m([].push);
 
 var objectKeysInternal = function (object, names) {
   var O = toIndexedObject$3(object);
   var i = 0;
   var result = [];
   var key;
-  for (key in O) !hasOwn$a(hiddenKeys$3, key) && hasOwn$a(O, key) && push$1(result, key);
+  for (key in O) !hasOwn$b(hiddenKeys$3, key) && hasOwn$b(O, key) && push$1(result, key);
   // Don't enum bug & hidden keys
-  while (names.length > i) if (hasOwn$a(O, key = names[i++])) {
+  while (names.length > i) if (hasOwn$b(O, key = names[i++])) {
     ~indexOf$1(result, key) || push$1(result, key);
   }
   return result;
@@ -641,7 +641,7 @@ var objectKeys$2 = Object.keys || function keys(O) {
 var DESCRIPTORS$9 = descriptors;
 var V8_PROTOTYPE_DEFINE_BUG = v8PrototypeDefineBug;
 var definePropertyModule$3 = objectDefineProperty;
-var anObject$9 = anObject$b;
+var anObject$e = anObject$g;
 var toIndexedObject$2 = toIndexedObject$5;
 var objectKeys$1 = objectKeys$2;
 
@@ -649,7 +649,7 @@ var objectKeys$1 = objectKeys$2;
 // https://tc39.es/ecma262/#sec-object.defineproperties
 // eslint-disable-next-line es/no-object-defineproperties -- safe
 objectDefineProperties.f = DESCRIPTORS$9 && !V8_PROTOTYPE_DEFINE_BUG ? Object.defineProperties : function defineProperties(O, Properties) {
-  anObject$9(O);
+  anObject$e(O);
   var props = toIndexedObject$2(Properties);
   var keys = objectKeys$1(Properties);
   var length = keys.length;
@@ -659,9 +659,9 @@ objectDefineProperties.f = DESCRIPTORS$9 && !V8_PROTOTYPE_DEFINE_BUG ? Object.de
   return O;
 };
 
-var getBuiltIn$2 = getBuiltIn$4;
+var getBuiltIn$5 = getBuiltIn$7;
 
-var html$1 = getBuiltIn$2('document', 'documentElement');
+var html$2 = getBuiltIn$5('document', 'documentElement');
 
 var shared$2 = shared$4.exports;
 var uid = uid$2;
@@ -674,11 +674,11 @@ var sharedKey$3 = function (key) {
 
 /* global ActiveXObject -- old IE, WSH */
 
-var anObject$8 = anObject$b;
+var anObject$d = anObject$g;
 var definePropertiesModule = objectDefineProperties;
 var enumBugKeys$1 = enumBugKeys$3;
 var hiddenKeys$2 = hiddenKeys$4;
-var html = html$1;
+var html$1 = html$2;
 var documentCreateElement$1 = documentCreateElement$2;
 var sharedKey$2 = sharedKey$3;
 
@@ -710,7 +710,7 @@ var NullProtoObjectViaIFrame = function () {
   var JS = 'java' + SCRIPT + ':';
   var iframeDocument;
   iframe.style.display = 'none';
-  html.appendChild(iframe);
+  html$1.appendChild(iframe);
   // https://github.com/zloirock/core-js/issues/475
   iframe.src = String(JS);
   iframeDocument = iframe.contentWindow.document;
@@ -748,7 +748,7 @@ hiddenKeys$2[IE_PROTO$1] = true;
 var objectCreate = Object.create || function create(O, Properties) {
   var result;
   if (O !== null) {
-    EmptyConstructor[PROTOTYPE] = anObject$8(O);
+    EmptyConstructor[PROTOTYPE] = anObject$d(O);
     result = new EmptyConstructor();
     EmptyConstructor[PROTOTYPE] = null;
     // add "__proto__" for Object.getPrototypeOf polyfill
@@ -757,17 +757,17 @@ var objectCreate = Object.create || function create(O, Properties) {
   return Properties === undefined ? result : definePropertiesModule.f(result, Properties);
 };
 
-var wellKnownSymbol$c = wellKnownSymbol$e;
+var wellKnownSymbol$h = wellKnownSymbol$j;
 var create$2 = objectCreate;
 var defineProperty$6 = objectDefineProperty.f;
 
-var UNSCOPABLES = wellKnownSymbol$c('unscopables');
-var ArrayPrototype = Array.prototype;
+var UNSCOPABLES = wellKnownSymbol$h('unscopables');
+var ArrayPrototype$1 = Array.prototype;
 
 // Array.prototype[@@unscopables]
 // https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
-if (ArrayPrototype[UNSCOPABLES] == undefined) {
-  defineProperty$6(ArrayPrototype, UNSCOPABLES, {
+if (ArrayPrototype$1[UNSCOPABLES] == undefined) {
+  defineProperty$6(ArrayPrototype$1, UNSCOPABLES, {
     configurable: true,
     value: create$2(null)
   });
@@ -775,17 +775,17 @@ if (ArrayPrototype[UNSCOPABLES] == undefined) {
 
 // add a key to Array.prototype[@@unscopables]
 var addToUnscopables$2 = function (key) {
-  ArrayPrototype[UNSCOPABLES][key] = true;
+  ArrayPrototype$1[UNSCOPABLES][key] = true;
 };
 
 var iterators = {};
 
-var global$a = global$i;
-var isCallable$d = isCallable$j;
+var global$f = global$n;
+var isCallable$i = isCallable$o;
 
-var WeakMap$1 = global$a.WeakMap;
+var WeakMap$1 = global$f.WeakMap;
 
-var weakMapBasicDetection = isCallable$d(WeakMap$1) && /native code/.test(String(WeakMap$1));
+var weakMapBasicDetection = isCallable$i(WeakMap$1) && /native code/.test(String(WeakMap$1));
 
 var createPropertyDescriptor$3 = function (bitmap, value) {
   return {
@@ -808,28 +808,28 @@ var createNonEnumerableProperty$6 = DESCRIPTORS$8 ? function (object, key, value
 };
 
 var NATIVE_WEAK_MAP = weakMapBasicDetection;
-var global$9 = global$i;
-var isObject$3 = isObject$8;
+var global$e = global$n;
+var isObject$5 = isObject$a;
 var createNonEnumerableProperty$5 = createNonEnumerableProperty$6;
-var hasOwn$9 = hasOwnProperty_1;
+var hasOwn$a = hasOwnProperty_1;
 var shared$1 = sharedStore;
 var sharedKey$1 = sharedKey$3;
 var hiddenKeys$1 = hiddenKeys$4;
 
 var OBJECT_ALREADY_INITIALIZED = 'Object already initialized';
-var TypeError$1 = global$9.TypeError;
-var WeakMap = global$9.WeakMap;
-var set, get, has;
+var TypeError$2 = global$e.TypeError;
+var WeakMap = global$e.WeakMap;
+var set$1, get, has;
 
 var enforce = function (it) {
-  return has(it) ? get(it) : set(it, {});
+  return has(it) ? get(it) : set$1(it, {});
 };
 
 var getterFor = function (TYPE) {
   return function (it) {
     var state;
-    if (!isObject$3(it) || (state = get(it)).type !== TYPE) {
-      throw TypeError$1('Incompatible receiver, ' + TYPE + ' required');
+    if (!isObject$5(it) || (state = get(it)).type !== TYPE) {
+      throw TypeError$2('Incompatible receiver, ' + TYPE + ' required');
     } return state;
   };
 };
@@ -841,8 +841,8 @@ if (NATIVE_WEAK_MAP || shared$1.state) {
   store$1.has = store$1.has;
   store$1.set = store$1.set;
   /* eslint-enable no-self-assign -- prototype methods protection */
-  set = function (it, metadata) {
-    if (store$1.has(it)) throw TypeError$1(OBJECT_ALREADY_INITIALIZED);
+  set$1 = function (it, metadata) {
+    if (store$1.has(it)) throw TypeError$2(OBJECT_ALREADY_INITIALIZED);
     metadata.facade = it;
     store$1.set(it, metadata);
     return metadata;
@@ -856,22 +856,22 @@ if (NATIVE_WEAK_MAP || shared$1.state) {
 } else {
   var STATE = sharedKey$1('state');
   hiddenKeys$1[STATE] = true;
-  set = function (it, metadata) {
-    if (hasOwn$9(it, STATE)) throw TypeError$1(OBJECT_ALREADY_INITIALIZED);
+  set$1 = function (it, metadata) {
+    if (hasOwn$a(it, STATE)) throw TypeError$2(OBJECT_ALREADY_INITIALIZED);
     metadata.facade = it;
     createNonEnumerableProperty$5(it, STATE, metadata);
     return metadata;
   };
   get = function (it) {
-    return hasOwn$9(it, STATE) ? it[STATE] : {};
+    return hasOwn$a(it, STATE) ? it[STATE] : {};
   };
   has = function (it) {
-    return hasOwn$9(it, STATE);
+    return hasOwn$a(it, STATE);
   };
 }
 
 var internalState = {
-  set: set,
+  set: set$1,
   get: get,
   has: has,
   enforce: enforce,
@@ -884,25 +884,25 @@ var objectPropertyIsEnumerable = {};
 
 var $propertyIsEnumerable = {}.propertyIsEnumerable;
 // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-var getOwnPropertyDescriptor$2 = Object.getOwnPropertyDescriptor;
+var getOwnPropertyDescriptor$3 = Object.getOwnPropertyDescriptor;
 
 // Nashorn ~ JDK8 bug
-var NASHORN_BUG = getOwnPropertyDescriptor$2 && !$propertyIsEnumerable.call({ 1: 2 }, 1);
+var NASHORN_BUG = getOwnPropertyDescriptor$3 && !$propertyIsEnumerable.call({ 1: 2 }, 1);
 
 // `Object.prototype.propertyIsEnumerable` method implementation
 // https://tc39.es/ecma262/#sec-object.prototype.propertyisenumerable
 objectPropertyIsEnumerable.f = NASHORN_BUG ? function propertyIsEnumerable(V) {
-  var descriptor = getOwnPropertyDescriptor$2(this, V);
+  var descriptor = getOwnPropertyDescriptor$3(this, V);
   return !!descriptor && descriptor.enumerable;
 } : $propertyIsEnumerable;
 
 var DESCRIPTORS$7 = descriptors;
-var call$9 = functionCall;
+var call$g = functionCall;
 var propertyIsEnumerableModule$1 = objectPropertyIsEnumerable;
 var createPropertyDescriptor$1 = createPropertyDescriptor$3;
 var toIndexedObject$1 = toIndexedObject$5;
 var toPropertyKey = toPropertyKey$2;
-var hasOwn$8 = hasOwnProperty_1;
+var hasOwn$9 = hasOwnProperty_1;
 var IE8_DOM_DEFINE = ie8DomDefine;
 
 // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
@@ -916,19 +916,19 @@ objectGetOwnPropertyDescriptor.f = DESCRIPTORS$7 ? $getOwnPropertyDescriptor : f
   if (IE8_DOM_DEFINE) try {
     return $getOwnPropertyDescriptor(O, P);
   } catch (error) { /* empty */ }
-  if (hasOwn$8(O, P)) return createPropertyDescriptor$1(!call$9(propertyIsEnumerableModule$1.f, O, P), O[P]);
+  if (hasOwn$9(O, P)) return createPropertyDescriptor$1(!call$g(propertyIsEnumerableModule$1.f, O, P), O[P]);
 };
 
 var makeBuiltIn$3 = {exports: {}};
 
 var DESCRIPTORS$6 = descriptors;
-var hasOwn$7 = hasOwnProperty_1;
+var hasOwn$8 = hasOwnProperty_1;
 
 var FunctionPrototype$1 = Function.prototype;
 // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
 var getDescriptor = DESCRIPTORS$6 && Object.getOwnPropertyDescriptor;
 
-var EXISTS = hasOwn$7(FunctionPrototype$1, 'name');
+var EXISTS = hasOwn$8(FunctionPrototype$1, 'name');
 // additional protection from minified / mangled / dropped function names
 var PROPER = EXISTS && (function something() { /* empty */ }).name === 'something';
 var CONFIGURABLE = EXISTS && (!DESCRIPTORS$6 || (DESCRIPTORS$6 && getDescriptor(FunctionPrototype$1, 'name').configurable));
@@ -939,40 +939,40 @@ var functionName = {
   CONFIGURABLE: CONFIGURABLE
 };
 
-var uncurryThis$i = functionUncurryThis;
-var isCallable$c = isCallable$j;
+var uncurryThis$l = functionUncurryThis;
+var isCallable$h = isCallable$o;
 var store = sharedStore;
 
-var functionToString = uncurryThis$i(Function.toString);
+var functionToString = uncurryThis$l(Function.toString);
 
 // this helper broken in `core-js@3.4.1-3.4.4`, so we can't use `shared` helper
-if (!isCallable$c(store.inspectSource)) {
+if (!isCallable$h(store.inspectSource)) {
   store.inspectSource = function (it) {
     return functionToString(it);
   };
 }
 
-var inspectSource$1 = store.inspectSource;
+var inspectSource$3 = store.inspectSource;
 
-var uncurryThis$h = functionUncurryThis;
-var fails$f = fails$m;
-var isCallable$b = isCallable$j;
-var hasOwn$6 = hasOwnProperty_1;
+var uncurryThis$k = functionUncurryThis;
+var fails$h = fails$o;
+var isCallable$g = isCallable$o;
+var hasOwn$7 = hasOwnProperty_1;
 var DESCRIPTORS$5 = descriptors;
 var CONFIGURABLE_FUNCTION_NAME$1 = functionName.CONFIGURABLE;
-var inspectSource = inspectSource$1;
-var InternalStateModule$1 = internalState;
+var inspectSource$2 = inspectSource$3;
+var InternalStateModule$2 = internalState;
 
-var enforceInternalState$1 = InternalStateModule$1.enforce;
-var getInternalState$2 = InternalStateModule$1.get;
+var enforceInternalState$1 = InternalStateModule$2.enforce;
+var getInternalState$2 = InternalStateModule$2.get;
 var $String$3 = String;
 // eslint-disable-next-line es/no-object-defineproperty -- safe
 var defineProperty$5 = Object.defineProperty;
-var stringSlice$8 = uncurryThis$h(''.slice);
-var replace$5 = uncurryThis$h(''.replace);
-var join = uncurryThis$h([].join);
+var stringSlice$8 = uncurryThis$k(''.slice);
+var replace$5 = uncurryThis$k(''.replace);
+var join = uncurryThis$k([].join);
 
-var CONFIGURABLE_LENGTH = DESCRIPTORS$5 && !fails$f(function () {
+var CONFIGURABLE_LENGTH = DESCRIPTORS$5 && !fails$h(function () {
   return defineProperty$5(function () { /* empty */ }, 'length', { value: 8 }).length !== 8;
 });
 
@@ -984,21 +984,21 @@ var makeBuiltIn$2 = makeBuiltIn$3.exports = function (value, name, options) {
   }
   if (options && options.getter) name = 'get ' + name;
   if (options && options.setter) name = 'set ' + name;
-  if (!hasOwn$6(value, 'name') || (CONFIGURABLE_FUNCTION_NAME$1 && value.name !== name)) {
+  if (!hasOwn$7(value, 'name') || (CONFIGURABLE_FUNCTION_NAME$1 && value.name !== name)) {
     if (DESCRIPTORS$5) defineProperty$5(value, 'name', { value: name, configurable: true });
     else value.name = name;
   }
-  if (CONFIGURABLE_LENGTH && options && hasOwn$6(options, 'arity') && value.length !== options.arity) {
+  if (CONFIGURABLE_LENGTH && options && hasOwn$7(options, 'arity') && value.length !== options.arity) {
     defineProperty$5(value, 'length', { value: options.arity });
   }
   try {
-    if (options && hasOwn$6(options, 'constructor') && options.constructor) {
+    if (options && hasOwn$7(options, 'constructor') && options.constructor) {
       if (DESCRIPTORS$5) defineProperty$5(value, 'prototype', { writable: false });
     // in V8 ~ Chrome 53, prototypes of some methods, like `Array.prototype.values`, are non-writable
     } else if (value.prototype) value.prototype = undefined;
   } catch (error) { /* empty */ }
   var state = enforceInternalState$1(value);
-  if (!hasOwn$6(state, 'source')) {
+  if (!hasOwn$7(state, 'source')) {
     state.source = join(TEMPLATE, typeof name == 'string' ? name : '');
   } return value;
 };
@@ -1006,19 +1006,19 @@ var makeBuiltIn$2 = makeBuiltIn$3.exports = function (value, name, options) {
 // add fake Function#toString for correct work wrapped methods / constructors with methods like LoDash isNative
 // eslint-disable-next-line no-extend-native -- required
 Function.prototype.toString = makeBuiltIn$2(function toString() {
-  return isCallable$b(this) && getInternalState$2(this).source || inspectSource(this);
+  return isCallable$g(this) && getInternalState$2(this).source || inspectSource$2(this);
 }, 'toString');
 
-var isCallable$a = isCallable$j;
+var isCallable$f = isCallable$o;
 var definePropertyModule$1 = objectDefineProperty;
 var makeBuiltIn$1 = makeBuiltIn$3.exports;
 var defineGlobalProperty$1 = defineGlobalProperty$3;
 
-var defineBuiltIn$6 = function (O, key, value, options) {
+var defineBuiltIn$8 = function (O, key, value, options) {
   if (!options) options = {};
   var simple = options.enumerable;
   var name = options.name !== undefined ? options.name : key;
-  if (isCallable$a(value)) makeBuiltIn$1(value, name, options);
+  if (isCallable$f(value)) makeBuiltIn$1(value, name, options);
   if (options.global) {
     if (simple) O[key] = value;
     else defineGlobalProperty$1(key, value);
@@ -1056,22 +1056,22 @@ var objectGetOwnPropertySymbols = {};
 // eslint-disable-next-line es/no-object-getownpropertysymbols -- safe
 objectGetOwnPropertySymbols.f = Object.getOwnPropertySymbols;
 
-var getBuiltIn$1 = getBuiltIn$4;
-var uncurryThis$g = functionUncurryThis;
+var getBuiltIn$4 = getBuiltIn$7;
+var uncurryThis$j = functionUncurryThis;
 var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
 var getOwnPropertySymbolsModule$1 = objectGetOwnPropertySymbols;
-var anObject$7 = anObject$b;
+var anObject$c = anObject$g;
 
-var concat$2 = uncurryThis$g([].concat);
+var concat$2 = uncurryThis$j([].concat);
 
 // all object keys, includes non-enumerable and symbols
-var ownKeys$1 = getBuiltIn$1('Reflect', 'ownKeys') || function ownKeys(it) {
-  var keys = getOwnPropertyNamesModule.f(anObject$7(it));
+var ownKeys$1 = getBuiltIn$4('Reflect', 'ownKeys') || function ownKeys(it) {
+  var keys = getOwnPropertyNamesModule.f(anObject$c(it));
   var getOwnPropertySymbols = getOwnPropertySymbolsModule$1.f;
   return getOwnPropertySymbols ? concat$2(keys, getOwnPropertySymbols(it)) : keys;
 };
 
-var hasOwn$5 = hasOwnProperty_1;
+var hasOwn$6 = hasOwnProperty_1;
 var ownKeys = ownKeys$1;
 var getOwnPropertyDescriptorModule = objectGetOwnPropertyDescriptor;
 var definePropertyModule = objectDefineProperty;
@@ -1082,42 +1082,42 @@ var copyConstructorProperties$2 = function (target, source, exceptions) {
   var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
   for (var i = 0; i < keys.length; i++) {
     var key = keys[i];
-    if (!hasOwn$5(target, key) && !(exceptions && hasOwn$5(exceptions, key))) {
+    if (!hasOwn$6(target, key) && !(exceptions && hasOwn$6(exceptions, key))) {
       defineProperty(target, key, getOwnPropertyDescriptor(source, key));
     }
   }
 };
 
-var fails$e = fails$m;
-var isCallable$9 = isCallable$j;
+var fails$g = fails$o;
+var isCallable$e = isCallable$o;
 
 var replacement = /#|\.prototype\./;
 
-var isForced$2 = function (feature, detection) {
+var isForced$3 = function (feature, detection) {
   var value = data[normalize(feature)];
   return value == POLYFILL ? true
     : value == NATIVE ? false
-    : isCallable$9(detection) ? fails$e(detection)
+    : isCallable$e(detection) ? fails$g(detection)
     : !!detection;
 };
 
-var normalize = isForced$2.normalize = function (string) {
+var normalize = isForced$3.normalize = function (string) {
   return String(string).replace(replacement, '.').toLowerCase();
 };
 
-var data = isForced$2.data = {};
-var NATIVE = isForced$2.NATIVE = 'N';
-var POLYFILL = isForced$2.POLYFILL = 'P';
+var data = isForced$3.data = {};
+var NATIVE = isForced$3.NATIVE = 'N';
+var POLYFILL = isForced$3.POLYFILL = 'P';
 
-var isForced_1 = isForced$2;
+var isForced_1 = isForced$3;
 
-var global$8 = global$i;
-var getOwnPropertyDescriptor$1 = objectGetOwnPropertyDescriptor.f;
+var global$d = global$n;
+var getOwnPropertyDescriptor$2 = objectGetOwnPropertyDescriptor.f;
 var createNonEnumerableProperty$4 = createNonEnumerableProperty$6;
-var defineBuiltIn$5 = defineBuiltIn$6;
+var defineBuiltIn$7 = defineBuiltIn$8;
 var defineGlobalProperty = defineGlobalProperty$3;
 var copyConstructorProperties$1 = copyConstructorProperties$2;
-var isForced$1 = isForced_1;
+var isForced$2 = isForced_1;
 
 /*
   options.target         - name of the target object
@@ -1140,19 +1140,19 @@ var _export = function (options, source) {
   var STATIC = options.stat;
   var FORCED, target, key, targetProperty, sourceProperty, descriptor;
   if (GLOBAL) {
-    target = global$8;
+    target = global$d;
   } else if (STATIC) {
-    target = global$8[TARGET] || defineGlobalProperty(TARGET, {});
+    target = global$d[TARGET] || defineGlobalProperty(TARGET, {});
   } else {
-    target = (global$8[TARGET] || {}).prototype;
+    target = (global$d[TARGET] || {}).prototype;
   }
   if (target) for (key in source) {
     sourceProperty = source[key];
     if (options.dontCallGetSet) {
-      descriptor = getOwnPropertyDescriptor$1(target, key);
+      descriptor = getOwnPropertyDescriptor$2(target, key);
       targetProperty = descriptor && descriptor.value;
     } else targetProperty = target[key];
-    FORCED = isForced$1(GLOBAL ? key : TARGET + (STATIC ? '.' : '#') + key, options.forced);
+    FORCED = isForced$2(GLOBAL ? key : TARGET + (STATIC ? '.' : '#') + key, options.forced);
     // contained in target
     if (!FORCED && targetProperty !== undefined) {
       if (typeof sourceProperty == typeof targetProperty) continue;
@@ -1162,21 +1162,21 @@ var _export = function (options, source) {
     if (options.sham || (targetProperty && targetProperty.sham)) {
       createNonEnumerableProperty$4(sourceProperty, 'sham', true);
     }
-    defineBuiltIn$5(target, key, sourceProperty, options);
+    defineBuiltIn$7(target, key, sourceProperty, options);
   }
 };
 
-var fails$d = fails$m;
+var fails$f = fails$o;
 
-var correctPrototypeGetter = !fails$d(function () {
+var correctPrototypeGetter = !fails$f(function () {
   function F() { /* empty */ }
   F.prototype.constructor = null;
   // eslint-disable-next-line es/no-object-getprototypeof -- required for testing
   return Object.getPrototypeOf(new F()) !== F.prototype;
 });
 
-var hasOwn$4 = hasOwnProperty_1;
-var isCallable$8 = isCallable$j;
+var hasOwn$5 = hasOwnProperty_1;
+var isCallable$d = isCallable$o;
 var toObject$2 = toObject$4;
 var sharedKey = sharedKey$3;
 var CORRECT_PROTOTYPE_GETTER = correctPrototypeGetter;
@@ -1190,21 +1190,21 @@ var ObjectPrototype = $Object$1.prototype;
 // eslint-disable-next-line es/no-object-getprototypeof -- safe
 var objectGetPrototypeOf = CORRECT_PROTOTYPE_GETTER ? $Object$1.getPrototypeOf : function (O) {
   var object = toObject$2(O);
-  if (hasOwn$4(object, IE_PROTO)) return object[IE_PROTO];
+  if (hasOwn$5(object, IE_PROTO)) return object[IE_PROTO];
   var constructor = object.constructor;
-  if (isCallable$8(constructor) && object instanceof constructor) {
+  if (isCallable$d(constructor) && object instanceof constructor) {
     return constructor.prototype;
   } return object instanceof $Object$1 ? ObjectPrototype : null;
 };
 
-var fails$c = fails$m;
-var isCallable$7 = isCallable$j;
-var isObject$2 = isObject$8;
+var fails$e = fails$o;
+var isCallable$c = isCallable$o;
+var isObject$4 = isObject$a;
 var getPrototypeOf$1 = objectGetPrototypeOf;
-var defineBuiltIn$4 = defineBuiltIn$6;
-var wellKnownSymbol$b = wellKnownSymbol$e;
+var defineBuiltIn$6 = defineBuiltIn$8;
+var wellKnownSymbol$g = wellKnownSymbol$j;
 
-var ITERATOR$3 = wellKnownSymbol$b('iterator');
+var ITERATOR$6 = wellKnownSymbol$g('iterator');
 var BUGGY_SAFARI_ITERATORS$1 = false;
 
 // `%IteratorPrototype%` object
@@ -1222,18 +1222,18 @@ if ([].keys) {
   }
 }
 
-var NEW_ITERATOR_PROTOTYPE = !isObject$2(IteratorPrototype$2) || fails$c(function () {
+var NEW_ITERATOR_PROTOTYPE = !isObject$4(IteratorPrototype$2) || fails$e(function () {
   var test = {};
   // FF44- legacy iterators case
-  return IteratorPrototype$2[ITERATOR$3].call(test) !== test;
+  return IteratorPrototype$2[ITERATOR$6].call(test) !== test;
 });
 
 if (NEW_ITERATOR_PROTOTYPE) IteratorPrototype$2 = {};
 
 // `%IteratorPrototype%[@@iterator]()` method
 // https://tc39.es/ecma262/#sec-%iteratorprototype%-@@iterator
-if (!isCallable$7(IteratorPrototype$2[ITERATOR$3])) {
-  defineBuiltIn$4(IteratorPrototype$2, ITERATOR$3, function () {
+if (!isCallable$c(IteratorPrototype$2[ITERATOR$6])) {
+  defineBuiltIn$6(IteratorPrototype$2, ITERATOR$6, function () {
     return this;
   });
 }
@@ -1244,14 +1244,14 @@ var iteratorsCore = {
 };
 
 var defineProperty$4 = objectDefineProperty.f;
-var hasOwn$3 = hasOwnProperty_1;
-var wellKnownSymbol$a = wellKnownSymbol$e;
+var hasOwn$4 = hasOwnProperty_1;
+var wellKnownSymbol$f = wellKnownSymbol$j;
 
-var TO_STRING_TAG$3 = wellKnownSymbol$a('toStringTag');
+var TO_STRING_TAG$3 = wellKnownSymbol$f('toStringTag');
 
-var setToStringTag$2 = function (target, TAG, STATIC) {
+var setToStringTag$3 = function (target, TAG, STATIC) {
   if (target && !STATIC) target = target.prototype;
-  if (target && !hasOwn$3(target, TO_STRING_TAG$3)) {
+  if (target && !hasOwn$4(target, TO_STRING_TAG$3)) {
     defineProperty$4(target, TO_STRING_TAG$3, { configurable: true, value: TAG });
   }
 };
@@ -1259,43 +1259,43 @@ var setToStringTag$2 = function (target, TAG, STATIC) {
 var IteratorPrototype$1 = iteratorsCore.IteratorPrototype;
 var create$1 = objectCreate;
 var createPropertyDescriptor = createPropertyDescriptor$3;
-var setToStringTag$1 = setToStringTag$2;
-var Iterators$2 = iterators;
+var setToStringTag$2 = setToStringTag$3;
+var Iterators$4 = iterators;
 
 var returnThis$1 = function () { return this; };
 
 var iteratorCreateConstructor = function (IteratorConstructor, NAME, next, ENUMERABLE_NEXT) {
   var TO_STRING_TAG = NAME + ' Iterator';
   IteratorConstructor.prototype = create$1(IteratorPrototype$1, { next: createPropertyDescriptor(+!ENUMERABLE_NEXT, next) });
-  setToStringTag$1(IteratorConstructor, TO_STRING_TAG, false);
-  Iterators$2[TO_STRING_TAG] = returnThis$1;
+  setToStringTag$2(IteratorConstructor, TO_STRING_TAG, false);
+  Iterators$4[TO_STRING_TAG] = returnThis$1;
   return IteratorConstructor;
 };
 
-var uncurryThis$f = functionUncurryThis;
-var aCallable = aCallable$2;
+var uncurryThis$i = functionUncurryThis;
+var aCallable$6 = aCallable$8;
 
 var functionUncurryThisAccessor = function (object, key, method) {
   try {
     // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-    return uncurryThis$f(aCallable(Object.getOwnPropertyDescriptor(object, key)[method]));
+    return uncurryThis$i(aCallable$6(Object.getOwnPropertyDescriptor(object, key)[method]));
   } catch (error) { /* empty */ }
 };
 
-var isCallable$6 = isCallable$j;
+var isCallable$b = isCallable$o;
 
 var $String$2 = String;
-var $TypeError$2 = TypeError;
+var $TypeError$8 = TypeError;
 
 var aPossiblePrototype$1 = function (argument) {
-  if (typeof argument == 'object' || isCallable$6(argument)) return argument;
-  throw $TypeError$2("Can't set " + $String$2(argument) + ' as a prototype');
+  if (typeof argument == 'object' || isCallable$b(argument)) return argument;
+  throw $TypeError$8("Can't set " + $String$2(argument) + ' as a prototype');
 };
 
 /* eslint-disable no-proto -- safe */
 
 var uncurryThisAccessor = functionUncurryThisAccessor;
-var anObject$6 = anObject$b;
+var anObject$b = anObject$g;
 var aPossiblePrototype = aPossiblePrototype$1;
 
 // `Object.setPrototypeOf` method
@@ -1312,7 +1312,7 @@ var objectSetPrototypeOf = Object.setPrototypeOf || ('__proto__' in {} ? functio
     CORRECT_SETTER = test instanceof Array;
   } catch (error) { /* empty */ }
   return function setPrototypeOf(O, proto) {
-    anObject$6(O);
+    anObject$b(O);
     aPossiblePrototype(proto);
     if (CORRECT_SETTER) setter(O, proto);
     else O.__proto__ = proto;
@@ -1320,25 +1320,25 @@ var objectSetPrototypeOf = Object.setPrototypeOf || ('__proto__' in {} ? functio
   };
 }() : undefined);
 
-var $$9 = _export;
-var call$8 = functionCall;
+var $$f = _export;
+var call$f = functionCall;
 var FunctionName = functionName;
-var isCallable$5 = isCallable$j;
+var isCallable$a = isCallable$o;
 var createIteratorConstructor = iteratorCreateConstructor;
 var getPrototypeOf = objectGetPrototypeOf;
-var setPrototypeOf$1 = objectSetPrototypeOf;
-var setToStringTag = setToStringTag$2;
+var setPrototypeOf$2 = objectSetPrototypeOf;
+var setToStringTag$1 = setToStringTag$3;
 var createNonEnumerableProperty$3 = createNonEnumerableProperty$6;
-var defineBuiltIn$3 = defineBuiltIn$6;
-var wellKnownSymbol$9 = wellKnownSymbol$e;
-var Iterators$1 = iterators;
+var defineBuiltIn$5 = defineBuiltIn$8;
+var wellKnownSymbol$e = wellKnownSymbol$j;
+var Iterators$3 = iterators;
 var IteratorsCore = iteratorsCore;
 
 var PROPER_FUNCTION_NAME$2 = FunctionName.PROPER;
 var CONFIGURABLE_FUNCTION_NAME = FunctionName.CONFIGURABLE;
 var IteratorPrototype = IteratorsCore.IteratorPrototype;
 var BUGGY_SAFARI_ITERATORS = IteratorsCore.BUGGY_SAFARI_ITERATORS;
-var ITERATOR$2 = wellKnownSymbol$9('iterator');
+var ITERATOR$5 = wellKnownSymbol$e('iterator');
 var KEYS = 'keys';
 var VALUES = 'values';
 var ENTRIES = 'entries';
@@ -1361,7 +1361,7 @@ var iteratorDefine = function (Iterable, NAME, IteratorConstructor, next, DEFAUL
   var TO_STRING_TAG = NAME + ' Iterator';
   var INCORRECT_VALUES_NAME = false;
   var IterablePrototype = Iterable.prototype;
-  var nativeIterator = IterablePrototype[ITERATOR$2]
+  var nativeIterator = IterablePrototype[ITERATOR$5]
     || IterablePrototype['@@iterator']
     || DEFAULT && IterablePrototype[DEFAULT];
   var defaultIterator = !BUGGY_SAFARI_ITERATORS && nativeIterator || getIterationMethod(DEFAULT);
@@ -1373,14 +1373,14 @@ var iteratorDefine = function (Iterable, NAME, IteratorConstructor, next, DEFAUL
     CurrentIteratorPrototype = getPrototypeOf(anyNativeIterator.call(new Iterable()));
     if (CurrentIteratorPrototype !== Object.prototype && CurrentIteratorPrototype.next) {
       if (getPrototypeOf(CurrentIteratorPrototype) !== IteratorPrototype) {
-        if (setPrototypeOf$1) {
-          setPrototypeOf$1(CurrentIteratorPrototype, IteratorPrototype);
-        } else if (!isCallable$5(CurrentIteratorPrototype[ITERATOR$2])) {
-          defineBuiltIn$3(CurrentIteratorPrototype, ITERATOR$2, returnThis);
+        if (setPrototypeOf$2) {
+          setPrototypeOf$2(CurrentIteratorPrototype, IteratorPrototype);
+        } else if (!isCallable$a(CurrentIteratorPrototype[ITERATOR$5])) {
+          defineBuiltIn$5(CurrentIteratorPrototype, ITERATOR$5, returnThis);
         }
       }
       // Set @@toStringTag to native iterators
-      setToStringTag(CurrentIteratorPrototype, TO_STRING_TAG, true);
+      setToStringTag$1(CurrentIteratorPrototype, TO_STRING_TAG, true);
     }
   }
 
@@ -1390,7 +1390,7 @@ var iteratorDefine = function (Iterable, NAME, IteratorConstructor, next, DEFAUL
       createNonEnumerableProperty$3(IterablePrototype, 'name', VALUES);
     } else {
       INCORRECT_VALUES_NAME = true;
-      defaultIterator = function values() { return call$8(nativeIterator, this); };
+      defaultIterator = function values() { return call$f(nativeIterator, this); };
     }
   }
 
@@ -1403,16 +1403,16 @@ var iteratorDefine = function (Iterable, NAME, IteratorConstructor, next, DEFAUL
     };
     if (FORCED) for (KEY in methods) {
       if (BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME || !(KEY in IterablePrototype)) {
-        defineBuiltIn$3(IterablePrototype, KEY, methods[KEY]);
+        defineBuiltIn$5(IterablePrototype, KEY, methods[KEY]);
       }
-    } else $$9({ target: NAME, proto: true, forced: BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME }, methods);
+    } else $$f({ target: NAME, proto: true, forced: BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME }, methods);
   }
 
   // define iterator
-  if (IterablePrototype[ITERATOR$2] !== defaultIterator) {
-    defineBuiltIn$3(IterablePrototype, ITERATOR$2, defaultIterator, { name: DEFAULT });
+  if (IterablePrototype[ITERATOR$5] !== defaultIterator) {
+    defineBuiltIn$5(IterablePrototype, ITERATOR$5, defaultIterator, { name: DEFAULT });
   }
-  Iterators$1[NAME] = defaultIterator;
+  Iterators$3[NAME] = defaultIterator;
 
   return methods;
 };
@@ -1425,16 +1425,16 @@ var createIterResultObject$1 = function (value, done) {
 
 var toIndexedObject = toIndexedObject$5;
 var addToUnscopables$1 = addToUnscopables$2;
-var Iterators = iterators;
-var InternalStateModule = internalState;
+var Iterators$2 = iterators;
+var InternalStateModule$1 = internalState;
 var defineProperty$3 = objectDefineProperty.f;
 var defineIterator = iteratorDefine;
 var createIterResultObject = createIterResultObject$1;
 var DESCRIPTORS$4 = descriptors;
 
 var ARRAY_ITERATOR = 'Array Iterator';
-var setInternalState = InternalStateModule.set;
-var getInternalState$1 = InternalStateModule.getterFor(ARRAY_ITERATOR);
+var setInternalState$1 = InternalStateModule$1.set;
+var getInternalState$1 = InternalStateModule$1.getterFor(ARRAY_ITERATOR);
 
 // `Array.prototype.entries` method
 // https://tc39.es/ecma262/#sec-array.prototype.entries
@@ -1447,7 +1447,7 @@ var getInternalState$1 = InternalStateModule.getterFor(ARRAY_ITERATOR);
 // `CreateArrayIterator` internal method
 // https://tc39.es/ecma262/#sec-createarrayiterator
 var es_array_iterator = defineIterator(Array, 'Array', function (iterated, kind) {
-  setInternalState(this, {
+  setInternalState$1(this, {
     type: ARRAY_ITERATOR,
     target: toIndexedObject(iterated), // target
     index: 0,                          // next index
@@ -1472,7 +1472,7 @@ var es_array_iterator = defineIterator(Array, 'Array', function (iterated, kind)
 // argumentsList[@@iterator] is %ArrayProto_values%
 // https://tc39.es/ecma262/#sec-createunmappedargumentsobject
 // https://tc39.es/ecma262/#sec-createmappedargumentsobject
-var values = Iterators.Arguments = Iterators.Array;
+var values = Iterators$2.Arguments = Iterators$2.Array;
 
 // https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
 addToUnscopables$1('keys');
@@ -1528,24 +1528,24 @@ var DOMTokenListPrototype$1 = classList && classList.constructor && classList.co
 
 var domTokenListPrototype = DOMTokenListPrototype$1 === Object.prototype ? undefined : DOMTokenListPrototype$1;
 
-var global$7 = global$i;
+var global$c = global$n;
 var DOMIterables = domIterables;
 var DOMTokenListPrototype = domTokenListPrototype;
 var ArrayIteratorMethods = es_array_iterator;
 var createNonEnumerableProperty$2 = createNonEnumerableProperty$6;
-var wellKnownSymbol$8 = wellKnownSymbol$e;
+var wellKnownSymbol$d = wellKnownSymbol$j;
 
-var ITERATOR$1 = wellKnownSymbol$8('iterator');
-var TO_STRING_TAG$2 = wellKnownSymbol$8('toStringTag');
+var ITERATOR$4 = wellKnownSymbol$d('iterator');
+var TO_STRING_TAG$2 = wellKnownSymbol$d('toStringTag');
 var ArrayValues = ArrayIteratorMethods.values;
 
 var handlePrototype = function (CollectionPrototype, COLLECTION_NAME) {
   if (CollectionPrototype) {
     // some Chrome versions have non-configurable methods on DOMTokenList
-    if (CollectionPrototype[ITERATOR$1] !== ArrayValues) try {
-      createNonEnumerableProperty$2(CollectionPrototype, ITERATOR$1, ArrayValues);
+    if (CollectionPrototype[ITERATOR$4] !== ArrayValues) try {
+      createNonEnumerableProperty$2(CollectionPrototype, ITERATOR$4, ArrayValues);
     } catch (error) {
-      CollectionPrototype[ITERATOR$1] = ArrayValues;
+      CollectionPrototype[ITERATOR$4] = ArrayValues;
     }
     if (!CollectionPrototype[TO_STRING_TAG$2]) {
       createNonEnumerableProperty$2(CollectionPrototype, TO_STRING_TAG$2, COLLECTION_NAME);
@@ -1562,14 +1562,14 @@ var handlePrototype = function (CollectionPrototype, COLLECTION_NAME) {
 };
 
 for (var COLLECTION_NAME in DOMIterables) {
-  handlePrototype(global$7[COLLECTION_NAME] && global$7[COLLECTION_NAME].prototype, COLLECTION_NAME);
+  handlePrototype(global$c[COLLECTION_NAME] && global$c[COLLECTION_NAME].prototype, COLLECTION_NAME);
 }
 
 handlePrototype(DOMTokenListPrototype, 'DOMTokenList');
 
-var wellKnownSymbol$7 = wellKnownSymbol$e;
+var wellKnownSymbol$c = wellKnownSymbol$j;
 
-var TO_STRING_TAG$1 = wellKnownSymbol$7('toStringTag');
+var TO_STRING_TAG$1 = wellKnownSymbol$c('toStringTag');
 var test = {};
 
 test[TO_STRING_TAG$1] = 'z';
@@ -1577,11 +1577,11 @@ test[TO_STRING_TAG$1] = 'z';
 var toStringTagSupport = String(test) === '[object z]';
 
 var TO_STRING_TAG_SUPPORT = toStringTagSupport;
-var isCallable$4 = isCallable$j;
+var isCallable$9 = isCallable$o;
 var classofRaw$1 = classofRaw$2;
-var wellKnownSymbol$6 = wellKnownSymbol$e;
+var wellKnownSymbol$b = wellKnownSymbol$j;
 
-var TO_STRING_TAG = wellKnownSymbol$6('toStringTag');
+var TO_STRING_TAG = wellKnownSymbol$b('toStringTag');
 var $Object = Object;
 
 // ES3 wrong here
@@ -1595,7 +1595,7 @@ var tryGet = function (it, key) {
 };
 
 // getting tag from ES6+ `Object.prototype.toString`
-var classof$3 = TO_STRING_TAG_SUPPORT ? classofRaw$1 : function (it) {
+var classof$6 = TO_STRING_TAG_SUPPORT ? classofRaw$1 : function (it) {
   var O, tag, result;
   return it === undefined ? 'Undefined' : it === null ? 'Null'
     // @@toStringTag case
@@ -1603,24 +1603,24 @@ var classof$3 = TO_STRING_TAG_SUPPORT ? classofRaw$1 : function (it) {
     // builtinTag case
     : CORRECT_ARGUMENTS ? classofRaw$1(O)
     // ES3 arguments fallback
-    : (result = classofRaw$1(O)) == 'Object' && isCallable$4(O.callee) ? 'Arguments' : result;
+    : (result = classofRaw$1(O)) == 'Object' && isCallable$9(O.callee) ? 'Arguments' : result;
 };
 
-var classof$2 = classof$3;
+var classof$5 = classof$6;
 
 var $String$1 = String;
 
 var toString$c = function (argument) {
-  if (classof$2(argument) === 'Symbol') throw TypeError('Cannot convert a Symbol value to a string');
+  if (classof$5(argument) === 'Symbol') throw TypeError('Cannot convert a Symbol value to a string');
   return $String$1(argument);
 };
 
-var anObject$5 = anObject$b;
+var anObject$a = anObject$g;
 
 // `RegExp.prototype.flags` getter implementation
 // https://tc39.es/ecma262/#sec-get-regexp.prototype.flags
 var regexpFlags$1 = function () {
-  var that = anObject$5(this);
+  var that = anObject$a(this);
   var result = '';
   if (that.hasIndices) result += 'd';
   if (that.global) result += 'g';
@@ -1633,13 +1633,13 @@ var regexpFlags$1 = function () {
   return result;
 };
 
-var fails$b = fails$m;
-var global$6 = global$i;
+var fails$d = fails$o;
+var global$b = global$n;
 
 // babel-minify and Closure Compiler transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError
-var $RegExp$2 = global$6.RegExp;
+var $RegExp$2 = global$b.RegExp;
 
-var UNSUPPORTED_Y$2 = fails$b(function () {
+var UNSUPPORTED_Y$2 = fails$d(function () {
   var re = $RegExp$2('a', 'y');
   re.lastIndex = 2;
   return re.exec('abcd') != null;
@@ -1647,11 +1647,11 @@ var UNSUPPORTED_Y$2 = fails$b(function () {
 
 // UC Browser bug
 // https://github.com/zloirock/core-js/issues/1008
-var MISSED_STICKY$1 = UNSUPPORTED_Y$2 || fails$b(function () {
+var MISSED_STICKY$1 = UNSUPPORTED_Y$2 || fails$d(function () {
   return !$RegExp$2('a', 'y').sticky;
 });
 
-var BROKEN_CARET = UNSUPPORTED_Y$2 || fails$b(function () {
+var BROKEN_CARET = UNSUPPORTED_Y$2 || fails$d(function () {
   // https://bugzilla.mozilla.org/show_bug.cgi?id=773687
   var re = $RegExp$2('^r', 'gy');
   re.lastIndex = 2;
@@ -1664,24 +1664,24 @@ var regexpStickyHelpers = {
   UNSUPPORTED_Y: UNSUPPORTED_Y$2
 };
 
-var fails$a = fails$m;
-var global$5 = global$i;
+var fails$c = fails$o;
+var global$a = global$n;
 
 // babel-minify and Closure Compiler transpiles RegExp('.', 's') -> /./s and it causes SyntaxError
-var $RegExp$1 = global$5.RegExp;
+var $RegExp$1 = global$a.RegExp;
 
-var regexpUnsupportedDotAll = fails$a(function () {
+var regexpUnsupportedDotAll = fails$c(function () {
   var re = $RegExp$1('.', 's');
   return !(re.dotAll && re.exec('\n') && re.flags === 's');
 });
 
-var fails$9 = fails$m;
-var global$4 = global$i;
+var fails$b = fails$o;
+var global$9 = global$n;
 
 // babel-minify and Closure Compiler transpiles RegExp('(?<a>b)', 'g') -> /(?<a>b)/g and it causes SyntaxError
-var $RegExp = global$4.RegExp;
+var $RegExp = global$9.RegExp;
 
-var regexpUnsupportedNcg = fails$9(function () {
+var regexpUnsupportedNcg = fails$b(function () {
   var re = $RegExp('(?<a>b)', 'g');
   return re.exec('b').groups.a !== 'b' ||
     'b'.replace(re, '$<a>c') !== 'bc';
@@ -1689,8 +1689,8 @@ var regexpUnsupportedNcg = fails$9(function () {
 
 /* eslint-disable regexp/no-empty-capturing-group, regexp/no-empty-group, regexp/no-lazy-ends -- testing */
 /* eslint-disable regexp/no-useless-quantifier -- testing */
-var call$7 = functionCall;
-var uncurryThis$e = functionUncurryThis;
+var call$e = functionCall;
+var uncurryThis$h = functionUncurryThis;
 var toString$b = toString$c;
 var regexpFlags = regexpFlags$1;
 var stickyHelpers$1 = regexpStickyHelpers;
@@ -1703,16 +1703,16 @@ var UNSUPPORTED_NCG$1 = regexpUnsupportedNcg;
 var nativeReplace = shared('native-string-replace', String.prototype.replace);
 var nativeExec = RegExp.prototype.exec;
 var patchedExec = nativeExec;
-var charAt$4 = uncurryThis$e(''.charAt);
-var indexOf = uncurryThis$e(''.indexOf);
-var replace$4 = uncurryThis$e(''.replace);
-var stringSlice$7 = uncurryThis$e(''.slice);
+var charAt$4 = uncurryThis$h(''.charAt);
+var indexOf = uncurryThis$h(''.indexOf);
+var replace$4 = uncurryThis$h(''.replace);
+var stringSlice$7 = uncurryThis$h(''.slice);
 
 var UPDATES_LAST_INDEX_WRONG = (function () {
   var re1 = /a/;
   var re2 = /b*/g;
-  call$7(nativeExec, re1, 'a');
-  call$7(nativeExec, re2, 'a');
+  call$e(nativeExec, re1, 'a');
+  call$e(nativeExec, re2, 'a');
   return re1.lastIndex !== 0 || re2.lastIndex !== 0;
 })();
 
@@ -1733,14 +1733,14 @@ if (PATCH) {
 
     if (raw) {
       raw.lastIndex = re.lastIndex;
-      result = call$7(patchedExec, raw, str);
+      result = call$e(patchedExec, raw, str);
       re.lastIndex = raw.lastIndex;
       return result;
     }
 
     var groups = state.groups;
     var sticky = UNSUPPORTED_Y$1 && re.sticky;
-    var flags = call$7(regexpFlags, re);
+    var flags = call$e(regexpFlags, re);
     var source = re.source;
     var charsAdded = 0;
     var strCopy = str;
@@ -1768,7 +1768,7 @@ if (PATCH) {
     }
     if (UPDATES_LAST_INDEX_WRONG) lastIndex = re.lastIndex;
 
-    match = call$7(nativeExec, sticky ? reCopy : re, strCopy);
+    match = call$e(nativeExec, sticky ? reCopy : re, strCopy);
 
     if (sticky) {
       if (match) {
@@ -1783,7 +1783,7 @@ if (PATCH) {
     if (NPCG_INCLUDED && match && match.length > 1) {
       // Fix browsers whose `exec` methods don't consistently return `undefined`
       // for NPCG, like IE8. NOTE: This doesn't work for /(.?)?/
-      call$7(nativeReplace, match[0], reCopy, function () {
+      call$e(nativeReplace, match[0], reCopy, function () {
         for (i = 1; i < arguments.length - 2; i++) {
           if (arguments[i] === undefined) match[i] = undefined;
         }
@@ -1804,48 +1804,48 @@ if (PATCH) {
 
 var regexpExec$2 = patchedExec;
 
-var $$8 = _export;
-var exec$2 = regexpExec$2;
+var $$e = _export;
+var exec$3 = regexpExec$2;
 
 // `RegExp.prototype.exec` method
 // https://tc39.es/ecma262/#sec-regexp.prototype.exec
-$$8({ target: 'RegExp', proto: true, forced: /./.exec !== exec$2 }, {
-  exec: exec$2
+$$e({ target: 'RegExp', proto: true, forced: /./.exec !== exec$3 }, {
+  exec: exec$3
 });
 
 var classofRaw = classofRaw$2;
-var uncurryThis$d = functionUncurryThis;
+var uncurryThis$g = functionUncurryThis;
 
 var functionUncurryThisClause = function (fn) {
   // Nashorn bug:
   //   https://github.com/zloirock/core-js/issues/1128
   //   https://github.com/zloirock/core-js/issues/1130
-  if (classofRaw(fn) === 'Function') return uncurryThis$d(fn);
+  if (classofRaw(fn) === 'Function') return uncurryThis$g(fn);
 };
 
 // TODO: Remove from `core-js@4` since it's moved to entry points
 
-var uncurryThis$c = functionUncurryThisClause;
-var defineBuiltIn$2 = defineBuiltIn$6;
+var uncurryThis$f = functionUncurryThisClause;
+var defineBuiltIn$4 = defineBuiltIn$8;
 var regexpExec$1 = regexpExec$2;
-var fails$8 = fails$m;
-var wellKnownSymbol$5 = wellKnownSymbol$e;
+var fails$a = fails$o;
+var wellKnownSymbol$a = wellKnownSymbol$j;
 var createNonEnumerableProperty$1 = createNonEnumerableProperty$6;
 
-var SPECIES$1 = wellKnownSymbol$5('species');
+var SPECIES$3 = wellKnownSymbol$a('species');
 var RegExpPrototype$3 = RegExp.prototype;
 
 var fixRegexpWellKnownSymbolLogic = function (KEY, exec, FORCED, SHAM) {
-  var SYMBOL = wellKnownSymbol$5(KEY);
+  var SYMBOL = wellKnownSymbol$a(KEY);
 
-  var DELEGATES_TO_SYMBOL = !fails$8(function () {
+  var DELEGATES_TO_SYMBOL = !fails$a(function () {
     // String methods call symbol-named RegEp methods
     var O = {};
     O[SYMBOL] = function () { return 7; };
     return ''[KEY](O) != 7;
   });
 
-  var DELEGATES_TO_EXEC = DELEGATES_TO_SYMBOL && !fails$8(function () {
+  var DELEGATES_TO_EXEC = DELEGATES_TO_SYMBOL && !fails$a(function () {
     // Symbol-named RegExp methods call .exec
     var execCalled = false;
     var re = /a/;
@@ -1858,7 +1858,7 @@ var fixRegexpWellKnownSymbolLogic = function (KEY, exec, FORCED, SHAM) {
       // RegExp[@@split] doesn't call the regex's exec method, but first creates
       // a new one. We need to return the patched regex when creating the new one.
       re.constructor = {};
-      re.constructor[SPECIES$1] = function () { return re; };
+      re.constructor[SPECIES$3] = function () { return re; };
       re.flags = '';
       re[SYMBOL] = /./[SYMBOL];
     }
@@ -1874,9 +1874,9 @@ var fixRegexpWellKnownSymbolLogic = function (KEY, exec, FORCED, SHAM) {
     !DELEGATES_TO_EXEC ||
     FORCED
   ) {
-    var uncurriedNativeRegExpMethod = uncurryThis$c(/./[SYMBOL]);
+    var uncurriedNativeRegExpMethod = uncurryThis$f(/./[SYMBOL]);
     var methods = exec(SYMBOL, ''[KEY], function (nativeMethod, regexp, str, arg2, forceStringMethod) {
-      var uncurriedNativeMethod = uncurryThis$c(nativeMethod);
+      var uncurriedNativeMethod = uncurryThis$f(nativeMethod);
       var $exec = regexp.exec;
       if ($exec === regexpExec$1 || $exec === RegExpPrototype$3.exec) {
         if (DELEGATES_TO_SYMBOL && !forceStringMethod) {
@@ -1890,21 +1890,21 @@ var fixRegexpWellKnownSymbolLogic = function (KEY, exec, FORCED, SHAM) {
       return { done: false };
     });
 
-    defineBuiltIn$2(String.prototype, KEY, methods[0]);
-    defineBuiltIn$2(RegExpPrototype$3, SYMBOL, methods[1]);
+    defineBuiltIn$4(String.prototype, KEY, methods[0]);
+    defineBuiltIn$4(RegExpPrototype$3, SYMBOL, methods[1]);
   }
 
   if (SHAM) createNonEnumerableProperty$1(RegExpPrototype$3[SYMBOL], 'sham', true);
 };
 
-var uncurryThis$b = functionUncurryThis;
+var uncurryThis$e = functionUncurryThis;
 var toIntegerOrInfinity$3 = toIntegerOrInfinity$6;
 var toString$a = toString$c;
 var requireObjectCoercible$7 = requireObjectCoercible$a;
 
-var charAt$3 = uncurryThis$b(''.charAt);
-var charCodeAt = uncurryThis$b(''.charCodeAt);
-var stringSlice$6 = uncurryThis$b(''.slice);
+var charAt$3 = uncurryThis$e(''.charAt);
+var charCodeAt = uncurryThis$e(''.charCodeAt);
+var stringSlice$6 = uncurryThis$e(''.slice);
 
 var createMethod$1 = function (CONVERT_TO_STRING) {
   return function ($this, pos) {
@@ -1942,35 +1942,35 @@ var advanceStringIndex$2 = function (S, index, unicode) {
   return index + (unicode ? charAt$2(S, index).length : 1);
 };
 
-var call$6 = functionCall;
-var anObject$4 = anObject$b;
-var isCallable$3 = isCallable$j;
-var classof$1 = classofRaw$2;
+var call$d = functionCall;
+var anObject$9 = anObject$g;
+var isCallable$8 = isCallable$o;
+var classof$4 = classofRaw$2;
 var regexpExec = regexpExec$2;
 
-var $TypeError$1 = TypeError;
+var $TypeError$7 = TypeError;
 
 // `RegExpExec` abstract operation
 // https://tc39.es/ecma262/#sec-regexpexec
 var regexpExecAbstract = function (R, S) {
   var exec = R.exec;
-  if (isCallable$3(exec)) {
-    var result = call$6(exec, R, S);
-    if (result !== null) anObject$4(result);
+  if (isCallable$8(exec)) {
+    var result = call$d(exec, R, S);
+    if (result !== null) anObject$9(result);
     return result;
   }
-  if (classof$1(R) === 'RegExp') return call$6(regexpExec, R, S);
-  throw $TypeError$1('RegExp#exec called on incompatible receiver');
+  if (classof$4(R) === 'RegExp') return call$d(regexpExec, R, S);
+  throw $TypeError$7('RegExp#exec called on incompatible receiver');
 };
 
-var call$5 = functionCall;
+var call$c = functionCall;
 var fixRegExpWellKnownSymbolLogic$2 = fixRegexpWellKnownSymbolLogic;
-var anObject$3 = anObject$b;
-var isNullOrUndefined$2 = isNullOrUndefined$5;
+var anObject$8 = anObject$g;
+var isNullOrUndefined$4 = isNullOrUndefined$7;
 var toLength$2 = toLength$4;
 var toString$9 = toString$c;
 var requireObjectCoercible$6 = requireObjectCoercible$a;
-var getMethod$2 = getMethod$4;
+var getMethod$4 = getMethod$6;
 var advanceStringIndex$1 = advanceStringIndex$2;
 var regExpExec$2 = regexpExecAbstract;
 
@@ -1981,13 +1981,13 @@ fixRegExpWellKnownSymbolLogic$2('match', function (MATCH, nativeMatch, maybeCall
     // https://tc39.es/ecma262/#sec-string.prototype.match
     function match(regexp) {
       var O = requireObjectCoercible$6(this);
-      var matcher = isNullOrUndefined$2(regexp) ? undefined : getMethod$2(regexp, MATCH);
-      return matcher ? call$5(matcher, regexp, O) : new RegExp(regexp)[MATCH](toString$9(O));
+      var matcher = isNullOrUndefined$4(regexp) ? undefined : getMethod$4(regexp, MATCH);
+      return matcher ? call$c(matcher, regexp, O) : new RegExp(regexp)[MATCH](toString$9(O));
     },
     // `RegExp.prototype[@@match]` method
     // https://tc39.es/ecma262/#sec-regexp.prototype-@@match
     function (string) {
-      var rx = anObject$3(this);
+      var rx = anObject$8(this);
       var S = toString$9(string);
       var res = maybeCallNative(nativeMatch, rx, S);
 
@@ -2012,9 +2012,9 @@ fixRegExpWellKnownSymbolLogic$2('match', function (MATCH, nativeMatch, maybeCall
 });
 
 var DESCRIPTORS$3 = descriptors;
-var uncurryThis$a = functionUncurryThis;
-var call$4 = functionCall;
-var fails$7 = fails$m;
+var uncurryThis$d = functionUncurryThis;
+var call$b = functionCall;
+var fails$9 = fails$o;
 var objectKeys = objectKeys$2;
 var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
 var propertyIsEnumerableModule = objectPropertyIsEnumerable;
@@ -2025,11 +2025,11 @@ var IndexedObject = indexedObject;
 var $assign = Object.assign;
 // eslint-disable-next-line es/no-object-defineproperty -- required for testing
 var defineProperty$2 = Object.defineProperty;
-var concat$1 = uncurryThis$a([].concat);
+var concat$1 = uncurryThis$d([].concat);
 
 // `Object.assign` method
 // https://tc39.es/ecma262/#sec-object.assign
-var objectAssign = !$assign || fails$7(function () {
+var objectAssign = !$assign || fails$9(function () {
   // should have correct order of operations (Edge bug)
   if (DESCRIPTORS$3 && $assign({ b: 1 }, $assign(defineProperty$2({}, 'a', {
     enumerable: true,
@@ -2063,18 +2063,18 @@ var objectAssign = !$assign || fails$7(function () {
     var key;
     while (length > j) {
       key = keys[j++];
-      if (!DESCRIPTORS$3 || call$4(propertyIsEnumerable, S, key)) T[key] = S[key];
+      if (!DESCRIPTORS$3 || call$b(propertyIsEnumerable, S, key)) T[key] = S[key];
     }
   } return T;
 } : $assign;
 
-var $$7 = _export;
+var $$d = _export;
 var assign = objectAssign;
 
 // `Object.assign` method
 // https://tc39.es/ecma262/#sec-object.assign
 // eslint-disable-next-line es/no-object-assign -- required for testing
-$$7({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign }, {
+$$d({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign }, {
   assign: assign
 });
 
@@ -2130,24 +2130,24 @@ class Module extends React.Component {
 // eslint-disable-next-line @typescript-eslint/ban-types
 class Page extends React.Component {}
 
-var NATIVE_BIND = functionBindNative;
+var NATIVE_BIND$1 = functionBindNative;
 
 var FunctionPrototype = Function.prototype;
-var apply$1 = FunctionPrototype.apply;
-var call$3 = FunctionPrototype.call;
+var apply$2 = FunctionPrototype.apply;
+var call$a = FunctionPrototype.call;
 
 // eslint-disable-next-line es/no-reflect -- safe
-var functionApply = typeof Reflect == 'object' && Reflect.apply || (NATIVE_BIND ? call$3.bind(apply$1) : function () {
-  return call$3.apply(apply$1, arguments);
+var functionApply = typeof Reflect == 'object' && Reflect.apply || (NATIVE_BIND$1 ? call$a.bind(apply$2) : function () {
+  return call$a.apply(apply$2, arguments);
 });
 
-var uncurryThis$9 = functionUncurryThis;
+var uncurryThis$c = functionUncurryThis;
 var toObject = toObject$4;
 
 var floor$1 = Math.floor;
-var charAt$1 = uncurryThis$9(''.charAt);
-var replace$3 = uncurryThis$9(''.replace);
-var stringSlice$5 = uncurryThis$9(''.slice);
+var charAt$1 = uncurryThis$c(''.charAt);
+var replace$3 = uncurryThis$c(''.replace);
+var stringSlice$5 = uncurryThis$c(''.slice);
 // eslint-disable-next-line redos/no-vulnerable -- safe
 var SUBSTITUTION_SYMBOLS = /\$([$&'`]|\d{1,2}|<[^>]*>)/g;
 var SUBSTITUTION_SYMBOLS_NO_NAMED = /\$([$&'`]|\d{1,2})/g;
@@ -2187,31 +2187,31 @@ var getSubstitution$1 = function (matched, str, position, captures, namedCapture
   });
 };
 
-var apply = functionApply;
-var call$2 = functionCall;
-var uncurryThis$8 = functionUncurryThis;
+var apply$1 = functionApply;
+var call$9 = functionCall;
+var uncurryThis$b = functionUncurryThis;
 var fixRegExpWellKnownSymbolLogic$1 = fixRegexpWellKnownSymbolLogic;
-var fails$6 = fails$m;
-var anObject$2 = anObject$b;
-var isCallable$2 = isCallable$j;
-var isNullOrUndefined$1 = isNullOrUndefined$5;
+var fails$8 = fails$o;
+var anObject$7 = anObject$g;
+var isCallable$7 = isCallable$o;
+var isNullOrUndefined$3 = isNullOrUndefined$7;
 var toIntegerOrInfinity$2 = toIntegerOrInfinity$6;
 var toLength$1 = toLength$4;
 var toString$8 = toString$c;
 var requireObjectCoercible$5 = requireObjectCoercible$a;
 var advanceStringIndex = advanceStringIndex$2;
-var getMethod$1 = getMethod$4;
+var getMethod$3 = getMethod$6;
 var getSubstitution = getSubstitution$1;
 var regExpExec$1 = regexpExecAbstract;
-var wellKnownSymbol$4 = wellKnownSymbol$e;
+var wellKnownSymbol$9 = wellKnownSymbol$j;
 
-var REPLACE = wellKnownSymbol$4('replace');
+var REPLACE = wellKnownSymbol$9('replace');
 var max = Math.max;
 var min$1 = Math.min;
-var concat = uncurryThis$8([].concat);
-var push = uncurryThis$8([].push);
-var stringIndexOf$2 = uncurryThis$8(''.indexOf);
-var stringSlice$4 = uncurryThis$8(''.slice);
+var concat = uncurryThis$b([].concat);
+var push = uncurryThis$b([].push);
+var stringIndexOf$2 = uncurryThis$b(''.indexOf);
+var stringSlice$4 = uncurryThis$b(''.slice);
 
 var maybeToString = function (it) {
   return it === undefined ? it : String(it);
@@ -2232,7 +2232,7 @@ var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE = (function () {
   return false;
 })();
 
-var REPLACE_SUPPORTS_NAMED_GROUPS = !fails$6(function () {
+var REPLACE_SUPPORTS_NAMED_GROUPS = !fails$8(function () {
   var re = /./;
   re.exec = function () {
     var result = [];
@@ -2252,15 +2252,15 @@ fixRegExpWellKnownSymbolLogic$1('replace', function (_, nativeReplace, maybeCall
     // https://tc39.es/ecma262/#sec-string.prototype.replace
     function replace(searchValue, replaceValue) {
       var O = requireObjectCoercible$5(this);
-      var replacer = isNullOrUndefined$1(searchValue) ? undefined : getMethod$1(searchValue, REPLACE);
+      var replacer = isNullOrUndefined$3(searchValue) ? undefined : getMethod$3(searchValue, REPLACE);
       return replacer
-        ? call$2(replacer, searchValue, O, replaceValue)
-        : call$2(nativeReplace, toString$8(O), searchValue, replaceValue);
+        ? call$9(replacer, searchValue, O, replaceValue)
+        : call$9(nativeReplace, toString$8(O), searchValue, replaceValue);
     },
     // `RegExp.prototype[@@replace]` method
     // https://tc39.es/ecma262/#sec-regexp.prototype-@@replace
     function (string, replaceValue) {
-      var rx = anObject$2(this);
+      var rx = anObject$7(this);
       var S = toString$8(string);
 
       if (
@@ -2272,7 +2272,7 @@ fixRegExpWellKnownSymbolLogic$1('replace', function (_, nativeReplace, maybeCall
         if (res.done) return res.value;
       }
 
-      var functionalReplace = isCallable$2(replaceValue);
+      var functionalReplace = isCallable$7(replaceValue);
       if (!functionalReplace) replaceValue = toString$8(replaceValue);
 
       var global = rx.global;
@@ -2310,7 +2310,7 @@ fixRegExpWellKnownSymbolLogic$1('replace', function (_, nativeReplace, maybeCall
         if (functionalReplace) {
           var replacerArgs = concat([matched], captures, position, S);
           if (namedCaptures !== undefined) push(replacerArgs, namedCaptures);
-          var replacement = toString$8(apply(replaceValue, undefined, replacerArgs));
+          var replacement = toString$8(apply$1(replaceValue, undefined, replacerArgs));
         } else {
           replacement = getSubstitution(matched, S, position, captures, namedCaptures, replaceValue);
         }
@@ -2328,12 +2328,12 @@ fixRegExpWellKnownSymbolLogic$1('replace', function (_, nativeReplace, maybeCall
 var whitespaces$3 = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' +
   '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
 
-var uncurryThis$7 = functionUncurryThis;
+var uncurryThis$a = functionUncurryThis;
 var requireObjectCoercible$4 = requireObjectCoercible$a;
 var toString$7 = toString$c;
 var whitespaces$2 = whitespaces$3;
 
-var replace$2 = uncurryThis$7(''.replace);
+var replace$2 = uncurryThis$a(''.replace);
 var ltrim = RegExp('^[' + whitespaces$2 + ']+');
 var rtrim = RegExp('(^|[^' + whitespaces$2 + '])[' + whitespaces$2 + ']+$');
 
@@ -2360,7 +2360,7 @@ var stringTrim = {
 };
 
 var PROPER_FUNCTION_NAME$1 = functionName.PROPER;
-var fails$5 = fails$m;
+var fails$7 = fails$o;
 var whitespaces$1 = whitespaces$3;
 
 var non = '\u200B\u0085\u180E';
@@ -2368,68 +2368,68 @@ var non = '\u200B\u0085\u180E';
 // check that a method works with the correct list
 // of whitespaces and has a correct name
 var stringTrimForced = function (METHOD_NAME) {
-  return fails$5(function () {
+  return fails$7(function () {
     return !!whitespaces$1[METHOD_NAME]()
       || non[METHOD_NAME]() !== non
       || (PROPER_FUNCTION_NAME$1 && whitespaces$1[METHOD_NAME].name !== METHOD_NAME);
   });
 };
 
-var $$6 = _export;
+var $$c = _export;
 var $trim = stringTrim.trim;
 var forcedStringTrimMethod = stringTrimForced;
 
 // `String.prototype.trim` method
 // https://tc39.es/ecma262/#sec-string.prototype.trim
-$$6({ target: 'String', proto: true, forced: forcedStringTrimMethod('trim') }, {
+$$c({ target: 'String', proto: true, forced: forcedStringTrimMethod('trim') }, {
   trim: function trim() {
     return $trim(this);
   }
 });
 
-var isCallable$1 = isCallable$j;
-var isObject$1 = isObject$8;
-var setPrototypeOf = objectSetPrototypeOf;
+var isCallable$6 = isCallable$o;
+var isObject$3 = isObject$a;
+var setPrototypeOf$1 = objectSetPrototypeOf;
 
 // makes subclassing work correct for wrapped built-ins
 var inheritIfRequired$1 = function ($this, dummy, Wrapper) {
   var NewTarget, NewTargetPrototype;
   if (
     // it can work only with native `setPrototypeOf`
-    setPrototypeOf &&
+    setPrototypeOf$1 &&
     // we haven't completely correct pre-ES6 way for getting `new.target`, so use this
-    isCallable$1(NewTarget = dummy.constructor) &&
+    isCallable$6(NewTarget = dummy.constructor) &&
     NewTarget !== Wrapper &&
-    isObject$1(NewTargetPrototype = NewTarget.prototype) &&
+    isObject$3(NewTargetPrototype = NewTarget.prototype) &&
     NewTargetPrototype !== Wrapper.prototype
-  ) setPrototypeOf($this, NewTargetPrototype);
+  ) setPrototypeOf$1($this, NewTargetPrototype);
   return $this;
 };
 
-var isObject = isObject$8;
-var classof = classofRaw$2;
-var wellKnownSymbol$3 = wellKnownSymbol$e;
+var isObject$2 = isObject$a;
+var classof$3 = classofRaw$2;
+var wellKnownSymbol$8 = wellKnownSymbol$j;
 
-var MATCH$2 = wellKnownSymbol$3('match');
+var MATCH$2 = wellKnownSymbol$8('match');
 
 // `IsRegExp` abstract operation
 // https://tc39.es/ecma262/#sec-isregexp
 var isRegexp = function (it) {
   var isRegExp;
-  return isObject(it) && ((isRegExp = it[MATCH$2]) !== undefined ? !!isRegExp : classof(it) == 'RegExp');
+  return isObject$2(it) && ((isRegExp = it[MATCH$2]) !== undefined ? !!isRegExp : classof$3(it) == 'RegExp');
 };
 
-var call$1 = functionCall;
-var hasOwn$2 = hasOwnProperty_1;
-var isPrototypeOf$2 = objectIsPrototypeOf;
+var call$8 = functionCall;
+var hasOwn$3 = hasOwnProperty_1;
+var isPrototypeOf$4 = objectIsPrototypeOf;
 var regExpFlags = regexpFlags$1;
 
 var RegExpPrototype$2 = RegExp.prototype;
 
 var regexpGetFlags = function (R) {
   var flags = R.flags;
-  return flags === undefined && !('flags' in RegExpPrototype$2) && !hasOwn$2(R, 'flags') && isPrototypeOf$2(RegExpPrototype$2, R)
-    ? call$1(regExpFlags, R) : flags;
+  return flags === undefined && !('flags' in RegExpPrototype$2) && !hasOwn$3(R, 'flags') && isPrototypeOf$4(RegExpPrototype$2, R)
+    ? call$8(regExpFlags, R) : flags;
 };
 
 var defineProperty$1 = objectDefineProperty.f;
@@ -2451,18 +2451,18 @@ var defineBuiltInAccessor$2 = function (target, name, descriptor) {
   return defineProperty.f(target, name, descriptor);
 };
 
-var getBuiltIn = getBuiltIn$4;
+var getBuiltIn$3 = getBuiltIn$7;
 var defineBuiltInAccessor$1 = defineBuiltInAccessor$2;
-var wellKnownSymbol$2 = wellKnownSymbol$e;
+var wellKnownSymbol$7 = wellKnownSymbol$j;
 var DESCRIPTORS$2 = descriptors;
 
-var SPECIES = wellKnownSymbol$2('species');
+var SPECIES$2 = wellKnownSymbol$7('species');
 
-var setSpecies$1 = function (CONSTRUCTOR_NAME) {
-  var Constructor = getBuiltIn(CONSTRUCTOR_NAME);
+var setSpecies$2 = function (CONSTRUCTOR_NAME) {
+  var Constructor = getBuiltIn$3(CONSTRUCTOR_NAME);
 
-  if (DESCRIPTORS$2 && Constructor && !Constructor[SPECIES]) {
-    defineBuiltInAccessor$1(Constructor, SPECIES, {
+  if (DESCRIPTORS$2 && Constructor && !Constructor[SPECIES$2]) {
+    defineBuiltInAccessor$1(Constructor, SPECIES$2, {
       configurable: true,
       get: function () { return this; }
     });
@@ -2470,36 +2470,36 @@ var setSpecies$1 = function (CONSTRUCTOR_NAME) {
 };
 
 var DESCRIPTORS$1 = descriptors;
-var global$3 = global$i;
-var uncurryThis$6 = functionUncurryThis;
-var isForced = isForced_1;
+var global$8 = global$n;
+var uncurryThis$9 = functionUncurryThis;
+var isForced$1 = isForced_1;
 var inheritIfRequired = inheritIfRequired$1;
 var createNonEnumerableProperty = createNonEnumerableProperty$6;
 var getOwnPropertyNames = objectGetOwnPropertyNames.f;
-var isPrototypeOf$1 = objectIsPrototypeOf;
+var isPrototypeOf$3 = objectIsPrototypeOf;
 var isRegExp$1 = isRegexp;
 var toString$6 = toString$c;
 var getRegExpFlags$1 = regexpGetFlags;
 var stickyHelpers = regexpStickyHelpers;
 var proxyAccessor = proxyAccessor$1;
-var defineBuiltIn$1 = defineBuiltIn$6;
-var fails$4 = fails$m;
-var hasOwn$1 = hasOwnProperty_1;
+var defineBuiltIn$3 = defineBuiltIn$8;
+var fails$6 = fails$o;
+var hasOwn$2 = hasOwnProperty_1;
 var enforceInternalState = internalState.enforce;
-var setSpecies = setSpecies$1;
-var wellKnownSymbol$1 = wellKnownSymbol$e;
+var setSpecies$1 = setSpecies$2;
+var wellKnownSymbol$6 = wellKnownSymbol$j;
 var UNSUPPORTED_DOT_ALL = regexpUnsupportedDotAll;
 var UNSUPPORTED_NCG = regexpUnsupportedNcg;
 
-var MATCH$1 = wellKnownSymbol$1('match');
-var NativeRegExp = global$3.RegExp;
+var MATCH$1 = wellKnownSymbol$6('match');
+var NativeRegExp = global$8.RegExp;
 var RegExpPrototype$1 = NativeRegExp.prototype;
-var SyntaxError = global$3.SyntaxError;
-var exec$1 = uncurryThis$6(RegExpPrototype$1.exec);
-var charAt = uncurryThis$6(''.charAt);
-var replace$1 = uncurryThis$6(''.replace);
-var stringIndexOf$1 = uncurryThis$6(''.indexOf);
-var stringSlice$3 = uncurryThis$6(''.slice);
+var SyntaxError = global$8.SyntaxError;
+var exec$2 = uncurryThis$9(RegExpPrototype$1.exec);
+var charAt = uncurryThis$9(''.charAt);
+var replace$1 = uncurryThis$9(''.replace);
+var stringIndexOf$1 = uncurryThis$9(''.indexOf);
+var stringSlice$3 = uncurryThis$9(''.slice);
 // TODO: Use only proper RegExpIdentifierName
 var IS_NCG = /^\?<[^\s\d!#%&*+<=>@^][^\s!#%&*+<=>@^]*>/;
 var re1 = /a/g;
@@ -2512,7 +2512,7 @@ var MISSED_STICKY = stickyHelpers.MISSED_STICKY;
 var UNSUPPORTED_Y = stickyHelpers.UNSUPPORTED_Y;
 
 var BASE_FORCED = DESCRIPTORS$1 &&
-  (!CORRECT_NEW || MISSED_STICKY || UNSUPPORTED_DOT_ALL || UNSUPPORTED_NCG || fails$4(function () {
+  (!CORRECT_NEW || MISSED_STICKY || UNSUPPORTED_DOT_ALL || UNSUPPORTED_NCG || fails$6(function () {
     re2[MATCH$1] = false;
     // RegExp constructor can alter flags and IsRegExp works correct with @@match
     return NativeRegExp(re1) != re1 || NativeRegExp(re2) == re2 || NativeRegExp(re1, 'i') != '/a/i';
@@ -2564,7 +2564,7 @@ var handleNCG = function (string) {
         brackets = true;
         break;
       case chr === '(':
-        if (exec$1(IS_NCG, stringSlice$3(string, index + 1))) {
+        if (exec$2(IS_NCG, stringSlice$3(string, index + 1))) {
           index += 2;
           ncg = true;
         }
@@ -2572,7 +2572,7 @@ var handleNCG = function (string) {
         groupid++;
         continue;
       case chr === '>' && ncg:
-        if (groupname === '' || hasOwn$1(names, groupname)) {
+        if (groupname === '' || hasOwn$2(names, groupname)) {
           throw new SyntaxError('Invalid capture group name');
         }
         names[groupname] = true;
@@ -2588,9 +2588,9 @@ var handleNCG = function (string) {
 
 // `RegExp` constructor
 // https://tc39.es/ecma262/#sec-regexp-constructor
-if (isForced('RegExp', BASE_FORCED)) {
+if (isForced$1('RegExp', BASE_FORCED)) {
   var RegExpWrapper = function RegExp(pattern, flags) {
-    var thisIsRegExp = isPrototypeOf$1(RegExpPrototype$1, this);
+    var thisIsRegExp = isPrototypeOf$3(RegExpPrototype$1, this);
     var patternIsRegExp = isRegExp$1(pattern);
     var flagsAreUndefined = flags === undefined;
     var groups = [];
@@ -2601,7 +2601,7 @@ if (isForced('RegExp', BASE_FORCED)) {
       return pattern;
     }
 
-    if (patternIsRegExp || isPrototypeOf$1(RegExpPrototype$1, pattern)) {
+    if (patternIsRegExp || isPrototypeOf$3(RegExpPrototype$1, pattern)) {
       pattern = pattern.source;
       if (flagsAreUndefined) flags = getRegExpFlags$1(rawPattern);
     }
@@ -2654,67 +2654,67 @@ if (isForced('RegExp', BASE_FORCED)) {
 
   RegExpPrototype$1.constructor = RegExpWrapper;
   RegExpWrapper.prototype = RegExpPrototype$1;
-  defineBuiltIn$1(global$3, 'RegExp', RegExpWrapper, { constructor: true });
+  defineBuiltIn$3(global$8, 'RegExp', RegExpWrapper, { constructor: true });
 }
 
 // https://tc39.es/ecma262/#sec-get-regexp-@@species
-setSpecies('RegExp');
+setSpecies$1('RegExp');
 
 var PROPER_FUNCTION_NAME = functionName.PROPER;
-var defineBuiltIn = defineBuiltIn$6;
-var anObject$1 = anObject$b;
+var defineBuiltIn$2 = defineBuiltIn$8;
+var anObject$6 = anObject$g;
 var $toString = toString$c;
-var fails$3 = fails$m;
+var fails$5 = fails$o;
 var getRegExpFlags = regexpGetFlags;
 
 var TO_STRING = 'toString';
 var RegExpPrototype = RegExp.prototype;
 var nativeToString = RegExpPrototype[TO_STRING];
 
-var NOT_GENERIC = fails$3(function () { return nativeToString.call({ source: 'a', flags: 'b' }) != '/a/b'; });
+var NOT_GENERIC = fails$5(function () { return nativeToString.call({ source: 'a', flags: 'b' }) != '/a/b'; });
 // FF44- RegExp#toString has a wrong name
 var INCORRECT_NAME = PROPER_FUNCTION_NAME && nativeToString.name != TO_STRING;
 
 // `RegExp.prototype.toString` method
 // https://tc39.es/ecma262/#sec-regexp.prototype.tostring
 if (NOT_GENERIC || INCORRECT_NAME) {
-  defineBuiltIn(RegExp.prototype, TO_STRING, function toString() {
-    var R = anObject$1(this);
+  defineBuiltIn$2(RegExp.prototype, TO_STRING, function toString() {
+    var R = anObject$6(this);
     var pattern = $toString(R.source);
     var flags = $toString(getRegExpFlags(R));
     return '/' + pattern + '/' + flags;
   }, { unsafe: true });
 }
 
-var global$2 = global$i;
-var fails$2 = fails$m;
-var uncurryThis$5 = functionUncurryThis;
+var global$7 = global$n;
+var fails$4 = fails$o;
+var uncurryThis$8 = functionUncurryThis;
 var toString$5 = toString$c;
 var trim = stringTrim.trim;
 var whitespaces = whitespaces$3;
 
-var $parseInt$1 = global$2.parseInt;
-var Symbol$1 = global$2.Symbol;
-var ITERATOR = Symbol$1 && Symbol$1.iterator;
+var $parseInt$1 = global$7.parseInt;
+var Symbol$1 = global$7.Symbol;
+var ITERATOR$3 = Symbol$1 && Symbol$1.iterator;
 var hex = /^[+-]?0x/i;
-var exec = uncurryThis$5(hex.exec);
+var exec$1 = uncurryThis$8(hex.exec);
 var FORCED$1 = $parseInt$1(whitespaces + '08') !== 8 || $parseInt$1(whitespaces + '0x16') !== 22
   // MS Edge 18- broken with boxed symbols
-  || (ITERATOR && !fails$2(function () { $parseInt$1(Object(ITERATOR)); }));
+  || (ITERATOR$3 && !fails$4(function () { $parseInt$1(Object(ITERATOR$3)); }));
 
 // `parseInt` method
 // https://tc39.es/ecma262/#sec-parseint-string-radix
 var numberParseInt = FORCED$1 ? function parseInt(string, radix) {
   var S = trim(toString$5(string));
-  return $parseInt$1(S, (radix >>> 0) || (exec(hex, S) ? 16 : 10));
+  return $parseInt$1(S, (radix >>> 0) || (exec$1(hex, S) ? 16 : 10));
 } : $parseInt$1;
 
-var $$5 = _export;
+var $$b = _export;
 var $parseInt = numberParseInt;
 
 // `parseInt` method
 // https://tc39.es/ecma262/#sec-parseint-string-radix
-$$5({ global: true, forced: parseInt != $parseInt }, {
+$$b({ global: true, forced: parseInt != $parseInt }, {
   parseInt: $parseInt
 });
 
@@ -2726,14 +2726,14 @@ var sameValue$1 = Object.is || function is(x, y) {
   return x === y ? x !== 0 || 1 / x === 1 / y : x != x && y != y;
 };
 
-var call = functionCall;
+var call$7 = functionCall;
 var fixRegExpWellKnownSymbolLogic = fixRegexpWellKnownSymbolLogic;
-var anObject = anObject$b;
-var isNullOrUndefined = isNullOrUndefined$5;
+var anObject$5 = anObject$g;
+var isNullOrUndefined$2 = isNullOrUndefined$7;
 var requireObjectCoercible$3 = requireObjectCoercible$a;
 var sameValue = sameValue$1;
 var toString$4 = toString$c;
-var getMethod = getMethod$4;
+var getMethod$2 = getMethod$6;
 var regExpExec = regexpExecAbstract;
 
 // @@search logic
@@ -2743,13 +2743,13 @@ fixRegExpWellKnownSymbolLogic('search', function (SEARCH, nativeSearch, maybeCal
     // https://tc39.es/ecma262/#sec-string.prototype.search
     function search(regexp) {
       var O = requireObjectCoercible$3(this);
-      var searcher = isNullOrUndefined(regexp) ? undefined : getMethod(regexp, SEARCH);
-      return searcher ? call(searcher, regexp, O) : new RegExp(regexp)[SEARCH](toString$4(O));
+      var searcher = isNullOrUndefined$2(regexp) ? undefined : getMethod$2(regexp, SEARCH);
+      return searcher ? call$7(searcher, regexp, O) : new RegExp(regexp)[SEARCH](toString$4(O));
     },
     // `RegExp.prototype[@@search]` method
     // https://tc39.es/ecma262/#sec-regexp.prototype-@@search
     function (string) {
-      var rx = anObject(this);
+      var rx = anObject$5(this);
       var S = toString$4(string);
       var res = maybeCallNative(nativeSearch, rx, S);
 
@@ -2778,18 +2778,6 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
-
-function __rest(s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-}
 
 function __awaiter(thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -2884,21 +2872,21 @@ const BarCodeScanner = ({
   }));
 };
 
-var $$4 = _export;
+var $$a = _export;
 var DESCRIPTORS = descriptors;
-var global$1 = global$i;
-var uncurryThis$4 = functionUncurryThis;
-var hasOwn = hasOwnProperty_1;
-var isCallable = isCallable$j;
-var isPrototypeOf = objectIsPrototypeOf;
+var global$6 = global$n;
+var uncurryThis$7 = functionUncurryThis;
+var hasOwn$1 = hasOwnProperty_1;
+var isCallable$5 = isCallable$o;
+var isPrototypeOf$2 = objectIsPrototypeOf;
 var toString$3 = toString$c;
 var defineBuiltInAccessor = defineBuiltInAccessor$2;
 var copyConstructorProperties = copyConstructorProperties$2;
 
-var NativeSymbol = global$1.Symbol;
+var NativeSymbol = global$6.Symbol;
 var SymbolPrototype = NativeSymbol && NativeSymbol.prototype;
 
-if (DESCRIPTORS && isCallable(NativeSymbol) && (!('description' in SymbolPrototype) ||
+if (DESCRIPTORS && isCallable$5(NativeSymbol) && (!('description' in SymbolPrototype) ||
   // Safari 12 bug
   NativeSymbol().description !== undefined
 )) {
@@ -2906,7 +2894,7 @@ if (DESCRIPTORS && isCallable(NativeSymbol) && (!('description' in SymbolPrototy
   // wrap Symbol constructor for correct work with undefined description
   var SymbolWrapper = function Symbol() {
     var description = arguments.length < 1 || arguments[0] === undefined ? undefined : toString$3(arguments[0]);
-    var result = isPrototypeOf(SymbolPrototype, this)
+    var result = isPrototypeOf$2(SymbolPrototype, this)
       ? new NativeSymbol(description)
       // in Edge 13, String(Symbol(undefined)) === 'Symbol(undefined)'
       : description === undefined ? NativeSymbol() : NativeSymbol(description);
@@ -2919,24 +2907,24 @@ if (DESCRIPTORS && isCallable(NativeSymbol) && (!('description' in SymbolPrototy
   SymbolPrototype.constructor = SymbolWrapper;
 
   var NATIVE_SYMBOL = String(NativeSymbol('test')) == 'Symbol(test)';
-  var thisSymbolValue = uncurryThis$4(SymbolPrototype.valueOf);
-  var symbolDescriptiveString = uncurryThis$4(SymbolPrototype.toString);
+  var thisSymbolValue = uncurryThis$7(SymbolPrototype.valueOf);
+  var symbolDescriptiveString = uncurryThis$7(SymbolPrototype.toString);
   var regexp = /^Symbol\((.*)\)[^)]+$/;
-  var replace = uncurryThis$4(''.replace);
-  var stringSlice$2 = uncurryThis$4(''.slice);
+  var replace = uncurryThis$7(''.replace);
+  var stringSlice$2 = uncurryThis$7(''.slice);
 
   defineBuiltInAccessor(SymbolPrototype, 'description', {
     configurable: true,
     get: function description() {
       var symbol = thisSymbolValue(this);
-      if (hasOwn(EmptyStringDescriptionStore, symbol)) return '';
+      if (hasOwn$1(EmptyStringDescriptionStore, symbol)) return '';
       var string = symbolDescriptiveString(symbol);
       var desc = NATIVE_SYMBOL ? stringSlice$2(string, 7, -1) : replace(string, regexp, '$1');
       return desc === '' ? undefined : desc;
     }
   });
 
-  $$4({ global: true, constructor: true, forced: true }, {
+  $$a({ global: true, constructor: true, forced: true }, {
     Symbol: SymbolWrapper
   });
 }
@@ -2974,13 +2962,11 @@ const ProductCard$1 = ({
     width: 'full'
   }, {
     children: [jsx(Ramen.XBox, {
-      children: jsx(Ramen.XImage, {
-        border: 'solid',
-        rounded: 's',
-        padding: 'none',
-        width: 2,
-        height: 2,
-        src: miniImageUrl((_a = product.sku) === null || _a === void 0 ? void 0 : _a.toString(), (_b = product.ean) === null || _b === void 0 ? void 0 : _b.toString())
+      children: jsx(Ramen.XImagePreviewer, {
+        border: "solid",
+        rounded: "s",
+        src: miniImageUrl((_a = product.sku) === null || _a === void 0 ? void 0 : _a.toString(), (_b = product.ean) === null || _b === void 0 ? void 0 : _b.toString()),
+        showExpandIcon: false
       })
     }), jsxs(Ramen.XBox, Object.assign({
       gap: 'xxs'
@@ -3002,7 +2988,7 @@ const ProductCard$1 = ({
   }));
 };
 
-const TaskCard$1 = ({
+const TaskCard = ({
   task,
   onDelete,
   onCountChange,
@@ -3094,7 +3080,7 @@ const ConfirmModal = ({
   });
 };
 
-const Image$3 = () => {
+const Image$5 = () => {
   return jsxs("svg", Object.assign({
     width: "169",
     height: "168",
@@ -3238,7 +3224,7 @@ const ProductListModal = ({
     gap: 's'
   }, {
     children: tasks.map(task => {
-      return jsx(TaskCard$1, {
+      return jsx(TaskCard, {
         task: task,
         onCountChange: onTaskChange,
         onDelete: () => setDeleteConfirm({
@@ -3274,7 +3260,7 @@ const ProductListModal = ({
       }),
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       onConfirm: () => onDeleted(deleteConfirm.item),
-      ImageCmp: jsx(Image$3, {})
+      ImageCmp: jsx(Image$5, {})
     }), sendConfirm && jsx(ConfirmModal, {
       visible: sendConfirm,
       title: '\u00BFDeseas enviar la solicitud?',
@@ -3282,7 +3268,7 @@ const ProductListModal = ({
       btnActionText: 'Enviar',
       onClose: () => setSendConfirm(false),
       onConfirm: onConfirmSend,
-      ImageCmp: jsx(Image$3, {})
+      ImageCmp: jsx(Image$5, {})
     })]
   });
 };
@@ -9031,11 +9017,11 @@ class Storage {
 }
 const StorageInstance = new Storage();
 
-var uncurryThis$3 = functionUncurryThis;
+var uncurryThis$6 = functionUncurryThis;
 
 // `thisNumberValue` abstract operation
 // https://tc39.es/ecma262/#sec-thisnumbervalue
-var thisNumberValue$1 = uncurryThis$3(1.0.valueOf);
+var thisNumberValue$1 = uncurryThis$6(1.0.valueOf);
 
 var toIntegerOrInfinity$1 = toIntegerOrInfinity$6;
 var toString$2 = toString$c;
@@ -9054,19 +9040,19 @@ var stringRepeat = function repeat(count) {
   return result;
 };
 
-var $$3 = _export;
-var uncurryThis$2 = functionUncurryThis;
+var $$9 = _export;
+var uncurryThis$5 = functionUncurryThis;
 var toIntegerOrInfinity = toIntegerOrInfinity$6;
 var thisNumberValue = thisNumberValue$1;
 var $repeat = stringRepeat;
-var fails$1 = fails$m;
+var fails$3 = fails$o;
 
 var $RangeError = RangeError;
 var $String = String;
 var floor = Math.floor;
-var repeat = uncurryThis$2($repeat);
-var stringSlice$1 = uncurryThis$2(''.slice);
-var nativeToFixed = uncurryThis$2(1.0.toFixed);
+var repeat = uncurryThis$5($repeat);
+var stringSlice$1 = uncurryThis$5(''.slice);
+var nativeToFixed = uncurryThis$5(1.0.toFixed);
 
 var pow = function (x, n, acc) {
   return n === 0 ? acc : n % 2 === 1 ? pow(x, n - 1, acc * x) : pow(x * x, n / 2, acc);
@@ -9116,19 +9102,19 @@ var dataToString = function (data) {
   } return s;
 };
 
-var FORCED = fails$1(function () {
+var FORCED = fails$3(function () {
   return nativeToFixed(0.00008, 3) !== '0.000' ||
     nativeToFixed(0.9, 0) !== '1' ||
     nativeToFixed(1.255, 2) !== '1.25' ||
     nativeToFixed(1000000000000000128.0, 0) !== '1000000000000000128';
-}) || !fails$1(function () {
+}) || !fails$3(function () {
   // V8 ~ Android 4.3-
   nativeToFixed({});
 });
 
 // `Number.prototype.toFixed` method
 // https://tc39.es/ecma262/#sec-number.prototype.tofixed
-$$3({ target: 'Number', proto: true, forced: FORCED }, {
+$$9({ target: 'Number', proto: true, forced: FORCED }, {
   toFixed: function toFixed(fractionDigits) {
     var number = thisNumberValue(this);
     var fractDigits = toIntegerOrInfinity(fractionDigits);
@@ -9185,6 +9171,67 @@ $$3({ target: 'Number', proto: true, forced: FORCED }, {
   }
 });
 
+var isRegExp = isRegexp;
+
+var $TypeError$6 = TypeError;
+
+var notARegexp = function (it) {
+  if (isRegExp(it)) {
+    throw $TypeError$6("The method doesn't accept regular expressions");
+  } return it;
+};
+
+var wellKnownSymbol$5 = wellKnownSymbol$j;
+
+var MATCH = wellKnownSymbol$5('match');
+
+var correctIsRegexpLogic = function (METHOD_NAME) {
+  var regexp = /./;
+  try {
+    '/./'[METHOD_NAME](regexp);
+  } catch (error1) {
+    try {
+      regexp[MATCH] = false;
+      return '/./'[METHOD_NAME](regexp);
+    } catch (error2) { /* empty */ }
+  } return false;
+};
+
+var $$8 = _export;
+var uncurryThis$4 = functionUncurryThisClause;
+var getOwnPropertyDescriptor$1 = objectGetOwnPropertyDescriptor.f;
+var toLength = toLength$4;
+var toString$1 = toString$c;
+var notARegExp$1 = notARegexp;
+var requireObjectCoercible$1 = requireObjectCoercible$a;
+var correctIsRegExpLogic$1 = correctIsRegexpLogic;
+
+// eslint-disable-next-line es/no-string-prototype-startswith -- safe
+var nativeStartsWith = uncurryThis$4(''.startsWith);
+var stringSlice = uncurryThis$4(''.slice);
+var min = Math.min;
+
+var CORRECT_IS_REGEXP_LOGIC = correctIsRegExpLogic$1('startsWith');
+// https://github.com/zloirock/core-js/pull/702
+var MDN_POLYFILL_BUG = !CORRECT_IS_REGEXP_LOGIC && !!function () {
+  var descriptor = getOwnPropertyDescriptor$1(String.prototype, 'startsWith');
+  return descriptor && !descriptor.writable;
+}();
+
+// `String.prototype.startsWith` method
+// https://tc39.es/ecma262/#sec-string.prototype.startswith
+$$8({ target: 'String', proto: true, forced: !MDN_POLYFILL_BUG && !CORRECT_IS_REGEXP_LOGIC }, {
+  startsWith: function startsWith(searchString /* , position = 0 */) {
+    var that = toString$1(requireObjectCoercible$1(this));
+    notARegExp$1(searchString);
+    var index = toLength(min(arguments.length > 1 ? arguments[1] : undefined, that.length));
+    var search = toString$1(searchString);
+    return nativeStartsWith
+      ? nativeStartsWith(that, search, index)
+      : stringSlice(that, index, index + search.length) === search;
+  }
+});
+
 const toCurrency = value => {
   if (!value) {
     return '$0';
@@ -9197,6 +9244,14 @@ const formatDate = (dateTime, format, tz) => {
   if (!format) format = 'DD MMM. yyyy';
   const date = moment$2(dateTime).tz(tz).format(format);
   return date;
+};
+const hourOfDate = (date, format) => {
+  const fmt = formatDate(date, format || 'hh:mm');
+  if (fmt && fmt.startsWith('Invalid')) {
+    return undefined;
+  } else {
+    return `${fmt} hrs`;
+  }
 };
 const checkUserLevel = (level, expectedLevel) => {
   switch (expectedLevel) {
@@ -9588,7 +9643,7 @@ const ControlTag = ({
   }
 };
 
-const TaskAttr$1 = ({
+const TaskAttr = ({
   label,
   value
 }) => {
@@ -9620,9 +9675,7 @@ const ProductCard = ({
   const handleCardClick = () => {
     onSelectCard(task);
   };
-  return jsx(Ramen.XCard, Object.assign({
-    onClick: handleCardClick
-  }, {
+  return jsx(Ramen.XCard, {
     children: jsxs(Ramen.XBox, Object.assign({
       gap: "l",
       width: 'full'
@@ -9670,17 +9723,16 @@ const ProductCard = ({
           width: 2,
           height: 2
         }, {
-          children: jsx(Ramen.XImage, {
+          children: jsx(Ramen.XImagePreviewer, {
             border: "solid",
             rounded: "s",
-            padding: "none",
-            width: 2,
-            height: 2,
-            src: miniImageUrl((_b = task.meta_data.product.sku) === null || _b === void 0 ? void 0 : _b.toString(), (_c = task.meta_data.product.ean) === null || _c === void 0 ? void 0 : _c.toString())
+            src: miniImageUrl((_b = task.meta_data.product.sku) === null || _b === void 0 ? void 0 : _b.toString(), (_c = task.meta_data.product.ean) === null || _c === void 0 ? void 0 : _c.toString()),
+            showExpandIcon: false
           })
         })), jsxs(Ramen.XBox, Object.assign({
           gap: "xxs",
-          width: 'full'
+          width: 'full',
+          onClick: handleCardClick
         }, {
           children: [jsx(Ramen.XText, Object.assign({
             weight: "bold",
@@ -9688,13 +9740,13 @@ const ProductCard = ({
             fontSize: 11
           }, {
             children: task.meta_data.product.description
-          })), jsx(TaskAttr$1, {
+          })), jsx(TaskAttr, {
             label: "SKU",
             value: task.meta_data.product.sku.toString()
-          }), jsx(TaskAttr$1, {
+          }), jsx(TaskAttr, {
             label: "Creado por",
             value: task.created_by.full_name
-          }), jsx(TaskAttr$1, {
+          }), jsx(TaskAttr, {
             label: "N\u00B0 solicitud",
             value: task.meta_data.documentNumber
           })]
@@ -9703,11 +9755,11 @@ const ProductCard = ({
         task: task
       })]
     }))
-  }));
+  });
 };
 
 /* eslint-disable react/style-prop-object */
-const Image$2 = () => {
+const Image$4 = () => {
   return jsxs("svg", Object.assign({
     width: "169",
     height: "169",
@@ -11312,6 +11364,399 @@ const Image$2 = () => {
   }));
 };
 
+const Image$3 = () => {
+  return jsxs("svg", Object.assign({
+    width: "169",
+    height: "168",
+    viewBox: "0 0 169 168",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, {
+    children: [jsxs("g", Object.assign({
+      clipPath: "url(#clip0_7498_115255)"
+    }, {
+      children: [jsxs("g", Object.assign({
+        clipPath: "url(#clip1_7498_115255)"
+      }, {
+        children: [jsx("path", {
+          d: "M257.712 0H-88.9805V167.85H257.712V0Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M258.1 0H-89.0996V110.32H258.1V0Z",
+          fill: "#F5F5F5"
+        }), jsx("path", {
+          d: "M258.09 111.277H-88.377V167.773H258.09V111.277Z",
+          fill: "#EAEAEA"
+        }), jsx("path", {
+          d: "M258.1 125.292H-88.9414V126.288H258.1V125.292Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M258.1 136.984H-88.9414V137.979H258.1V136.984Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M258.1 153.408H-88.9414V154.404H258.1V153.408Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M258.1 116.587H-88.9414V117.582H258.1V116.587Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M203.981 168L168.019 110.118L167.295 110.686L202.904 168H203.981Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M161.608 168L137.655 110.118L136.855 110.536L160.632 168H161.608Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M121.91 168L108.148 110.118L107.291 110.377L120.996 168H121.91Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M85.0217 110.118H84.1387V168H85.0217V110.118Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M48.1659 168L61.8665 110.377L61.0144 110.118L47.252 168H48.1659Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M8.53046 168L32.3067 110.536L31.5076 110.118L7.55469 168H8.53046Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M-33.7405 168L1.86871 110.686L1.14461 110.118L-34.8223 168H-33.7405Z",
+          fill: "#D6D6D6"
+        })]
+      })), jsx("path", {
+        d: "M32.9805 46.9879C32.9805 38.3568 39.9774 31.3599 48.6085 31.3599L119.456 31.3599C128.087 31.3599 135.084 38.3568 135.084 46.9879V224.106C135.084 232.737 128.087 239.734 119.456 239.734H48.6085C39.9774 239.734 32.9805 232.737 32.9805 224.106L32.9805 46.9879Z",
+        fill: "#1F1F1F"
+      }), jsxs("g", Object.assign({
+        clipPath: "url(#clip2_7498_115255)"
+      }, {
+        children: [jsx("path", {
+          d: "M37.1484 49.0718C37.1484 42.1669 42.746 36.5693 49.6509 36.5693H118.414C125.319 36.5693 130.917 42.1669 130.917 49.0718V222.022C130.917 228.927 125.319 234.525 118.414 234.525H49.6509C42.746 234.525 37.1484 228.927 37.1484 222.022L37.1484 49.0718Z",
+          fill: "white"
+        }), jsx("path", {
+          fillRule: "evenodd",
+          clipRule: "evenodd",
+          d: "M90.1276 72.1233L115.885 116.663C116.51 117.729 116.843 118.941 116.848 120.177C116.854 121.413 116.532 122.628 115.916 123.7C115.3 124.771 114.412 125.661 113.341 126.277C112.27 126.894 111.055 127.217 109.819 127.212H58.2463C57.0105 127.217 55.7954 126.894 54.7245 126.277C53.6535 125.661 52.7649 124.771 52.1489 123.7C51.5328 122.628 51.2113 121.413 51.2169 120.177C51.2225 118.941 51.555 117.729 52.1807 116.663L77.9377 72.1233C78.5543 71.052 79.4424 70.1623 80.5124 69.5436C81.5824 68.9249 82.7966 68.5991 84.0326 68.5991C85.2687 68.5991 86.4828 68.9249 87.5529 69.5436C88.6229 70.1623 89.511 71.052 90.1276 72.1233ZM80.9383 102.207C80.9383 103.933 82.3377 105.333 84.064 105.333C85.7902 105.333 87.1896 103.933 87.1896 102.207V89.7046C87.1896 87.9784 85.7902 86.579 84.064 86.579C82.3377 86.579 80.9383 87.9784 80.9383 89.7046V102.207ZM84.064 117.835C85.7902 117.835 87.1896 116.436 87.1896 114.71C87.1896 112.983 85.7902 111.584 84.064 111.584H84.0327C82.3065 111.584 80.9071 112.983 80.9071 114.71C80.9071 116.436 82.3065 117.835 84.0327 117.835H84.064Z",
+          fill: "#FFC107"
+        })]
+      }))]
+    })), jsxs("defs", {
+      children: [jsx("clipPath", Object.assign({
+        id: "clip0_7498_115255"
+      }, {
+        children: jsx("rect", {
+          x: "0.5",
+          width: "168",
+          height: "168",
+          rx: "84",
+          fill: "white"
+        })
+      })), jsx("clipPath", Object.assign({
+        id: "clip1_7498_115255"
+      }, {
+        children: jsx("rect", {
+          width: "347.2",
+          height: "168",
+          fill: "white",
+          transform: "translate(-89.0996)"
+        })
+      })), jsx("clipPath", Object.assign({
+        id: "clip2_7498_115255"
+      }, {
+        children: jsx("rect", {
+          width: "93.7684",
+          height: "197.956",
+          fill: "white",
+          transform: "translate(37.1484 36.5693)"
+        })
+      }))]
+    })]
+  }));
+};
+
+const CardList$1 = ({
+  title,
+  btnActionText,
+  loading,
+  tasks,
+  miniImageUrl,
+  goHome,
+  onSelectCard,
+  bulkTaskRequest
+}) => {
+  const [taskStates, setStaskStates] = useState([]);
+  const [modalType, setModalType] = useState();
+  const onMarkTask = (task, state) => {
+    setStaskStates(stateList => {
+      const index = stateList.findIndex(st => st.task.id === task.id);
+      if (index > -1) {
+        if (stateList[index].state === state) {
+          stateList.splice(index, 1);
+        } else {
+          stateList[index].state = state;
+        }
+      } else {
+        stateList.push({
+          task: task,
+          state: state
+        });
+      }
+      return [...stateList];
+    });
+  };
+  const onBulkTaskRequest = () => __awaiter(void 0, void 0, void 0, function* () {
+    yield bulkTaskRequest(taskStates.map(t => ({
+      task: t.task,
+      qty: t.task.meta_data.count,
+      action: t.state === 'FREE' ? 'APPROVED' : 'REJECTED'
+    })));
+    setStaskStates([]);
+  });
+  const getTaskMark = useCallback(task => {
+    var _a;
+    return (_a = taskStates.find(t => t.task.id === task.id)) === null || _a === void 0 ? void 0 : _a.state;
+  }, [taskStates]);
+  const handleConfirm = () => {
+    if (taskStates.every(t => t.state === 'FREE')) {
+      setModalType('UNIQUE');
+    } else {
+      setModalType('MIX');
+    }
+  };
+  return jsxs(Ramen.XPage, Object.assign({
+    skeleton: loading
+  }, {
+    children: [jsx(Ramen.XHeader, {
+      onBack: goHome,
+      title: title
+    }), jsxs(Ramen.XBody, {
+      children: [jsx(Ramen.XSkeletonRenderer, Object.assign({
+        visible: loading
+      }, {
+        children: jsxs(Ramen.XBox, Object.assign({
+          gap: "m"
+        }, {
+          children: [jsx(Ramen.XSkeleton, {
+            type: "image",
+            size: "xl",
+            width: "xl"
+          }), jsx(Ramen.XSkeleton, {
+            type: "image",
+            size: "xl",
+            width: "xl"
+          }), jsx(Ramen.XSkeleton, {
+            type: "image",
+            size: "xl",
+            width: "xl"
+          }), jsx(Ramen.XSkeleton, {
+            type: "image",
+            size: "xl",
+            width: "xl"
+          })]
+        }))
+      })), jsx(Ramen.XBox, Object.assign({
+        gap: "s"
+      }, {
+        children: tasks.map(task => {
+          return jsx(ProductCard, {
+            task: task,
+            miniImageUrl: miniImageUrl,
+            onSelectCard: onSelectCard,
+            onMarkTask: onMarkTask,
+            markedAs: getTaskMark(task)
+          }, task.id);
+        })
+      }))]
+    }), jsx(Ramen.XFooter, {
+      children: jsx(Ramen.XButton, {
+        type: "solid",
+        text: btnActionText,
+        size: "xl",
+        disabled: taskStates.length === 0,
+        onClick: () => handleConfirm()
+      })
+    }), jsx(ConfirmModal, {
+      visible: modalType === 'UNIQUE',
+      title: "\u00BFDeseas confirmar la solicitud?",
+      btnActionText: "Confirmar",
+      onClose: () => setModalType(undefined),
+      onConfirm: onBulkTaskRequest,
+      ImageCmp: jsx(Image$4, {})
+    }), jsx(ConfirmModal, {
+      visible: modalType === 'MIX',
+      title: "\u00BFDeseas continuar con el proceso?",
+      btnActionText: "Continuar",
+      onClose: () => setModalType(undefined),
+      onConfirm: onBulkTaskRequest,
+      ImageCmp: jsx(Image$3, {})
+    })]
+  }));
+};
+
+const Image$2 = () => {
+  return jsxs("svg", Object.assign({
+    width: "169",
+    height: "169",
+    viewBox: "0 0 169 169",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, {
+    children: [jsxs("g", Object.assign({
+      clipPath: "url(#clip0_14090_264044)"
+    }, {
+      children: [jsxs("g", Object.assign({
+        clipPath: "url(#clip1_14090_264044)"
+      }, {
+        children: [jsx("path", {
+          d: "M257.565 0.412109H-89.127V168.262H257.565V0.412109Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M257.954 0.412109H-89.2461V110.732H257.954V0.412109Z",
+          fill: "#F5F5F5"
+        }), jsx("path", {
+          d: "M257.945 111.689H-88.5225V168.185H257.945V111.689Z",
+          fill: "#EAEAEA"
+        }), jsx("path", {
+          d: "M257.954 125.704H-89.0869V126.7H257.954V125.704Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M257.954 137.396H-89.0869V138.392H257.954V137.396Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M257.954 153.82H-89.0869V154.816H257.954V153.82Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M257.954 116.999H-89.0869V117.995H257.954V116.999Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M203.836 168.412L167.874 110.53L167.149 111.099L202.759 168.412H203.836Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M161.463 168.412L137.51 110.53L136.711 110.948L160.487 168.412H161.463Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M121.765 168.412L108.003 110.53L107.146 110.789L120.852 168.412H121.765Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M84.8752 110.53H83.9922V168.412H84.8752V110.53Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M48.0204 168.412L61.721 110.789L60.8689 110.53L47.1064 168.412H48.0204Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M8.38495 168.412L32.1612 110.948L31.3621 110.53L7.40918 168.412H8.38495Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M-33.887 168.412L1.72223 111.099L0.998123 110.53L-34.9688 168.412H-33.887Z",
+          fill: "#D6D6D6"
+        })]
+      })), jsx("path", {
+        d: "M32.834 47.4005C32.834 38.7694 39.8309 31.7725 48.4621 31.7725L119.309 31.7725C127.94 31.7725 134.937 38.7694 134.937 47.4005V224.519C134.937 233.15 127.94 240.147 119.309 240.147H48.4621C39.8309 240.147 32.834 233.15 32.834 224.519L32.834 47.4005Z",
+        fill: "#1F1F1F"
+      }), jsxs("g", Object.assign({
+        clipPath: "url(#clip2_14090_264044)"
+      }, {
+        children: [jsx("path", {
+          d: "M37.002 49.4839C37.002 42.579 42.5995 36.9814 49.5044 36.9814H118.268C125.173 36.9814 130.77 42.579 130.77 49.4839V222.435C130.77 229.339 125.173 234.937 118.268 234.937H49.5044C42.5995 234.937 37.002 229.339 37.002 222.435L37.002 49.4839Z",
+          fill: "white"
+        }), jsx("path", {
+          fillRule: "evenodd",
+          clipRule: "evenodd",
+          d: "M83.886 130.75C101.148 130.75 115.142 116.756 115.142 99.4934C115.142 82.2312 101.148 68.2373 83.886 68.2373C66.6237 68.2373 52.6299 82.2312 52.6299 99.4934C52.6299 116.756 66.6237 130.75 83.886 130.75ZM95.473 92.3267C96.6936 91.1061 96.6936 89.1271 95.473 87.9065C94.2524 86.6858 92.2734 86.6858 91.0527 87.9065L83.886 95.0732L76.7193 87.9065C75.4987 86.6858 73.5197 86.6858 72.299 87.9065C71.0784 89.1271 71.0784 91.1061 72.299 92.3267L79.4657 99.4934L72.299 106.66C71.0784 107.881 71.0784 109.86 72.299 111.08C73.5197 112.301 75.4987 112.301 76.7193 111.08L83.886 103.914L91.0527 111.08C92.2734 112.301 94.2524 112.301 95.473 111.08C96.6936 109.86 96.6936 107.881 95.473 106.66L88.3063 99.4934L95.473 92.3267Z",
+          fill: "#DD4242"
+        })]
+      }))]
+    })), jsxs("defs", {
+      children: [jsx("clipPath", Object.assign({
+        id: "clip0_14090_264044"
+      }, {
+        children: jsx("rect", {
+          x: "0.353516",
+          y: "0.412109",
+          width: "168",
+          height: "168",
+          rx: "84",
+          fill: "white"
+        })
+      })), jsx("clipPath", Object.assign({
+        id: "clip1_14090_264044"
+      }, {
+        children: jsx("rect", {
+          width: "347.2",
+          height: "168",
+          fill: "white",
+          transform: "translate(-89.2461 0.412109)"
+        })
+      })), jsx("clipPath", Object.assign({
+        id: "clip2_14090_264044"
+      }, {
+        children: jsx("rect", {
+          width: "93.7684",
+          height: "197.956",
+          fill: "white",
+          transform: "translate(37.002 36.9814)"
+        })
+      }))]
+    })]
+  }));
+};
+
+const InfoBox = ({
+  label,
+  value
+}) => {
+  return jsx(Ramen.XBox, Object.assign({
+    width: 'half'
+  }, {
+    children: jsx(Ramen.XCard, Object.assign({
+      borderType: "solid"
+    }, {
+      children: jsxs(Ramen.XBox, Object.assign({
+        orientation: "vertical"
+      }, {
+        children: [jsx(Ramen.XText, Object.assign({
+          colorThone: "medium",
+          fontSize: 11,
+          weight: "normal"
+        }, {
+          children: label
+        })), jsx(Ramen.XText, Object.assign({
+          colorThone: "darkest",
+          weight: "bold"
+        }, {
+          children: value
+        }))]
+      }))
+    }))
+  }));
+};
+
+const InfoRawRow = ({
+  label,
+  value
+}) => {
+  if (value) {
+    return jsxs(Ramen.XBox, Object.assign({
+      orientation: "horizontal",
+      horizontalAlign: "between"
+    }, {
+      children: [jsx(Ramen.XText, Object.assign({
+        colorThone: "medium",
+        fontSize: 11,
+        weight: "normal"
+      }, {
+        children: label
+      })), jsxs(Ramen.XText, Object.assign({
+        colorThone: "darkest",
+        fontSize: 11,
+        weight: "normal",
+        textOverflow: "break-word"
+      }, {
+        children: [' ', value]
+      }))]
+    }));
+  } else {
+    return null;
+  }
+};
+
 const Image$1 = () => {
   return jsxs("svg", Object.assign({
     width: "169",
@@ -11419,177 +11864,1609 @@ const Image$1 = () => {
   }));
 };
 
-const CardList = ({
-  title,
-  btnActionText,
-  loading,
-  tasks,
-  miniImageUrl,
-  goHome,
-  onSelectCard,
-  bulkTaskRequest
-}) => {
-  const [taskStates, setStaskStates] = useState([]);
-  const [modalType, setModalType] = useState();
-  const onMarkTask = (task, state) => {
-    setStaskStates(stateList => {
-      const index = stateList.findIndex(st => st.task.id === task.id);
-      if (index > -1) {
-        if (stateList[index].state === state) {
-          stateList.splice(index, 1);
-        } else {
-          stateList[index].state = state;
-        }
-      } else {
-        stateList.push({
-          task: task,
-          state: state
-        });
-      }
-      return [...stateList];
-    });
-  };
-  const onBulkTaskRequest = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield bulkTaskRequest(taskStates.map(t => ({
-      task: t.task,
-      qty: t.task.meta_data.count,
-      action: t.state === 'FREE' ? 'APPROVED' : 'REJECTED'
-    })));
-    setStaskStates([]);
-  });
-  const getTaskMark = useCallback(task => {
-    var _a;
-    return (_a = taskStates.find(t => t.task.id === task.id)) === null || _a === void 0 ? void 0 : _a.state;
-  }, [taskStates]);
-  const handleConfirm = () => {
-    if (taskStates.every(t => t.state === 'FREE')) {
-      setModalType('UNIQUE');
-    } else {
-      setModalType('MIX');
-    }
-  };
-  return jsxs(Ramen.XPage, Object.assign({
-    skeleton: loading
+/* eslint-disable react/style-prop-object */
+const Image = () => {
+  return jsxs("svg", Object.assign({
+    width: "169",
+    height: "169",
+    viewBox: "0 0 169 169",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg"
   }, {
-    children: [jsx(Ramen.XHeader, {
-      onBack: goHome,
-      title: title
-    }), jsxs(Ramen.XBody, {
-      children: [jsx(Ramen.XSkeletonRenderer, Object.assign({
-        visible: loading
+    children: [jsxs("g", Object.assign({
+      clipPath: "url(#clip0_8926_132573)"
+    }, {
+      children: [jsx("mask", Object.assign({
+        id: "mask0_8926_132573",
+        style: {
+          maskType: 'alpha'
+        },
+        maskUnits: "userSpaceOnUse",
+        x: "0",
+        y: "0",
+        width: "169",
+        height: "169"
       }, {
-        children: jsxs(Ramen.XBox, Object.assign({
-          gap: "m"
+        children: jsx("circle", {
+          cx: "84.3535",
+          cy: "84.4121",
+          r: "84",
+          fill: "#7C7AE3"
+        })
+      })), jsx("g", {
+        mask: "url(#mask0_8926_132573)"
+      }), jsxs("g", Object.assign({
+        clipPath: "url(#clip1_8926_132573)"
+      }, {
+        children: [jsx("path", {
+          d: "M194.285 0.412109H-152.407V168.262H194.285V0.412109Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M18.8925 0.480225H-64.8301V110.53H18.8925V0.480225Z",
+          fill: "#F5F5F5"
+        }), jsx("path", {
+          d: "M106.589 0.480225H22.8662V110.53H106.589V0.480225Z",
+          fill: "#F5F5F5"
+        }), jsx("path", {
+          d: "M194.285 0.480225H110.562V110.53H194.285V0.480225Z",
+          fill: "#F5F5F5"
+        }), jsx("path", {
+          d: "M194.664 111.689H-151.803V168.185H194.664V111.689Z",
+          fill: "#EAEAEA"
+        }), jsx("path", {
+          d: "M194.674 125.704H-152.367V126.7H194.674V125.704Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M194.674 137.396H-152.367V138.391H194.674V137.396Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M194.674 153.82H-152.367V154.815H194.674V153.82Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M194.674 116.999H-152.367V117.994H194.674V116.999Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M187.481 168.412L136.118 110.53L135.491 111.235L186.232 168.412H187.481Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M140.556 168.412L104.593 110.53L103.869 111.098L139.478 168.412H140.556Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M98.1827 168.412L74.2298 110.53L73.4307 110.948L97.2069 168.412H98.1827Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M58.4852 168.412L44.7228 110.53L43.8662 110.789L57.5712 168.412H58.4852Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M21.595 110.53H20.7119V168.412H21.595V110.53Z",
+          fill: "#D6D6D6"
+        }), jsx("mask", Object.assign({
+          id: "mask1_8926_132573",
+          style: {
+            maskType: 'luminance'
+          },
+          maskUnits: "userSpaceOnUse",
+          x: "126",
+          y: "0",
+          width: "69",
+          height: "169"
         }, {
-          children: [jsx(Ramen.XSkeleton, {
-            type: "image",
-            size: "xl",
-            width: "xl"
-          }), jsx(Ramen.XSkeleton, {
-            type: "image",
-            size: "xl",
-            width: "xl"
-          }), jsx(Ramen.XSkeleton, {
-            type: "image",
-            size: "xl",
-            width: "xl"
-          }), jsx(Ramen.XSkeleton, {
-            type: "image",
-            size: "xl",
-            width: "xl"
+          children: jsx("path", {
+            d: "M194.515 0.412109H126.078V168.008H194.515V0.412109Z",
+            fill: "white"
+          })
+        })), jsxs("g", Object.assign({
+          mask: "url(#mask1_8926_132573)"
+        }, {
+          children: [jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M130.471 57.2123L203.173 -22.1987V190.619L130.696 111.448L130.471 57.2123Z",
+            fill: "#A8A8A8"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M135.213 67.8723L132.122 69.6179V61.0217L135.213 58.3442V67.8723Z",
+            fill: "#D6D6D6"
+          }), jsx("mask", Object.assign({
+            id: "mask2_8926_132573",
+            style: {
+              maskType: 'luminance'
+            },
+            maskUnits: "userSpaceOnUse",
+            x: "132",
+            y: "58",
+            width: "4",
+            height: "12"
+          }, {
+            children: jsx("path", {
+              d: "M135.213 67.8723L132.122 69.6179V61.0217L135.213 58.3442V67.8723Z",
+              fill: "white"
+            })
+          })), jsx("g", Object.assign({
+            mask: "url(#mask2_8926_132573)"
+          }, {
+            children: jsx("path", {
+              fillRule: "evenodd",
+              clipRule: "evenodd",
+              d: "M131.147 57.5806L138.207 68.6951L136.405 70.1998L129.341 59.0852L131.147 57.5806Z",
+              fill: "white"
+            })
+          })), jsx("path", {
+            d: "M137.094 58.3442H135.213V67.8723H137.094V58.3442Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M140.44 64.831L136.842 66.8675V56.8531L140.44 53.7346V64.831Z",
+            fill: "#D6D6D6"
+          }), jsx("mask", Object.assign({
+            id: "mask3_8926_132573",
+            style: {
+              maskType: 'luminance'
+            },
+            maskUnits: "userSpaceOnUse",
+            x: "136",
+            y: "53",
+            width: "5",
+            height: "14"
+          }, {
+            children: jsx("path", {
+              d: "M140.44 64.831L136.842 66.8675V56.8531L140.44 53.7346V64.831Z",
+              fill: "white"
+            })
+          })), jsx("g", Object.assign({
+            mask: "url(#mask3_8926_132573)"
+          }, {
+            children: jsx("path", {
+              fillRule: "evenodd",
+              clipRule: "evenodd",
+              d: "M135.517 52.8074L143.902 66.0039L141.765 67.7904L133.376 54.5939L135.517 52.8074Z",
+              fill: "white"
+            })
+          })), jsx("path", {
+            d: "M142.63 53.7346H140.44V64.8355H142.63V53.7346Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M146.034 61.6081L141.915 63.9401V52.4665L146.034 48.8889V61.6081Z",
+            fill: "#D6D6D6"
+          }), jsx("mask", Object.assign({
+            id: "mask4_8926_132573",
+            style: {
+              maskType: 'luminance'
+            },
+            maskUnits: "userSpaceOnUse",
+            x: "141",
+            y: "48",
+            width: "6",
+            height: "16"
+          }, {
+            children: jsx("path", {
+              d: "M146.034 61.6081L141.915 63.9401V52.4665L146.034 48.8889V61.6081Z",
+              fill: "white"
+            })
+          })), jsx("g", Object.assign({
+            mask: "url(#mask4_8926_132573)"
+          }, {
+            children: jsx("path", {
+              fillRule: "evenodd",
+              clipRule: "evenodd",
+              d: "M140.144 47.2251L150.427 63.4082L147.805 65.5993L137.521 49.4207L140.144 47.2251Z",
+              fill: "white"
+            })
+          })), jsx("path", {
+            d: "M148.546 48.8889H146.034V61.6127H148.546V48.8889Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M151.757 51.7891L147.964 54.7393V49.1434L151.757 45.6567V51.7891Z",
+            fill: "white"
+          }), jsx("path", {
+            d: "M156.834 45.6567H151.757V51.7936H156.834V45.6567Z",
+            fill: "#E7E7E7"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M159.13 46.3386L154.582 49.8798V43.1565L159.13 38.9744V46.3386Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            d: "M165.223 38.9744H159.13V46.3386H165.223V38.9744Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M151.757 58.1941L147.964 60.3398V54.7393L151.757 51.7891V58.1941Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            d: "M156.834 51.7891H151.757V58.1941H156.834V51.7891Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M159.13 54.0256L154.582 56.5985V49.8798L159.13 46.3386V54.0256Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            d: "M165.223 46.3386H159.13V54.0256H165.223V46.3386Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M160.812 53.3439H163.907C164.34 53.3439 164.693 53.0075 164.693 52.6029V45.1023C164.693 44.6932 164.34 44.3613 163.907 44.3613H160.812C160.38 44.3613 160.026 44.6932 160.026 45.1023V52.6029C160.026 53.012 160.38 53.3439 160.812 53.3439Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M160.826 44.4978H163.895C164.182 44.4978 164.42 44.7205 164.42 44.9933V52.7076C164.42 52.9803 164.182 53.2031 163.895 53.2031H160.826C160.539 53.2031 160.301 52.9803 160.301 52.7076V44.9933C160.301 44.7205 160.539 44.4978 160.826 44.4978Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M160.208 44.3567H164.517C164.614 44.3567 164.694 44.2794 164.694 44.1885C164.694 44.0975 164.614 44.0203 164.517 44.0203H160.208C160.111 44.0203 160.031 44.0975 160.031 44.1885C160.031 44.2794 160.111 44.3567 160.208 44.3567Z",
+            fill: "white"
+          }), jsx("path", {
+            d: "M162.358 46.0659H160.026V51.2436H162.358V46.0659Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M160.812 44.0204H163.907C164.34 44.0204 164.693 43.684 164.693 43.2794V35.7788C164.693 35.3697 164.34 35.0378 163.907 35.0378H160.812C160.38 35.0378 160.026 35.3697 160.026 35.7788V43.2794C160.026 43.6885 160.38 44.0204 160.812 44.0204Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M160.826 35.1741H163.895C164.182 35.1741 164.42 35.3968 164.42 35.6696V43.3838C164.42 43.6566 164.182 43.8793 163.895 43.8793H160.826C160.539 43.8793 160.301 43.6566 160.301 43.3838V35.6696C160.301 35.3968 160.539 35.1741 160.826 35.1741Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M160.208 35.0378H164.517C164.614 35.0378 164.694 34.9605 164.694 34.8696C164.694 34.7787 164.614 34.7014 164.517 34.7014H160.208C160.111 34.7014 160.031 34.7787 160.031 34.8696C160.031 34.9605 160.111 35.0378 160.208 35.0378Z",
+            fill: "white"
+          }), jsx("path", {
+            d: "M162.358 36.7471H160.026V41.9248H162.358V36.7471Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M164.764 51.0983H168.08C168.544 51.0983 168.923 50.7392 168.923 50.3028V42.2657C168.923 41.8293 168.544 41.4702 168.08 41.4702H164.764C164.301 41.4702 163.921 41.8293 163.921 42.2657V50.3028C163.921 50.7392 164.301 51.0983 164.764 51.0983Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M164.777 41.6201H168.066C168.376 41.6201 168.632 41.861 168.632 42.152V50.4208C168.632 50.7118 168.38 50.9527 168.066 50.9527H164.777C164.468 50.9527 164.212 50.7118 164.212 50.4208V42.152C164.212 41.861 164.464 41.6201 164.777 41.6201Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M164.116 41.4701H168.734C168.84 41.4701 168.924 41.3883 168.924 41.2883C168.924 41.1883 168.84 41.1064 168.734 41.1064H164.116C164.01 41.1064 163.926 41.1883 163.926 41.2883C163.926 41.3883 164.014 41.4701 164.116 41.4701Z",
+            fill: "white"
+          }), jsx("path", {
+            d: "M166.42 43.302H163.921V48.8525H166.42V43.302Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M164.764 41.1066H168.08C168.544 41.1066 168.923 40.7474 168.923 40.311V32.274C168.923 31.8376 168.544 31.4785 168.08 31.4785H164.764C164.301 31.4785 163.921 31.8376 163.921 32.274V40.311C163.921 40.7474 164.301 41.1066 164.764 41.1066Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M164.777 31.6284H168.066C168.376 31.6284 168.632 31.8693 168.632 32.1603V40.4291C168.632 40.7201 168.38 40.961 168.066 40.961H164.777C164.468 40.961 164.212 40.7201 164.212 40.4291V32.1603C164.212 31.8693 164.464 31.6284 164.777 31.6284Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M164.115 31.4784H168.733C168.839 31.4784 168.923 31.3966 168.923 31.2966C168.923 31.1966 168.839 31.1147 168.733 31.1147H164.115C164.009 31.1147 163.925 31.1966 163.925 31.2966C163.925 31.3966 164.013 31.4784 164.115 31.4784Z",
+            fill: "white"
+          }), jsx("path", {
+            d: "M166.42 33.3103H163.921V38.8608H166.42V33.3103Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M168.689 48.8844H172.283C172.787 48.8844 173.197 48.498 173.197 48.0207V39.3063C173.197 38.8336 172.787 38.4426 172.283 38.4426H168.689C168.186 38.4426 167.775 38.829 167.775 39.3063V48.0207C167.775 48.4934 168.186 48.8844 168.689 48.8844Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M168.702 38.6064H172.27C172.605 38.6064 172.879 38.8656 172.879 39.1838V48.1481C172.879 48.4663 172.605 48.7255 172.27 48.7255H168.702C168.367 48.7255 168.093 48.4663 168.093 48.1481V39.1838C168.093 38.8656 168.367 38.6064 168.702 38.6064Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M167.983 38.4427H172.99C173.105 38.4427 173.197 38.3563 173.197 38.2472C173.197 38.1381 173.105 38.0518 172.99 38.0518H167.983C167.868 38.0518 167.775 38.1381 167.775 38.2472C167.775 38.3563 167.868 38.4427 167.983 38.4427Z",
+            fill: "white"
+          }), jsx("path", {
+            d: "M170.486 40.4292H167.775V46.4479H170.486V40.4292Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M168.689 38.0519H172.283C172.787 38.0519 173.197 37.6655 173.197 37.1882V28.4738C173.197 28.001 172.787 27.6101 172.283 27.6101H168.689C168.186 27.6101 167.775 27.9965 167.775 28.4738V37.1882C167.775 37.6609 168.186 38.0519 168.689 38.0519Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M168.702 27.7737H172.27C172.605 27.7737 172.879 28.0328 172.879 28.351V37.3154C172.879 37.6336 172.605 37.8927 172.27 37.8927H168.702C168.367 37.8927 168.093 37.6336 168.093 37.3154V28.351C168.093 28.0328 168.367 27.7737 168.702 27.7737Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M167.983 27.6146H172.99C173.105 27.6146 173.197 27.5282 173.197 27.4191C173.197 27.31 173.105 27.2236 172.99 27.2236H167.983C167.868 27.2236 167.775 27.31 167.775 27.4191C167.775 27.5282 167.868 27.6146 167.983 27.6146Z",
+            fill: "white"
+          }), jsx("path", {
+            d: "M170.486 29.5964H167.775V35.6151H170.486V29.5964Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M151.095 48.7433L150.34 49.3343V48.216L151.095 47.5205V48.7433Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M149.986 49.6072L149.319 50.1254V49.1435L149.986 48.5298V49.6072Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M149.002 50.3754L148.428 50.8209V49.9708L149.002 49.439V50.3754Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M151.095 57.226L148.428 58.958V57.5624L151.095 55.6804V57.226Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M158.203 45.2658L155.13 47.6569V46.0522L158.203 43.4565V45.2658Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M158.203 52.2938L155.13 54.2848V52.6802L158.203 50.5164V52.2938Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M132.753 83.0964H134.709C134.983 83.0964 135.208 82.8873 135.208 82.6282V80.2053C135.208 79.9462 134.983 79.7371 134.709 79.7371H132.753C132.479 79.7371 132.254 79.9462 132.254 80.2053V82.6282C132.254 82.8873 132.479 83.0964 132.753 83.0964Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M133.27 79.8188H134.192C134.656 79.8188 135.031 80.1734 135.031 80.6098V82.2099C135.031 82.6463 134.652 83.0009 134.192 83.0009H133.27C132.806 83.0009 132.431 82.6463 132.431 82.2099V80.6098C132.431 80.1734 132.81 79.8188 133.27 79.8188Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M132.369 79.7325H135.093C135.155 79.7325 135.208 79.6825 135.208 79.628C135.208 79.5689 135.159 79.5234 135.093 79.5234H132.369C132.307 79.5234 132.254 79.5734 132.254 79.628C132.254 79.6871 132.302 79.7325 132.369 79.7325Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M132.514 79.6917H133.671C133.707 79.6917 133.737 79.6645 133.737 79.6281C133.737 79.5917 133.707 79.5645 133.671 79.5645H132.514C132.479 79.5645 132.448 79.5917 132.448 79.6281C132.448 79.6645 132.479 79.6917 132.514 79.6917Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            d: "M134.925 80.8145H132.603V81.7736H134.925V80.8145Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M132.753 79.5007H134.709C134.983 79.5007 135.208 79.2916 135.208 79.0325V76.6096C135.208 76.3505 134.983 76.1414 134.709 76.1414H132.753C132.479 76.1414 132.254 76.3505 132.254 76.6096V79.0325C132.254 79.2916 132.479 79.5007 132.753 79.5007Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M133.27 76.2275H134.192C134.656 76.2275 135.031 76.5821 135.031 77.0185V78.6186C135.031 79.055 134.652 79.4096 134.192 79.4096H133.27C132.806 79.4096 132.431 79.055 132.431 78.6186V77.0185C132.431 76.5821 132.81 76.2275 133.27 76.2275Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M132.369 76.1412H135.093C135.155 76.1412 135.208 76.0912 135.208 76.0367C135.208 75.9776 135.159 75.9321 135.093 75.9321H132.369C132.307 75.9321 132.254 75.9821 132.254 76.0367C132.254 76.0958 132.302 76.1412 132.369 76.1412Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M132.514 76.0958H133.671C133.707 76.0958 133.737 76.0685 133.737 76.0321C133.737 75.9958 133.707 75.9685 133.671 75.9685H132.514C132.479 75.9685 132.448 75.9958 132.448 76.0321C132.448 76.0685 132.479 76.0958 132.514 76.0958Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            d: "M134.925 77.2185H132.603V78.1777H134.925V77.2185Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M132.753 75.9275H134.709C134.983 75.9275 135.208 75.7184 135.208 75.4593V73.0363C135.208 72.7772 134.983 72.5681 134.709 72.5681H132.753C132.479 72.5681 132.254 72.7772 132.254 73.0363V75.4593C132.254 75.7184 132.479 75.9275 132.753 75.9275Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M133.27 72.6499H134.192C134.656 72.6499 135.031 73.0045 135.031 73.4409V75.041C135.031 75.4774 134.652 75.832 134.192 75.832H133.27C132.806 75.832 132.431 75.4774 132.431 75.041V73.4409C132.431 73.0045 132.81 72.6499 133.27 72.6499Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M132.369 72.5636H135.093C135.155 72.5636 135.208 72.5136 135.208 72.459C135.208 72.3999 135.159 72.3545 135.093 72.3545H132.369C132.307 72.3545 132.254 72.4045 132.254 72.459C132.254 72.5181 132.302 72.5636 132.369 72.5636Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M132.514 72.5228H133.671C133.707 72.5228 133.737 72.4955 133.737 72.4591C133.737 72.4228 133.707 72.3955 133.671 72.3955H132.514C132.479 72.3955 132.448 72.4228 132.448 72.4591C132.448 72.4955 132.479 72.5228 132.514 72.5228Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            d: "M134.925 73.6455H132.603V74.6047H134.925V73.6455Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M134.224 83.0962H136.286C136.573 83.0962 136.811 82.8734 136.811 82.6007V80.0414C136.811 79.7686 136.577 79.5459 136.286 79.5459H134.224C133.937 79.5459 133.698 79.7686 133.698 80.0414V82.6007C133.698 82.8734 133.932 83.0962 134.224 83.0962Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M134.723 79.6414H135.791C136.255 79.6414 136.63 79.9959 136.63 80.4323V82.2097C136.63 82.6461 136.25 83.0007 135.791 83.0007H134.723C134.259 83.0007 133.884 82.6461 133.884 82.2097V80.4323C133.884 79.9959 134.263 79.6414 134.723 79.6414Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M133.821 79.5459H136.696C136.762 79.5459 136.815 79.4959 136.815 79.4323C136.815 79.3686 136.762 79.3186 136.696 79.3186H133.821C133.755 79.3186 133.702 79.3686 133.702 79.4323C133.702 79.4959 133.755 79.5459 133.821 79.5459Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M133.971 79.505H135.19C135.229 79.505 135.26 79.4732 135.26 79.4368C135.26 79.4005 135.229 79.3687 135.19 79.3687H133.971C133.931 79.3687 133.9 79.4005 133.9 79.4368C133.9 79.4732 133.931 79.505 133.971 79.505Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            d: "M136.515 80.687H134.064V81.6962H136.515V80.687Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M134.224 79.3049H136.286C136.573 79.3049 136.811 79.0822 136.811 78.8094V76.2501C136.811 75.9774 136.577 75.7546 136.286 75.7546H134.224C133.937 75.7546 133.698 75.9774 133.698 76.2501V78.8094C133.698 79.0822 133.932 79.3049 134.224 79.3049Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M134.723 75.8455H135.791C136.255 75.8455 136.63 76.2 136.63 76.6364V78.4139C136.63 78.8503 136.25 79.2048 135.791 79.2048H134.723C134.259 79.2048 133.884 78.8503 133.884 78.4139V76.6364C133.884 76.2 134.263 75.8455 134.723 75.8455Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M133.821 75.7546H136.696C136.762 75.7546 136.815 75.7046 136.815 75.641C136.815 75.5773 136.762 75.5273 136.696 75.5273H133.821C133.755 75.5273 133.702 75.5773 133.702 75.641C133.702 75.7046 133.755 75.7546 133.821 75.7546Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M133.971 75.7091H135.19C135.229 75.7091 135.26 75.6773 135.26 75.6409C135.26 75.6046 135.229 75.5728 135.19 75.5728H133.971C133.931 75.5728 133.9 75.6046 133.9 75.6409C133.9 75.6773 133.931 75.7091 133.971 75.7091Z",
+            fill: "white"
+          }), jsx("path", {
+            d: "M136.515 76.8958H134.064V77.9049H136.515V76.8958Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M134.224 75.532H136.286C136.573 75.532 136.811 75.3092 136.811 75.0365V72.4772C136.811 72.2044 136.577 71.9817 136.286 71.9817H134.224C133.937 71.9817 133.698 72.2044 133.698 72.4772V75.0365C133.698 75.3092 133.932 75.532 134.224 75.532Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M134.723 72.0725H135.791C136.255 72.0725 136.63 72.4271 136.63 72.8635V74.6409C136.63 75.0773 136.25 75.4319 135.791 75.4319H134.723C134.259 75.4319 133.884 75.0773 133.884 74.6409V72.8635C133.884 72.4271 134.263 72.0725 134.723 72.0725Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M133.821 71.9817H136.696C136.762 71.9817 136.815 71.9317 136.815 71.868C136.815 71.8044 136.762 71.7544 136.696 71.7544H133.821C133.755 71.7544 133.702 71.8044 133.702 71.868C133.702 71.9317 133.755 71.9817 133.821 71.9817Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M133.971 71.9362H135.19C135.229 71.9362 135.26 71.9044 135.26 71.868C135.26 71.8316 135.229 71.7998 135.19 71.7998H133.971C133.931 71.7998 133.9 71.8316 133.9 71.868C133.9 71.9044 133.931 71.9362 133.971 71.9362Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            d: "M136.515 73.1228H134.064V74.132H136.515V73.1228Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M136.485 82.9552H138.692C139.001 82.9552 139.253 82.7189 139.253 82.4234V79.6823C139.253 79.3913 139.001 79.1504 138.692 79.1504H136.485C136.176 79.1504 135.924 79.3868 135.924 79.6823V82.4234C135.924 82.7143 136.176 82.9552 136.485 82.9552Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M136.956 79.2549H138.219C138.682 79.2549 139.058 79.6095 139.058 80.0459V82.0597C139.058 82.4961 138.678 82.8506 138.219 82.8506H136.956C136.492 82.8506 136.117 82.4961 136.117 82.0597V80.0459C136.117 79.6095 136.497 79.2549 136.956 79.2549Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M136.047 79.1549H139.124C139.195 79.1549 139.252 79.1003 139.252 79.0322C139.252 78.964 139.195 78.9094 139.124 78.9094H136.047C135.976 78.9094 135.919 78.964 135.919 79.0322C135.919 79.1003 135.976 79.1549 136.047 79.1549Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M136.211 79.1093H137.518C137.562 79.1093 137.593 79.0775 137.593 79.0366C137.593 78.9957 137.557 78.9639 137.518 78.9639H136.211C136.167 78.9639 136.136 78.9957 136.136 79.0366C136.136 79.0775 136.171 79.1093 136.211 79.1093Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            d: "M138.935 80.3777H136.312V81.4596H138.935V80.3777Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M136.485 78.8959H138.692C139.001 78.8959 139.253 78.6595 139.253 78.3641V75.6229C139.253 75.332 139.001 75.0911 138.692 75.0911H136.485C136.176 75.0911 135.924 75.3274 135.924 75.6229V78.3641C135.924 78.655 136.176 78.8959 136.485 78.8959Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M136.956 75.1956H138.219C138.682 75.1956 139.058 75.5501 139.058 75.9865V78.0003C139.058 78.4367 138.678 78.7913 138.219 78.7913H136.956C136.492 78.7913 136.117 78.4367 136.117 78.0003V75.9865C136.117 75.5501 136.497 75.1956 136.956 75.1956Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M136.047 75.0956H139.124C139.195 75.0956 139.252 75.041 139.252 74.9728C139.252 74.9046 139.195 74.8501 139.124 74.8501H136.047C135.976 74.8501 135.919 74.9046 135.919 74.9728C135.919 75.041 135.976 75.0956 136.047 75.0956Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M136.211 75.0456H137.518C137.562 75.0456 137.593 75.0138 137.593 74.9729C137.593 74.932 137.557 74.9001 137.518 74.9001H136.211C136.167 74.9001 136.136 74.932 136.136 74.9729C136.136 75.0138 136.171 75.0456 136.211 75.0456Z",
+            fill: "white"
+          }), jsx("path", {
+            d: "M138.935 76.3137H136.312V77.3956H138.935V76.3137Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M136.485 74.8547H138.692C139.001 74.8547 139.253 74.6183 139.253 74.3228V71.5817C139.253 71.2907 139.001 71.0498 138.692 71.0498H136.485C136.176 71.0498 135.924 71.2862 135.924 71.5817V74.3228C135.924 74.6137 136.176 74.8547 136.485 74.8547Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M136.956 71.1543H138.219C138.682 71.1543 139.058 71.5089 139.058 71.9453V73.9591C139.058 74.3955 138.678 74.75 138.219 74.75H136.956C136.492 74.75 136.117 74.3955 136.117 73.9591V71.9453C136.117 71.5089 136.497 71.1543 136.956 71.1543Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M136.047 71.0543H139.124C139.195 71.0543 139.252 70.9998 139.252 70.9316C139.252 70.8634 139.195 70.8088 139.124 70.8088H136.047C135.976 70.8088 135.919 70.8634 135.919 70.9316C135.919 70.9998 135.976 71.0543 136.047 71.0543Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M136.211 71.0043H137.518C137.562 71.0043 137.593 70.9725 137.593 70.9316C137.593 70.8907 137.557 70.8589 137.518 70.8589H136.211C136.167 70.8589 136.136 70.8907 136.136 70.9316C136.136 70.9725 136.171 71.0043 136.211 71.0043Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            d: "M138.935 72.2725H136.312V73.3544H138.935V72.2725Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M141.932 73.0909L138.029 74.2046V69.8497L141.932 68.2542V73.0909Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            d: "M145.845 68.2542H141.933V73.0864H145.845V68.2542Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M141.932 77.923L138.029 78.5594V74.2046L141.932 73.0908V77.923Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            d: "M145.845 73.0908H141.933V77.9276H145.845V73.0908Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M141.932 82.7598L138.029 82.9144V78.5595L141.932 77.9231V82.7598Z",
+            fill: "white"
+          }), jsx("path", {
+            d: "M145.845 77.9231H141.933V82.7553H145.845V77.9231Z",
+            fill: "#E7E7E7"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M148.463 71.0452L143.836 72.368V67.1994L148.463 65.3083V71.0452Z",
+            fill: "white"
+          }), jsx("path", {
+            d: "M153.108 65.3083H148.463V71.0452H153.108V65.3083Z",
+            fill: "#E7E7E7"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M148.463 76.7865L143.836 77.5366V72.368L148.463 71.0452V76.7865Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            d: "M153.108 71.0452H148.463V76.782H153.108V71.0452Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M148.463 82.5234L143.836 82.7053V77.5367L148.463 76.7866V82.5234Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            d: "M153.108 76.7866H148.463V82.5234H153.108V76.7866Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M156.265 68.5996L150.785 70.1633V64.0447L156.265 61.8081V68.5996Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            d: "M161.762 61.8081H156.265V68.5996H161.762V61.8081Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M156.265 75.3865L150.785 76.2775V70.1634L156.265 68.5996V75.3865Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            d: "M161.762 68.5996H156.265V75.3911H161.762V68.5996Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M156.265 82.1779L150.785 82.3961V76.2775L156.265 75.3865V82.1779Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            d: "M161.762 75.3865H156.265V82.1779H161.762V75.3865Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M166.459 65.4538L159.85 67.3403V59.9624L166.459 57.2622V65.4538Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            d: "M173.091 57.2622H166.459V65.4538H173.091V57.2622Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M166.459 73.6454L159.85 74.7228V67.3404L166.459 65.4539V73.6454Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            d: "M173.091 65.4539H166.459V73.6454H173.091V65.4539Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M166.459 81.8368L159.85 82.1005V74.7226L166.459 73.6453V81.8368Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            d: "M173.091 73.6453H166.459V81.8368H173.091V73.6453Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M133.371 91.0422H137.283V96.5563C137.283 96.7291 136.409 96.87 135.327 96.87C134.245 96.87 133.371 96.7291 133.371 96.5563V91.0422Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M135.327 91.3514C136.404 91.3514 137.283 91.2105 137.283 91.0378C137.283 90.865 136.404 90.7241 135.327 90.7241C134.25 90.7241 133.371 90.865 133.371 91.0378C133.371 91.2105 134.25 91.3514 135.327 91.3514Z",
+            fill: "#BBBBBB"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M133.371 85.5283H137.283V91.0424C137.283 91.2151 136.409 91.3561 135.327 91.3561C134.245 91.3561 133.371 91.2151 133.371 91.0424V85.5283Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M135.327 85.8419C136.404 85.8419 137.283 85.701 137.283 85.5283C137.283 85.3555 136.404 85.2146 135.327 85.2146C134.25 85.2146 133.371 85.3555 133.371 85.5283C133.371 85.701 134.25 85.8419 135.327 85.8419Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M136.882 91.8879H141.271V98.0703C141.271 98.2657 140.29 98.4203 139.076 98.4203C137.862 98.4203 136.882 98.2657 136.882 98.0703V91.8879Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M139.076 92.2379C140.286 92.2379 141.271 92.0788 141.271 91.8879C141.271 91.6969 140.286 91.5378 139.076 91.5378C137.866 91.5378 136.882 91.6969 136.882 91.8879C136.882 92.0788 137.866 92.2379 139.076 92.2379Z",
+            fill: "#BBBBBB"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M136.882 85.7056H141.271V91.8879C141.271 92.0788 140.29 92.2379 139.076 92.2379C137.862 92.2379 136.882 92.0834 136.882 91.8879V85.7056Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M139.076 86.0555C140.286 86.0555 141.271 85.8964 141.271 85.7055C141.271 85.5146 140.286 85.3555 139.076 85.3555C137.866 85.3555 136.882 85.5146 136.882 85.7055C136.882 85.8964 137.866 86.0555 139.076 86.0555Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M140.516 92.8606H145.452V99.8203C145.452 100.038 144.348 100.216 142.984 100.216C141.619 100.216 140.516 100.038 140.516 99.8203V92.8606Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M142.984 93.2561C144.344 93.2561 145.452 93.0788 145.452 92.8606C145.452 92.6424 144.344 92.4651 142.984 92.4651C141.624 92.4651 140.516 92.6424 140.516 92.8606C140.516 93.0788 141.624 93.2561 142.984 93.2561Z",
+            fill: "#BBBBBB"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M140.516 85.9009H145.452V92.8605C145.452 93.0787 144.348 93.256 142.984 93.256C141.619 93.256 140.516 93.0787 140.516 92.8605V85.9009Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M142.984 86.2963C144.344 86.2963 145.452 86.1191 145.452 85.9009C145.452 85.6827 144.344 85.5054 142.984 85.5054C141.624 85.5054 140.516 85.6827 140.516 85.9009C140.516 86.1191 141.624 86.2963 142.984 86.2963Z",
+            fill: "#E7E7E7"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M144.569 93.8154H150.119V101.639C150.119 101.884 148.878 102.08 147.342 102.08C145.805 102.08 144.564 101.88 144.564 101.639V93.8154H144.569Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M147.346 94.2608C148.873 94.2608 150.123 94.0608 150.123 93.8199C150.123 93.5789 148.878 93.3789 147.346 93.3789C145.813 93.3789 144.568 93.5789 144.568 93.8199C144.568 94.0608 145.813 94.2608 147.346 94.2608Z",
+            fill: "#BBBBBB"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M144.569 85.9963H150.119V93.8197C150.119 94.0652 148.878 94.2607 147.342 94.2607C145.805 94.2607 144.564 94.0606 144.564 93.8197V85.9963H144.569Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M147.346 86.4373C148.873 86.4373 150.123 86.2373 150.123 85.9964C150.123 85.7554 148.878 85.5554 147.346 85.5554C145.813 85.5554 144.568 85.7554 144.568 85.9964C144.568 86.2373 145.813 86.4373 147.346 86.4373Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M140.149 103.657H137.412L134.493 101.861H136.975L140.149 103.657Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M165.095 94.938C166.42 94.938 167.493 97.0563 167.493 99.6747C167.493 102.289 166.424 104.411 165.1 104.411C163.775 104.411 162.702 102.293 162.702 99.6747C162.702 97.0609 163.771 94.938 165.095 94.938Z",
+            fill: "#E7E7E7"
+          }), jsx("path", {
+            d: "M165.095 94.938H150.494V104.407H165.095V94.938Z",
+            fill: "#E7E7E7"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M150.494 94.938C151.818 94.938 152.891 97.0563 152.891 99.6747C152.891 102.289 151.823 104.411 150.498 104.411C149.173 104.411 148.101 102.293 148.101 99.6747C148.101 97.0609 149.169 94.938 150.494 94.938Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M150.074 97.261C150.595 97.261 151.015 98.3429 151.015 99.6748C151.015 101.007 150.595 102.089 150.074 102.089C149.553 102.089 149.134 101.007 149.134 99.6748C149.134 98.3429 149.553 97.261 150.074 97.261Z",
+            fill: "#CCCCCC"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M165.043 85.4963C166.367 85.4963 167.44 87.6147 167.44 90.2331C167.44 92.8469 166.371 94.9698 165.047 94.9698C163.722 94.9698 162.649 92.8515 162.649 90.2331C162.649 87.6192 163.718 85.4963 165.043 85.4963Z",
+            fill: "#E7E7E7"
+          }), jsx("path", {
+            d: "M165.048 85.4963H150.446V94.9653H165.048V85.4963Z",
+            fill: "#E7E7E7"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M150.446 85.4963C151.77 85.4963 152.843 87.6147 152.843 90.2331C152.843 92.8469 151.775 94.9698 150.45 94.9698C149.126 94.9698 148.053 92.8515 148.053 90.2331C148.053 87.6192 149.121 85.4963 150.446 85.4963Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M150.026 87.8193C150.547 87.8193 150.967 88.9012 150.967 90.2332C150.967 91.5651 150.547 92.647 150.026 92.647C149.505 92.647 149.086 91.5651 149.086 90.2332C149.086 88.9012 149.505 87.8193 150.026 87.8193Z",
+            fill: "#CCCCCC"
+          }), jsx("path", {
+            d: "M172.905 96.5154H156.6V107.094H172.905V96.5154Z",
+            fill: "#E7E7E7"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M156.6 96.5154C158.075 96.5154 159.276 98.8838 159.276 101.802C159.276 104.721 158.083 107.089 156.604 107.089C155.125 107.089 153.929 104.721 153.929 101.802C153.929 98.8838 155.125 96.5154 156.6 96.5154Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M156.132 99.1111C156.71 99.1111 157.183 100.316 157.183 101.807C157.183 103.293 156.715 104.502 156.132 104.502C155.549 104.502 155.081 103.298 155.081 101.807C155.081 100.32 155.549 99.1111 156.132 99.1111Z",
+            fill: "#CCCCCC"
+          }), jsx("path", {
+            d: "M172.905 85.9419H156.6V96.52H172.905V85.9419Z",
+            fill: "#E7E7E7"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M156.6 85.9419C158.075 85.9419 159.276 88.3103 159.276 91.2287C159.276 94.1471 158.083 96.5155 156.604 96.5155C155.125 96.5155 153.929 94.1471 153.929 91.2287C153.929 88.3103 155.125 85.9419 156.6 85.9419Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M156.132 88.533C156.71 88.533 157.183 89.7376 157.183 91.2286C157.183 92.7151 156.715 93.9243 156.132 93.9243C155.549 93.9243 155.081 92.7197 155.081 91.2286C155.081 89.7422 155.549 88.533 156.132 88.533Z",
+            fill: "#CCCCCC"
+          }), jsx("path", {
+            d: "M181.984 98.2202H163.563V110.171H181.984V98.2202Z",
+            fill: "#E7E7E7"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M163.563 98.2202C165.232 98.2202 166.588 100.893 166.588 104.193C166.588 107.494 165.237 110.167 163.572 110.167C161.908 110.167 160.548 107.494 160.548 104.193C160.548 100.893 161.899 98.2202 163.568 98.2202H163.563Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M163.033 101.152C163.691 101.152 164.221 102.516 164.221 104.198C164.221 105.88 163.691 107.244 163.033 107.244C162.376 107.244 161.846 105.88 161.846 104.198C161.846 102.516 162.376 101.152 163.033 101.152Z",
+            fill: "#CCCCCC"
+          }), jsx("path", {
+            d: "M181.984 86.269H163.563V98.2155H181.984V86.269Z",
+            fill: "#E7E7E7"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M163.563 86.269C165.232 86.269 166.588 88.942 166.588 92.2423C166.588 95.5425 165.237 98.2155 163.572 98.2155C161.908 98.2155 160.548 95.5425 160.548 92.2423C160.548 88.942 161.899 86.269 163.568 86.269H163.563Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M163.033 89.2012C163.691 89.2012 164.221 90.5649 164.221 92.2469C164.221 93.9288 163.691 95.2926 163.033 95.2926C162.376 95.2926 161.846 93.9288 161.846 92.2469C161.846 90.5649 162.376 89.2012 163.033 89.2012Z",
+            fill: "#CCCCCC"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M173.525 112.689C174.346 112.689 175.013 112.117 175.013 111.417V97.1518C175.013 94.3561 172.951 94.1288 172.893 93.1469L172.571 87.5374H170.364L170.041 93.1469C169.984 94.1288 167.922 94.3561 167.922 97.1518V111.417C167.922 112.117 168.593 112.689 169.41 112.689H173.525Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            d: "M171.295 97.5063H167.917V105.934H171.295V97.5063Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M137.412 113.571H147.797V107.962L140.15 103.657H137.412V113.571Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M142.246 117.985H154.017L154.26 111.635L145.615 106.748H142.246V117.985Z",
+            fill: "#CCCCCC"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M145.641 106.748H142.246L138.935 104.716H142.025L145.641 106.748Z",
+            fill: "#E7E7E7"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M148.188 123.522H161.969L162.088 116.049L151.972 110.344L148.188 110.366V123.522Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M151.973 110.344L148.189 110.367L144.312 107.98L147.796 107.962L151.973 110.344Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M154.578 129.427H170.517V120.817L158.83 114.203H154.578V129.427Z",
+            fill: "#CCCCCC"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M158.83 114.203H154.578L150.092 111.448H153.924L158.83 114.203Z",
+            fill: "#E7E7E7"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M161.599 135.946H179.829V126.1L166.46 118.54H161.599V135.946Z",
+            fill: "#A5A5A5"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M176.358 127.613L163.991 120.013V138.369L176.358 149.751V127.613Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M163.991 120.013H169.064L182.509 127.613H176.358L163.991 120.013Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M161.599 118.54L156.473 115.385V131.223L161.599 135.946V118.54Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M154.573 114.203L150.092 111.448V125.281L154.573 129.404V114.203Z",
+            fill: "white",
+            stroke: "white",
+            strokeWidth: "0.22",
+            strokeMiterlimit: "22.93"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M148.185 110.362L144.312 107.98V119.949L148.185 123.518V110.362Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M142.246 106.753L138.935 104.716V114.944L142.246 117.994V106.753Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M137.412 103.657L134.493 101.861V110.871L137.412 113.553V103.657Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M166.46 118.54H161.599L156.473 115.385H160.888L166.46 118.54Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M157.62 120.763L160.04 122.677V128.995L157.62 127V120.763Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M151.28 116.472L153.382 117.958V123.522L151.28 121.79V116.472Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M145.346 112.29L147.152 113.571V118.354L145.346 116.863V112.29Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M139.849 108.325L141.46 109.466V113.721L139.849 112.394V108.325Z",
+            fill: "#D6D6D6"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M135.253 105.094L136.626 106.066V109.708L135.253 108.571V105.094Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M153.386 110.33V108.198L156.94 109.985V112.271L153.386 110.33Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M136.873 101.252V99.8521L139.204 101.029V102.53L136.873 101.252Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M139.257 119.767V118.085L141.566 120.363V122.222L139.257 119.767Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M133.641 84.8235V83.4916L135.972 83.437V84.8735L133.641 84.8235Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M144.428 85.0418V83.1916L147.669 83.1189V85.1145L144.428 85.0418Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M151.095 51.1209L148.428 53.1984V51.8028L151.095 49.5481V51.1209Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M151.095 54.8576L150.34 55.4032V54.2212L151.095 53.6257V54.8576Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M149.986 55.6577L149.319 56.1396V54.9713L149.986 54.4758V55.6577Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M149.002 56.3668L148.428 56.785V55.644L149.002 55.2122V56.3668Z",
+            fill: "#BDBDBD"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M158.203 42.5293L157.333 43.2067V41.9202L158.203 41.1201V42.5293Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M156.926 43.5248L156.158 44.1203V42.9884L156.926 42.2883V43.5248Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M155.797 44.4067L155.13 44.9249V43.943L155.797 43.3293V44.4067Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M158.203 49.5662L157.333 50.1936V48.8389L158.203 48.1479V49.5662Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M156.926 50.489L156.158 51.0436V49.698L156.926 49.1252V50.489Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M155.797 51.3073L155.13 51.7891V50.4754L155.797 49.9753V51.3073Z",
+            fill: "white"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M130.471 59.7806L132.122 58.1487V110.271L130.471 108.635V59.7806Z",
+            fill: "#989898"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M130.471 108.635L203.173 180.49V190.618L130.471 111.207V108.635Z",
+            fill: "#9E9E9E"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M130.471 57.2122L203.173 -22.1987V-12.0752L130.471 59.7806V57.2122Z",
+            fill: "#9E9E9E"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M130.471 70.2316V72.3045L203.173 37.288V29.1191L130.471 70.2316Z",
+            fill: "#9E9E9E"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M130.471 98.1838V96.1155L203.173 131.132V139.301L130.471 98.1838Z",
+            fill: "#9E9E9E"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M130.471 83.2281L203.173 80.3369V88.0785L130.471 85.1919V83.2281Z",
+            fill: "#9E9E9E"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M130.471 59.7806H132.122L203.173 -6.03834V-12.0752L130.471 59.7806Z",
+            fill: "#989898"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M130.471 72.3043H132.122L203.173 40.229V37.2878L130.471 72.3043Z",
+            fill: "#989898"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M130.471 96.1155H132.122L203.173 128.191V131.132L130.471 96.1155Z",
+            fill: "#989898"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M130.471 108.635H132.122L203.173 174.458V180.49L130.471 108.635Z",
+            fill: "#989898"
+          }), jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M130.471 57.2122L128.921 58.9077V109.512L130.471 111.207V57.2122Z",
+            fill: "#9E9E9E"
           })]
-        }))
-      })), jsx(Ramen.XBox, Object.assign({
-        gap: "s"
+        }))]
+      })), jsx("path", {
+        d: "M24.5907 65.1246C22.2859 57.4787 20.8652 44.4072 30.5574 35.4674C37.9646 28.6352 57.9758 27.9467 64.937 42.8463C66.099 45.3335 64.5108 49.2318 61.3853 49.0899C60.1571 49.0331 59.3964 52.9212 58.6861 55.3335C59.6806 65.1246 68.5403 65.3054 73.0346 72.7872C78.5751 82.0107 71.756 95.6332 55.4187 95.6332C39.0813 95.6332 29.7158 82.1257 24.5907 65.1246Z",
+        fill: "#232E36"
+      }), jsx("path", {
+        d: "M37.3676 75.6793C37.3676 73.1251 37.3631 60.4708 37.3674 60.2579C30.3469 61.2915 30.9425 48.0087 38.0457 51.2724C39.6084 52.2657 44.4681 54.5975 44.0419 46.3673C50.7171 49.4953 56.2798 48.0342 55.1672 44.1448C59.6174 50.2567 60.928 47.4785 60.928 49.4953C61.9711 60.1761 60.9218 71.3539 54.2763 71.3547C53.5493 71.3459 52.5449 70.9499 51.8305 70.8148V75.6793C51.8305 78.5173 51.8305 79.9363 51.8305 79.9363C51.8305 79.9363 48.3903 88.2517 44.7228 88.2057C41.0552 88.1597 37.3676 79.9363 37.3676 79.9363C37.3676 79.9363 37.3676 78.5173 37.3676 75.6793Z",
+        fill: "#EA925A"
+      }), jsx("path", {
+        fillRule: "evenodd",
+        clipRule: "evenodd",
+        d: "M49.0683 50.7405C48.3148 50.9172 47.6861 51.2154 47.3484 51.4276C47.1877 51.5286 46.9755 51.4803 46.8744 51.3198C46.7734 51.1593 46.8217 50.9474 46.9824 50.8464C47.3832 50.5946 48.0822 50.2665 48.9112 50.072C49.7404 49.8775 50.7259 49.8108 51.6828 50.1139C51.8637 50.1712 51.9639 50.3642 51.9065 50.5449C51.8491 50.7257 51.6559 50.8257 51.475 50.7684C50.6736 50.5146 49.8217 50.5638 49.0683 50.7405Z",
+        fill: "#5C3737"
+      }), jsx("path", {
+        fillRule: "evenodd",
+        clipRule: "evenodd",
+        d: "M57.2248 50.6655C56.7867 50.6402 56.3793 50.7521 56.15 50.8573C55.9775 50.9364 55.7735 50.8609 55.6942 50.6886C55.615 50.5163 55.6906 50.3125 55.8631 50.2333C56.1804 50.0878 56.6995 49.9474 57.2645 49.98C57.8381 50.0132 58.4734 50.2268 58.9734 50.807C59.0972 50.9507 59.081 51.1675 58.9371 51.2912C58.7932 51.4149 58.5762 51.3986 58.4524 51.2549C58.099 50.8448 57.6544 50.6903 57.2248 50.6655Z",
+        fill: "#5C3737"
+      }), jsx("path", {
+        d: "M49.9982 54.1426C49.9982 54.989 49.7108 55.6492 49.2915 55.6661C48.8721 55.683 48.5149 55.0398 48.4683 54.2103C48.4217 53.3809 48.7479 52.7038 49.175 52.6868C49.6021 52.6699 49.9671 53.3216 49.9982 54.1426Z",
+        fill: "#232E36"
+      }), jsx("path", {
+        d: "M57.8409 54.1426C57.8409 54.989 57.5536 55.6492 57.1342 55.6661C56.7148 55.683 56.3576 55.0398 56.311 54.2103C56.2644 53.3809 56.5983 52.7038 57.0177 52.6868C57.4371 52.6699 57.8409 53.3216 57.8409 54.1426Z",
+        fill: "#232E36"
+      }), jsx("path", {
+        d: "M50.9997 63.8071C51.5365 64.2975 52.2653 64.5838 53.0336 64.6055C53.4079 64.6055 53.7822 64.5448 54.1269 64.4189C54.4717 64.2931 54.7869 64.1065 55.0479 63.8679C55.3089 63.6292 55.5157 63.3515 55.6536 63.0434C55.7915 62.7354 55.8555 62.4056 55.8457 62.0758L50.1674 61.989C50.1674 62.6659 50.4678 63.3211 50.9997 63.8071Z",
+        fill: "#5C3737"
+      }), jsx("path", {
+        d: "M51.3883 64.0974C50.9026 63.7849 50.5344 63.355 50.3361 62.856C51.0003 62.7345 51.7006 62.8477 52.2706 63.1688C52.8405 63.4899 53.2692 64.002 53.4229 64.5834C53.3039 64.5964 53.1683 64.6039 53.0493 64.6082C52.4496 64.5908 51.8691 64.4098 51.3883 64.0974Z",
+        fill: "#CD754D"
+      }), jsx("path", {
+        d: "M50.2513 62.2552C50.2175 62.2107 50.1856 62.0592 50.1738 61.989L55.8469 62.0757C55.8525 62.1896 55.8304 62.3956 55.8187 62.4843C55.4804 62.5277 50.2936 62.311 50.2513 62.2552Z",
+        fill: "white"
+      }), jsx("path", {
+        d: "M54.1495 54.9999C54.3094 54.2731 54.25 53.5153 53.9789 52.8223C53.7078 52.1292 53.2371 51.5319 52.6263 51.1059C52.0155 50.6799 51.292 50.4443 50.5472 50.4288C49.8024 50.4133 49.0698 50.6187 48.4418 51.0189C47.8138 51.4192 47.3186 51.9963 47.0189 52.6776C46.7191 53.3588 46.6282 54.1134 46.7577 54.8462C46.8871 55.579 47.2311 56.257 47.7462 56.7946C48.2612 57.3322 48.9242 57.7053 49.6514 57.8666C50.1353 57.974 50.6356 57.985 51.1237 57.899C51.6118 57.813 52.0781 57.6316 52.4959 57.3653C52.9137 57.099 53.2748 56.753 53.5586 56.3471C53.8423 55.9412 54.0431 55.4834 54.1495 54.9999ZM53.6129 54.8794C53.4775 55.5002 53.1612 56.0671 52.7036 56.5084C52.2461 56.9498 51.668 57.2459 51.0422 57.3595C50.4163 57.473 49.7709 57.3988 49.1872 57.1463C48.6035 56.8938 48.1078 56.4743 47.7625 55.9407C47.4173 55.4071 47.238 54.7833 47.2474 54.148C47.2567 53.5128 47.4542 52.8945 47.8149 52.3712C48.1756 51.8479 48.6834 51.4431 49.2743 51.2078C49.8651 50.9725 50.5125 50.9172 51.1347 51.049C51.9681 51.2336 52.6945 51.74 53.1554 52.4576C53.6163 53.1752 53.7743 54.0459 53.5948 54.8794H53.6129Z",
+        fill: "white"
+      }), jsx("path", {
+        fillRule: "evenodd",
+        clipRule: "evenodd",
+        d: "M38.874 51.4094C38.874 51.2918 38.9694 51.1965 39.0871 51.1965C39.8808 51.1965 41.2146 51.2827 42.6515 51.5404C44.086 51.7977 45.6405 52.2289 46.8643 52.9274C46.9665 52.9857 47.002 53.1157 46.9436 53.2178C46.8852 53.3199 46.755 53.3553 46.6529 53.297C45.49 52.6333 43.9901 52.213 42.5762 51.9594C41.1648 51.7063 39.8562 51.6222 39.0871 51.6222C38.9694 51.6222 38.874 51.5269 38.874 51.4094Z",
+        fill: "white"
+      }), jsx("path", {
+        d: "M62.5193 54.705C62.6795 53.978 62.6203 53.2199 62.3492 52.5265C62.078 51.8331 61.6071 51.2356 60.996 50.8095C60.3849 50.3834 59.6611 50.1478 58.916 50.1326C58.1709 50.1174 57.438 50.3232 56.8099 50.724C56.1819 51.1248 55.687 51.7026 55.3877 52.3843C55.0884 53.0661 54.9982 53.8211 55.1285 54.5541C55.2588 55.287 55.6037 55.9649 56.1197 56.502C56.6357 57.0392 57.2995 57.4114 58.0273 57.5718C58.5107 57.6783 59.0104 57.6886 59.4978 57.6021C59.9852 57.5157 60.4508 57.3342 60.8679 57.0679C61.2851 56.8017 61.6456 56.456 61.929 56.0506C62.2123 55.6451 62.413 55.1879 62.5193 54.705ZM61.9827 54.5846C61.8462 55.2059 61.5283 55.7729 61.0692 56.2137C60.6102 56.6546 60.0305 56.9496 59.4035 57.0614C58.7766 57.1731 58.1305 57.0967 57.5471 56.8417C56.9636 56.5867 56.469 56.1646 56.1257 55.6288C55.7824 55.093 55.606 54.4676 55.6186 53.8316C55.6312 53.1956 55.8324 52.5776 56.1966 52.0558C56.5609 51.534 57.0719 51.1319 57.665 50.9002C58.2581 50.6685 58.9067 50.6177 59.5287 50.7542C60.362 50.9387 61.0885 51.4451 61.5494 52.1627C62.0103 52.8804 62.1682 53.751 61.9887 54.5846H61.9827Z",
+        fill: "white"
+      }), jsx("path", {
+        fillRule: "evenodd",
+        clipRule: "evenodd",
+        d: "M54.5308 53.306C54.641 53.2619 54.7672 53.3147 54.8127 53.424C55.1727 54.2895 55.6378 55.5232 55.7843 56.6384C55.8575 57.1957 55.8539 57.7422 55.7041 58.2048C55.5514 58.676 55.2463 59.059 54.7339 59.2655C54.6238 59.3099 54.4974 59.2573 54.4517 59.1482C54.406 59.039 54.4582 58.9145 54.5683 58.8702C54.9474 58.7174 55.1731 58.4413 55.2928 58.0718C55.4153 57.6937 55.4255 57.2181 55.3562 56.6902C55.2176 55.6349 54.7722 54.4459 54.4136 53.5837C54.3681 53.4744 54.4206 53.3501 54.5308 53.306Z",
+        fill: "#CD754D"
+      }), jsx("g", Object.assign({
+        style: {
+          mixBlendMode: 'multiply'
+        },
+        opacity: "0.7"
       }, {
-        children: tasks.map(task => {
-          return jsx(ProductCard, {
-            task: task,
-            miniImageUrl: miniImageUrl,
-            onSelectCard: onSelectCard,
-            onMarkTask: onMarkTask,
-            markedAs: getTaskMark(task)
-          }, task.id);
+        children: jsx("path", {
+          d: "M51.6387 71.1213C48.2824 70.3464 45.1031 68.8969 42.2764 66.8528C42.2764 66.8528 44.6016 72.8346 51.6253 73.9581L51.6387 71.1213Z",
+          fill: "#EA925A"
+        })
+      })), jsx("path", {
+        d: "M70.9747 86.1092L68.3886 98.545C68.1123 99.8795 67.8028 101.214 67.4602 102.549C67.0955 104.012 66.6755 105.465 66.2334 106.908L59.6686 128.142L59.3812 129.081L59.0939 130L58.4086 132.215L57.7566 134.33H33.8844L33.2434 132.215L32.4808 129.714L32.2929 129.081L31.6298 126.886L25.7833 107.64C25.2749 105.959 24.8439 104.249 24.4792 102.539C24.1255 100.858 23.8492 99.1678 23.6503 97.4774L20.6787 87.2205L25.6617 83.6774L32.4145 81.0282L32.7129 80.9095L37.1889 79.1598L41.2127 78.1909H51.5442L54.231 78.8039L56.2535 79.6837L58.7071 80.7514L63.5146 82.8569L70.9747 86.1092Z",
+        fill: "#FAD2A0"
+      }), jsx("path", {
+        d: "M51.8291 80.5252V76.3711H37.3662V79.5241C37.3662 79.5241 41.7799 88.5498 45.5137 88.5947C49.2474 88.6395 51.8291 80.5252 51.8291 80.5252Z",
+        fill: "#EA925A"
+      }), jsx("path", {
+        d: "M73.3065 166.032L46.6824 180.633L17.0742 168.889C19.0746 157.975 24.7774 146.548 28.8335 139.411C31.3423 134.992 33.2322 132.214 33.2322 132.214H58.4085C59.9005 134.33 61.3372 136.791 62.6966 139.411C68.8084 151.164 73.3065 166.032 73.3065 166.032Z",
+        fill: "#3A6598"
+      }), jsx("path", {
+        d: "M57.2364 241.637C52.5283 241.637 48.6822 238.295 48.5385 234.084L46.5713 170.452C46.5713 163.621 52.8156 158.036 60.4525 158.036C68.0894 158.036 74.3338 163.621 74.3338 170.452C76.732 191.765 73.1291 216.182 65.4812 236.368C64.2876 239.521 60.9609 241.637 57.2364 241.637Z",
+        fill: "#3A6598"
+      }), jsx("path", {
+        d: "M34.0611 241.844C38.7692 241.844 42.6153 238.502 42.759 234.291L44.7262 170.659C44.7262 163.828 38.4819 158.243 30.845 158.243C23.2081 158.243 16.9638 163.828 16.9638 170.659C14.5655 191.972 18.1684 216.389 25.8164 236.575C27.01 239.728 30.3366 241.844 34.0611 241.844Z",
+        fill: "#3A6598"
+      }), jsx("path", {
+        fillRule: "evenodd",
+        clipRule: "evenodd",
+        d: "M117.085 88.7103C117.085 88.7103 110.939 92.8183 107.299 89.864C104.002 87.1885 105.844 83.4906 105.844 83.4906C105.844 83.4906 107.115 79.4573 110.052 76.0261C111.986 73.7655 116.094 69.9024 117.405 70.9277C119.113 72.2659 113.35 75.5341 114.289 76.8491C115.252 78.1983 116.131 78.2804 119.158 77.4819C121.05 76.9826 122.927 75.7335 124.627 75.6478C127.952 75.4803 126.835 83.4186 117.085 88.7103Z",
+        fill: "#EA925A"
+      }), jsx("path", {
+        d: "M124.926 76.5498C125.037 76.4608 125.19 76.4899 125.268 76.6146C125.345 76.7394 125.318 76.9127 125.206 77.0017C123.464 78.3957 121.829 79.3233 120.346 79.8729C119.825 80.0662 119.359 80.1984 118.954 80.2805L118.783 80.3129C118.626 80.3405 118.511 80.354 118.44 80.3581C118.304 80.3659 118.19 80.2482 118.185 80.0951C118.179 79.9421 118.285 79.8116 118.42 79.8038L118.49 79.7976C118.575 79.7881 118.703 79.7685 118.873 79.7342C119.255 79.6567 119.699 79.5308 120.198 79.3456C121.634 78.8135 123.225 77.9112 124.926 76.5498Z",
+        fill: "#CD754D"
+      }), jsx("path", {
+        d: "M124.57 78.4966C124.67 78.3925 124.825 78.3995 124.916 78.512C125.007 78.6246 124.999 78.8002 124.899 78.9042L124.803 78.9993C124.761 79.0397 124.71 79.0885 124.649 79.1452C124.447 79.3323 124.209 79.5396 123.935 79.7618C123.155 80.395 122.248 81.0219 121.222 81.5987C120.481 82.0151 119.704 82.39 118.892 82.7145C118.764 82.7658 118.624 82.6902 118.58 82.5458C118.536 82.4013 118.605 82.2427 118.733 82.1914C119.525 81.8747 120.284 81.5087 121.007 81.1022C122.008 80.5394 122.893 79.9283 123.652 79.3122L123.905 79.1023C124.066 78.966 124.211 78.8372 124.34 78.7174L124.519 78.5473C124.54 78.5265 124.557 78.5095 124.57 78.4966Z",
+        fill: "#CD754D"
+      }), jsx("path", {
+        d: "M123.241 81.592C123.356 81.5091 123.507 81.5464 123.579 81.6753C123.651 81.8042 123.616 81.9759 123.502 82.0588C121.997 83.1454 120.747 83.9138 119.737 84.4182L119.48 84.5433C119.233 84.6599 119.017 84.7519 118.83 84.8219L118.711 84.8652C118.676 84.8776 118.644 84.8881 118.617 84.8969L118.519 84.925L118.424 84.927L118.271 84.9005C118.22 84.8926 118.159 84.8837 118.09 84.8745C116.935 84.7206 115.625 84.7376 114.379 85.0673C112.952 85.4448 111.82 86.1923 111.087 87.3815C111.009 87.5078 110.856 87.54 110.745 87.4533C110.635 87.3666 110.608 87.1938 110.686 87.0675C111.497 85.7514 112.735 84.9336 114.272 84.5269C115.582 84.1802 116.946 84.1625 118.153 84.3233L118.398 84.3595L118.462 84.3703L118.576 84.3335L118.68 84.2955C118.913 84.2078 119.2 84.0818 119.542 83.9109C120.528 83.4185 121.757 82.6637 123.241 81.592Z",
+        fill: "#CD754D"
+      }), jsx("path", {
+        d: "M113.895 77.6616C114.03 77.6735 114.129 77.807 114.117 77.9598L114.096 78.1624L114.061 78.4084C114.048 78.4943 114.033 78.584 114.016 78.6768C113.917 79.2079 113.774 79.7375 113.576 80.2318C113.126 81.3537 112.461 82.1333 111.539 82.3951C111.407 82.4325 111.275 82.3423 111.243 82.1937C111.212 82.0451 111.293 81.8942 111.425 81.8568C112.177 81.6432 112.736 80.9874 113.129 80.0072C113.311 79.554 113.444 79.0626 113.535 78.5689C113.567 78.3958 113.592 78.2352 113.61 78.0912L113.628 77.9167C113.64 77.7639 113.76 77.6497 113.895 77.6616Z",
+        fill: "#CD754D"
+      }), jsx("path", {
+        d: "M108.22 65.702L117.271 62.5463C118.639 62.0693 120.106 62.7503 120.555 64.0547L128.37 86.758C128.822 88.0707 128.076 89.5144 126.716 89.9883L117.666 93.1441C116.298 93.6211 114.83 92.9401 114.381 91.6356L106.567 68.9324C106.115 67.6197 106.861 66.176 108.22 65.702Z",
+        fill: "#373C4F"
+      }), jsxs("g", Object.assign({
+        clipPath: "url(#clip2_8926_132573)"
+      }, {
+        children: [jsx("path", {
+          d: "M107.443 68.809C107.142 67.9284 107.651 66.9577 108.581 66.6408L117.842 63.4848C118.772 63.1679 119.77 63.6249 120.071 64.5054L127.612 86.5609C127.913 87.4415 127.404 88.4122 126.474 88.7291L117.213 91.8851C116.283 92.202 115.285 91.745 114.984 90.8645L107.443 68.809Z",
+          fill: "white"
+        }), jsx("path", {
+          d: "M110.337 73.6082C110.211 73.2413 110.423 72.8368 110.811 72.7048L113.417 71.8167C113.804 71.6847 114.22 71.8751 114.346 72.242C114.471 72.6089 114.259 73.0133 113.871 73.1454L111.265 74.0334C110.878 74.1655 110.462 73.9751 110.337 73.6082Z",
+          fill: "#2CDFA6"
+        }), jsx("path", {
+          d: "M114.686 72.1257C114.561 71.7589 114.773 71.3544 115.161 71.2223L117.767 70.3343C118.154 70.2023 118.57 70.3926 118.695 70.7595C118.821 71.1264 118.608 71.5309 118.221 71.6629L115.615 72.551C115.227 72.683 114.812 72.4926 114.686 72.1257Z",
+          fill: "#F5F5F5"
+        }), jsx("path", {
+          d: "M119.037 70.6436C118.911 70.2767 119.124 69.8722 119.511 69.7402L121.616 69.0229L122.07 70.3515L119.965 71.0688C119.578 71.2009 119.162 71.0105 119.037 70.6436Z",
+          fill: "#F5F5F5"
+        }), jsx("path", {
+          d: "M111.109 75.8669C111.034 75.6467 111.161 75.404 111.394 75.3248L121.076 72.0254C121.308 71.9462 121.558 72.0604 121.633 72.2805L122.678 75.3364C122.753 75.5566 122.626 75.7993 122.393 75.8785L112.711 79.1779C112.479 79.2571 112.229 79.1429 112.154 78.9227L111.109 75.8669Z",
+          fill: "#5C5C5C"
+        }), jsx("path", {
+          d: "M112.699 80.5172C112.624 80.2971 112.751 80.0544 112.983 79.9752L122.666 76.6758C122.898 76.5966 123.148 76.7108 123.223 76.9309L123.586 77.9939C123.661 78.214 123.534 78.4567 123.302 78.5359L113.619 81.8353C113.387 81.9145 113.137 81.8003 113.062 81.5802L112.699 80.5172Z",
+          fill: "#F5F5F5"
+        }), jsx("path", {
+          d: "M113.607 83.1745C113.532 82.9543 113.659 82.7117 113.892 82.6324L123.574 79.333C123.806 79.2538 124.056 79.368 124.131 79.5882L124.54 80.7839C124.615 81.0041 124.488 81.2468 124.255 81.326L114.573 84.6254C114.341 84.7046 114.091 84.5904 114.016 84.3703L113.607 83.1745Z",
+          fill: "#F5F5F5"
+        }), jsx("path", {
+          d: "M114.561 85.9645C114.486 85.7444 114.613 85.5017 114.846 85.4225L124.528 82.1231C124.76 82.0438 125.01 82.1581 125.085 82.3782L125.448 83.4411C125.524 83.6613 125.396 83.9039 125.164 83.9832L115.482 87.2826C115.249 87.3618 115 87.2476 114.925 87.0274L114.561 85.9645Z",
+          fill: "#F5F5F5"
+        }), jsx("path", {
+          d: "M115.47 88.622C115.395 88.4018 115.522 88.1592 115.755 88.0799L125.437 84.7805C125.669 84.7013 125.919 84.8155 125.994 85.0357L126.358 86.0986C126.433 86.3187 126.305 86.5614 126.073 86.6406L116.391 89.94C116.158 90.0193 115.909 89.905 115.834 89.6849L115.47 88.622Z",
+          fill: "#F5F5F5"
+        }), jsx("path", {
+          d: "M109.184 70.2355C109.143 70.1169 109.212 69.9861 109.337 69.9435L113.964 68.3667C114.089 68.324 114.224 68.3856 114.264 68.5042C114.305 68.6228 114.236 68.7536 114.111 68.7962L109.484 70.373C109.359 70.4157 109.224 70.3541 109.184 70.2355Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M109.409 70.8942C109.369 70.7756 109.437 70.6448 109.563 70.6022L112.436 69.6231C112.561 69.5804 112.695 69.642 112.736 69.7606C112.776 69.8792 112.708 70.01 112.583 70.0526L109.71 71.0317C109.584 71.0744 109.45 71.0128 109.409 70.8942Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M119.646 66.9264C119.73 67.1715 119.588 67.4417 119.329 67.5299C119.07 67.6182 118.792 67.491 118.708 67.2458C118.625 67.0007 118.767 66.7305 119.025 66.6423C119.284 66.554 119.562 66.6812 119.646 66.9264Z",
+          fill: "#D6D6D6"
+        }), jsx("path", {
+          d: "M109.655 68.5509C109.738 68.796 109.597 69.0662 109.338 69.1545C109.079 69.2427 108.801 69.1155 108.717 68.8703C108.633 68.6252 108.775 68.355 109.034 68.2668C109.293 68.1786 109.571 68.3058 109.655 68.5509Z",
+          fill: "#D6D6D6"
+        })]
+      })), jsx("path", {
+        d: "M105.594 84.3533C105.594 84.3533 107.867 74.0802 110.802 73.0703L110.818 73.0639C111.976 72.792 112.635 74.7555 111.919 76.2731L108.585 83.321L105.594 84.3533Z",
+        fill: "#EA925A"
+      }), jsx("path", {
+        fillRule: "evenodd",
+        clipRule: "evenodd",
+        d: "M91.6737 131.222L91.3544 131.465C88.33 133.765 84.2563 132.877 82.2549 129.482L63.5352 97.716C61.535 94.3205 62.365 89.7034 65.3894 87.4027L65.7081 87.1601C68.7325 84.8594 72.8068 85.7467 74.8076 89.1423L93.5279 120.909C95.5287 124.304 94.6981 128.921 91.6737 131.222Z",
+        fill: "#EA925A"
+      }), jsx("path", {
+        fillRule: "evenodd",
+        clipRule: "evenodd",
+        d: "M110.208 84.3532C112.095 85.619 112.833 88.2011 111.882 90.2156L93.5071 129.091C91.7048 132.595 87.4927 133.623 84.1406 131.376C80.7593 129.109 79.5739 124.399 81.5179 120.95L104.923 85.3265C106.089 83.5511 108.38 83.1293 110.208 84.3532Z",
+        fill: "#EA925A"
+      }), jsx("path", {
+        fillRule: "evenodd",
+        clipRule: "evenodd",
+        d: "M82.726 102.581L74.7009 88.963C72.7662 85.6803 68.6469 84.9232 65.5469 87.281C62.4469 89.6388 61.4938 94.2541 63.4285 97.5367L71.3778 111.025L82.726 102.581Z",
+        fill: "#FAD2A0"
+      }), jsx("path", {
+        d: "M22.2264 114.412C23.9675 105.31 22.9941 94.9685 21.5796 89.0119C20.8975 86.1393 21.3213 82.6781 24.1205 81.7394C25.3458 81.3286 26.698 80.987 28.0392 80.7097C31.3125 80.0327 34.2527 82.5598 35.3471 85.7181C37.8986 93.0816 43.3331 100.299 46.3035 103.545V156.399H28.7468C25.6095 156.399 22.9832 154.008 22.6319 150.89C21.46 140.489 19.7988 127.102 22.2264 114.412Z",
+        fill: "#E00109"
+      }), jsx("path", {
+        d: "M46.3037 103.545C53.2643 98.8798 54.9499 90.6455 56.1505 84.3797C56.6667 81.6861 59.0399 79.7919 61.7289 80.3316C63.3583 80.6586 64.9327 81.117 66.3216 81.6141C69.3588 82.7012 69.1058 85.9522 68.6592 89.147C67.9521 94.2049 70.1256 101.585 71.3635 107.496C72.7049 113.902 70.5657 138.856 69.0947 151.264C68.7429 154.231 66.2123 156.399 63.2243 156.399H46.3037V103.545Z",
+        fill: "#E00109"
+      }), jsx("path", {
+        opacity: "0.3",
+        d: "M52.2002 138.043V136.276C53.6743 136.473 56.2294 136.865 60.5535 136.865C64.8775 136.865 68.4154 136.473 68.9067 136.276V138.043C68.5792 138.338 65.762 139.221 61.0448 139.221C56.3277 139.221 53.5105 138.436 52.2002 138.043Z",
+        fill: "black"
+      }), jsx("path", {
+        opacity: "0.3",
+        d: "M24.6836 138.043V136.276C26.1577 136.473 28.7128 136.865 33.0369 136.865C37.3609 136.865 40.8988 136.473 41.3901 136.276V138.043C41.0626 138.338 37.754 139.221 33.0369 139.221C28.3197 139.221 25.9939 138.436 24.6836 138.043Z",
+        fill: "black"
+      }), jsxs("g", Object.assign({
+        opacity: "0.5"
+      }, {
+        children: [jsx("path", {
+          fillRule: "evenodd",
+          clipRule: "evenodd",
+          d: "M46.3037 156.399V103.393H47.2864V156.399H46.3037Z",
+          fill: "black"
+        }), jsx("path", {
+          fillRule: "evenodd",
+          clipRule: "evenodd",
+          d: "M46.3037 103.648V103.393H47.2864V103.648H46.3037ZM46.3037 104.667V104.157H47.2864V104.667H46.3037ZM46.3037 105.686V105.177H47.2864V105.686H46.3037ZM46.3037 106.706V106.196H47.2864V106.706H46.3037ZM46.3037 107.725V107.215H47.2864V107.725H46.3037ZM46.3037 108.744V108.235H47.2864V108.744H46.3037ZM46.3037 109.764V109.254H47.2864V109.764H46.3037ZM46.3037 110.783V110.273H47.2864V110.783H46.3037ZM46.3037 111.803V111.293H47.2864V111.803H46.3037ZM46.3037 112.822V112.312H47.2864V112.822H46.3037ZM46.3037 113.841V113.332H47.2864V113.841H46.3037ZM46.3037 114.861V114.351H47.2864V114.861H46.3037ZM46.3037 115.88V115.37H47.2864V115.88H46.3037ZM46.3037 116.899V116.39H47.2864V116.899H46.3037ZM46.3037 117.919V117.409H47.2864V117.919H46.3037ZM46.3037 118.938V118.428H47.2864V118.938H46.3037ZM46.3037 119.957V119.448H47.2864V119.957H46.3037ZM46.3037 120.977V120.467H47.2864V120.977H46.3037ZM46.3037 121.996V121.486H47.2864V121.996H46.3037ZM46.3037 123.015V122.506H47.2864V123.015H46.3037ZM46.3037 124.035V123.525H47.2864V124.035H46.3037ZM46.3037 125.054V124.545H47.2864V125.054H46.3037ZM46.3037 126.074V125.564H47.2864V126.074H46.3037ZM46.3037 127.093V126.583H47.2864V127.093H46.3037ZM46.3037 128.112V127.603H47.2864V128.112H46.3037ZM46.3037 129.132V128.622H47.2864V129.132H46.3037ZM46.3037 130.151V129.641H47.2864V130.151H46.3037ZM46.3037 131.17V130.661H47.2864V131.17H46.3037ZM46.3037 132.19V131.68H47.2864V132.19H46.3037ZM46.3037 133.209V132.699H47.2864V133.209H46.3037ZM46.3037 134.228V133.719H47.2864V134.228H46.3037ZM46.3037 135.248V134.738H47.2864V135.248H46.3037ZM46.3037 136.267V135.757H47.2864V136.267H46.3037ZM46.3037 137.286V136.777H47.2864V137.286H46.3037ZM46.3037 138.306V137.796H47.2864V138.306H46.3037ZM46.3037 139.325V138.816H47.2864V139.325H46.3037ZM46.3037 140.345V139.835H47.2864V140.345H46.3037ZM46.3037 141.364V140.854H47.2864V141.364H46.3037ZM46.3037 142.383V141.874H47.2864V142.383H46.3037ZM46.3037 143.403V142.893H47.2864V143.403H46.3037ZM46.3037 144.422V143.912H47.2864V144.422H46.3037ZM46.3037 145.441V144.932H47.2864V145.441H46.3037ZM46.3037 146.461V145.951H47.2864V146.461H46.3037ZM46.3037 147.48V146.97H47.2864V147.48H46.3037ZM46.3037 148.499V147.99H47.2864V148.499H46.3037ZM46.3037 149.519V149.009H47.2864V149.519H46.3037ZM46.3037 150.538V150.028H47.2864V150.538H46.3037ZM46.3037 151.557V151.048H47.2864V151.557H46.3037ZM46.3037 152.577V152.067H47.2864V152.577H46.3037ZM46.3037 153.596V153.087H47.2864V153.596H46.3037ZM46.3037 154.616V154.106H47.2864V154.616H46.3037ZM46.3037 155.635V155.125H47.2864V155.635H46.3037ZM46.3037 156.399V156.145H47.2864V156.399H46.3037Z",
+          fill: "white"
+        })]
+      })), jsxs("g", Object.assign({
+        filter: "url(#filter0_d_8926_132573)"
+      }, {
+        children: [jsx("path", {
+          d: "M62.8504 102.12C62.9781 102.057 63.1281 102.02 63.2742 102.032C63.7124 102.068 64.0367 102.449 64.0011 102.887C63.9892 103.033 63.9408 103.176 63.8579 103.291C64.4095 104.193 64.6896 105.268 64.5976 106.399C64.3671 109.232 61.8926 111.332 59.0564 111.102C56.2324 110.872 54.1177 108.4 54.3482 105.567C54.5777 102.746 57.0531 100.634 59.8893 100.864C61.0326 100.969 62.0488 101.431 62.8504 102.12Z",
+          fill: "white"
+        }), jsx("path", {
+          d: "M63.4291 103.599C63.3409 103.629 63.2425 103.633 63.1452 103.625C62.7069 103.59 62.3826 103.208 62.4182 102.771C62.4261 102.673 62.4584 102.578 62.4897 102.495C61.7795 101.886 60.8689 101.482 59.8586 101.4C57.3145 101.194 55.0779 103.08 54.8712 105.622C54.6644 108.163 56.5544 110.385 59.0985 110.591C61.6538 110.811 63.8792 108.911 64.0859 106.37C64.168 105.36 63.9145 104.41 63.4291 103.599Z",
+          fill: "#E00109"
+        }), jsx("path", {
+          d: "M63.4286 103.599C63.3405 103.629 63.2421 103.633 63.1447 103.625C62.7065 103.59 62.3822 103.208 62.4178 102.771C62.4257 102.673 62.4458 102.577 62.4892 102.495C61.779 101.886 60.8684 101.482 59.8581 101.4C57.314 101.194 55.0897 103.081 54.8829 105.623C54.6762 108.164 56.5662 110.386 59.1103 110.592C61.6543 110.799 63.8787 108.911 64.0855 106.37C64.1676 105.36 63.9141 104.41 63.4286 103.599Z",
+          stroke: "#E00109",
+          strokeWidth: "0.0385495",
+          strokeMiterlimit: "3.864"
+        }), jsx("path", {
+          d: "M62.7837 102.788C62.8035 102.545 63.0141 102.366 63.2576 102.386C63.501 102.406 63.6799 102.616 63.6602 102.859C63.6404 103.102 63.4298 103.281 63.1863 103.261C62.9429 103.242 62.7639 103.031 62.7837 102.788Z",
+          fill: "#E00109"
+        }), jsx("path", {
+          d: "M63.1746 103.26C63.4166 103.28 63.6288 103.1 63.6484 102.858C63.6681 102.616 63.4879 102.405 63.2458 102.385C63.0038 102.365 62.7917 102.545 62.772 102.787C62.7523 103.029 62.9326 103.241 63.1746 103.26Z",
+          stroke: "#E00109",
+          strokeWidth: "0.0356583",
+          strokeMiterlimit: "3.864"
+        }), jsx("path", {
+          d: "M63.6398 105.22L62.4421 107.741L61.87 107.695L62.3166 106.875L61.7773 105.068L62.3495 105.115L62.6226 106.275L62.647 106.277L63.0798 105.174L63.6398 105.22Z",
+          fill: "#FDF737"
+        }), jsx("path", {
+          d: "M61.5859 106.375C61.5522 106.788 61.089 106.909 60.6508 106.874C60.2247 106.839 59.7872 106.645 59.8208 106.231L60.3808 106.277C60.3699 106.41 60.5495 106.462 60.6834 106.473C60.8173 106.484 60.9907 106.461 61.0006 106.339C61.0134 106.181 60.8085 106.14 60.4746 106.027C60.1407 105.915 59.8979 105.736 59.9246 105.407C59.9582 104.994 60.3718 104.881 60.7979 104.915C61.2239 104.95 61.6016 105.127 61.5689 105.529L61.009 105.483C61.0179 105.374 60.8758 105.313 60.7662 105.304C60.6445 105.295 60.5086 105.308 60.4987 105.43C60.4858 105.588 60.7283 105.62 60.9902 105.714C61.3343 105.852 61.6155 106.01 61.5859 106.375Z",
+          fill: "#FDF737"
+        }), jsx("path", {
+          d: "M59.0126 105.762C59.0324 105.519 58.9173 105.277 58.6008 105.251C58.2843 105.225 58.1661 105.473 58.1483 105.692C58.1295 105.923 58.2315 106.176 58.548 106.202C58.8766 106.228 58.9948 105.981 59.0126 105.762ZM59.474 106.717L58.9506 106.675L58.9674 106.468L58.943 106.466C58.843 106.642 58.6525 106.724 58.3847 106.702C57.9221 106.665 57.5511 106.255 57.5996 105.659C57.649 105.052 58.0439 104.716 58.5065 104.754C58.7621 104.775 58.9723 104.902 59.0568 105.068L59.0812 105.07L59.098 104.863L59.6336 104.907L59.474 106.717Z",
+          fill: "#FDF737"
+        }), jsx("path", {
+          d: "M60.8707 107.626C59.438 107.314 57.9904 107.184 55.7256 107.16L55.7579 107.064C58.0256 107.053 59.8118 107.087 60.7704 107.202C61.3416 107.26 61.508 107.323 61.4912 107.53C61.4866 107.737 61.2319 107.704 60.8707 107.626Z",
+          fill: "#FDF737"
+        }), jsx("path", {
+          d: "M56.7518 105.382C56.7485 105.272 56.7055 105.048 56.4012 105.024C56.1212 105.001 56.0172 105.225 55.9971 105.321L56.7518 105.382ZM57.2969 105.61C57.291 105.683 57.2699 105.792 57.2699 105.792L55.9552 105.685C55.9506 105.893 56.096 106.064 56.3151 106.081C56.4733 106.094 56.5878 106.042 56.6454 105.937L57.2176 105.983C57.1471 106.247 56.8881 106.568 56.2917 106.52C55.7195 106.474 55.3666 105.992 55.4101 105.457C55.4547 104.91 55.8403 104.537 56.4124 104.584C56.9967 104.631 57.3414 105.063 57.2969 105.61Z",
+          fill: "#FDF737"
+        }), jsx("path", {
+          d: "M56.9679 108.46C56.9943 108.437 57.0328 108.416 57.0703 108.407C57.1078 108.398 57.1453 108.388 57.1818 108.391C57.2183 108.394 57.2538 108.409 57.2894 108.425C57.3249 108.44 57.3594 108.467 57.3818 108.493L57.4154 108.533L57.3232 108.611L57.2907 108.559C57.2795 108.546 57.2561 108.532 57.2328 108.518C57.2094 108.504 57.1851 108.502 57.1729 108.501C57.1485 108.499 57.1242 108.497 57.111 108.508C57.0857 108.518 57.0725 108.529 57.0472 108.54C57.034 108.551 57.0199 108.574 57.0057 108.597C56.9916 108.621 56.9896 108.645 56.9886 108.657C56.9866 108.682 56.9847 108.706 56.9958 108.719C57.006 108.744 57.0172 108.757 57.0274 108.783C57.061 108.822 57.0965 108.837 57.1452 108.841C57.1695 108.843 57.1939 108.845 57.207 108.834C57.2324 108.824 57.2455 108.813 57.2709 108.803L57.3104 108.769L57.3886 108.861L57.3492 108.895C57.3228 108.917 57.2843 108.938 57.2468 108.947C57.2093 108.957 57.1718 108.966 57.1353 108.963C57.0988 108.96 57.0633 108.945 57.0277 108.93C56.9922 108.915 56.9698 108.888 56.9353 108.861C56.9129 108.835 56.8915 108.796 56.8823 108.759C56.8731 108.721 56.8639 108.684 56.8669 108.647C56.8699 108.611 56.885 108.575 56.9001 108.54C56.9143 108.517 56.9416 108.482 56.9679 108.46Z",
+          fill: "white"
+        }), jsx("path", {
+          d: "M57.6195 108.586C57.58 108.62 57.5648 108.655 57.5609 108.704C57.5589 108.728 57.5569 108.752 57.5671 108.778C57.5803 108.767 57.5934 108.755 57.6198 108.733C57.6461 108.711 57.6724 108.688 57.6856 108.677C57.7119 108.655 57.7382 108.633 57.7645 108.61C57.7909 108.588 57.804 108.577 57.8172 108.565C57.7817 108.55 57.7583 108.536 57.7208 108.545C57.6833 108.555 57.6458 108.564 57.6195 108.586ZM57.8826 108.816L57.9609 108.908L57.9214 108.941C57.8951 108.963 57.8566 108.985 57.8191 108.994C57.7816 109.003 57.7441 109.012 57.7076 109.009C57.671 109.006 57.6355 108.991 57.6 108.976C57.5644 108.961 57.5421 108.935 57.5075 108.908C57.4852 108.881 57.4638 108.843 57.4546 108.805C57.4454 108.768 57.4362 108.73 57.4391 108.694C57.4421 108.657 57.4573 108.622 57.4724 108.586C57.4875 108.551 57.5139 108.529 57.5412 108.494C57.5675 108.472 57.606 108.45 57.6435 108.441C57.681 108.432 57.7185 108.423 57.755 108.426C57.7916 108.429 57.8271 108.444 57.8626 108.459C57.8981 108.474 57.9327 108.501 57.955 108.528L57.9886 108.567L57.6464 108.858C57.6819 108.873 57.7053 108.887 57.7428 108.878C57.7793 108.881 57.8178 108.859 57.8441 108.837L57.8826 108.816Z",
+          fill: "white"
+        }), jsx("path", {
+          d: "M58.0114 108.74C58.0144 108.704 58.0295 108.668 58.0447 108.633C58.0598 108.597 58.0861 108.575 58.1125 108.553C58.1388 108.53 58.1773 108.509 58.2148 108.5C58.2523 108.491 58.2898 108.481 58.3263 108.484C58.3628 108.487 58.3984 108.502 58.4339 108.518C58.4694 108.533 58.4918 108.559 58.5263 108.586C58.5487 108.613 58.5701 108.651 58.5803 108.676C58.5895 108.714 58.5987 108.751 58.5957 108.788L58.572 109.08L58.4624 109.071L58.4862 108.779C58.4881 108.755 58.4901 108.73 58.4789 108.717C58.4687 108.692 58.4576 108.679 58.4474 108.653C58.4362 108.64 58.4128 108.626 58.3895 108.612C58.3661 108.598 58.3418 108.596 58.3174 108.594C58.2931 108.592 58.2687 108.59 58.2434 108.6C58.2181 108.61 58.2049 108.621 58.1917 108.633C58.1786 108.644 58.1644 108.667 58.1503 108.69C58.1361 108.714 58.1351 108.726 58.1332 108.75L58.1094 109.042L57.9877 109.032L58.0114 108.74Z",
+          fill: "white"
+        }), jsx("path", {
+          d: "M58.7203 108.602C58.7467 108.58 58.7852 108.558 58.8227 108.549C58.8602 108.54 58.8977 108.531 58.9342 108.534C58.9707 108.537 59.0062 108.552 59.0418 108.567C59.0773 108.582 59.1118 108.609 59.1342 108.636L59.1678 108.675L59.0756 108.753L59.0421 108.714C59.0309 108.701 59.0075 108.687 58.9842 108.672C58.9608 108.658 58.9365 108.656 58.9243 108.655C58.9 108.653 58.8756 108.651 58.8625 108.663C58.8371 108.673 58.824 108.684 58.7986 108.694C58.7855 108.705 58.7713 108.729 58.7572 108.752C58.743 108.775 58.741 108.8 58.74 108.812C58.7381 108.836 58.7361 108.86 58.7473 108.873C58.7575 108.899 58.7686 108.912 58.7788 108.937C58.8124 108.977 58.8479 108.992 58.8966 108.996C58.921 108.998 58.9453 109 58.9585 108.989C58.9838 108.978 58.997 108.967 59.0223 108.957L59.0618 108.923L59.1401 109.016L59.0894 109.036C59.0631 109.058 59.0246 109.08 58.9871 109.089C58.9496 109.098 58.9121 109.107 58.8755 109.104C58.839 109.101 58.8035 109.086 58.768 109.071C58.7324 109.056 58.7101 109.03 58.6755 109.002C58.6532 108.976 58.6318 108.938 58.6226 108.9C58.6134 108.863 58.6042 108.825 58.6071 108.789C58.6101 108.752 58.6252 108.717 58.6404 108.681C58.6667 108.659 58.694 108.624 58.7203 108.602Z",
+          fill: "white"
+        }), jsx("path", {
+          d: "M59.3016 108.845C59.2997 108.869 59.2977 108.894 59.3079 108.919C59.3181 108.944 59.3293 108.957 59.3395 108.983C59.3506 108.996 59.374 109.01 59.3974 109.024C59.4207 109.038 59.4451 109.04 59.4694 109.042C59.4937 109.044 59.5181 109.046 59.5434 109.036C59.5688 109.026 59.5819 109.015 59.6073 109.004C59.6204 108.993 59.6346 108.97 59.6487 108.947C59.6629 108.923 59.6648 108.899 59.6668 108.875C59.6688 108.85 59.6708 108.826 59.6596 108.813C59.6494 108.787 59.6382 108.774 59.628 108.749C59.6168 108.736 59.5935 108.722 59.5701 108.708C59.5468 108.693 59.5224 108.692 59.4981 108.69C59.4737 108.688 59.4494 108.686 59.4241 108.696C59.3987 108.706 59.3856 108.717 59.3602 108.727C59.3471 108.738 59.3329 108.762 59.3188 108.785C59.3168 108.809 59.3036 108.821 59.3016 108.845ZM59.1921 108.836C59.1951 108.8 59.2102 108.764 59.2253 108.729C59.2405 108.693 59.2668 108.671 59.2931 108.648C59.3195 108.626 59.3579 108.605 59.3955 108.596C59.433 108.586 59.4705 108.577 59.507 108.58C59.5435 108.583 59.579 108.598 59.6146 108.613C59.6501 108.628 59.6725 108.655 59.707 108.682C59.7294 108.708 59.7507 108.747 59.7609 108.772C59.7701 108.81 59.7793 108.847 59.7764 108.883C59.7734 108.92 59.7583 108.955 59.7431 108.991C59.728 109.026 59.7017 109.049 59.6744 109.083C59.648 109.106 59.6095 109.127 59.572 109.136C59.5345 109.145 59.497 109.155 59.4605 109.152C59.424 109.149 59.3884 109.133 59.3529 109.118C59.3174 109.103 59.295 109.077 59.2605 109.05C59.2381 109.023 59.2167 108.985 59.2075 108.947C59.1973 108.922 59.1881 108.885 59.1921 108.836Z",
+          fill: "white"
+        }), jsx("path", {
+          d: "M60.3345 108.647L60.3256 108.757L59.9848 108.729C59.9726 108.728 59.9604 108.727 59.9472 108.738C59.9341 108.75 59.9331 108.762 59.9321 108.774C59.9311 108.786 59.9301 108.798 59.9413 108.811C59.9525 108.825 59.9647 108.825 59.9768 108.826L60.2081 108.845C60.2325 108.847 60.2568 108.849 60.268 108.862C60.2914 108.876 60.3025 108.89 60.3137 108.903C60.3249 108.916 60.3351 108.941 60.3453 108.967C60.3555 108.992 60.3545 109.004 60.3525 109.028C60.3505 109.053 60.3486 109.077 60.3344 109.1C60.3203 109.124 60.3071 109.135 60.2929 109.158C60.2798 109.169 60.2545 109.179 60.2413 109.191C60.216 109.201 60.1916 109.199 60.1794 109.198L59.8386 109.17L59.8475 109.061L60.1883 109.088C60.2005 109.089 60.2249 109.091 60.2258 109.079C60.239 109.068 60.24 109.056 60.241 109.044C60.242 109.032 60.243 109.019 60.2318 109.006C60.2206 108.993 60.2084 108.992 60.1963 108.991L59.965 108.972C59.9406 108.97 59.9163 108.968 59.8929 108.954C59.8696 108.94 59.8584 108.927 59.8472 108.914C59.836 108.901 59.8258 108.875 59.8146 108.862C59.8044 108.837 59.8064 108.813 59.8084 108.788C59.8104 108.764 59.8124 108.74 59.8255 108.729C59.8397 108.705 59.8528 108.694 59.867 108.671C59.8801 108.66 59.9055 108.649 59.9186 108.638C59.944 108.628 59.9683 108.63 59.9927 108.632L60.3335 108.66L60.3345 108.647Z",
+          fill: "white"
+        }), jsx("path", {
+          d: "M61.0042 108.702L60.9815 108.981C60.9785 109.018 60.9634 109.053 60.9482 109.089C60.9331 109.124 60.9067 109.147 60.8794 109.181C60.8531 109.203 60.8146 109.225 60.7771 109.234C60.7396 109.243 60.7021 109.252 60.6656 109.249C60.6291 109.247 60.5935 109.231 60.558 109.216C60.5225 109.201 60.5001 109.175 60.4656 109.148C60.4432 109.121 60.4218 109.083 60.4126 109.045C60.4034 109.008 60.3942 108.97 60.3972 108.934L60.4199 108.654L60.5295 108.663L60.5067 108.943C60.5047 108.967 60.5028 108.991 60.513 109.017C60.5232 109.042 60.5343 109.055 60.5445 109.081C60.5557 109.094 60.5791 109.108 60.6024 109.122C60.6258 109.136 60.6501 109.138 60.6745 109.14C60.6988 109.142 60.7232 109.144 60.7485 109.134C60.7738 109.124 60.787 109.112 60.8123 109.102C60.8255 109.091 60.8396 109.068 60.8538 109.044C60.8679 109.021 60.8699 108.997 60.8719 108.972L60.8947 108.693L61.0042 108.702Z",
+          fill: "white"
+        }), jsx("path", {
+          d: "M61.2841 109.177C61.3085 109.179 61.3328 109.181 61.346 109.17C61.3713 109.16 61.3845 109.149 61.3977 109.138C61.4108 109.126 61.425 109.103 61.4391 109.08C61.4533 109.056 61.4552 109.032 61.4572 109.008L61.4711 108.837L61.3128 108.825C61.2885 108.823 61.2641 108.821 61.2388 108.831C61.2135 108.841 61.2003 108.852 61.175 108.862C61.1618 108.874 61.1477 108.897 61.1335 108.92C61.1194 108.944 61.1184 108.956 61.1164 108.98C61.1144 109.004 61.1124 109.029 61.1226 109.054C61.1328 109.079 61.144 109.092 61.1542 109.118C61.1654 109.131 61.1887 109.145 61.2121 109.159C61.2355 109.173 61.2598 109.175 61.2841 109.177ZM61.6317 108.52L61.5901 109.031C61.5872 109.067 61.572 109.103 61.5569 109.138C61.5417 109.174 61.5154 109.196 61.4881 109.231C61.4618 109.253 61.4233 109.274 61.398 109.284C61.3605 109.294 61.3229 109.303 61.2864 109.3C61.2499 109.297 61.2144 109.282 61.1788 109.267C61.1433 109.251 61.121 109.225 61.0864 109.198C61.064 109.172 61.0427 109.133 61.0335 109.096C61.0243 109.058 61.0151 109.021 61.018 108.984C61.021 108.948 61.0361 108.912 61.0513 108.877C61.0664 108.841 61.0927 108.819 61.1191 108.797C61.1454 108.774 61.1839 108.753 61.2214 108.744C61.2589 108.735 61.2964 108.725 61.3329 108.728L61.5033 108.742L61.5221 108.511L61.6317 108.52Z",
+          fill: "white"
+        })]
+      })), jsx("path", {
+        fillRule: "evenodd",
+        clipRule: "evenodd",
+        d: "M-4.96091 176.598C-4.96091 176.598 -1.10781 169.728 3.27307 170.137C7.24058 170.507 7.04644 174.616 7.04644 174.616C7.04644 174.616 7.48985 178.681 6.22152 183.184C5.3854 186.151 3.24487 191.671 1.68275 191.555C-0.353945 191.404 2.41646 185.271 1.07172 184.706C-0.308068 184.126 -0.970384 185.358 -3.34496 187.724C-4.82884 189.203 -5.76356 191.211 -7.23924 192.239C-10.1238 194.247 -11.5511 186.477 -4.96091 176.598Z",
+        fill: "#EA925A"
+      }), jsx("path", {
+        fillRule: "evenodd",
+        clipRule: "evenodd",
+        d: "M1.19743 176.596C-0.78069 176.059 -1.90199 173.891 -1.34755 171.674L9.3584 128.871C10.4594 124.963 14.23 122.547 17.7416 123.499C21.2842 124.46 23.179 128.471 21.9355 132.376L5.98041 173.862C5.18529 175.93 3.11165 177.115 1.19743 176.596Z",
+        fill: "#EA925A"
+      }), jsx("path", {
+        d: "M25.6782 87.558C25.4687 87.4813 25.2532 87.416 25.0324 87.363L24.5557 87.2484C21.2247 86.4495 17.916 88.7437 17.1665 92.373L10.2451 125.878C9.49504 129.507 11.5876 133.097 14.9192 133.897L15.3953 134.01C18.7263 134.809 22.035 132.516 22.7844 128.887L29.2672 97.5051L25.6782 87.558Z",
+        fill: "#EA925A"
+      }), jsx("path", {
+        d: "M29.9876 90.2615C28.7277 87.4833 24.8198 86.7595 24.8198 86.7595C21.0223 85.8378 17.5462 88.715 16.7556 92.5866L12.8662 109.428L26.6919 114.769L29.9876 99.5068C29.9876 99.5068 31.2475 93.0396 29.9876 90.2615Z",
+        fill: "#FAD2A0"
+      }), jsxs("g", Object.assign({
+        filter: "url(#filter1_d_8926_132573)"
+      }, {
+        children: [jsx("path", {
+          d: "M131.046 30.4812H106.551C103.652 30.4812 101.302 32.7193 101.302 35.4802C101.302 38.2411 103.652 40.4792 106.551 40.4792H131.046C133.945 40.4792 136.295 38.2411 136.295 35.4802C136.295 32.7193 133.945 30.4812 131.046 30.4812Z",
+          fill: "white"
+        }), jsx("g", Object.assign({
+          clipPath: "url(#clip3_8926_132573)"
+        }, {
+          children: jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M110.536 35.4801C110.536 37.5891 108.826 39.2987 106.717 39.2987C104.608 39.2987 102.898 37.5891 102.898 35.4801C102.898 33.3711 104.608 31.6614 106.717 31.6614C108.826 31.6614 110.536 33.3711 110.536 35.4801ZM106.717 33.5707C106.506 33.5707 106.335 33.7417 106.335 33.9526C106.335 34.1635 106.506 34.3345 106.717 34.3345H106.721C106.932 34.3345 107.103 34.1635 107.103 33.9526C107.103 33.7417 106.932 33.5707 106.721 33.5707H106.717ZM107.099 35.4801C107.099 35.2692 106.928 35.0982 106.717 35.0982C106.506 35.0982 106.335 35.2692 106.335 35.4801V37.0075C106.335 37.2184 106.506 37.3894 106.717 37.3894C106.928 37.3894 107.099 37.2184 107.099 37.0075V35.4801Z",
+            fill: "#5382BC"
+          })
+        })), jsx("path", {
+          d: "M120.468 36.0527H113.471C113.23 36.0527 113.034 36.2489 113.034 36.4909C113.034 36.7329 113.23 36.9291 113.471 36.9291H120.468C120.71 36.9291 120.906 36.7329 120.906 36.4909C120.906 36.2489 120.71 36.0527 120.468 36.0527Z",
+          fill: "#CCCCCC"
+        }), jsx("path", {
+          d: "M126.591 34.0808H113.471C113.23 34.0808 113.034 34.277 113.034 34.519C113.034 34.761 113.23 34.9571 113.471 34.9571H126.591C126.832 34.9571 127.028 34.761 127.028 34.519C127.028 34.277 126.832 34.0808 126.591 34.0808Z",
+          fill: "#CCCCCC"
+        })]
+      })), jsxs("g", Object.assign({
+        filter: "url(#filter2_d_8926_132573)"
+      }, {
+        children: [jsx("path", {
+          d: "M79.4107 44.3489H115.749C120.05 44.3489 123.536 47.843 123.536 52.1531C123.536 56.4633 120.05 59.9574 115.749 59.9574H79.4107C75.1102 59.9574 71.6239 56.4633 71.6239 52.1531C71.6239 47.843 75.1102 44.3489 79.4107 44.3489Z",
+          fill: "white"
+        }), jsx("path", {
+          fillRule: "evenodd",
+          clipRule: "evenodd",
+          d: "M115.466 58.0452C118.725 58.0452 121.368 55.4029 121.368 52.1435C121.368 48.8842 118.725 46.2419 115.466 46.2419C112.207 46.2419 109.564 48.8842 109.564 52.1435C109.564 55.4029 112.207 58.0452 115.466 58.0452ZM117.855 49.7128C118.057 49.5112 118.384 49.5112 118.585 49.7128C118.787 49.9145 118.787 50.2415 118.585 50.4431L114.798 54.23C114.597 54.4317 114.27 54.4317 114.068 54.23L112.347 52.5087C112.145 52.307 112.145 51.9801 112.347 51.7784C112.549 51.5767 112.875 51.5767 113.077 51.7784L114.433 53.1346L117.855 49.7128Z",
+          fill: "#2B994C"
+        }), jsx("path", {
+          d: "M89.044 52.8032H78.6616C78.3032 52.8032 78.0127 53.0943 78.0127 53.4534C78.0127 53.8125 78.3032 54.1036 78.6616 54.1036H89.044C89.4024 54.1036 89.693 53.8125 89.693 53.4534C89.693 53.0943 89.4024 52.8032 89.044 52.8032Z",
+          fill: "#CCCCCC"
+        }), jsx("path", {
+          d: "M98.1287 49.8767H78.6616C78.3032 49.8767 78.0127 50.1678 78.0127 50.5269C78.0127 50.886 78.3032 51.1771 78.6616 51.1771H98.1287C98.4871 51.1771 98.7776 50.886 98.7776 50.5269C98.7776 50.1678 98.4871 49.8767 98.1287 49.8767Z",
+          fill: "#CCCCCC"
+        })]
+      })), jsxs("g", Object.assign({
+        filter: "url(#filter3_d_8926_132573)"
+      }, {
+        children: [jsx("path", {
+          d: "M76.8542 22.1494H96.903C99.2758 22.1494 101.199 24.0772 101.199 26.4552C101.199 28.8332 99.2758 30.761 96.903 30.761H76.8542C74.4814 30.761 72.558 28.8332 72.558 26.4552C72.558 24.0772 74.4814 22.1494 76.8542 22.1494Z",
+          fill: "white"
+        }), jsx("g", Object.assign({
+          clipPath: "url(#clip4_8926_132573)"
+        }, {
+          children: jsx("path", {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M96.9278 29.8215C98.7493 29.8215 100.226 28.345 100.226 26.5235C100.226 24.7021 98.7493 23.2256 96.9278 23.2256C95.1064 23.2256 93.6299 24.7021 93.6299 26.5235C93.6299 28.345 95.1064 29.8215 96.9278 29.8215ZM98.1504 25.7674C98.2792 25.6386 98.2792 25.4297 98.1504 25.301C98.0216 25.1722 97.8128 25.1722 97.684 25.301L96.9278 26.0571L96.1717 25.301C96.0429 25.1722 95.834 25.1722 95.7053 25.301C95.5765 25.4297 95.5765 25.6386 95.7053 25.7674L96.4614 26.5235L95.7053 27.2797C95.5765 27.4085 95.5765 27.6173 95.7053 27.7461C95.834 27.8749 96.0429 27.8749 96.1717 27.7461L96.9278 26.9899L97.684 27.7461C97.8128 27.8749 98.0216 27.8749 98.1504 27.7461C98.2792 27.6173 98.2792 27.4085 98.1504 27.2797L97.3942 26.5235L98.1504 25.7674Z",
+            fill: "#DD4242"
+          })
+        })), jsx("path", {
+          d: "M81.8538 26.9465H76.1256C75.9279 26.9465 75.7676 27.1071 75.7676 27.3053C75.7676 27.5034 75.9279 27.664 76.1256 27.664H81.8538C82.0516 27.664 82.2119 27.5034 82.2119 27.3053C82.2119 27.1071 82.0516 26.9465 81.8538 26.9465Z",
+          fill: "#CCCCCC"
+        }), jsx("path", {
+          d: "M86.8661 25.3313H76.1256C75.9279 25.3313 75.7676 25.4919 75.7676 25.69C75.7676 25.8881 75.9279 26.0487 76.1256 26.0487H86.8661C87.0638 26.0487 87.2241 25.8881 87.2241 25.69C87.2241 25.4919 87.0638 25.3313 86.8661 25.3313Z",
+          fill: "#CCCCCC"
+        })]
+      }))]
+    })), jsxs("defs", {
+      children: [jsxs("filter", Object.assign({
+        id: "filter0_d_8926_132573",
+        x: "23.6125",
+        y: "76.1927",
+        width: "71.7203",
+        height: "71.7079",
+        filterUnits: "userSpaceOnUse",
+        colorInterpolationFilters: "sRGB"
+      }, {
+        children: [jsx("feFlood", {
+          floodOpacity: "0",
+          result: "BackgroundImageFix"
+        }), jsx("feColorMatrix", {
+          in: "SourceAlpha",
+          type: "matrix",
+          values: "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0",
+          result: "hardAlpha"
+        }), jsx("feOffset", {
+          dy: "6.06383"
+        }), jsx("feGaussianBlur", {
+          stdDeviation: "15.1596"
+        }), jsx("feComposite", {
+          in2: "hardAlpha",
+          operator: "out"
+        }), jsx("feColorMatrix", {
+          type: "matrix",
+          values: "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"
+        }), jsx("feBlend", {
+          mode: "normal",
+          in2: "BackgroundImageFix",
+          result: "effect1_dropShadow_8926_132573"
+        }), jsx("feBlend", {
+          mode: "normal",
+          in: "SourceGraphic",
+          in2: "effect1_dropShadow_8926_132573",
+          result: "shape"
+        })]
+      })), jsxs("filter", Object.assign({
+        id: "filter1_d_8926_132573",
+        x: "88.848",
+        y: "18.0275",
+        width: "59.9006",
+        height: "34.9055",
+        filterUnits: "userSpaceOnUse",
+        colorInterpolationFilters: "sRGB"
+      }, {
+        children: [jsx("feFlood", {
+          floodOpacity: "0",
+          result: "BackgroundImageFix"
+        }), jsx("feColorMatrix", {
+          in: "SourceAlpha",
+          type: "matrix",
+          values: "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0",
+          result: "hardAlpha"
+        }), jsx("feOffset", {}), jsx("feGaussianBlur", {
+          stdDeviation: "6.22687"
+        }), jsx("feComposite", {
+          in2: "hardAlpha",
+          operator: "out"
+        }), jsx("feColorMatrix", {
+          type: "matrix",
+          values: "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0"
+        }), jsx("feBlend", {
+          mode: "normal",
+          in2: "BackgroundImageFix",
+          result: "effect1_dropShadow_8926_132573"
+        }), jsx("feBlend", {
+          mode: "normal",
+          in: "SourceGraphic",
+          in2: "effect1_dropShadow_8926_132573",
+          result: "shape"
+        })]
+      })), jsxs("filter", Object.assign({
+        id: "filter2_d_8926_132573",
+        x: "59.1703",
+        y: "31.8951",
+        width: "76.8196",
+        height: "40.5159",
+        filterUnits: "userSpaceOnUse",
+        colorInterpolationFilters: "sRGB"
+      }, {
+        children: [jsx("feFlood", {
+          floodOpacity: "0",
+          result: "BackgroundImageFix"
+        }), jsx("feColorMatrix", {
+          in: "SourceAlpha",
+          type: "matrix",
+          values: "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0",
+          result: "hardAlpha"
+        }), jsx("feOffset", {}), jsx("feGaussianBlur", {
+          stdDeviation: "6.22687"
+        }), jsx("feComposite", {
+          in2: "hardAlpha",
+          operator: "out"
+        }), jsx("feColorMatrix", {
+          type: "matrix",
+          values: "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0"
+        }), jsx("feBlend", {
+          mode: "normal",
+          in2: "BackgroundImageFix",
+          result: "effect1_dropShadow_8926_132573"
+        }), jsx("feBlend", {
+          mode: "normal",
+          in: "SourceGraphic",
+          in2: "effect1_dropShadow_8926_132573",
+          result: "shape"
+        })]
+      })), jsxs("filter", Object.assign({
+        id: "filter3_d_8926_132573",
+        x: "60.1039",
+        y: "9.69567",
+        width: "53.5491",
+        height: "33.5191",
+        filterUnits: "userSpaceOnUse",
+        colorInterpolationFilters: "sRGB"
+      }, {
+        children: [jsx("feFlood", {
+          floodOpacity: "0",
+          result: "BackgroundImageFix"
+        }), jsx("feColorMatrix", {
+          in: "SourceAlpha",
+          type: "matrix",
+          values: "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0",
+          result: "hardAlpha"
+        }), jsx("feOffset", {}), jsx("feGaussianBlur", {
+          stdDeviation: "6.22687"
+        }), jsx("feComposite", {
+          in2: "hardAlpha",
+          operator: "out"
+        }), jsx("feColorMatrix", {
+          type: "matrix",
+          values: "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0"
+        }), jsx("feBlend", {
+          mode: "normal",
+          in2: "BackgroundImageFix",
+          result: "effect1_dropShadow_8926_132573"
+        }), jsx("feBlend", {
+          mode: "normal",
+          in: "SourceGraphic",
+          in2: "effect1_dropShadow_8926_132573",
+          result: "shape"
+        })]
+      })), jsx("clipPath", Object.assign({
+        id: "clip0_8926_132573"
+      }, {
+        children: jsx("rect", {
+          x: "0.353516",
+          y: "0.412109",
+          width: "168",
+          height: "168",
+          rx: "84",
+          fill: "white"
+        })
+      })), jsx("clipPath", Object.assign({
+        id: "clip1_8926_132573"
+      }, {
+        children: jsx("rect", {
+          width: "347.2",
+          height: "168",
+          fill: "white",
+          transform: "translate(-152.526 0.412109)"
+        })
+      })), jsx("clipPath", Object.assign({
+        id: "clip2_8926_132573"
+      }, {
+        children: jsx("rect", {
+          width: "13.3404",
+          height: "26.6821",
+          fill: "white",
+          transform: "matrix(0.946658 -0.322597 0.323486 0.946111 106.897 67.2146)"
+        })
+      })), jsx("clipPath", Object.assign({
+        id: "clip3_8926_132573"
+      }, {
+        children: jsx("rect", {
+          width: "9.16485",
+          height: "9.16485",
+          fill: "white",
+          transform: "translate(102.135 30.8977)"
+        })
+      })), jsx("clipPath", Object.assign({
+        id: "clip4_8926_132573"
+      }, {
+        children: jsx("rect", {
+          width: "7.9151",
+          height: "7.91509",
+          fill: "white",
+          transform: "translate(92.9707 22.5659)"
         })
       }))]
-    }), jsx(Ramen.XFooter, {
-      children: jsx(Ramen.XButton, {
-        type: "solid",
-        text: btnActionText,
-        size: "xl",
-        disabled: taskStates.length === 0,
-        onClick: () => handleConfirm()
-      })
-    }), jsx(ConfirmModal, {
-      visible: modalType === 'UNIQUE',
-      title: "\u00BFDeseas confirmar la solicitud?",
-      btnActionText: "Confirmar",
-      onClose: () => setModalType(undefined),
-      onConfirm: onBulkTaskRequest,
-      ImageCmp: jsx(Image$2, {})
-    }), jsx(ConfirmModal, {
-      visible: modalType === 'MIX',
-      title: "\u00BFDeseas continuar con el proceso?",
-      btnActionText: "Continuar",
-      onClose: () => setModalType(undefined),
-      onConfirm: onBulkTaskRequest,
-      ImageCmp: jsx(Image$1, {})
     })]
-  }));
-};
-
-const InfoBox = ({
-  label,
-  value
-}) => {
-  return jsx(Ramen.XBox, Object.assign({
-    width: 'half'
-  }, {
-    children: jsx(Ramen.XCard, Object.assign({
-      borderType: "solid"
-    }, {
-      children: jsxs(Ramen.XBox, Object.assign({
-        orientation: "vertical"
-      }, {
-        children: [jsx(Ramen.XText, Object.assign({
-          colorThone: "medium",
-          fontSize: 11,
-          weight: "normal"
-        }, {
-          children: label
-        })), jsx(Ramen.XText, Object.assign({
-          colorThone: "darkest",
-          weight: "bold"
-        }, {
-          children: value
-        }))]
-      }))
-    }))
-  }));
-};
-
-const InfoRawRow = ({
-  label,
-  value
-}) => {
-  return jsxs(Ramen.XBox, Object.assign({
-    orientation: "horizontal",
-    horizontalAlign: "between"
-  }, {
-    children: [jsx(Ramen.XText, Object.assign({
-      colorThone: "medium",
-      fontSize: 11,
-      weight: "normal"
-    }, {
-      children: label
-    })), jsxs(Ramen.XText, Object.assign({
-      colorThone: "darkest",
-      fontSize: 11,
-      weight: "normal",
-      textOverflow: "break-word"
-    }, {
-      children: [' ', value]
-    }))]
   }));
 };
 
@@ -11599,9 +13476,11 @@ const ProductDetail = ({
   goBack,
   miniImageUrl,
   rejectTask,
-  freeTask
+  freeTask,
+  controlTag: _controlTag = true,
+  showActions
 }) => {
-  var _a, _b, _c, _d, _e, _f;
+  var _a, _b, _c, _d, _e, _f, _g, _h;
   const [qty, setQty] = useState(selectedTask.meta_data.count);
   const [openModal, setOpenModal] = useState();
   const product = selectedTask.meta_data.product;
@@ -11614,6 +13493,10 @@ const ProductDetail = ({
   const handleRejectProduct = () => {
     setOpenModal('rejectModal');
   };
+  const showRevisorReleaseBtn = showActions && selectedTask.state === 'PENDING' && checkUserLevel(user === null || user === void 0 ? void 0 : user.level, 'REVISOR');
+  const showControlReleaseBtn = showActions && selectedTask.state === 'PENDING' && checkUserLevel(user === null || user === void 0 ? void 0 : user.level, 'CONTROL') && !((_a = selectedTask.meta_data.controlResponse) === null || _a === void 0 ? void 0 : _a.status);
+  const showRejectBtn = showControlReleaseBtn || showRevisorReleaseBtn;
+  const showAnyAction = showControlReleaseBtn || showRevisorReleaseBtn || showRejectBtn;
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
       onBack: goBack
@@ -11634,13 +13517,11 @@ const ProductDetail = ({
               width: 2,
               height: 2
             }, {
-              children: jsx(Ramen.XImage, {
+              children: jsx(Ramen.XImagePreviewer, {
                 border: "solid",
                 rounded: "s",
-                padding: "none",
-                width: 2,
-                height: 2,
-                src: miniImageUrl((_a = selectedTask.meta_data.product.sku) === null || _a === void 0 ? void 0 : _a.toString(), (_b = selectedTask.meta_data.product.ean) === null || _b === void 0 ? void 0 : _b.toString())
+                src: miniImageUrl((_b = selectedTask.meta_data.product.sku) === null || _b === void 0 ? void 0 : _b.toString(), (_c = selectedTask.meta_data.product.ean) === null || _c === void 0 ? void 0 : _c.toString()),
+                showExpandIcon: false
               })
             })), jsxs(Ramen.XBox, Object.assign({
               gap: "xxs"
@@ -11660,7 +13541,7 @@ const ProductDetail = ({
                 }, {
                   children: "EAN"
                 })), jsx(Ramen.XText, {
-                  children: (_d = (_c = selectedTask.meta_data.product) === null || _c === void 0 ? void 0 : _c.ean) === null || _d === void 0 ? void 0 : _d.toString()
+                  children: (_e = (_d = selectedTask.meta_data.product) === null || _d === void 0 ? void 0 : _d.ean) === null || _e === void 0 ? void 0 : _e.toString()
                 })]
               })), jsxs(Ramen.XBox, Object.assign({
                 orientation: "horizontal",
@@ -11672,11 +13553,11 @@ const ProductDetail = ({
                 }, {
                   children: "SKU"
                 })), jsx(Ramen.XText, {
-                  children: (_f = (_e = selectedTask.meta_data.product) === null || _e === void 0 ? void 0 : _e.sku) === null || _f === void 0 ? void 0 : _f.toString()
+                  children: (_g = (_f = selectedTask.meta_data.product) === null || _f === void 0 ? void 0 : _f.sku) === null || _g === void 0 ? void 0 : _g.toString()
                 })]
               }))]
             }))]
-          })), jsx(ControlTag, {
+          })), _controlTag && jsx(ControlTag, {
             task: selectedTask
           })]
         })), jsxs(Ramen.XBox, Object.assign({
@@ -11703,7 +13584,7 @@ const ProductDetail = ({
             label: "Stock compr.",
             value: `${selectedTask.meta_data.product.nextCantProxAbastDesp || 0}`
           })]
-        })), jsx(Ramen.XBox, Object.assign({
+        })), location && jsx(Ramen.XBox, Object.assign({
           width: 'full'
         }, {
           children: jsx(Ramen.XCard, Object.assign({
@@ -11763,10 +13644,13 @@ const ProductDetail = ({
           }), jsx(InfoRawRow, {
             label: "Tintom\u00E9trico",
             value: `${selectedTask.meta_data.product.sectionGroup === 'TINTOMETRICO' ? 'Si' : 'No'}`
+          }), jsx(InfoRawRow, {
+            label: "Revisado por",
+            value: (_h = selectedTask.meta_data.releaseResponse) === null || _h === void 0 ? void 0 : _h.user.full_name
           })]
         })), jsx(Ramen.XVSpace, {
           size: "s"
-        }), jsx(Ramen.XBox, {
+        }), showAnyAction && jsx(Ramen.XBox, {
           children: jsx(Ramen.XCard, Object.assign({
             size: "l"
           }, {
@@ -11789,12 +13673,17 @@ const ProductDetail = ({
         })]
       }))
     }), jsxs(Ramen.XFooter, {
-      children: [jsx(Ramen.XButton, {
+      children: [showRevisorReleaseBtn && jsx(Ramen.XButton, {
         type: "solid",
-        text: (user === null || user === void 0 ? void 0 : user.level) === 1 ? "Confirmar" : "Liberar",
+        text: "Liberar",
         size: "xl",
         onClick: handleFreeProduct
-      }), jsx(Ramen.XButton, {
+      }), showControlReleaseBtn && jsx(Ramen.XButton, {
+        type: "solid",
+        text: "Confirmar",
+        size: "xl",
+        onClick: handleFreeProduct
+      }), showRejectBtn && jsx(Ramen.XButton, {
         type: "outline",
         text: "Rechazar",
         size: "xl",
@@ -11806,7 +13695,7 @@ const ProductDetail = ({
       btnActionText: (user === null || user === void 0 ? void 0 : user.level) === 1 ? "Confirmar" : "Liberar",
       onClose: () => setOpenModal(undefined),
       onConfirm: () => freeTask(selectedTask, qty),
-      ImageCmp: jsx(Image$2, {})
+      ImageCmp: jsx(Image, {})
     }), jsx(ConfirmModal, {
       visible: openModal === 'rejectModal',
       title: "\u00BFDeseas rechazar la solicitud?",
@@ -11817,114 +13706,6 @@ const ProductDetail = ({
       ImageCmp: jsx(Image$1, {})
     })]
   });
-};
-
-const Image = () => {
-  return jsxs("svg", Object.assign({
-    width: "169",
-    height: "169",
-    viewBox: "0 0 169 169",
-    fill: "none",
-    xmlns: "http://www.w3.org/2000/svg"
-  }, {
-    children: [jsxs("g", Object.assign({
-      clipPath: "url(#clip0_14090_264044)"
-    }, {
-      children: [jsxs("g", Object.assign({
-        clipPath: "url(#clip1_14090_264044)"
-      }, {
-        children: [jsx("path", {
-          d: "M257.565 0.412109H-89.127V168.262H257.565V0.412109Z",
-          fill: "#D6D6D6"
-        }), jsx("path", {
-          d: "M257.954 0.412109H-89.2461V110.732H257.954V0.412109Z",
-          fill: "#F5F5F5"
-        }), jsx("path", {
-          d: "M257.945 111.689H-88.5225V168.185H257.945V111.689Z",
-          fill: "#EAEAEA"
-        }), jsx("path", {
-          d: "M257.954 125.704H-89.0869V126.7H257.954V125.704Z",
-          fill: "#D6D6D6"
-        }), jsx("path", {
-          d: "M257.954 137.396H-89.0869V138.392H257.954V137.396Z",
-          fill: "#D6D6D6"
-        }), jsx("path", {
-          d: "M257.954 153.82H-89.0869V154.816H257.954V153.82Z",
-          fill: "#D6D6D6"
-        }), jsx("path", {
-          d: "M257.954 116.999H-89.0869V117.995H257.954V116.999Z",
-          fill: "#D6D6D6"
-        }), jsx("path", {
-          d: "M203.836 168.412L167.874 110.53L167.149 111.099L202.759 168.412H203.836Z",
-          fill: "#D6D6D6"
-        }), jsx("path", {
-          d: "M161.463 168.412L137.51 110.53L136.711 110.948L160.487 168.412H161.463Z",
-          fill: "#D6D6D6"
-        }), jsx("path", {
-          d: "M121.765 168.412L108.003 110.53L107.146 110.789L120.852 168.412H121.765Z",
-          fill: "#D6D6D6"
-        }), jsx("path", {
-          d: "M84.8752 110.53H83.9922V168.412H84.8752V110.53Z",
-          fill: "#D6D6D6"
-        }), jsx("path", {
-          d: "M48.0204 168.412L61.721 110.789L60.8689 110.53L47.1064 168.412H48.0204Z",
-          fill: "#D6D6D6"
-        }), jsx("path", {
-          d: "M8.38495 168.412L32.1612 110.948L31.3621 110.53L7.40918 168.412H8.38495Z",
-          fill: "#D6D6D6"
-        }), jsx("path", {
-          d: "M-33.887 168.412L1.72223 111.099L0.998123 110.53L-34.9688 168.412H-33.887Z",
-          fill: "#D6D6D6"
-        })]
-      })), jsx("path", {
-        d: "M32.834 47.4005C32.834 38.7694 39.8309 31.7725 48.4621 31.7725L119.309 31.7725C127.94 31.7725 134.937 38.7694 134.937 47.4005V224.519C134.937 233.15 127.94 240.147 119.309 240.147H48.4621C39.8309 240.147 32.834 233.15 32.834 224.519L32.834 47.4005Z",
-        fill: "#1F1F1F"
-      }), jsxs("g", Object.assign({
-        clipPath: "url(#clip2_14090_264044)"
-      }, {
-        children: [jsx("path", {
-          d: "M37.002 49.4839C37.002 42.579 42.5995 36.9814 49.5044 36.9814H118.268C125.173 36.9814 130.77 42.579 130.77 49.4839V222.435C130.77 229.339 125.173 234.937 118.268 234.937H49.5044C42.5995 234.937 37.002 229.339 37.002 222.435L37.002 49.4839Z",
-          fill: "white"
-        }), jsx("path", {
-          fillRule: "evenodd",
-          clipRule: "evenodd",
-          d: "M83.886 130.75C101.148 130.75 115.142 116.756 115.142 99.4934C115.142 82.2312 101.148 68.2373 83.886 68.2373C66.6237 68.2373 52.6299 82.2312 52.6299 99.4934C52.6299 116.756 66.6237 130.75 83.886 130.75ZM95.473 92.3267C96.6936 91.1061 96.6936 89.1271 95.473 87.9065C94.2524 86.6858 92.2734 86.6858 91.0527 87.9065L83.886 95.0732L76.7193 87.9065C75.4987 86.6858 73.5197 86.6858 72.299 87.9065C71.0784 89.1271 71.0784 91.1061 72.299 92.3267L79.4657 99.4934L72.299 106.66C71.0784 107.881 71.0784 109.86 72.299 111.08C73.5197 112.301 75.4987 112.301 76.7193 111.08L83.886 103.914L91.0527 111.08C92.2734 112.301 94.2524 112.301 95.473 111.08C96.6936 109.86 96.6936 107.881 95.473 106.66L88.3063 99.4934L95.473 92.3267Z",
-          fill: "#DD4242"
-        })]
-      }))]
-    })), jsxs("defs", {
-      children: [jsx("clipPath", Object.assign({
-        id: "clip0_14090_264044"
-      }, {
-        children: jsx("rect", {
-          x: "0.353516",
-          y: "0.412109",
-          width: "168",
-          height: "168",
-          rx: "84",
-          fill: "white"
-        })
-      })), jsx("clipPath", Object.assign({
-        id: "clip1_14090_264044"
-      }, {
-        children: jsx("rect", {
-          width: "347.2",
-          height: "168",
-          fill: "white",
-          transform: "translate(-89.2461 0.412109)"
-        })
-      })), jsx("clipPath", Object.assign({
-        id: "clip2_14090_264044"
-      }, {
-        children: jsx("rect", {
-          width: "93.7684",
-          height: "197.956",
-          fill: "white",
-          transform: "translate(37.002 36.9814)"
-        })
-      }))]
-    })]
-  }));
 };
 
 const TasksPageWrapper = props => {
@@ -12098,7 +13879,7 @@ const TasksPageWrapper = props => {
   const renderCmp = mode => {
     switch (mode) {
       case 'LIST':
-        return jsx(CardList, {
+        return jsx(CardList$1, {
           title: props.title,
           btnActionText: props.btnActionText,
           goHome: goHome,
@@ -12115,7 +13896,8 @@ const TasksPageWrapper = props => {
           goBack: goBackFromProductDetail,
           miniImageUrl: props.miniImageUrl,
           rejectTask: rejectTask,
-          freeTask: freeTask
+          freeTask: freeTask,
+          showActions: true
         });
         return null;
       default:
@@ -12132,7 +13914,7 @@ const TasksPageWrapper = props => {
       btnActionText: "Volver a intentar",
       onClose: () => setActionError(undefined),
       onConfirm: () => retryTaskAction(actionError),
-      ImageCmp: jsx(Image, {})
+      ImageCmp: jsx(Image$2, {})
     })]
   });
 };
@@ -12209,93 +13991,1059 @@ class ControlTasksPage extends Page {
   }
 }
 
-const SummaryButtons = props => {
-  const [selected, setSelected] = useState(props.activeDefault);
-  const onClick = key => {
-    setSelected(key);
-    props.onSelectBtn(key);
-  };
-  return jsx(Ramen.XBox, Object.assign({
-    gap: "s",
-    orientation: 'horizontal',
-    overflow: 'scroll_x',
-    padding: 'm'
-  }, {
-    children: props.buttons.map(tab => {
-      return jsx(Ramen.XTab, {
-        icon: tab.icon,
-        label: tab.text,
-        onSelect: () => onClick(tab.key),
-        selected: selected === tab.key
-      }, tab.key);
-    })
-  }));
+var classof$2 = classofRaw$2;
+
+var engineIsNode = typeof process != 'undefined' && classof$2(process) == 'process';
+
+var isPrototypeOf$1 = objectIsPrototypeOf;
+
+var $TypeError$5 = TypeError;
+
+var anInstance$1 = function (it, Prototype) {
+  if (isPrototypeOf$1(Prototype, it)) return it;
+  throw $TypeError$5('Incorrect invocation');
 };
 
-var isRegExp = isRegexp;
+var uncurryThis$3 = functionUncurryThis;
+var fails$2 = fails$o;
+var isCallable$4 = isCallable$o;
+var classof$1 = classof$6;
+var getBuiltIn$2 = getBuiltIn$7;
+var inspectSource$1 = inspectSource$3;
+
+var noop = function () { /* empty */ };
+var empty = [];
+var construct = getBuiltIn$2('Reflect', 'construct');
+var constructorRegExp = /^\s*(?:class|function)\b/;
+var exec = uncurryThis$3(constructorRegExp.exec);
+var INCORRECT_TO_STRING = !constructorRegExp.exec(noop);
+
+var isConstructorModern = function isConstructor(argument) {
+  if (!isCallable$4(argument)) return false;
+  try {
+    construct(noop, empty, argument);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+var isConstructorLegacy = function isConstructor(argument) {
+  if (!isCallable$4(argument)) return false;
+  switch (classof$1(argument)) {
+    case 'AsyncFunction':
+    case 'GeneratorFunction':
+    case 'AsyncGeneratorFunction': return false;
+  }
+  try {
+    // we can't check .prototype since constructors produced by .bind haven't it
+    // `Function#toString` throws on some built-it function in some legacy engines
+    // (for example, `DOMQuad` and similar in FF41-)
+    return INCORRECT_TO_STRING || !!exec(constructorRegExp, inspectSource$1(argument));
+  } catch (error) {
+    return true;
+  }
+};
+
+isConstructorLegacy.sham = true;
+
+// `IsConstructor` abstract operation
+// https://tc39.es/ecma262/#sec-isconstructor
+var isConstructor$1 = !construct || fails$2(function () {
+  var called;
+  return isConstructorModern(isConstructorModern.call)
+    || !isConstructorModern(Object)
+    || !isConstructorModern(function () { called = true; })
+    || called;
+}) ? isConstructorLegacy : isConstructorModern;
+
+var isConstructor = isConstructor$1;
+var tryToString$2 = tryToString$4;
+
+var $TypeError$4 = TypeError;
+
+// `Assert: IsConstructor(argument) is true`
+var aConstructor$1 = function (argument) {
+  if (isConstructor(argument)) return argument;
+  throw $TypeError$4(tryToString$2(argument) + ' is not a constructor');
+};
+
+var anObject$4 = anObject$g;
+var aConstructor = aConstructor$1;
+var isNullOrUndefined$1 = isNullOrUndefined$7;
+var wellKnownSymbol$4 = wellKnownSymbol$j;
+
+var SPECIES$1 = wellKnownSymbol$4('species');
+
+// `SpeciesConstructor` abstract operation
+// https://tc39.es/ecma262/#sec-speciesconstructor
+var speciesConstructor$1 = function (O, defaultConstructor) {
+  var C = anObject$4(O).constructor;
+  var S;
+  return C === undefined || isNullOrUndefined$1(S = anObject$4(C)[SPECIES$1]) ? defaultConstructor : aConstructor(S);
+};
+
+var uncurryThis$2 = functionUncurryThisClause;
+var aCallable$5 = aCallable$8;
+var NATIVE_BIND = functionBindNative;
+
+var bind$4 = uncurryThis$2(uncurryThis$2.bind);
+
+// optional / simple context binding
+var functionBindContext = function (fn, that) {
+  aCallable$5(fn);
+  return that === undefined ? fn : NATIVE_BIND ? bind$4(fn, that) : function (/* ...args */) {
+    return fn.apply(that, arguments);
+  };
+};
+
+var uncurryThis$1 = functionUncurryThis;
+
+var arraySlice$1 = uncurryThis$1([].slice);
+
+var $TypeError$3 = TypeError;
+
+var validateArgumentsLength$1 = function (passed, required) {
+  if (passed < required) throw $TypeError$3('Not enough arguments');
+  return passed;
+};
+
+var userAgent$2 = engineUserAgent;
+
+// eslint-disable-next-line redos/no-vulnerable -- safe
+var engineIsIos = /(?:ipad|iphone|ipod).*applewebkit/i.test(userAgent$2);
+
+var global$5 = global$n;
+var apply = functionApply;
+var bind$3 = functionBindContext;
+var isCallable$3 = isCallable$o;
+var hasOwn = hasOwnProperty_1;
+var fails$1 = fails$o;
+var html = html$2;
+var arraySlice = arraySlice$1;
+var createElement = documentCreateElement$2;
+var validateArgumentsLength = validateArgumentsLength$1;
+var IS_IOS$1 = engineIsIos;
+var IS_NODE$3 = engineIsNode;
+
+var set = global$5.setImmediate;
+var clear = global$5.clearImmediate;
+var process$3 = global$5.process;
+var Dispatch = global$5.Dispatch;
+var Function$1 = global$5.Function;
+var MessageChannel = global$5.MessageChannel;
+var String$1 = global$5.String;
+var counter = 0;
+var queue$2 = {};
+var ONREADYSTATECHANGE = 'onreadystatechange';
+var $location, defer, channel, port;
+
+fails$1(function () {
+  // Deno throws a ReferenceError on `location` access without `--location` flag
+  $location = global$5.location;
+});
+
+var run = function (id) {
+  if (hasOwn(queue$2, id)) {
+    var fn = queue$2[id];
+    delete queue$2[id];
+    fn();
+  }
+};
+
+var runner = function (id) {
+  return function () {
+    run(id);
+  };
+};
+
+var eventListener = function (event) {
+  run(event.data);
+};
+
+var globalPostMessageDefer = function (id) {
+  // old engines have not location.origin
+  global$5.postMessage(String$1(id), $location.protocol + '//' + $location.host);
+};
+
+// Node.js 0.9+ & IE10+ has setImmediate, otherwise:
+if (!set || !clear) {
+  set = function setImmediate(handler) {
+    validateArgumentsLength(arguments.length, 1);
+    var fn = isCallable$3(handler) ? handler : Function$1(handler);
+    var args = arraySlice(arguments, 1);
+    queue$2[++counter] = function () {
+      apply(fn, undefined, args);
+    };
+    defer(counter);
+    return counter;
+  };
+  clear = function clearImmediate(id) {
+    delete queue$2[id];
+  };
+  // Node.js 0.8-
+  if (IS_NODE$3) {
+    defer = function (id) {
+      process$3.nextTick(runner(id));
+    };
+  // Sphere (JS game engine) Dispatch API
+  } else if (Dispatch && Dispatch.now) {
+    defer = function (id) {
+      Dispatch.now(runner(id));
+    };
+  // Browsers with MessageChannel, includes WebWorkers
+  // except iOS - https://github.com/zloirock/core-js/issues/624
+  } else if (MessageChannel && !IS_IOS$1) {
+    channel = new MessageChannel();
+    port = channel.port2;
+    channel.port1.onmessage = eventListener;
+    defer = bind$3(port.postMessage, port);
+  // Browsers with postMessage, skip WebWorkers
+  // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
+  } else if (
+    global$5.addEventListener &&
+    isCallable$3(global$5.postMessage) &&
+    !global$5.importScripts &&
+    $location && $location.protocol !== 'file:' &&
+    !fails$1(globalPostMessageDefer)
+  ) {
+    defer = globalPostMessageDefer;
+    global$5.addEventListener('message', eventListener, false);
+  // IE8-
+  } else if (ONREADYSTATECHANGE in createElement('script')) {
+    defer = function (id) {
+      html.appendChild(createElement('script'))[ONREADYSTATECHANGE] = function () {
+        html.removeChild(this);
+        run(id);
+      };
+    };
+  // Rest old browsers
+  } else {
+    defer = function (id) {
+      setTimeout(runner(id), 0);
+    };
+  }
+}
+
+var task$1 = {
+  set: set,
+  clear: clear
+};
+
+var Queue$2 = function () {
+  this.head = null;
+  this.tail = null;
+};
+
+Queue$2.prototype = {
+  add: function (item) {
+    var entry = { item: item, next: null };
+    var tail = this.tail;
+    if (tail) tail.next = entry;
+    else this.head = entry;
+    this.tail = entry;
+  },
+  get: function () {
+    var entry = this.head;
+    if (entry) {
+      var next = this.head = entry.next;
+      if (next === null) this.tail = null;
+      return entry.item;
+    }
+  }
+};
+
+var queue$1 = Queue$2;
+
+var userAgent$1 = engineUserAgent;
+
+var engineIsIosPebble = /ipad|iphone|ipod/i.test(userAgent$1) && typeof Pebble != 'undefined';
+
+var userAgent = engineUserAgent;
+
+var engineIsWebosWebkit = /web0s(?!.*chrome)/i.test(userAgent);
+
+var global$4 = global$n;
+var bind$2 = functionBindContext;
+var getOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
+var macrotask = task$1.set;
+var Queue$1 = queue$1;
+var IS_IOS = engineIsIos;
+var IS_IOS_PEBBLE = engineIsIosPebble;
+var IS_WEBOS_WEBKIT = engineIsWebosWebkit;
+var IS_NODE$2 = engineIsNode;
+
+var MutationObserver = global$4.MutationObserver || global$4.WebKitMutationObserver;
+var document$2 = global$4.document;
+var process$2 = global$4.process;
+var Promise$1 = global$4.Promise;
+// Node.js 11 shows ExperimentalWarning on getting `queueMicrotask`
+var queueMicrotaskDescriptor = getOwnPropertyDescriptor(global$4, 'queueMicrotask');
+var microtask$1 = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
+var notify$1, toggle, node, promise, then;
+
+// modern engines have queueMicrotask method
+if (!microtask$1) {
+  var queue = new Queue$1();
+
+  var flush = function () {
+    var parent, fn;
+    if (IS_NODE$2 && (parent = process$2.domain)) parent.exit();
+    while (fn = queue.get()) try {
+      fn();
+    } catch (error) {
+      if (queue.head) notify$1();
+      throw error;
+    }
+    if (parent) parent.enter();
+  };
+
+  // browsers with MutationObserver, except iOS - https://github.com/zloirock/core-js/issues/339
+  // also except WebOS Webkit https://github.com/zloirock/core-js/issues/898
+  if (!IS_IOS && !IS_NODE$2 && !IS_WEBOS_WEBKIT && MutationObserver && document$2) {
+    toggle = true;
+    node = document$2.createTextNode('');
+    new MutationObserver(flush).observe(node, { characterData: true });
+    notify$1 = function () {
+      node.data = toggle = !toggle;
+    };
+  // environments with maybe non-completely correct, but existent Promise
+  } else if (!IS_IOS_PEBBLE && Promise$1 && Promise$1.resolve) {
+    // Promise.resolve without an argument throws an error in LG WebOS 2
+    promise = Promise$1.resolve(undefined);
+    // workaround of WebKit ~ iOS Safari 10.1 bug
+    promise.constructor = Promise$1;
+    then = bind$2(promise.then, promise);
+    notify$1 = function () {
+      then(flush);
+    };
+  // Node.js without promises
+  } else if (IS_NODE$2) {
+    notify$1 = function () {
+      process$2.nextTick(flush);
+    };
+  // for other environments - macrotask based on:
+  // - setImmediate
+  // - MessageChannel
+  // - window.postMessage
+  // - onreadystatechange
+  // - setTimeout
+  } else {
+    // `webpack` dev server bug on IE global methods - use bind(fn, global)
+    macrotask = bind$2(macrotask, global$4);
+    notify$1 = function () {
+      macrotask(flush);
+    };
+  }
+
+  microtask$1 = function (fn) {
+    if (!queue.head) notify$1();
+    queue.add(fn);
+  };
+}
+
+var microtask_1 = microtask$1;
+
+var hostReportErrors$1 = function (a, b) {
+  try {
+    // eslint-disable-next-line no-console -- safe
+    arguments.length == 1 ? console.error(a) : console.error(a, b);
+  } catch (error) { /* empty */ }
+};
+
+var perform$3 = function (exec) {
+  try {
+    return { error: false, value: exec() };
+  } catch (error) {
+    return { error: true, value: error };
+  }
+};
+
+var global$3 = global$n;
+
+var promiseNativeConstructor = global$3.Promise;
+
+/* global Deno -- Deno case */
+
+var engineIsDeno = typeof Deno == 'object' && Deno && typeof Deno.version == 'object';
+
+var IS_DENO$1 = engineIsDeno;
+var IS_NODE$1 = engineIsNode;
+
+var engineIsBrowser = !IS_DENO$1 && !IS_NODE$1
+  && typeof window == 'object'
+  && typeof document == 'object';
+
+var global$2 = global$n;
+var NativePromiseConstructor$3 = promiseNativeConstructor;
+var isCallable$2 = isCallable$o;
+var isForced = isForced_1;
+var inspectSource = inspectSource$3;
+var wellKnownSymbol$3 = wellKnownSymbol$j;
+var IS_BROWSER = engineIsBrowser;
+var IS_DENO = engineIsDeno;
+var V8_VERSION = engineV8Version;
+
+NativePromiseConstructor$3 && NativePromiseConstructor$3.prototype;
+var SPECIES = wellKnownSymbol$3('species');
+var SUBCLASSING = false;
+var NATIVE_PROMISE_REJECTION_EVENT$1 = isCallable$2(global$2.PromiseRejectionEvent);
+
+var FORCED_PROMISE_CONSTRUCTOR$5 = isForced('Promise', function () {
+  var PROMISE_CONSTRUCTOR_SOURCE = inspectSource(NativePromiseConstructor$3);
+  var GLOBAL_CORE_JS_PROMISE = PROMISE_CONSTRUCTOR_SOURCE !== String(NativePromiseConstructor$3);
+  // V8 6.6 (Node 10 and Chrome 66) have a bug with resolving custom thenables
+  // https://bugs.chromium.org/p/chromium/issues/detail?id=830565
+  // We can't detect it synchronously, so just check versions
+  if (!GLOBAL_CORE_JS_PROMISE && V8_VERSION === 66) return true;
+  // We can't use @@species feature detection in V8 since it causes
+  // deoptimization and performance degradation
+  // https://github.com/zloirock/core-js/issues/679
+  if (!V8_VERSION || V8_VERSION < 51 || !/native code/.test(PROMISE_CONSTRUCTOR_SOURCE)) {
+    // Detect correctness of subclassing with @@species support
+    var promise = new NativePromiseConstructor$3(function (resolve) { resolve(1); });
+    var FakePromise = function (exec) {
+      exec(function () { /* empty */ }, function () { /* empty */ });
+    };
+    var constructor = promise.constructor = {};
+    constructor[SPECIES] = FakePromise;
+    SUBCLASSING = promise.then(function () { /* empty */ }) instanceof FakePromise;
+    if (!SUBCLASSING) return true;
+  // Unhandled rejections tracking support, NodeJS Promise without it fails @@species test
+  } return !GLOBAL_CORE_JS_PROMISE && (IS_BROWSER || IS_DENO) && !NATIVE_PROMISE_REJECTION_EVENT$1;
+});
+
+var promiseConstructorDetection = {
+  CONSTRUCTOR: FORCED_PROMISE_CONSTRUCTOR$5,
+  REJECTION_EVENT: NATIVE_PROMISE_REJECTION_EVENT$1,
+  SUBCLASSING: SUBCLASSING
+};
+
+var newPromiseCapability$2 = {};
+
+var aCallable$4 = aCallable$8;
+
+var $TypeError$2 = TypeError;
+
+var PromiseCapability = function (C) {
+  var resolve, reject;
+  this.promise = new C(function ($$resolve, $$reject) {
+    if (resolve !== undefined || reject !== undefined) throw $TypeError$2('Bad Promise constructor');
+    resolve = $$resolve;
+    reject = $$reject;
+  });
+  this.resolve = aCallable$4(resolve);
+  this.reject = aCallable$4(reject);
+};
+
+// `NewPromiseCapability` abstract operation
+// https://tc39.es/ecma262/#sec-newpromisecapability
+newPromiseCapability$2.f = function (C) {
+  return new PromiseCapability(C);
+};
+
+var $$7 = _export;
+var IS_NODE = engineIsNode;
+var global$1 = global$n;
+var call$6 = functionCall;
+var defineBuiltIn$1 = defineBuiltIn$8;
+var setPrototypeOf = objectSetPrototypeOf;
+var setToStringTag = setToStringTag$3;
+var setSpecies = setSpecies$2;
+var aCallable$3 = aCallable$8;
+var isCallable$1 = isCallable$o;
+var isObject$1 = isObject$a;
+var anInstance = anInstance$1;
+var speciesConstructor = speciesConstructor$1;
+var task = task$1.set;
+var microtask = microtask_1;
+var hostReportErrors = hostReportErrors$1;
+var perform$2 = perform$3;
+var Queue = queue$1;
+var InternalStateModule = internalState;
+var NativePromiseConstructor$2 = promiseNativeConstructor;
+var PromiseConstructorDetection = promiseConstructorDetection;
+var newPromiseCapabilityModule$3 = newPromiseCapability$2;
+
+var PROMISE = 'Promise';
+var FORCED_PROMISE_CONSTRUCTOR$4 = PromiseConstructorDetection.CONSTRUCTOR;
+var NATIVE_PROMISE_REJECTION_EVENT = PromiseConstructorDetection.REJECTION_EVENT;
+var NATIVE_PROMISE_SUBCLASSING = PromiseConstructorDetection.SUBCLASSING;
+var getInternalPromiseState = InternalStateModule.getterFor(PROMISE);
+var setInternalState = InternalStateModule.set;
+var NativePromisePrototype$1 = NativePromiseConstructor$2 && NativePromiseConstructor$2.prototype;
+var PromiseConstructor = NativePromiseConstructor$2;
+var PromisePrototype = NativePromisePrototype$1;
+var TypeError$1 = global$1.TypeError;
+var document$1 = global$1.document;
+var process$1 = global$1.process;
+var newPromiseCapability$1 = newPromiseCapabilityModule$3.f;
+var newGenericPromiseCapability = newPromiseCapability$1;
+
+var DISPATCH_EVENT = !!(document$1 && document$1.createEvent && global$1.dispatchEvent);
+var UNHANDLED_REJECTION = 'unhandledrejection';
+var REJECTION_HANDLED = 'rejectionhandled';
+var PENDING = 0;
+var FULFILLED = 1;
+var REJECTED = 2;
+var HANDLED = 1;
+var UNHANDLED = 2;
+
+var Internal, OwnPromiseCapability, PromiseWrapper, nativeThen;
+
+// helpers
+var isThenable = function (it) {
+  var then;
+  return isObject$1(it) && isCallable$1(then = it.then) ? then : false;
+};
+
+var callReaction = function (reaction, state) {
+  var value = state.value;
+  var ok = state.state == FULFILLED;
+  var handler = ok ? reaction.ok : reaction.fail;
+  var resolve = reaction.resolve;
+  var reject = reaction.reject;
+  var domain = reaction.domain;
+  var result, then, exited;
+  try {
+    if (handler) {
+      if (!ok) {
+        if (state.rejection === UNHANDLED) onHandleUnhandled(state);
+        state.rejection = HANDLED;
+      }
+      if (handler === true) result = value;
+      else {
+        if (domain) domain.enter();
+        result = handler(value); // can throw
+        if (domain) {
+          domain.exit();
+          exited = true;
+        }
+      }
+      if (result === reaction.promise) {
+        reject(TypeError$1('Promise-chain cycle'));
+      } else if (then = isThenable(result)) {
+        call$6(then, result, resolve, reject);
+      } else resolve(result);
+    } else reject(value);
+  } catch (error) {
+    if (domain && !exited) domain.exit();
+    reject(error);
+  }
+};
+
+var notify = function (state, isReject) {
+  if (state.notified) return;
+  state.notified = true;
+  microtask(function () {
+    var reactions = state.reactions;
+    var reaction;
+    while (reaction = reactions.get()) {
+      callReaction(reaction, state);
+    }
+    state.notified = false;
+    if (isReject && !state.rejection) onUnhandled(state);
+  });
+};
+
+var dispatchEvent = function (name, promise, reason) {
+  var event, handler;
+  if (DISPATCH_EVENT) {
+    event = document$1.createEvent('Event');
+    event.promise = promise;
+    event.reason = reason;
+    event.initEvent(name, false, true);
+    global$1.dispatchEvent(event);
+  } else event = { promise: promise, reason: reason };
+  if (!NATIVE_PROMISE_REJECTION_EVENT && (handler = global$1['on' + name])) handler(event);
+  else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
+};
+
+var onUnhandled = function (state) {
+  call$6(task, global$1, function () {
+    var promise = state.facade;
+    var value = state.value;
+    var IS_UNHANDLED = isUnhandled(state);
+    var result;
+    if (IS_UNHANDLED) {
+      result = perform$2(function () {
+        if (IS_NODE) {
+          process$1.emit('unhandledRejection', value, promise);
+        } else dispatchEvent(UNHANDLED_REJECTION, promise, value);
+      });
+      // Browsers should not trigger `rejectionHandled` event if it was handled here, NodeJS - should
+      state.rejection = IS_NODE || isUnhandled(state) ? UNHANDLED : HANDLED;
+      if (result.error) throw result.value;
+    }
+  });
+};
+
+var isUnhandled = function (state) {
+  return state.rejection !== HANDLED && !state.parent;
+};
+
+var onHandleUnhandled = function (state) {
+  call$6(task, global$1, function () {
+    var promise = state.facade;
+    if (IS_NODE) {
+      process$1.emit('rejectionHandled', promise);
+    } else dispatchEvent(REJECTION_HANDLED, promise, state.value);
+  });
+};
+
+var bind$1 = function (fn, state, unwrap) {
+  return function (value) {
+    fn(state, value, unwrap);
+  };
+};
+
+var internalReject = function (state, value, unwrap) {
+  if (state.done) return;
+  state.done = true;
+  if (unwrap) state = unwrap;
+  state.value = value;
+  state.state = REJECTED;
+  notify(state, true);
+};
+
+var internalResolve = function (state, value, unwrap) {
+  if (state.done) return;
+  state.done = true;
+  if (unwrap) state = unwrap;
+  try {
+    if (state.facade === value) throw TypeError$1("Promise can't be resolved itself");
+    var then = isThenable(value);
+    if (then) {
+      microtask(function () {
+        var wrapper = { done: false };
+        try {
+          call$6(then, value,
+            bind$1(internalResolve, wrapper, state),
+            bind$1(internalReject, wrapper, state)
+          );
+        } catch (error) {
+          internalReject(wrapper, error, state);
+        }
+      });
+    } else {
+      state.value = value;
+      state.state = FULFILLED;
+      notify(state, false);
+    }
+  } catch (error) {
+    internalReject({ done: false }, error, state);
+  }
+};
+
+// constructor polyfill
+if (FORCED_PROMISE_CONSTRUCTOR$4) {
+  // 25.4.3.1 Promise(executor)
+  PromiseConstructor = function Promise(executor) {
+    anInstance(this, PromisePrototype);
+    aCallable$3(executor);
+    call$6(Internal, this);
+    var state = getInternalPromiseState(this);
+    try {
+      executor(bind$1(internalResolve, state), bind$1(internalReject, state));
+    } catch (error) {
+      internalReject(state, error);
+    }
+  };
+
+  PromisePrototype = PromiseConstructor.prototype;
+
+  // eslint-disable-next-line no-unused-vars -- required for `.length`
+  Internal = function Promise(executor) {
+    setInternalState(this, {
+      type: PROMISE,
+      done: false,
+      notified: false,
+      parent: false,
+      reactions: new Queue(),
+      rejection: false,
+      state: PENDING,
+      value: undefined
+    });
+  };
+
+  // `Promise.prototype.then` method
+  // https://tc39.es/ecma262/#sec-promise.prototype.then
+  Internal.prototype = defineBuiltIn$1(PromisePrototype, 'then', function then(onFulfilled, onRejected) {
+    var state = getInternalPromiseState(this);
+    var reaction = newPromiseCapability$1(speciesConstructor(this, PromiseConstructor));
+    state.parent = true;
+    reaction.ok = isCallable$1(onFulfilled) ? onFulfilled : true;
+    reaction.fail = isCallable$1(onRejected) && onRejected;
+    reaction.domain = IS_NODE ? process$1.domain : undefined;
+    if (state.state == PENDING) state.reactions.add(reaction);
+    else microtask(function () {
+      callReaction(reaction, state);
+    });
+    return reaction.promise;
+  });
+
+  OwnPromiseCapability = function () {
+    var promise = new Internal();
+    var state = getInternalPromiseState(promise);
+    this.promise = promise;
+    this.resolve = bind$1(internalResolve, state);
+    this.reject = bind$1(internalReject, state);
+  };
+
+  newPromiseCapabilityModule$3.f = newPromiseCapability$1 = function (C) {
+    return C === PromiseConstructor || C === PromiseWrapper
+      ? new OwnPromiseCapability(C)
+      : newGenericPromiseCapability(C);
+  };
+
+  if (isCallable$1(NativePromiseConstructor$2) && NativePromisePrototype$1 !== Object.prototype) {
+    nativeThen = NativePromisePrototype$1.then;
+
+    if (!NATIVE_PROMISE_SUBCLASSING) {
+      // make `Promise#then` return a polyfilled `Promise` for native promise-based APIs
+      defineBuiltIn$1(NativePromisePrototype$1, 'then', function then(onFulfilled, onRejected) {
+        var that = this;
+        return new PromiseConstructor(function (resolve, reject) {
+          call$6(nativeThen, that, resolve, reject);
+        }).then(onFulfilled, onRejected);
+      // https://github.com/zloirock/core-js/issues/640
+      }, { unsafe: true });
+    }
+
+    // make `.constructor === Promise` work for native promise-based APIs
+    try {
+      delete NativePromisePrototype$1.constructor;
+    } catch (error) { /* empty */ }
+
+    // make `instanceof Promise` work for native promise-based APIs
+    if (setPrototypeOf) {
+      setPrototypeOf(NativePromisePrototype$1, PromisePrototype);
+    }
+  }
+}
+
+$$7({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
+  Promise: PromiseConstructor
+});
+
+setToStringTag(PromiseConstructor, PROMISE, false);
+setSpecies(PROMISE);
+
+var wellKnownSymbol$2 = wellKnownSymbol$j;
+var Iterators$1 = iterators;
+
+var ITERATOR$2 = wellKnownSymbol$2('iterator');
+var ArrayPrototype = Array.prototype;
+
+// check on default Array iterator
+var isArrayIteratorMethod$1 = function (it) {
+  return it !== undefined && (Iterators$1.Array === it || ArrayPrototype[ITERATOR$2] === it);
+};
+
+var classof = classof$6;
+var getMethod$1 = getMethod$6;
+var isNullOrUndefined = isNullOrUndefined$7;
+var Iterators = iterators;
+var wellKnownSymbol$1 = wellKnownSymbol$j;
+
+var ITERATOR$1 = wellKnownSymbol$1('iterator');
+
+var getIteratorMethod$2 = function (it) {
+  if (!isNullOrUndefined(it)) return getMethod$1(it, ITERATOR$1)
+    || getMethod$1(it, '@@iterator')
+    || Iterators[classof(it)];
+};
+
+var call$5 = functionCall;
+var aCallable$2 = aCallable$8;
+var anObject$3 = anObject$g;
+var tryToString$1 = tryToString$4;
+var getIteratorMethod$1 = getIteratorMethod$2;
+
+var $TypeError$1 = TypeError;
+
+var getIterator$1 = function (argument, usingIterator) {
+  var iteratorMethod = arguments.length < 2 ? getIteratorMethod$1(argument) : usingIterator;
+  if (aCallable$2(iteratorMethod)) return anObject$3(call$5(iteratorMethod, argument));
+  throw $TypeError$1(tryToString$1(argument) + ' is not iterable');
+};
+
+var call$4 = functionCall;
+var anObject$2 = anObject$g;
+var getMethod = getMethod$6;
+
+var iteratorClose$1 = function (iterator, kind, value) {
+  var innerResult, innerError;
+  anObject$2(iterator);
+  try {
+    innerResult = getMethod(iterator, 'return');
+    if (!innerResult) {
+      if (kind === 'throw') throw value;
+      return value;
+    }
+    innerResult = call$4(innerResult, iterator);
+  } catch (error) {
+    innerError = true;
+    innerResult = error;
+  }
+  if (kind === 'throw') throw value;
+  if (innerError) throw innerResult;
+  anObject$2(innerResult);
+  return value;
+};
+
+var bind = functionBindContext;
+var call$3 = functionCall;
+var anObject$1 = anObject$g;
+var tryToString = tryToString$4;
+var isArrayIteratorMethod = isArrayIteratorMethod$1;
+var lengthOfArrayLike = lengthOfArrayLike$2;
+var isPrototypeOf = objectIsPrototypeOf;
+var getIterator = getIterator$1;
+var getIteratorMethod = getIteratorMethod$2;
+var iteratorClose = iteratorClose$1;
 
 var $TypeError = TypeError;
 
-var notARegexp = function (it) {
-  if (isRegExp(it)) {
-    throw $TypeError("The method doesn't accept regular expressions");
-  } return it;
+var Result = function (stopped, result) {
+  this.stopped = stopped;
+  this.result = result;
 };
 
-var wellKnownSymbol = wellKnownSymbol$e;
+var ResultPrototype = Result.prototype;
 
-var MATCH = wellKnownSymbol('match');
+var iterate$2 = function (iterable, unboundFunction, options) {
+  var that = options && options.that;
+  var AS_ENTRIES = !!(options && options.AS_ENTRIES);
+  var IS_RECORD = !!(options && options.IS_RECORD);
+  var IS_ITERATOR = !!(options && options.IS_ITERATOR);
+  var INTERRUPTED = !!(options && options.INTERRUPTED);
+  var fn = bind(unboundFunction, that);
+  var iterator, iterFn, index, length, result, next, step;
 
-var correctIsRegexpLogic = function (METHOD_NAME) {
-  var regexp = /./;
-  try {
-    '/./'[METHOD_NAME](regexp);
-  } catch (error1) {
+  var stop = function (condition) {
+    if (iterator) iteratorClose(iterator, 'normal', condition);
+    return new Result(true, condition);
+  };
+
+  var callFn = function (value) {
+    if (AS_ENTRIES) {
+      anObject$1(value);
+      return INTERRUPTED ? fn(value[0], value[1], stop) : fn(value[0], value[1]);
+    } return INTERRUPTED ? fn(value, stop) : fn(value);
+  };
+
+  if (IS_RECORD) {
+    iterator = iterable.iterator;
+  } else if (IS_ITERATOR) {
+    iterator = iterable;
+  } else {
+    iterFn = getIteratorMethod(iterable);
+    if (!iterFn) throw $TypeError(tryToString(iterable) + ' is not iterable');
+    // optimisation for array iterators
+    if (isArrayIteratorMethod(iterFn)) {
+      for (index = 0, length = lengthOfArrayLike(iterable); length > index; index++) {
+        result = callFn(iterable[index]);
+        if (result && isPrototypeOf(ResultPrototype, result)) return result;
+      } return new Result(false);
+    }
+    iterator = getIterator(iterable, iterFn);
+  }
+
+  next = IS_RECORD ? iterable.next : iterator.next;
+  while (!(step = call$3(next, iterator)).done) {
     try {
-      regexp[MATCH] = false;
-      return '/./'[METHOD_NAME](regexp);
-    } catch (error2) { /* empty */ }
-  } return false;
+      result = callFn(step.value);
+    } catch (error) {
+      iteratorClose(iterator, 'throw', error);
+    }
+    if (typeof result == 'object' && result && isPrototypeOf(ResultPrototype, result)) return result;
+  } return new Result(false);
+};
+
+var wellKnownSymbol = wellKnownSymbol$j;
+
+var ITERATOR = wellKnownSymbol('iterator');
+var SAFE_CLOSING = false;
+
+try {
+  var called = 0;
+  var iteratorWithReturn = {
+    next: function () {
+      return { done: !!called++ };
+    },
+    'return': function () {
+      SAFE_CLOSING = true;
+    }
+  };
+  iteratorWithReturn[ITERATOR] = function () {
+    return this;
+  };
+  // eslint-disable-next-line es/no-array-from, no-throw-literal -- required for testing
+  Array.from(iteratorWithReturn, function () { throw 2; });
+} catch (error) { /* empty */ }
+
+var checkCorrectnessOfIteration$1 = function (exec, SKIP_CLOSING) {
+  if (!SKIP_CLOSING && !SAFE_CLOSING) return false;
+  var ITERATION_SUPPORT = false;
+  try {
+    var object = {};
+    object[ITERATOR] = function () {
+      return {
+        next: function () {
+          return { done: ITERATION_SUPPORT = true };
+        }
+      };
+    };
+    exec(object);
+  } catch (error) { /* empty */ }
+  return ITERATION_SUPPORT;
+};
+
+var NativePromiseConstructor$1 = promiseNativeConstructor;
+var checkCorrectnessOfIteration = checkCorrectnessOfIteration$1;
+var FORCED_PROMISE_CONSTRUCTOR$3 = promiseConstructorDetection.CONSTRUCTOR;
+
+var promiseStaticsIncorrectIteration = FORCED_PROMISE_CONSTRUCTOR$3 || !checkCorrectnessOfIteration(function (iterable) {
+  NativePromiseConstructor$1.all(iterable).then(undefined, function () { /* empty */ });
+});
+
+var $$6 = _export;
+var call$2 = functionCall;
+var aCallable$1 = aCallable$8;
+var newPromiseCapabilityModule$2 = newPromiseCapability$2;
+var perform$1 = perform$3;
+var iterate$1 = iterate$2;
+var PROMISE_STATICS_INCORRECT_ITERATION$1 = promiseStaticsIncorrectIteration;
+
+// `Promise.all` method
+// https://tc39.es/ecma262/#sec-promise.all
+$$6({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
+  all: function all(iterable) {
+    var C = this;
+    var capability = newPromiseCapabilityModule$2.f(C);
+    var resolve = capability.resolve;
+    var reject = capability.reject;
+    var result = perform$1(function () {
+      var $promiseResolve = aCallable$1(C.resolve);
+      var values = [];
+      var counter = 0;
+      var remaining = 1;
+      iterate$1(iterable, function (promise) {
+        var index = counter++;
+        var alreadyCalled = false;
+        remaining++;
+        call$2($promiseResolve, C, promise).then(function (value) {
+          if (alreadyCalled) return;
+          alreadyCalled = true;
+          values[index] = value;
+          --remaining || resolve(values);
+        }, reject);
+      });
+      --remaining || resolve(values);
+    });
+    if (result.error) reject(result.value);
+    return capability.promise;
+  }
+});
+
+var $$5 = _export;
+var FORCED_PROMISE_CONSTRUCTOR$2 = promiseConstructorDetection.CONSTRUCTOR;
+var NativePromiseConstructor = promiseNativeConstructor;
+var getBuiltIn$1 = getBuiltIn$7;
+var isCallable = isCallable$o;
+var defineBuiltIn = defineBuiltIn$8;
+
+var NativePromisePrototype = NativePromiseConstructor && NativePromiseConstructor.prototype;
+
+// `Promise.prototype.catch` method
+// https://tc39.es/ecma262/#sec-promise.prototype.catch
+$$5({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
+  'catch': function (onRejected) {
+    return this.then(undefined, onRejected);
+  }
+});
+
+// makes sure that native promise-based APIs `Promise#catch` properly works with patched `Promise#then`
+if (isCallable(NativePromiseConstructor)) {
+  var method = getBuiltIn$1('Promise').prototype['catch'];
+  if (NativePromisePrototype['catch'] !== method) {
+    defineBuiltIn(NativePromisePrototype, 'catch', method, { unsafe: true });
+  }
+}
+
+var $$4 = _export;
+var call$1 = functionCall;
+var aCallable = aCallable$8;
+var newPromiseCapabilityModule$1 = newPromiseCapability$2;
+var perform = perform$3;
+var iterate = iterate$2;
+var PROMISE_STATICS_INCORRECT_ITERATION = promiseStaticsIncorrectIteration;
+
+// `Promise.race` method
+// https://tc39.es/ecma262/#sec-promise.race
+$$4({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
+  race: function race(iterable) {
+    var C = this;
+    var capability = newPromiseCapabilityModule$1.f(C);
+    var reject = capability.reject;
+    var result = perform(function () {
+      var $promiseResolve = aCallable(C.resolve);
+      iterate(iterable, function (promise) {
+        call$1($promiseResolve, C, promise).then(capability.resolve, reject);
+      });
+    });
+    if (result.error) reject(result.value);
+    return capability.promise;
+  }
+});
+
+var $$3 = _export;
+var call = functionCall;
+var newPromiseCapabilityModule = newPromiseCapability$2;
+var FORCED_PROMISE_CONSTRUCTOR$1 = promiseConstructorDetection.CONSTRUCTOR;
+
+// `Promise.reject` method
+// https://tc39.es/ecma262/#sec-promise.reject
+$$3({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
+  reject: function reject(r) {
+    var capability = newPromiseCapabilityModule.f(this);
+    call(capability.reject, undefined, r);
+    return capability.promise;
+  }
+});
+
+var anObject = anObject$g;
+var isObject = isObject$a;
+var newPromiseCapability = newPromiseCapability$2;
+
+var promiseResolve$1 = function (C, x) {
+  anObject(C);
+  if (isObject(x) && x.constructor === C) return x;
+  var promiseCapability = newPromiseCapability.f(C);
+  var resolve = promiseCapability.resolve;
+  resolve(x);
+  return promiseCapability.promise;
 };
 
 var $$2 = _export;
-var uncurryThis$1 = functionUncurryThisClause;
-var getOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
-var toLength = toLength$4;
-var toString$1 = toString$c;
-var notARegExp$1 = notARegexp;
-var requireObjectCoercible$1 = requireObjectCoercible$a;
-var correctIsRegExpLogic$1 = correctIsRegexpLogic;
+var getBuiltIn = getBuiltIn$7;
+var FORCED_PROMISE_CONSTRUCTOR = promiseConstructorDetection.CONSTRUCTOR;
+var promiseResolve = promiseResolve$1;
 
-// eslint-disable-next-line es/no-string-prototype-startswith -- safe
-var nativeStartsWith = uncurryThis$1(''.startsWith);
-var stringSlice = uncurryThis$1(''.slice);
-var min = Math.min;
+getBuiltIn('Promise');
 
-var CORRECT_IS_REGEXP_LOGIC = correctIsRegExpLogic$1('startsWith');
-// https://github.com/zloirock/core-js/pull/702
-var MDN_POLYFILL_BUG = !CORRECT_IS_REGEXP_LOGIC && !!function () {
-  var descriptor = getOwnPropertyDescriptor(String.prototype, 'startsWith');
-  return descriptor && !descriptor.writable;
-}();
-
-// `String.prototype.startsWith` method
-// https://tc39.es/ecma262/#sec-string.prototype.startswith
-$$2({ target: 'String', proto: true, forced: !MDN_POLYFILL_BUG && !CORRECT_IS_REGEXP_LOGIC }, {
-  startsWith: function startsWith(searchString /* , position = 0 */) {
-    var that = toString$1(requireObjectCoercible$1(this));
-    notARegExp$1(searchString);
-    var index = toLength(min(arguments.length > 1 ? arguments[1] : undefined, that.length));
-    var search = toString$1(searchString);
-    return nativeStartsWith
-      ? nativeStartsWith(that, search, index)
-      : stringSlice(that, index, index + search.length) === search;
+// `Promise.resolve` method
+// https://tc39.es/ecma262/#sec-promise.resolve
+$$2({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR }, {
+  resolve: function resolve(x) {
+    return promiseResolve(this, x);
   }
 });
 
 var $$1 = _export;
 var $includes = arrayIncludes.includes;
-var fails = fails$m;
+var fails = fails$o;
 var addToUnscopables = addToUnscopables$2;
 
 // FF99+ bug
@@ -12336,7 +15084,35 @@ $({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, 
   }
 });
 
-const TaskAttr = ({
+const TaskStateTag = props => {
+  var _a;
+  const status = (_a = props.task.meta_data.releaseResponse) === null || _a === void 0 ? void 0 : _a.status;
+  if (status) {
+    if (status === 'APPROVED') {
+      return jsx(Ramen.XTagState, {
+        type: 'solid',
+        state: 'success',
+        text: 'Liberado'
+      });
+    } else if (status === 'REJECTED') {
+      return jsx(Ramen.XTagState, {
+        type: 'solid',
+        state: 'error',
+        text: 'Rechazado'
+      });
+    } else {
+      return jsx(Ramen.XTagState, {
+        type: 'solid',
+        state: 'info',
+        text: 'Reversado'
+      });
+    }
+  } else {
+    return null;
+  }
+};
+
+const DataAttr = ({
   label,
   value
 }) => {
@@ -12361,35 +15137,32 @@ const TaskAttr = ({
     return null;
   }
 };
-const hourOfDate = date => {
-  const fmt = formatDate(date, 'hh:mm');
-  if (fmt && fmt.startsWith('Invalid')) {
-    return undefined;
-  } else {
-    return `${fmt} hrs`;
-  }
-};
-const TaskCard = ({
-  task,
-  miniImageUrl,
-  fields: _fields = ['sku', 'document', 'hour']
+const ImgDataCard = ({
+  label,
+  imageUrl,
+  fields,
+  tags: _tags = [],
+  onClick,
+  controlTag: _controlTag = true,
+  task
 }) => {
-  var _a, _b, _c, _d, _e;
   return jsx(Ramen.XCard, {
     children: jsxs(Ramen.XBox, Object.assign({
       gap: "l",
-      width: 'full'
+      width: 'full',
+      onClick: () => onClick()
     }, {
       children: [jsx(Ramen.XBox, Object.assign({
         orientation: "horizontal",
         horizontalAlign: "between",
         verticalAlign: "center"
       }, {
-        children: jsx(Ramen.XBox, {
-          children: jsx(Ramen.XTag, {
-            text: `${task.meta_data.count} ${(_a = task.meta_data.product.um) === null || _a === void 0 ? void 0 : _a.toLowerCase()}`
-          })
-        })
+        children: jsx(Ramen.XBox, Object.assign({
+          orientation: 'horizontal',
+          gap: 'm'
+        }, {
+          children: _tags
+        }))
       })), jsxs(Ramen.XBox, Object.assign({
         orientation: "horizontal",
         gap: "s",
@@ -12400,13 +15173,11 @@ const TaskCard = ({
           width: 2,
           height: 2
         }, {
-          children: jsx(Ramen.XImage, {
+          children: jsx(Ramen.XImagePreviewer, {
             border: "solid",
             rounded: "s",
-            padding: "none",
-            width: 2,
-            height: 2,
-            src: miniImageUrl((_b = task.meta_data.product.sku) === null || _b === void 0 ? void 0 : _b.toString(), (_c = task.meta_data.product.ean) === null || _c === void 0 ? void 0 : _c.toString())
+            src: imageUrl,
+            showExpandIcon: false
           })
         })), jsxs(Ramen.XBox, Object.assign({
           gap: "xxs",
@@ -12417,22 +15188,15 @@ const TaskCard = ({
             lineHeight: "title",
             fontSize: 11
           }, {
-            children: task.meta_data.product.description
-          })), _fields.includes('sku') && jsx(TaskAttr, {
-            label: "SKU",
-            value: task.meta_data.product.sku.toString()
-          }), _fields.includes('document') && jsx(TaskAttr, {
-            label: "N\u00B0 solicitud",
-            value: task.meta_data.documentNumber
-          }), _fields.includes('hour') && jsx(TaskAttr, {
-            label: "Hora de creaci\u00F3n",
-            value: hourOfDate(task.created_at)
-          }), _fields.includes('rejected_by') && jsx(TaskAttr, {
-            label: "Rechazado por",
-            value: (_e = (_d = task.meta_data.releaseResponse) === null || _d === void 0 ? void 0 : _d.user) === null || _e === void 0 ? void 0 : _e.full_name
-          })]
+            children: label
+          })), fields.map(field => jsx(DataAttr, {
+            label: field.label,
+            value: field.value
+          }, field.key))]
         }))]
-      }))]
+      })), _controlTag && jsx(ControlTag, {
+        task: task
+      })]
     }))
   });
 };
@@ -12560,115 +15324,44 @@ const EmptyList = ({
   }));
 };
 
-const TaskCardFields = {
-  PENDING: ['sku', 'document', 'hour'],
-  REJECTED: ['sku', 'document', 'rejected_by'],
-  EXPIRED: ['sku', 'document']
+const SummaryButtons = props => {
+  const [selected, setSelected] = useState(props.activeDefault);
+  const onClick = key => {
+    setSelected(key);
+    props.onSelectBtn(key);
+  };
+  return jsx(Ramen.XBox, Object.assign({
+    gap: "s",
+    orientation: 'horizontal',
+    overflow: 'scroll_x',
+    padding: 'm'
+  }, {
+    children: props.buttons.map(tab => {
+      return jsx(Ramen.XTab, {
+        icon: tab.icon,
+        label: tab.text,
+        onSelect: () => onClick(tab.key),
+        selected: selected === tab.key
+      }, tab.key);
+    })
+  }));
 };
-const CreatorSummaryPageWrapper = _a => {
-  var {
-      pendingTasksFn,
-      rejectedTasksFn,
-      expiredTasksFn
-    } = _a,
-    props = __rest(_a, ["pendingTasksFn", "rejectedTasksFn", "expiredTasksFn"]);
-  const [skeleton, setSkeleton] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [activeTab, setActiveTab] = useState();
-  const [currentTasks, setCurrentTasks] = useState([]);
-  const history = useHistory();
-  const goHome = useCallback(() => {
-    if (history) {
-      history.replace('/');
-    } else {
-      window.location.replace('/');
-    }
-  }, [history]);
-  const loadTasks = useCallback(tab => __awaiter(void 0, void 0, void 0, function* () {
-    setLoading(true);
-    try {
-      if (tab === 'PENDING') {
-        const tasks = yield pendingTasksFn();
-        setCurrentTasks(tasks);
-      } else if (tab === 'REJECTED') {
-        const tasks = yield rejectedTasksFn();
-        setCurrentTasks(tasks);
-      } else if (tab === 'EXPIRED') {
-        const tasks = yield expiredTasksFn();
-        setCurrentTasks(tasks);
-      } else {
-        setCurrentTasks([]);
-      }
-    } catch (error) {
-      setError(true);
-    }
-    setLoading(false);
-  }), [rejectedTasksFn, expiredTasksFn, pendingTasksFn]);
-  useEffect(() => {
-    if (loading) {
-      Ramen.Api.loading.show({
-        text: 'Cargando'
-      });
-    } else {
-      Ramen.Api.loading.hide();
-    }
-  }, [loading]);
-  useEffect(() => {
-    if (activeTab) {
-      setCurrentTasks([]);
-      loadTasks(activeTab);
-    }
-  }, [activeTab]);
-  useEffect(() => {
-    const checkAccess = () => __awaiter(void 0, void 0, void 0, function* () {
-      let user;
-      try {
-        user = yield props.moduleClient.getICUser();
-      } catch (error) {
-        // Nothing
-      }
-      if (user && user.level === 0) {
-        setSkeleton(false);
-        setActiveTab('PENDING');
-      } else {
-        Ramen.Api.snackbar.warning({
-          placement: 'top',
-          duration: 5,
-          closable: true,
-          text: 'Acceso restringido'
-        });
-        setTimeout(goHome, 1000);
-      }
-    });
-    checkAccess();
-  }, []);
+
+const CardList = props => {
   return jsxs(Ramen.XPage, Object.assign({
-    skeleton: skeleton
+    skeleton: props.skeleton
   }, {
     children: [jsx(Ramen.XHeader, {
-      onBack: goHome,
-      title: 'Listado de solicitudes',
-      children: activeTab && jsx(SummaryButtons, {
-        buttons: [{
-          key: 'PENDING',
-          icon: 'inbox-filled',
-          text: 'Pendientes'
-        }, {
-          key: 'REJECTED',
-          icon: 'x-circle-bold-filled',
-          text: 'Rechazadas'
-        }, {
-          key: 'EXPIRED',
-          icon: 'block-filled',
-          text: 'Caducadas'
-        }],
-        activeDefault: activeTab,
-        onSelectBtn: key => setActiveTab(key)
+      onBack: props.goBack,
+      title: props.title,
+      children: props.activeTab && jsx(SummaryButtons, {
+        buttons: props.tabs,
+        activeDefault: props.activeTab,
+        onSelectBtn: key => props.onClickTab(key)
       })
     }), jsxs(Ramen.XBody, {
       children: [jsx(Ramen.XSkeletonRenderer, Object.assign({
-        visible: skeleton
+        visible: props.skeleton
       }, {
         children: jsxs(Ramen.XBox, Object.assign({
           gap: 'm'
@@ -12709,29 +15402,182 @@ const CreatorSummaryPageWrapper = _a => {
             })]
           }))]
         }))
-      })), !loading && activeTab && currentTasks.length === 0 && jsx(EmptyList, {
+      })), !props.loading && props.activeTab && props.tasks.length === 0 && jsx(EmptyList, {
         text: '\u00A1Tienes todo en orden!'
-      }), activeTab && currentTasks.length > 0 && jsx(Ramen.XBox, Object.assign({
+      }), props.activeTab && props.tasks.length > 0 && jsx(Ramen.XBox, Object.assign({
         gap: "s"
       }, {
-        children: currentTasks.map(task => {
-          return jsx(TaskCard, {
-            task: task,
-            miniImageUrl: props.miniImageUrl,
-            fields: TaskCardFields[activeTab]
+        children: props.tasks.map(task => {
+          var _a, _b, _c;
+          return jsx(ImgDataCard, {
+            imageUrl: props.miniImageUrl((_a = task.meta_data.product.sku) === null || _a === void 0 ? void 0 : _a.toString(), (_b = task.meta_data.product.ean) === null || _b === void 0 ? void 0 : _b.toString()),
+            label: task.meta_data.product.description,
+            fields: props.cardFields[props.activeTab](task),
+            tags: [jsx(Ramen.XTag, {
+              text: `${task.meta_data.count} ${(_c = task.meta_data.product.um) === null || _c === void 0 ? void 0 : _c.toLowerCase()}`
+            }, 'count'), props.activeTab !== 'REJECTED' ? jsx(TaskStateTag, {
+              task: task
+            }, 'state') : null],
+            onClick: () => {
+              if (props.showDetails) {
+                props.onCardClick(task);
+              }
+            },
+            controlTag: props.controlTag,
+            task: task
           }, task.id);
         })
       }))]
-    }), jsx(ConfirmModal, {
+    }), jsx(Ramen.XVSpace, {
+      size: 's'
+    })]
+  }));
+};
+
+const SummaryPageWrapper = props => {
+  const CurrentTabs = useMemo(() => {
+    const allTabs = [{
+      key: 'PROCESSED',
+      icon: 'check-bold-filled',
+      text: 'Procesadas'
+    }, {
+      key: 'PENDING',
+      icon: 'inbox-filled',
+      text: 'Pendientes'
+    }, {
+      key: 'REJECTED',
+      icon: 'x-circle-bold-filled',
+      text: 'Rechazadas'
+    }, {
+      key: 'EXPIRED',
+      icon: 'block-filled',
+      text: 'Caducadas'
+    }];
+    return allTabs.filter(tab => props.tabs.includes(tab.key));
+  }, []);
+  const [mode, setMode] = useState('LIST');
+  const [skeleton, setSkeleton] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [activeTab, setActiveTab] = useState();
+  const [currentTasks, setCurrentTasks] = useState([]);
+  const [selectedTask, setSelectedTask] = useState();
+  const [user, setUser] = useState();
+  const history = useHistory();
+  const goHome = useCallback(() => {
+    if (history) {
+      history.replace('/');
+    } else {
+      window.location.replace('/');
+    }
+  }, [history]);
+  const loadTasks = useCallback(tab => __awaiter(void 0, void 0, void 0, function* () {
+    setLoading(true);
+    try {
+      if (tab) {
+        const fn = props.dataFn[tab];
+        const tasks = yield fn();
+        setCurrentTasks(tasks);
+      } else {
+        setCurrentTasks([]);
+      }
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
+  }), [props.dataFn]);
+  useEffect(() => {
+    if (loading) {
+      Ramen.Api.loading.show({
+        text: 'Cargando'
+      });
+    } else {
+      Ramen.Api.loading.hide();
+    }
+  }, [loading]);
+  useEffect(() => {
+    if (activeTab) {
+      setCurrentTasks([]);
+      loadTasks(activeTab);
+    }
+  }, [activeTab]);
+  useEffect(() => {
+    const checkAccess = () => __awaiter(void 0, void 0, void 0, function* () {
+      let user;
+      try {
+        user = yield props.moduleClient.getICUser();
+      } catch (error) {
+        // Nothing
+      }
+      if (user && checkUserLevel(user.level, props.expectedUserLevel)) {
+        setSkeleton(false);
+        setActiveTab(props.defaultTab);
+        setUser(user);
+      } else {
+        Ramen.Api.snackbar.warning({
+          placement: 'top',
+          duration: 5,
+          closable: true,
+          text: 'Acceso restringido'
+        });
+        setTimeout(goHome, 1000);
+      }
+    });
+    checkAccess();
+  }, []);
+  const renderMode = mode => {
+    switch (mode) {
+      case 'LIST':
+        return jsx(CardList, {
+          title: props.title,
+          miniImageUrl: props.miniImageUrl,
+          tasks: currentTasks,
+          tabs: CurrentTabs,
+          activeTab: activeTab,
+          goBack: goHome,
+          cardFields: props.cardFields,
+          onCardClick: task => {
+            setSelectedTask(task);
+            setMode('DETAILS');
+          },
+          onClickTab: key => setActiveTab(key),
+          skeleton: skeleton,
+          loading: loading,
+          controlTag: props.controlTag,
+          showDetails: props.showDetails
+        });
+      case 'DETAILS':
+        if (selectedTask) return jsx(ProductDetail, {
+          selectedTask: selectedTask,
+          user: user,
+          goBack: () => {
+            setSelectedTask(undefined);
+            setMode('LIST');
+          },
+          miniImageUrl: props.miniImageUrl,
+          rejectTask: () => Promise.resolve(),
+          freeTask: () => Promise.resolve(),
+          controlTag: props.controlTag,
+          showActions: activeTab !== 'EXPIRED'
+        });
+        return null;
+      default:
+        return jsx("div", {
+          children: mode
+        });
+    }
+  };
+  return jsxs(Fragment, {
+    children: [renderMode(mode), jsx(ConfirmModal, {
       visible: !!error,
       title: "Lo sentimos",
       subTitle: 'Ha ocurrido un error cargando las tareas. Int\u00E9ntalo nuevamente',
       btnActionText: "Volver a intentar",
       onClose: () => setError(false),
       onConfirm: () => loadTasks(activeTab),
-      ImageCmp: jsx(Image, {})
+      ImageCmp: jsx(Image$2, {})
     })]
-  }));
+  });
 };
 
 class CreatorSummaryPage extends Page {
@@ -12762,12 +15608,220 @@ class CreatorSummaryPage extends Page {
     const pendingTasks = () => taskClient.creatorPendingTasks();
     const rejectedTasks = () => taskClient.creatorRejectedTasks();
     const expiredTasks = () => taskClient.creatorExpiredTasks();
-    return jsx(CreatorSummaryPageWrapper, {
+    const TaskCardFields = {
+      PENDING: task => [{
+        key: 'sku',
+        label: 'SKU',
+        value: task.meta_data.product.sku.toString()
+      }, {
+        key: 'document',
+        label: 'N° solicitud',
+        value: task.meta_data.documentNumber
+      }, {
+        key: 'hour',
+        label: 'Hora de creación',
+        value: hourOfDate(task.created_at)
+      }],
+      REJECTED: task => {
+        var _a, _b;
+        return [{
+          key: 'sku',
+          label: 'SKU',
+          value: task.meta_data.product.sku.toString()
+        }, {
+          key: 'document',
+          label: 'N° solicitud',
+          value: task.meta_data.documentNumber
+        }, {
+          key: 'rejected_by',
+          label: 'Rechazado por',
+          value: (_b = (_a = task.meta_data.releaseResponse) === null || _a === void 0 ? void 0 : _a.user) === null || _b === void 0 ? void 0 : _b.full_name
+        }];
+      },
+      EXPIRED: task => [{
+        key: 'sku',
+        label: 'SKU',
+        value: task.meta_data.product.sku.toString()
+      }, {
+        key: 'document',
+        label: 'N° solicitud',
+        value: task.meta_data.documentNumber
+      }],
+      PROCESSED: task => []
+    };
+    const DataFn = {
+      PENDING: pendingTasks,
+      REJECTED: rejectedTasks,
+      EXPIRED: expiredTasks,
+      PROCESSED: () => Promise.resolve([])
+    };
+    return jsx(SummaryPageWrapper, {
+      title: 'Listado de solicitudes',
       miniImageUrl: imgUrl,
-      pendingTasksFn: pendingTasks,
-      rejectedTasksFn: rejectedTasks,
-      expiredTasksFn: expiredTasks,
-      moduleClient: moduleClient
+      cardFields: TaskCardFields,
+      dataFn: DataFn,
+      moduleClient: moduleClient,
+      expectedUserLevel: 'CREATOR',
+      tabs: ['PENDING', 'REJECTED', 'EXPIRED'],
+      defaultTab: 'PENDING',
+      controlTag: false,
+      showDetails: false
+    });
+  }
+}
+
+class ControlSummaryPage extends Page {
+  constructor() {
+    super(...arguments);
+    this.state = {};
+  }
+  render() {
+    var _a, _b, _c, _d, _e, _f;
+    let taskClient;
+    let imgUrl;
+    let moduleClient;
+    if (!((_a = this.props.extensions) === null || _a === void 0 ? void 0 : _a.triggers.moduleClientFactory)) {
+      throw Error('Missing a module dependency');
+    } else {
+      moduleClient = (_b = this.props.extensions) === null || _b === void 0 ? void 0 : _b.triggers.moduleClientFactory();
+    }
+    if (!((_c = this.props.extensions) === null || _c === void 0 ? void 0 : _c.triggers.tasksClientFactory)) {
+      throw Error('Missing a module dependency');
+    } else {
+      taskClient = (_d = this.props.extensions) === null || _d === void 0 ? void 0 : _d.triggers.tasksClientFactory();
+    }
+    if (!((_e = this.props.extensions) === null || _e === void 0 ? void 0 : _e.triggers.miniImgUrlResolver)) {
+      throw Error('Missing a module dependency');
+    } else {
+      imgUrl = (_f = this.props.extensions) === null || _f === void 0 ? void 0 : _f.triggers.miniImgUrlResolver;
+    }
+    const processedTasks = () => taskClient.processedTasks();
+    const expiredTasks = () => taskClient.creatorExpiredTasks();
+    const TaskCardFields = {
+      PROCESSED: task => [{
+        key: 'sku',
+        label: 'SKU',
+        value: task.meta_data.product.sku.toString()
+      }, {
+        key: 'document',
+        label: 'N° solicitud',
+        value: task.meta_data.documentNumber
+      }, {
+        key: 'hour',
+        label: 'Hora de creación',
+        value: hourOfDate(task.created_at)
+      }],
+      EXPIRED: task => [{
+        key: 'sku',
+        label: 'SKU',
+        value: task.meta_data.product.sku.toString()
+      }, {
+        key: 'document',
+        label: 'N° solicitud',
+        value: task.meta_data.documentNumber
+      }, {
+        key: 'hour',
+        label: 'Hora de creación',
+        value: hourOfDate(task.created_at)
+      }],
+      REJECTED: task => [],
+      PENDING: task => []
+    };
+    const DataFn = {
+      PENDING: () => Promise.resolve([]),
+      REJECTED: () => Promise.resolve([]),
+      EXPIRED: expiredTasks,
+      PROCESSED: processedTasks
+    };
+    return jsx(SummaryPageWrapper, {
+      title: 'Solicitud de Consumo interno',
+      miniImageUrl: imgUrl,
+      cardFields: TaskCardFields,
+      dataFn: DataFn,
+      moduleClient: moduleClient,
+      expectedUserLevel: 'CONTROL',
+      tabs: ['PROCESSED', 'EXPIRED'],
+      defaultTab: 'PROCESSED',
+      controlTag: false,
+      showDetails: true
+    });
+  }
+}
+
+class RevisorSummaryPage extends Page {
+  constructor() {
+    super(...arguments);
+    this.state = {};
+  }
+  render() {
+    var _a, _b, _c, _d, _e, _f;
+    let taskClient;
+    let imgUrl;
+    let moduleClient;
+    if (!((_a = this.props.extensions) === null || _a === void 0 ? void 0 : _a.triggers.moduleClientFactory)) {
+      throw Error('Missing a module dependency');
+    } else {
+      moduleClient = (_b = this.props.extensions) === null || _b === void 0 ? void 0 : _b.triggers.moduleClientFactory();
+    }
+    if (!((_c = this.props.extensions) === null || _c === void 0 ? void 0 : _c.triggers.tasksClientFactory)) {
+      throw Error('Missing a module dependency');
+    } else {
+      taskClient = (_d = this.props.extensions) === null || _d === void 0 ? void 0 : _d.triggers.tasksClientFactory();
+    }
+    if (!((_e = this.props.extensions) === null || _e === void 0 ? void 0 : _e.triggers.miniImgUrlResolver)) {
+      throw Error('Missing a module dependency');
+    } else {
+      imgUrl = (_f = this.props.extensions) === null || _f === void 0 ? void 0 : _f.triggers.miniImgUrlResolver;
+    }
+    const processedTasks = () => taskClient.processedTasks();
+    const expiredTasks = () => taskClient.creatorExpiredTasks();
+    const TaskCardFields = {
+      PROCESSED: task => [{
+        key: 'sku',
+        label: 'SKU',
+        value: task.meta_data.product.sku.toString()
+      }, {
+        key: 'document',
+        label: 'N° solicitud',
+        value: task.meta_data.documentNumber
+      }, {
+        key: 'hour',
+        label: 'Hora de creación',
+        value: hourOfDate(task.created_at)
+      }],
+      EXPIRED: task => [{
+        key: 'sku',
+        label: 'SKU',
+        value: task.meta_data.product.sku.toString()
+      }, {
+        key: 'document',
+        label: 'N° solicitud',
+        value: task.meta_data.documentNumber
+      }, {
+        key: 'hour',
+        label: 'Hora de creación',
+        value: hourOfDate(task.created_at)
+      }],
+      REJECTED: task => [],
+      PENDING: task => []
+    };
+    const DataFn = {
+      PENDING: () => Promise.resolve([]),
+      REJECTED: () => Promise.resolve([]),
+      EXPIRED: expiredTasks,
+      PROCESSED: processedTasks
+    };
+    return jsx(SummaryPageWrapper, {
+      title: 'Solicitud de Consumo interno',
+      miniImageUrl: imgUrl,
+      cardFields: TaskCardFields,
+      dataFn: DataFn,
+      moduleClient: moduleClient,
+      expectedUserLevel: 'REVISOR',
+      tabs: ['PROCESSED', 'EXPIRED'],
+      defaultTab: 'PROCESSED',
+      controlTag: true,
+      showDetails: true
     });
   }
 }
@@ -12787,6 +15841,12 @@ class InternalConsumptionModule extends Module {
       }, {
         path: '/creator-summary',
         page: CreatorSummaryPage
+      }, {
+        path: '/control-summary',
+        page: ControlSummaryPage
+      }, {
+        path: '/revisor-summary',
+        page: RevisorSummaryPage
       }],
       override
     });
