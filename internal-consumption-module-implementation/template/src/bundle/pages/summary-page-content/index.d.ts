@@ -2,10 +2,12 @@
 import { Task } from '../../models/task';
 import { IModuleClient, UserLevel } from '../../clients/module-client.interface';
 import { ImgDataCardField } from '../../components/img-data-card';
+import { ITaskClient } from '../../clients/tasks-client.interface';
 export declare type Tabs = 'PENDING' | 'REJECTED' | 'EXPIRED' | 'PROCESSED';
 export declare type TaskCardFields = Record<Tabs, (obj: any) => ImgDataCardField[]>;
 export declare type DataFn = Record<Tabs, () => Promise<Task[]>>;
 interface IProps {
+    taskClient: ITaskClient;
     title: string;
     dataFn: DataFn;
     expectedUserLevel: UserLevel;

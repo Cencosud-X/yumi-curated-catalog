@@ -6,8 +6,9 @@ interface IProductDetail {
     user?: ICUser;
     goBack: () => void;
     miniImageUrl: (sku: string, ean: string) => string;
-    rejectTask: (task: Task, qty: number) => Promise<void>;
-    freeTask: (task: Task, qty: number) => Promise<void>;
+    rejectTask?: (task: Task, qty: number) => Promise<void>;
+    freeTask?: (task: Task, qty: number) => Promise<void>;
+    reverseTask?: (task: Task) => Promise<void>;
     showActions: boolean;
     controlTag?: boolean;
 }

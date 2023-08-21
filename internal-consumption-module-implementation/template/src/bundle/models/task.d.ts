@@ -7,7 +7,14 @@ export interface ControlResponse {
     user: User;
 }
 export interface ReleaseResponse {
+    documentNumber?: string;
     status: 'APPROVED' | 'REJECTED';
+    action_at: string;
+    user: User;
+}
+export interface ReversedResponse {
+    documentNumber?: string;
+    action_at: string;
     user: User;
 }
 export interface CostCenter {
@@ -26,9 +33,11 @@ export interface TaskMetaData {
     documentNumber: string;
     controlResponse?: ControlResponse;
     releaseResponse?: ReleaseResponse;
+    reversedResponse?: ReversedResponse;
     count: number;
     create: Create;
     store: NamedStore;
+    flowToApprove: 'PENDING' | 'REJECTED' | 'APPROVED' | 'REVERSED';
 }
 export interface Store {
     id: string;

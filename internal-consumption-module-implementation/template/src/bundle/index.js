@@ -9240,9 +9240,10 @@ const toCurrency = value => {
   return '$' + formatted.substring(0, formatted.length - 3);
 };
 const formatDate = (dateTime, format, tz) => {
+  if (!dateTime) return undefined;
   if (!tz) tz = 'America/Santiago';
-  if (!format) format = 'DD MMM. yyyy';
-  const date = moment$2(dateTime).tz(tz).format(format);
+  if (!format) format = 'DD MMM yyyy';
+  const date = moment$2(dateTime).locale('es').tz(tz).format(format);
   return date;
 };
 const hourOfDate = (date, format) => {
@@ -13477,10 +13478,11 @@ const ProductDetail = ({
   miniImageUrl,
   rejectTask,
   freeTask,
+  reverseTask,
   controlTag: _controlTag = true,
   showActions
 }) => {
-  var _a, _b, _c, _d, _e, _f, _g, _h;
+  var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
   const [qty, setQty] = useState(selectedTask.meta_data.count);
   const [openModal, setOpenModal] = useState();
   const product = selectedTask.meta_data.product;
@@ -13493,10 +13495,13 @@ const ProductDetail = ({
   const handleRejectProduct = () => {
     setOpenModal('rejectModal');
   };
+  const handleReverseProduct = () => {
+    setOpenModal('reverseModal');
+  };
   const showRevisorReleaseBtn = showActions && selectedTask.state === 'PENDING' && checkUserLevel(user === null || user === void 0 ? void 0 : user.level, 'REVISOR');
   const showControlReleaseBtn = showActions && selectedTask.state === 'PENDING' && checkUserLevel(user === null || user === void 0 ? void 0 : user.level, 'CONTROL') && !((_a = selectedTask.meta_data.controlResponse) === null || _a === void 0 ? void 0 : _a.status);
   const showRejectBtn = showControlReleaseBtn || showRevisorReleaseBtn;
-  const showAnyAction = showControlReleaseBtn || showRevisorReleaseBtn || showRejectBtn;
+  const showReversedBtn = showActions && selectedTask.state === 'COMPLETED' && selectedTask.meta_data.flowToApprove === 'APPROVED' && checkUserLevel(user === null || user === void 0 ? void 0 : user.level, 'REVISOR');
   return jsxs(Ramen.XPage, {
     children: [jsx(Ramen.XHeader, {
       onBack: goBack
@@ -13648,9 +13653,20 @@ const ProductDetail = ({
             label: "Revisado por",
             value: (_h = selectedTask.meta_data.releaseResponse) === null || _h === void 0 ? void 0 : _h.user.full_name
           })]
-        })), jsx(Ramen.XVSpace, {
+        })), selectedTask.state === 'COMPLETED' && jsxs(Fragment, {
+          children: [jsx(Ramen.XDivider, {}), jsx(InfoRawRow, {
+            label: "Movimiento",
+            value: selectedTask.meta_data.flowToApprove === 'REVERSED' ? 'Reversado' : 'Ingreso'
+          }), jsx(InfoRawRow, {
+            label: "Documento SAP",
+            value: selectedTask.meta_data.flowToApprove === 'REVERSED' ? (_j = selectedTask.meta_data.reversedResponse) === null || _j === void 0 ? void 0 : _j.documentNumber : (_k = selectedTask.meta_data.releaseResponse) === null || _k === void 0 ? void 0 : _k.documentNumber
+          }), jsx(InfoRawRow, {
+            label: "Fecha de conteo",
+            value: formatDate((_l = selectedTask.meta_data.releaseResponse) === null || _l === void 0 ? void 0 : _l.action_at)
+          })]
+        }), jsx(Ramen.XVSpace, {
           size: "s"
-        }), showAnyAction && jsx(Ramen.XBox, {
+        }), showRevisorReleaseBtn && jsx(Ramen.XBox, {
           children: jsx(Ramen.XCard, Object.assign({
             size: "l"
           }, {
@@ -13688,15 +13704,25 @@ const ProductDetail = ({
         text: "Rechazar",
         size: "xl",
         onClick: handleRejectProduct
+      }), showReversedBtn && jsx(Ramen.XButton, {
+        type: "solid",
+        text: "Reversar",
+        size: "xl",
+        onClick: handleReverseProduct
+      }), showReversedBtn && jsx(Ramen.XButton, {
+        type: "outline",
+        text: "Volver",
+        size: "xl",
+        onClick: goBack
       })]
-    }), jsx(ConfirmModal, {
+    }), freeTask && jsx(ConfirmModal, {
       visible: openModal === 'freeModal',
       title: (user === null || user === void 0 ? void 0 : user.level) === 1 ? "¿Deseas confirmar la solicitud?" : "¿Deseas liberar la solicitud?",
       btnActionText: (user === null || user === void 0 ? void 0 : user.level) === 1 ? "Confirmar" : "Liberar",
       onClose: () => setOpenModal(undefined),
       onConfirm: () => freeTask(selectedTask, qty),
       ImageCmp: jsx(Image, {})
-    }), jsx(ConfirmModal, {
+    }), rejectTask && jsx(ConfirmModal, {
       visible: openModal === 'rejectModal',
       title: "\u00BFDeseas rechazar la solicitud?",
       subTitle: 'Esta acci\u00F3n es irreversible y no podr\u00E1 ser modificada posteriormente.',
@@ -13704,6 +13730,13 @@ const ProductDetail = ({
       onClose: () => setOpenModal(undefined),
       onConfirm: () => rejectTask(selectedTask, qty),
       ImageCmp: jsx(Image$1, {})
+    }), reverseTask && jsx(ConfirmModal, {
+      visible: openModal === 'reverseModal',
+      title: "\u00BFDeseas reversar la solicitud?",
+      btnActionText: "Reversar",
+      onClose: () => setOpenModal(undefined),
+      onConfirm: () => reverseTask(selectedTask),
+      ImageCmp: jsx(Image, {})
     })]
   });
 };
@@ -15085,8 +15118,7 @@ $({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, 
 });
 
 const TaskStateTag = props => {
-  var _a;
-  const status = (_a = props.task.meta_data.releaseResponse) === null || _a === void 0 ? void 0 : _a.status;
+  const status = props.task.meta_data.flowToApprove;
   if (status) {
     if (status === 'APPROVED') {
       return jsx(Ramen.XTagState, {
@@ -15100,12 +15132,14 @@ const TaskStateTag = props => {
         state: 'error',
         text: 'Rechazado'
       });
-    } else {
+    } else if (status === 'REVERSED') {
       return jsx(Ramen.XTagState, {
         type: 'solid',
         state: 'info',
         text: 'Reversado'
       });
+    } else {
+      return null;
     }
   } else {
     return null;
@@ -15149,8 +15183,7 @@ const ImgDataCard = ({
   return jsx(Ramen.XCard, {
     children: jsxs(Ramen.XBox, Object.assign({
       gap: "l",
-      width: 'full',
-      onClick: () => onClick()
+      width: 'full'
     }, {
       children: [jsx(Ramen.XBox, Object.assign({
         orientation: "horizontal",
@@ -15181,7 +15214,8 @@ const ImgDataCard = ({
           })
         })), jsxs(Ramen.XBox, Object.assign({
           gap: "xxs",
-          width: 'full'
+          width: 'full',
+          onClick: () => onClick()
         }, {
           children: [jsx(Ramen.XText, Object.assign({
             weight: "bold",
@@ -15462,6 +15496,7 @@ const SummaryPageWrapper = props => {
   const [activeTab, setActiveTab] = useState();
   const [currentTasks, setCurrentTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState();
+  const [awaitTask, setAwaitTask] = useState();
   const [user, setUser] = useState();
   const history = useHistory();
   const goHome = useCallback(() => {
@@ -15471,21 +15506,66 @@ const SummaryPageWrapper = props => {
       window.location.replace('/');
     }
   }, [history]);
+  const reverseTask = task => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+      setLoading(true);
+      setMode('LIST');
+      yield props.taskClient.setTaskAction({
+        reports: [{
+          id: task.id,
+          action: 'REVERSED'
+        }]
+      });
+      Ramen.Api.snackbar.success({
+        placement: 'top',
+        duration: 5,
+        closable: true,
+        text: 'Solicitud reversada con éxito'
+      });
+      setAwaitTask({
+        task: task.id,
+        retry: 0
+      });
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  });
   const loadTasks = useCallback(tab => __awaiter(void 0, void 0, void 0, function* () {
     setLoading(true);
     try {
       if (tab) {
         const fn = props.dataFn[tab];
         const tasks = yield fn();
-        setCurrentTasks(tasks);
+        if (awaitTask) {
+          const loaded = tasks.find(item => item.id === awaitTask.task);
+          if (loaded || awaitTask.retry >= 3) {
+            setAwaitTask(undefined);
+            setCurrentTasks(tasks);
+            setLoading(false);
+          } else {
+            setAwaitTask({
+              task: awaitTask.task,
+              retry: awaitTask.retry + 1
+            });
+          }
+        } else {
+          setCurrentTasks(tasks);
+          setLoading(false);
+        }
       } else {
         setCurrentTasks([]);
+        setLoading(false);
       }
     } catch (error) {
       setError(true);
     }
-    setLoading(false);
-  }), [props.dataFn]);
+  }), [props.dataFn, awaitTask]);
+  useEffect(() => {
+    if (awaitTask) {
+      setTimeout(() => loadTasks(activeTab), 3000);
+    }
+  }, [loadTasks, awaitTask, activeTab]);
   useEffect(() => {
     if (loading) {
       Ramen.Api.loading.show({
@@ -15555,8 +15635,7 @@ const SummaryPageWrapper = props => {
             setMode('LIST');
           },
           miniImageUrl: props.miniImageUrl,
-          rejectTask: () => Promise.resolve(),
-          freeTask: () => Promise.resolve(),
+          reverseTask: reverseTask,
           controlTag: props.controlTag,
           showActions: activeTab !== 'EXPIRED'
         });
@@ -15656,6 +15735,7 @@ class CreatorSummaryPage extends Page {
       PROCESSED: () => Promise.resolve([])
     };
     return jsx(SummaryPageWrapper, {
+      taskClient: taskClient,
       title: 'Listado de solicitudes',
       miniImageUrl: imgUrl,
       cardFields: TaskCardFields,
@@ -15696,7 +15776,7 @@ class ControlSummaryPage extends Page {
       imgUrl = (_f = this.props.extensions) === null || _f === void 0 ? void 0 : _f.triggers.miniImgUrlResolver;
     }
     const processedTasks = () => taskClient.processedTasks();
-    const expiredTasks = () => taskClient.creatorExpiredTasks();
+    const expiredTasks = () => taskClient.expiredTasks();
     const TaskCardFields = {
       PROCESSED: task => [{
         key: 'sku',
@@ -15734,6 +15814,7 @@ class ControlSummaryPage extends Page {
       PROCESSED: processedTasks
     };
     return jsx(SummaryPageWrapper, {
+      taskClient: taskClient,
       title: 'Solicitud de Consumo interno',
       miniImageUrl: imgUrl,
       cardFields: TaskCardFields,
@@ -15742,7 +15823,7 @@ class ControlSummaryPage extends Page {
       expectedUserLevel: 'CONTROL',
       tabs: ['PROCESSED', 'EXPIRED'],
       defaultTab: 'PROCESSED',
-      controlTag: false,
+      controlTag: true,
       showDetails: true
     });
   }
@@ -15774,7 +15855,7 @@ class RevisorSummaryPage extends Page {
       imgUrl = (_f = this.props.extensions) === null || _f === void 0 ? void 0 : _f.triggers.miniImgUrlResolver;
     }
     const processedTasks = () => taskClient.processedTasks();
-    const expiredTasks = () => taskClient.creatorExpiredTasks();
+    const expiredTasks = () => taskClient.expiredTasks();
     const TaskCardFields = {
       PROCESSED: task => [{
         key: 'sku',
@@ -15812,6 +15893,7 @@ class RevisorSummaryPage extends Page {
       PROCESSED: processedTasks
     };
     return jsx(SummaryPageWrapper, {
+      taskClient: taskClient,
       title: 'Solicitud de Consumo interno',
       miniImageUrl: imgUrl,
       cardFields: TaskCardFields,
