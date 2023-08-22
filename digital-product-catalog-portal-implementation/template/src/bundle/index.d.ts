@@ -1,6 +1,5 @@
 import { Header } from './Layout';
 import { DrawerCategories } from './components';
-import ModalCart from './components/ModalCart/ModalCart';
 import { PortalLayout } from './Layout/index';
 import { ICartPageExtension } from './flow/cart-page';
 import { IHomePageExtension } from './flow/home-page';
@@ -18,7 +17,7 @@ export interface IPortalModuleOverride extends Components.IModuleOverride {
 }
 export interface IModuleProps extends Components.IModuleProps {
 }
-export { Header, PortalLayout, ModalCart, DrawerCategories };
+export { Header, PortalLayout, DrawerCategories };
 export default abstract class PortalModule extends Components.Module<IPortalModuleOverride> {
     static route: string;
     constructor(props: IModuleProps, override: IPortalModuleOverride);
