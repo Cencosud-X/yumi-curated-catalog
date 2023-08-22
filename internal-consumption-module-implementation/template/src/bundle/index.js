@@ -3067,7 +3067,7 @@ const ConfirmModal = ({
     closable: true,
     onClose: onClose,
     onActionClick: onActionClick,
-    size: 'l',
+    size: 'xl',
     actions: [{
       key: "ok",
       text: btnActionText,
