@@ -1,7 +1,7 @@
-import Module, { IModuleProps, Footer, Header, CartContextProvider, GlobalContextProvider, ElevatorButton, DrawerCategories, LoaderScreen, ModalCart } from './bundle'
+import Module, { Header, ModalCart, DrawerCategories, PortalLayout, IModuleProps } from './bundle'
 import './bundle/index.css'
 
-export { Footer, Header, CartContextProvider, GlobalContextProvider, ElevatorButton, LoaderScreen, ModalCart, DrawerCategories }
+export { Header, ModalCart, DrawerCategories, PortalLayout }
 
 export class {{#pascalCase data.name}}{{/pascalCase}}OverrideModule extends Module {
     constructor(props: IModuleProps) {

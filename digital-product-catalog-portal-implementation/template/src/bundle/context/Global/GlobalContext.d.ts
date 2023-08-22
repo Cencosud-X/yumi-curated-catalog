@@ -11,6 +11,8 @@ interface IContext {
     setLoader: (status: boolean) => void;
     isOpenModalCategories: boolean;
     setIsOpenModalCategories: (open: boolean) => void;
+    isOpenModalLogin: boolean;
+    setIsOpenModalLogin: (open: boolean) => void;
 }
 declare const useGlobal: () => IContext;
 export { GlobalContextProvider, useGlobal };

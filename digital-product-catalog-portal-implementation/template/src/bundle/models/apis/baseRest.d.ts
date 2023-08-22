@@ -27,6 +27,7 @@ export default class BaseRest {
     handleError: (error: any) => Promise<never>;
     getToken(): string | undefined;
     getLanguage(): string;
+    removeToken(remember: boolean): void;
     setToken(token: string, remember?: boolean): void;
 }
 export {};

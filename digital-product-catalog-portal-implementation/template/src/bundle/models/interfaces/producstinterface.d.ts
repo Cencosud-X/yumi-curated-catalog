@@ -10,5 +10,5 @@ export interface IProduct {
     inStock: boolean;
     price: number;
     quantity: number;
-    metadata?: Record<string, any>;
+    metadata?: any;
 }
