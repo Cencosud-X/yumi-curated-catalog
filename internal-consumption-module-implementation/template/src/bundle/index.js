@@ -1,7 +1,7 @@
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import { IonRouterOutlet } from '@ionic/react';
 import * as React from 'react';
-import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import React__default, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { Route, useHistory } from 'react-router-dom';
 import Ramen from '@team_yumi/ramen';
 import { useScanner, ScannerHoC } from '@team_yumi/code-scanner';
@@ -2794,17 +2794,21 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 };
 
-const BarCodeScanner = ({
-  searchDisabled,
-  autoFocused,
-  onScan,
-  isCodeValid
-}) => {
+const BarCodeScanner = /*#__PURE__*/React__default.forwardRef((props, barcodeInputRef) => {
+  const {
+    searchDisabled,
+    autoFocused,
+    onScan,
+    isCodeValid,
+    focusInput
+  } = props;
   const [barcodeNumber, setBarcodeNumber] = useState('');
-  const barcodeInputRef = useRef(null);
+  // const barcodeInputRef = useRef<HTMLInputElement>(null);
   const printWhenMainClick = () => {
-    barcodeInputRef.current && barcodeInputRef.current.focus();
+    focusInput();
+    // barcodeInputRef.current && barcodeInputRef.current.focus();
   };
+
   const {
     startScan
   } = useScanner(printWhenMainClick);
@@ -2844,7 +2848,8 @@ const BarCodeScanner = ({
   };
   useEffect(() => {
     if (autoFocused) {
-      barcodeInputRef.current && barcodeInputRef.current.focus();
+      // barcodeInputRef.current && barcodeInputRef.current.focus();
+      focusInput();
     }
   }, [autoFocused]);
   return jsxs(Ramen.XBox, Object.assign({
@@ -2870,7 +2875,7 @@ const BarCodeScanner = ({
       onClick: handleCameraClick
     })]
   }));
-};
+});
 
 var $$a = _export;
 var DESCRIPTORS = descriptors;
@@ -9285,6 +9290,7 @@ const ToolPageWrapper = props => {
   const [selectedCostCenter, setSelectedCostCenter] = useState(StorageInstance.getMetaData());
   const [hasError, setHasError] = useState(false);
   const [open, setOpen] = useState(false);
+  const barcodeInputRef = useRef(null);
   const history = useHistory();
   const goHome = useCallback(() => {
     if (history) {
@@ -9315,6 +9321,7 @@ const ToolPageWrapper = props => {
     if (center) {
       setSelectedCostCenter(center);
     }
+    focusInput();
   };
   const checkModuleAccessFn = useCallback(() => __awaiter(void 0, void 0, void 0, function* () {
     const _user = yield safeRestCall(() => props.moduleClient.getICUser());
@@ -9331,6 +9338,13 @@ const ToolPageWrapper = props => {
       setTimeout(goHome, 3000);
     }
   }), [goHome, loadCostCeners, props.moduleClient]);
+  const focusInput = () => {
+    barcodeInputRef.current && barcodeInputRef.current.focus();
+  };
+  const handleCloseProductListModal = () => {
+    setOpen(false);
+    focusInput();
+  };
   useEffect(() => {
     checkModuleAccessFn();
   }, []);
@@ -9386,6 +9400,8 @@ const ToolPageWrapper = props => {
               searchDisabled: !(selectedCostCenter === null || selectedCostCenter === void 0 ? void 0 : selectedCostCenter.id),
               autoFocused: true,
               isCodeValid: props.productClient.isCodeValid,
+              ref: barcodeInputRef,
+              focusInput: focusInput,
               onScan: code => __awaiter(void 0, void 0, void 0, function* () {
                 var _a, _b;
                 console.log('PCode', code);
@@ -9514,11 +9530,11 @@ const ToolPageWrapper = props => {
         open: open,
         tasks: tasks,
         miniImageUrl: props.miniImageUrl,
-        onClose: () => setOpen(false),
+        onClose: handleCloseProductListModal,
         onDelete: task => {
           const newTasks = tasks.filter(item => item.id !== task.id);
           if (newTasks.length === 0) {
-            setOpen(false);
+            handleCloseProductListModal();
           }
           setTasks(newTasks);
         },
