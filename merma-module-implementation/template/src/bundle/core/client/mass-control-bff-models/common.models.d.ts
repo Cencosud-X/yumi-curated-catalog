@@ -10,22 +10,22 @@ export declare const productDetailsSchema: z.ZodObject<{
     ean: z.ZodString;
     sku: z.ZodString;
 }, "strip", z.ZodTypeAny, {
+    name: string;
+    image: string;
     ean: string;
     price: number;
     ntrStock: number;
     averageSale: number;
-    image: string;
-    name: string;
     provider: string;
     brand: string;
     sku: string;
 }, {
+    name: string;
+    image: string;
     ean: string;
     price: number;
     ntrStock: number;
     averageSale: number;
-    image: string;
-    name: string;
     provider: string;
     brand: string;
     sku: string;

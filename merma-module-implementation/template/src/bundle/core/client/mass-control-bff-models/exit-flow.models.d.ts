@@ -1,11 +1,11 @@
 import { z } from 'zod';
 export declare const productUnitInformationSchema: z.ZodObject<{
+    name: z.ZodString;
+    image: z.ZodString;
     ean: z.ZodString;
     price: z.ZodNumber;
     ntrStock: z.ZodNumber;
     averageSale: z.ZodNumber;
-    image: z.ZodString;
-    name: z.ZodString;
     provider: z.ZodString;
     brand: z.ZodString;
     sku: z.ZodString;
@@ -16,12 +16,12 @@ export declare const productUnitInformationSchema: z.ZodObject<{
     tally: z.ZodString;
     usefulLifeDays: z.ZodNumber;
 }, "strip", z.ZodTypeAny, {
+    name: string;
+    image: string;
     ean: string;
     price: number;
     ntrStock: number;
     averageSale: number;
-    image: string;
-    name: string;
     provider: string;
     brand: string;
     sku: string;
@@ -32,12 +32,12 @@ export declare const productUnitInformationSchema: z.ZodObject<{
     tally: string;
     usefulLifeDays: number;
 }, {
+    name: string;
+    image: string;
     ean: string;
     price: number;
     ntrStock: number;
     averageSale: number;
-    image: string;
-    name: string;
     provider: string;
     brand: string;
     sku: string;
@@ -108,9 +108,9 @@ export declare const productExitBodySchema: z.ZodUnion<[z.ZodObject<{
 }>]>;
 export declare type ProductExitBody = z.infer<typeof productExitBodySchema>;
 export declare const productsInformationSchema: z.ZodObject<{
-    ean: z.ZodString;
-    image: z.ZodString;
     name: z.ZodString;
+    image: z.ZodString;
+    ean: z.ZodString;
     sku: z.ZodString;
     netWeight: z.ZodNumber;
     expirationDate: z.ZodDate;
@@ -120,9 +120,9 @@ export declare const productsInformationSchema: z.ZodObject<{
     usefulLifeDays: z.ZodNumber;
     barcode: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
-    ean: string;
-    image: string;
     name: string;
+    image: string;
+    ean: string;
     sku: string;
     netWeight: number;
     expirationDate: Date;
@@ -132,9 +132,9 @@ export declare const productsInformationSchema: z.ZodObject<{
     usefulLifeDays: number;
     barcode?: string | undefined;
 }, {
-    ean: string;
-    image: string;
     name: string;
+    image: string;
+    ean: string;
     sku: string;
     netWeight: number;
     expirationDate: Date;
@@ -147,9 +147,9 @@ export declare const productsInformationSchema: z.ZodObject<{
 export declare type ProductsInformation = z.infer<typeof productsInformationSchema>;
 export declare const productsInformationResponseSchema: z.ZodObject<{
     result: z.ZodArray<z.ZodObject<{
-        ean: z.ZodString;
-        image: z.ZodString;
         name: z.ZodString;
+        image: z.ZodString;
+        ean: z.ZodString;
         sku: z.ZodString;
         netWeight: z.ZodNumber;
         expirationDate: z.ZodDate;
@@ -159,9 +159,9 @@ export declare const productsInformationResponseSchema: z.ZodObject<{
         usefulLifeDays: z.ZodNumber;
         barcode: z.ZodOptional<z.ZodString>;
     }, "strip", z.ZodTypeAny, {
-        ean: string;
-        image: string;
         name: string;
+        image: string;
+        ean: string;
         sku: string;
         netWeight: number;
         expirationDate: Date;
@@ -171,9 +171,9 @@ export declare const productsInformationResponseSchema: z.ZodObject<{
         usefulLifeDays: number;
         barcode?: string | undefined;
     }, {
-        ean: string;
-        image: string;
         name: string;
+        image: string;
+        ean: string;
         sku: string;
         netWeight: number;
         expirationDate: Date;
@@ -185,9 +185,9 @@ export declare const productsInformationResponseSchema: z.ZodObject<{
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
     result: {
-        ean: string;
-        image: string;
         name: string;
+        image: string;
+        ean: string;
         sku: string;
         netWeight: number;
         expirationDate: Date;
@@ -199,9 +199,9 @@ export declare const productsInformationResponseSchema: z.ZodObject<{
     }[];
 }, {
     result: {
-        ean: string;
-        image: string;
         name: string;
+        image: string;
+        ean: string;
         sku: string;
         netWeight: number;
         expirationDate: Date;

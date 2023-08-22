@@ -1,11 +1,11 @@
 import { z } from 'zod';
 export declare const productInfoResponseSchema: z.ZodObject<{
+    name: z.ZodString;
+    image: z.ZodString;
     ean: z.ZodString;
     price: z.ZodNumber;
     ntrStock: z.ZodNumber;
     averageSale: z.ZodNumber;
-    image: z.ZodString;
-    name: z.ZodString;
     provider: z.ZodString;
     brand: z.ZodString;
     sku: z.ZodString;
@@ -17,12 +17,12 @@ export declare const productInfoResponseSchema: z.ZodObject<{
     tally: z.ZodOptional<z.ZodString>;
     usefulLifeDays: z.ZodNumber;
 }, "strip", z.ZodTypeAny, {
+    name: string;
+    image: string;
     ean: string;
     price: number;
     ntrStock: number;
     averageSale: number;
-    image: string;
-    name: string;
     provider: string;
     brand: string;
     sku: string;
@@ -34,12 +34,12 @@ export declare const productInfoResponseSchema: z.ZodObject<{
     barcode?: string | undefined;
     tally?: string | undefined;
 }, {
+    name: string;
+    image: string;
     ean: string;
     price: number;
     ntrStock: number;
     averageSale: number;
-    image: string;
-    name: string;
     provider: string;
     brand: string;
     sku: string;
@@ -125,12 +125,12 @@ export declare const ProductCartSchema: z.ZodObject<{
     tally: z.ZodOptional<z.ZodString>;
     barcode: z.ZodOptional<z.ZodString>;
     productDetails: z.ZodObject<{
+        name: z.ZodString;
+        image: z.ZodString;
         ean: z.ZodString;
         price: z.ZodNumber;
         ntrStock: z.ZodNumber;
         averageSale: z.ZodNumber;
-        image: z.ZodString;
-        name: z.ZodString;
         provider: z.ZodString;
         brand: z.ZodString;
         sku: z.ZodString;
@@ -142,12 +142,12 @@ export declare const ProductCartSchema: z.ZodObject<{
         tally: z.ZodOptional<z.ZodString>;
         usefulLifeDays: z.ZodNumber;
     }, "strip", z.ZodTypeAny, {
+        name: string;
+        image: string;
         ean: string;
         price: number;
         ntrStock: number;
         averageSale: number;
-        image: string;
-        name: string;
         provider: string;
         brand: string;
         sku: string;
@@ -159,12 +159,12 @@ export declare const ProductCartSchema: z.ZodObject<{
         barcode?: string | undefined;
         tally?: string | undefined;
     }, {
+        name: string;
+        image: string;
         ean: string;
         price: number;
         ntrStock: number;
         averageSale: number;
-        image: string;
-        name: string;
         provider: string;
         brand: string;
         sku: string;
@@ -181,12 +181,12 @@ export declare const ProductCartSchema: z.ZodObject<{
     netWeight: number;
     quantity: number;
     productDetails: {
+        name: string;
+        image: string;
         ean: string;
         price: number;
         ntrStock: number;
         averageSale: number;
-        image: string;
-        name: string;
         provider: string;
         brand: string;
         sku: string;
@@ -205,12 +205,12 @@ export declare const ProductCartSchema: z.ZodObject<{
     netWeight: number;
     quantity: number;
     productDetails: {
+        name: string;
+        image: string;
         ean: string;
         price: number;
         ntrStock: number;
         averageSale: number;
-        image: string;
-        name: string;
         provider: string;
         brand: string;
         sku: string;

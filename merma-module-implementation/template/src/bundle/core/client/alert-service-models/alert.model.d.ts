@@ -9,12 +9,12 @@ export declare const alertSchema: z.ZodObject<{
     updatedAt: z.ZodDefault<z.ZodDate>;
     ean: z.ZodString;
     product: z.ZodObject<{
+        name: z.ZodString;
+        image: z.ZodString;
         ean: z.ZodString;
         price: z.ZodNumber;
         ntrStock: z.ZodNumber;
         averageSale: z.ZodNumber;
-        image: z.ZodString;
-        name: z.ZodString;
         provider: z.ZodString;
         brand: z.ZodString;
         sku: z.ZodString;
@@ -25,12 +25,12 @@ export declare const alertSchema: z.ZodObject<{
         tally: z.ZodString;
         usefulLifeDays: z.ZodNumber;
     }, "strip", z.ZodTypeAny, {
+        name: string;
+        image: string;
         ean: string;
         price: number;
         ntrStock: number;
         averageSale: number;
-        image: string;
-        name: string;
         provider: string;
         brand: string;
         sku: string;
@@ -41,12 +41,12 @@ export declare const alertSchema: z.ZodObject<{
         tally: string;
         usefulLifeDays: number;
     }, {
+        name: string;
+        image: string;
         ean: string;
         price: number;
         ntrStock: number;
         averageSale: number;
-        image: string;
-        name: string;
         provider: string;
         brand: string;
         sku: string;
@@ -68,12 +68,12 @@ export declare const alertSchema: z.ZodObject<{
     updatedAt: Date;
     ean: string;
     product: {
+        name: string;
+        image: string;
         ean: string;
         price: number;
         ntrStock: number;
         averageSale: number;
-        image: string;
-        name: string;
         provider: string;
         brand: string;
         sku: string;
@@ -93,12 +93,12 @@ export declare const alertSchema: z.ZodObject<{
     local: string;
     ean: string;
     product: {
+        name: string;
+        image: string;
         ean: string;
         price: number;
         ntrStock: number;
         averageSale: number;
-        image: string;
-        name: string;
         provider: string;
         brand: string;
         sku: string;

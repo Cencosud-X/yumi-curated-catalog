@@ -1,4 +1,4 @@
-import { MermaContextType } from '../../core/context/MermaContext';
+import { MermaContextType } from '../../core/context/merma-context/MermaContext';
 import { Components } from '../../sdk';
 import React from 'react';
 export interface IHomePageExtension extends Components.IPageExtensions {
