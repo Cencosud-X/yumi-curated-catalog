@@ -1,15 +1,7 @@
 /// <reference types="react" />
+import { IProductsPageExtension } from '../../../../core/interfaces';
 import { MermaContextType } from '../../../../core/context/merma-context/MermaContext';
 import { Components } from '../../../../sdk';
-export interface IProductsPageExtension extends Components.IPageExtensions {
-    white_boxes: {
-        red_box: React.ComponentClass;
-    };
-    triggers: {
-        get_user_token: () => Promise<string>;
-        url_env: () => Promise<string>;
-    };
-}
 export interface IProps extends Components.IPageProps<{}, IProductsPageExtension> {
 }
 export interface IState {

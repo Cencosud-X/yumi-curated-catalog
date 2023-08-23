@@ -1,16 +1,6 @@
 /// <reference types="react" />
-import { IHomePageExtension } from './flow/home-page';
-import { IProductsPageExtension } from './flow/flow-cl/pages/products-page';
-import { IAlertPageExtension } from './flow/flow-cl/pages/product-alert-page';
 import { Components } from './sdk';
-export interface IMermaModuleOverride extends Components.IModuleOverride {
-    extensions?: {
-        home_page: IHomePageExtension;
-        products_page: IProductsPageExtension;
-        alert_page: IAlertPageExtension;
-    };
-    routes?: Components.IModuleRoute[];
-}
+import { IMermaModuleOverride } from './core/interfaces';
 export declare type IModuleProps = Components.IModuleProps;
 export default abstract class MermaModule extends Components.Module<IMermaModuleOverride> {
     static route: string;

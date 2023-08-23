@@ -1,5 +1,6 @@
 import { ScanResultType, TallyData } from '../../types.d';
 import { z } from 'zod';
+import { Components } from '../../sdk';
 export declare const tallySchema: z.ZodString;
 export declare const barcodeSchema: z.ZodString;
 /**
@@ -11,3 +12,5 @@ export declare const classifyScanInput: (code: string) => ScanResultType;
 export declare const formatDate: (dateString: Date | string) => string;
 export declare const getWeightFromTally: (data: TallyData) => number;
 export declare const customCssCamera: () => void;
+export declare const getRoutesByCountry: (country: string) => Components.IModuleRoute[];
+export declare const getCountryByToken: (token: string) => string;

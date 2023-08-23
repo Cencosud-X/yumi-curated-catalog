@@ -1,14 +1,7 @@
 import { MermaContextType } from '../../core/context/merma-context/MermaContext';
+import { IHomePageExtension } from '../../core/interfaces';
 import { Components } from '../../sdk';
 import React from 'react';
-export interface IHomePageExtension extends Components.IPageExtensions {
-    white_boxes: {
-        red_box: React.ComponentClass;
-    };
-    triggers: {
-        get_user_token: () => Promise<string>;
-    };
-}
 export interface IProps extends Components.IPageProps<{}, IHomePageExtension> {
 }
 export interface IState {
