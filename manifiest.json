@@ -11,7 +11,7 @@
   },
   "descriptions": {
     "es": "Lista de plantillas de modulos regionales para Seki con configuraciones dinamicas por modulo disponibles para la región",
-    "en": "long description..."
+    "en": "List of regional module templates for Seki with dynamic module configurations available for the region"
   },
   "types": [
     "blank-source/typerc.json",
@@ -32,6 +32,6 @@
     "yumi-digital-checklist-portal-implementation/typerc.json",
     "arcus-documentation-implementation/typerc.json",
     "product-searcher-module-implementation/typerc.json",
-    "portal/typerc.json"
+    "portal-web-ramen/typerc.json"
   ]
 }
