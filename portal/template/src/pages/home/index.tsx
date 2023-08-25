@@ -1,26 +1,9 @@
-import React from 'react';
+import Ramen from '@team_yumi/ramen-web';
 
-import { RoutedProps, withRouter } from '../../components/router';
-import { Link } from 'react-router-dom';
-
-interface IState {}
-interface IRouteParams {}
-interface IRouteLocation {}
-interface IProps extends RoutedProps<IRouteParams, IRouteLocation> {}
-
-export default withRouter(
-  class RootPage extends React.Component<IProps, IState> {
-    override state: IState = {};
-
-    override render() {
-      return (
-        <>
-          <span>Welcome to Seki!</span>
-          <br />
-          <br />
-          <Link to={'/home/about'}>About</Link>
-        </>
-      );
-    }
-  }
-);
+export const HomePage = () => {
+    return (
+        <Ramen.XText>
+            Home Page
+        </Ramen.XText>
+    );
+}

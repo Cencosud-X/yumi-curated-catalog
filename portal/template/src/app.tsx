@@ -1,56 +1,135 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+/* Yummi SDK and Ramen imports */
+import * as SDK from '@team_yumi/sdk';
+import Ramen from '@team_yumi/ramen-web';
+/* Ramen Web styles imports */
+import '@team_yumi/ramen-web/index.css';
+import '@team_yumi/ramen-web/themes/fonts.css';
+import '@team_yumi/ramen-web/themes/default.css';
+/* Static Assets*/
+import AvatarImage from './assets/avatar.png';
+import SideBarLogoImage from './assets/sidebar-logo.png';
+import ExpandedSideBarLogoImage from './assets/sidebar-logo-expanded.png';
+/* Pages Imports */
+import { HomePage } from './pages/home';
+/* Components Imports */
+import { IMenuItem } from '@team_yumi/ramen-web/components/web/xsidebar/root';
+// YUMMI_IMPORT_INJECTION (DONT REMOVE THIS COMMENT)
+// END_YUMMI_IMPORT_INJECTION (DONT REMOVE THIS COMMENT)
 
-import './themes/default.css';
+/**
+ * Yummi SDK modules setup
+ */
+SDK.setupModules({stage: 'STAGING'});
+/* Default Menu Items */
+const menuItems = [
+    {
+        icon: 'home-outline',
+        key: 'home',
+        text: 'Inicio',
+        type: 'action'
+    },
+    {
+        text: 'Herramientas',
+        type: 'divider'
+    },
+    {
+        icon: 'list-outline',
+        key: 'assign_task',
+        text: 'Asignar tareas',
+        type: 'action'
+    },
+    {
+        icon: 'announcement-outline',
+        key: 'mailing',
+        text: 'Enviar comunicados',
+        type: 'action'
+    }
+];
 
-import BootingPage from './pages/booting';
-import SignInPage from './pages/sign-in';
+const App: React.FC = () => {
+    const [booting, setBooting] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [menu, setMenu] = useState<IMenuItem[]>(menuItems);
 
-interface IProps {}
-interface PageState {
-  booting: boolean;
-  authenticated: boolean;
-  layout?: React.ComponentClass;
-}
+    const onBootHandler = async () => {
+        setBooting(true);
+        // -------------------------------
+        // Boot your app here
+        await Promise.all([SDK.Lib.IAM.boot(), SDK.Lib.Settings.boot()]);
+        // -------------------------------
+        const isAuthenticated = SDK.Lib.IAM.isAuthenticated();
+        setIsAuthenticated(isAuthenticated);
+        setBooting(false);
+    };
 
-export default class App extends React.Component<IProps, PageState> {
-  override state: PageState = {
-    // Just for pre-boot that we really need
-    // before other clients
-    booting: true,
-    authenticated: false,
-  };
+    const onAuthenticatedHandler = () => {
+        setIsAuthenticated(true);
+    };
 
-  onBootCompleteHandler = async () => {
-    // Dynamic Import of the Main Layout 
-    // after, all booting ocurrs
-    const MainLayout = (await import('./pages/layout')).default;
+    const onSignOutHandler = () => {
+        window.location.reload();
+    };
 
-    this.setState({
-      booting: false,
-      layout: MainLayout,
-    });
-  };
-
-  onAuthenticatedHandler = async () => {
-    this.setState({
-      authenticated: true,
-    });
-  };
-
-
-  override render() {
-    const { booting, authenticated, layout } = this.state;
+    useEffect(() => {
+        onBootHandler();
+        SDK.Lib.EventStreamer.on(SDK.Lib.IAM.USER_SIGNOUT_EVENT, onSignOutHandler);
+        return () => SDK.Lib.EventStreamer.off(SDK.Lib.IAM.USER_SIGNOUT_EVENT, onSignOutHandler)
+    }, []);
 
     if (booting) {
-      return <BootingPage onLoadComplete={this.onBootCompleteHandler} />;
+        return <Ramen.XPage/>;
     }
 
-    if (!authenticated) {
-      return <SignInPage onAuthenticated={this.onAuthenticatedHandler} />;
+    /**
+     * @ToDo Ramen login page implementation
+     */
+    if (!isAuthenticated) {
+        return (
+            <Ramen.XConfigProvider theme="arcus" country="cl">
+                <Ramen.XApp>
+                    <Ramen.XPage>
+                        <Ramen.XText>
+                            Login Page
+                        </Ramen.XText>
+                    </Ramen.XPage>
+                </Ramen.XApp>
+            </Ramen.XConfigProvider>
+        );
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const MainLayout = layout!;
-    return <MainLayout />;
-  }
-}
+    return (
+        <Ramen.XConfigProvider theme="arcus" country="cl">
+            <Ramen.XApp>
+                <Ramen.XPage>
+                    <Ramen.XSidebar
+                        expandedLogo={ExpandedSideBarLogoImage}
+                        logo={SideBarLogoImage}
+                        menu={menu}
+                    />
+                    <Ramen.XHeader
+                        profile={{
+                            title: 'Administrador',
+                            name: 'Gabriela González',
+                            avatar: AvatarImage
+                        }}
+                    />
+                    <Ramen.XBody>
+                        <Ramen.XBox horizontalAlign="center" verticalAlign="center" height="full">
+                            <Router>
+                                <Switch>
+                                    <Route path="/" component={HomePage} exact={true}/>
+                                    {/*YUMMI_ROUTE_INJECTION (DONT REMOVE THIS COMMENT)  */}
+                                    {/*END_YUMMI_ROUTE_INJECTION (DONT REMOVE THIS COMMENT) */}
+                                </Switch>
+                            </Router>
+                        </Ramen.XBox>
+                    </Ramen.XBody>
+                </Ramen.XPage>
+            </Ramen.XApp>
+        </Ramen.XConfigProvider>
+    );
+};
+
+export default App;

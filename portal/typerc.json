@@ -5,7 +5,10 @@
     "Nestjs",
     "Api",
     "Node",
-    "React"
+    "React",
+    "Yumi",
+    "Ramen",
+    "Experimental"
   ],
   "kind": "web",
   "folder": "apps",
@@ -14,8 +17,8 @@
     "dark": "icons/icon.svg"
   },
   "descriptions": {
-    "es": "Plantilla de proyecto que se encuentra desarrollada bajo el framework React con funcionalidades de live reloading y webpack como su empaquetador.",
-    "en": "Project template based on the React framework with live reloading and webpack"
+    "es": "Plantilla de proyecto Web que se encuentra desarrollada bajo el framework React utilizando Ramen y Yumi para el manejo de dependencias y el manejo de la configuración del proyecto",
+    "en": "Web Project template based on the React framework using Ramen and Yumi for dependency management and project configuration management"
   },
   "scripts": {
     "pre": "scripts/pre.js",
