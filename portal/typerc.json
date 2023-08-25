@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
-  "name": "Portal",
+  "name": "Portal Web Ramen",
   "tags": [
     "Nestjs",
     "Api",
@@ -8,7 +8,7 @@
     "React",
     "Yumi",
     "Ramen",
-    "Experimental"
+    "experimental"
   ],
   "kind": "web",
   "folder": "apps",
