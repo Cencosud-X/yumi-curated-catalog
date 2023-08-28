@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Route, BrowserRouter } from 'react-router-dom';
 /* Yummi SDK and Ramen imports */
 import * as SDK from '@team_yumi/sdk';
 import Ramen from '@team_yumi/ramen-web';
@@ -51,7 +51,7 @@ const menuItems = [
 const App: React.FC = () => {
     const [booting, setBooting] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [menu, setMenu] = useState<IMenuItem[]>(menuItems);
+    const [menu, setMenu] = useState<IMenuItem[]>(menuItems as IMenuItem[]);
 
     const onBootHandler = async () => {
         setBooting(true);
@@ -117,13 +117,11 @@ const App: React.FC = () => {
                     />
                     <Ramen.XBody>
                         <Ramen.XBox horizontalAlign="center" verticalAlign="center" height="full">
-                            <Router>
-                                <Switch>
-                                    <Route path="/" component={HomePage} exact={true}/>
+                            <BrowserRouter>
+                                    <Route path="/" element={<HomePage/>}/>
                                     {/*YUMMI_ROUTE_INJECTION (DONT REMOVE THIS COMMENT)  */}
                                     {/*END_YUMMI_ROUTE_INJECTION (DONT REMOVE THIS COMMENT) */}
-                                </Switch>
-                            </Router>
+                            </BrowserRouter>
                         </Ramen.XBox>
                     </Ramen.XBody>
                 </Ramen.XPage>
