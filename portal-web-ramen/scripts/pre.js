@@ -6,8 +6,8 @@ module.exports = async (runner, args) => {
     await runner.execute([
       'npm install -D @nrwl/web@14.4.3',
       'npm install -D react-router-dom@6.3.0',
-      'npm install @team-yumi/ramen-web@latest',
-      'npm install @team-yumi/sdk@latest',
+      'npm install @team_yumi/ramen-web@latest',
+      'npm install @team_yumi/sdk@latest',
       `npx nx g @nrwl/web:app ${rc.path}`
     ], {
       cwd: rc.workspace_path
