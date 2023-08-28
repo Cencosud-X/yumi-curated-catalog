@@ -11,7 +11,6 @@ module.exports = async (runner, args) => {
       'rm -rf ./src/favicon.ico',
       'rm -rf ./src/main.ts',
       'rm -rf ./src/styles.css',
-      'rm -rf ./src/assets',
       'rm -rf ./src/environments',
     ], {
       cwd: args.workspacePath
