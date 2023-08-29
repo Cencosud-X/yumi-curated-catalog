@@ -1,0 +1,1 @@
+export declare const createSocket: (country: string, URL?: string) => import("socket.io-client").Socket<import("@socket.io/component-emitter").DefaultEventsMap, import("@socket.io/component-emitter").DefaultEventsMap>;
