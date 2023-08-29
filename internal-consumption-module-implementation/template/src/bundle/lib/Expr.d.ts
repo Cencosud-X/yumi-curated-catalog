@@ -40,6 +40,11 @@ declare class Expressions {
      */
     whenInNativePhone(callback: () => void): void;
     /**
+     * Execute a callback when we are in Native Phone (Capacitor)
+     * @param {()=>void} callback Function to execute if we are in a native phone
+     */
+    isNativePhone(): boolean;
+    /**
      * Execute a callback when we are not in Native Phone (Capacitor)
      * @param {()=>void} inCallback Function to execute if we are in a native phone
      */

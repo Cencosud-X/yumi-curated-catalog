@@ -24,3 +24,4 @@ export default abstract class InternalConsumptionModule extends Components.Modul
 export * from './clients/module-client.interface';
 export * from './clients/tasks-client.interface';
 export * from './clients/product-client.interface';
+export * from './lib/EventStreamer';

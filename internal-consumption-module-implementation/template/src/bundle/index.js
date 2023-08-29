@@ -1,12 +1,13 @@
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
-import { IonRouterOutlet } from '@ionic/react';
+import { IonRouterOutlet, isPlatform } from '@ionic/react';
 import * as React from 'react';
 import React__default, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { Route, useHistory } from 'react-router-dom';
 import Ramen from '@team_yumi/ramen';
-import { useScanner, ScannerHoC } from '@team_yumi/code-scanner';
+import { useScanner } from '@team_yumi/code-scanner';
 import '@team_yumi/code-scanner/index.css';
 import moment$2 from 'moment-timezone';
+import { Device } from '@capacitor/device';
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -2871,6 +2872,7 @@ const BarCodeScanner = /*#__PURE__*/React__default.forwardRef((props, barcodeInp
       onClick: handleSearchCodeClick,
       disabled: searchDisabled || !isCodeValid(barcodeNumber)
     }), jsx(Ramen.XButtonIcon, {
+      disabled: searchDisabled,
       icon: "camera-outline",
       onClick: handleCameraClick
     })]
@@ -9351,245 +9353,243 @@ const ToolPageWrapper = props => {
   useEffect(() => {
     StorageInstance.set(tasks, selectedCostCenter);
   }, [tasks, selectedCostCenter]);
-  return jsx(ScannerHoC, {
-    children: jsxs(Ramen.XPage, Object.assign({
-      skeleton: loading
-    }, {
-      children: [jsx(Ramen.XHeader, {
-        onBack: goHome,
-        title: 'Solicitud de Consumo Interno'
-      }), jsxs(Ramen.XBody, {
-        children: [jsx(Ramen.XSkeletonRenderer, Object.assign({
-          visible: loading
-        }, {
-          children: jsxs(Ramen.XBox, Object.assign({
-            gap: 'm'
-          }, {
-            children: [jsx(Ramen.XSkeleton, {
-              type: 'image',
-              size: 'xl',
-              width: 'xl'
-            }), jsx(Ramen.XSkeleton, {
-              type: 'image',
-              size: 'xl',
-              width: 'xl'
-            })]
-          }))
-        })), jsxs(Ramen.XBox, Object.assign({
+  return jsxs(Ramen.XPage, Object.assign({
+    skeleton: loading
+  }, {
+    children: [jsx(Ramen.XHeader, {
+      onBack: goHome,
+      title: 'Solicitud de Consumo Interno'
+    }), jsxs(Ramen.XBody, {
+      children: [jsx(Ramen.XSkeletonRenderer, Object.assign({
+        visible: loading
+      }, {
+        children: jsxs(Ramen.XBox, Object.assign({
           gap: 'm'
         }, {
-          children: [jsxs(Ramen.XBox, Object.assign({
-            gap: 's'
-          }, {
-            children: [jsx(Ramen.XText, {
-              children: "Centro de costo (*)"
-            }), jsx(Ramen.XSelect, {
-              title: 'Centro de costo',
-              options: constCentersSelectOptions,
-              okText: 'Aceptar',
-              onChange: opt => selectCostCenter(opt.value),
-              value: selectedCostCenter === null || selectedCostCenter === void 0 ? void 0 : selectedCostCenter.id,
-              searchable: true
-            })]
-          })), jsxs(Ramen.XBox, Object.assign({
-            gap: 's'
-          }, {
-            children: [jsx(Ramen.XText, {
-              children: "Carga los productos que deseas solicitar"
-            }), jsx(BarCodeScanner, {
-              searchDisabled: !(selectedCostCenter === null || selectedCostCenter === void 0 ? void 0 : selectedCostCenter.id),
-              autoFocused: true,
-              isCodeValid: props.productClient.isCodeValid,
-              ref: barcodeInputRef,
-              focusInput: focusInput,
-              onScan: code => __awaiter(void 0, void 0, void 0, function* () {
-                var _a, _b;
-                console.log('PCode', code);
-                if ((code === null || code === void 0 ? void 0 : code.length) > 0) {
-                  if (!selectedCostCenter) {
-                    Ramen.Api.snackbar.warning({
-                      placement: 'top',
-                      duration: 5,
-                      closable: true,
-                      text: 'Debe seleccionar el centro de costo.'
-                    });
-                    return;
-                  }
-                  const productInList = tasks.find(item => item.product.sku === parseInt(code) || item.product.ean === parseInt(code));
-                  if (productInList) {
-                    console.log('Exist p', productInList);
-                    const newTasks = [];
-                    tasks.forEach(item => {
-                      if (item.id === productInList.id) {
-                        const newTask = Object.assign(Object.assign({}, item), {
-                          id: `${new Date().getTime()}}`,
-                          count: item.count + 1
-                        });
-                        console.log('Update count', newTask);
-                        newTasks.push(newTask);
-                      } else {
-                        newTasks.push(item);
-                      }
-                    });
-                    setTasks(newTasks);
-                    Ramen.Api.snackbar.success({
-                      placement: 'top',
-                      duration: 5,
-                      closable: true,
-                      text: 'Producto adicionado.'
-                    });
-                  } else {
-                    try {
-                      Ramen.Api.loading.show({
-                        text: ''
+          children: [jsx(Ramen.XSkeleton, {
+            type: 'image',
+            size: 'xl',
+            width: 'xl'
+          }), jsx(Ramen.XSkeleton, {
+            type: 'image',
+            size: 'xl',
+            width: 'xl'
+          })]
+        }))
+      })), jsxs(Ramen.XBox, Object.assign({
+        gap: 'm'
+      }, {
+        children: [jsxs(Ramen.XBox, Object.assign({
+          gap: 's'
+        }, {
+          children: [jsx(Ramen.XText, {
+            children: "Centro de costo (*)"
+          }), jsx(Ramen.XSelect, {
+            title: 'Centro de costo',
+            options: constCentersSelectOptions,
+            okText: 'Aceptar',
+            onChange: opt => selectCostCenter(opt.value),
+            value: selectedCostCenter === null || selectedCostCenter === void 0 ? void 0 : selectedCostCenter.id,
+            searchable: true
+          })]
+        })), jsxs(Ramen.XBox, Object.assign({
+          gap: 's'
+        }, {
+          children: [jsx(Ramen.XText, {
+            children: "Carga los productos que deseas solicitar"
+          }), jsx(BarCodeScanner, {
+            searchDisabled: !(selectedCostCenter === null || selectedCostCenter === void 0 ? void 0 : selectedCostCenter.id),
+            autoFocused: true,
+            isCodeValid: props.productClient.isCodeValid,
+            ref: barcodeInputRef,
+            focusInput: focusInput,
+            onScan: code => __awaiter(void 0, void 0, void 0, function* () {
+              var _a, _b;
+              console.log('PCode', code);
+              if ((code === null || code === void 0 ? void 0 : code.length) > 0) {
+                if (!selectedCostCenter) {
+                  Ramen.Api.snackbar.warning({
+                    placement: 'top',
+                    duration: 5,
+                    closable: true,
+                    text: 'Debe seleccionar el centro de costo.'
+                  });
+                  return;
+                }
+                const productInList = tasks.find(item => item.product.sku === parseInt(code) || item.product.ean === parseInt(code));
+                if (productInList) {
+                  console.log('Exist p', productInList);
+                  const newTasks = [];
+                  tasks.forEach(item => {
+                    if (item.id === productInList.id) {
+                      const newTask = Object.assign(Object.assign({}, item), {
+                        id: `${new Date().getTime()}}`,
+                        count: item.count + 1
                       });
-                      const product = yield props.productClient.search(code);
-                      console.log(product);
-                      if (product) {
-                        const data = {
-                          id: `${new Date().getTime()}}`,
-                          product: product,
-                          count: 1
-                        };
-                        setTasks([...tasks, data]);
-                        Ramen.Api.snackbar.success({
-                          placement: 'top',
-                          duration: 5,
-                          closable: true,
-                          text: 'Producto adicionado.'
-                        });
-                      } else {
-                        Ramen.Api.snackbar.warning({
-                          placement: 'top',
-                          duration: 5,
-                          closable: true,
-                          text: 'El Producto no ha podido ser adicionado.'
-                        });
-                      }
+                      console.log('Update count', newTask);
+                      newTasks.push(newTask);
+                    } else {
+                      newTasks.push(item);
+                    }
+                  });
+                  setTasks(newTasks);
+                  Ramen.Api.snackbar.success({
+                    placement: 'top',
+                    duration: 5,
+                    closable: true,
+                    text: 'Producto adicionado.'
+                  });
+                } else {
+                  try {
+                    Ramen.Api.loading.show({
+                      text: ''
+                    });
+                    const product = yield props.productClient.search(code);
+                    console.log(product);
+                    if (product) {
+                      const data = {
+                        id: `${new Date().getTime()}}`,
+                        product: product,
+                        count: 1
+                      };
+                      setTasks([...tasks, data]);
+                      Ramen.Api.snackbar.success({
+                        placement: 'top',
+                        duration: 5,
+                        closable: true,
+                        text: 'Producto adicionado.'
+                      });
+                    } else {
+                      Ramen.Api.snackbar.warning({
+                        placement: 'top',
+                        duration: 5,
+                        closable: true,
+                        text: 'El Producto no ha podido ser adicionado.'
+                      });
+                    }
+                    Ramen.Api.loading.hide();
+                  } catch (error) {
+                    console.log(error);
+                    if (error.response.status === 400) {
+                      console.log((_a = error.response.data) === null || _a === void 0 ? void 0 : _a.message);
                       Ramen.Api.loading.hide();
-                    } catch (error) {
-                      console.log(error);
-                      if (error.response.status === 400) {
-                        console.log((_a = error.response.data) === null || _a === void 0 ? void 0 : _a.message);
-                        Ramen.Api.loading.hide();
-                        Ramen.Api.snackbar.warning({
-                          text: (_b = error.response.data) === null || _b === void 0 ? void 0 : _b.message,
-                          placement: 'top',
-                          closable: true
-                        });
-                      }
+                      Ramen.Api.snackbar.warning({
+                        text: (_b = error.response.data) === null || _b === void 0 ? void 0 : _b.message,
+                        placement: 'top',
+                        closable: true
+                      });
                     }
                   }
                 }
-              })
-            })]
-          }))]
-        })), tasks.length > 0 && jsx("div", Object.assign({
-          onClick: () => setOpen(true)
-        }, {
-          children: jsx(Ramen.XFooter, Object.assign({
-            background: 'gradient'
-          }, {
-            children: jsxs(Ramen.XBox, Object.assign({
-              width: 'full'
-            }, {
-              children: [jsx(Ramen.XBox, Object.assign({
-                orientation: 'horizontal',
-                width: 'full',
-                horizontalAlign: 'center',
-                height: 8
-              }, {
-                children: jsx(Ramen.XBox, Object.assign({
-                  width: 4
-                }, {
-                  children: jsx(Ramen.XDivider, {})
-                }))
-              })), jsxs(Ramen.XBox, Object.assign({
-                width: 'full',
-                orientation: 'horizontal',
-                horizontalAlign: 'between',
-                verticalAlign: 'center'
-              }, {
-                children: [jsx(Ramen.XText, {
-                  children: "Productos a solicitar"
-                }), jsxs(Ramen.XBox, Object.assign({
-                  orientation: 'horizontal',
-                  gap: 'xs'
-                }, {
-                  children: [jsx(Ramen.XIcon, {
-                    icon: 'book-outline'
-                  }), jsx(Ramen.XBadge, {
-                    value: tasks.length
-                  })]
-                }))]
-              }))]
-            }))
-          }))
+              }
+            })
+          })]
         }))]
-      }), selectedCostCenter && jsx(ProductListModal, {
-        open: open,
-        tasks: tasks,
-        miniImageUrl: props.miniImageUrl,
-        onClose: handleCloseProductListModal,
-        onDelete: task => {
-          const newTasks = tasks.filter(item => item.id !== task.id);
-          if (newTasks.length === 0) {
-            handleCloseProductListModal();
-          }
-          setTasks(newTasks);
-        },
-        onSend: () => __awaiter(void 0, void 0, void 0, function* () {
-          setLoading(true);
-          try {
-            const declarationsDTO = tasks.map(task => ({
-              id: task.id,
-              product: task.product.sku.toString(),
-              costCenter: selectedCostCenter,
-              count: task.count
-            }));
-            yield props.taskClient.createTasks({
-              costCenter: selectedCostCenter,
-              data: declarationsDTO
-            });
-            setTasks([]);
-            setSelectedCostCenter(undefined);
-            Ramen.Api.snackbar.success({
-              placement: 'top',
-              duration: 5,
-              closable: true,
-              text: 'Solicitud enviada con éxito'
-            });
-          } catch (error) {
-            Ramen.Api.snackbar.error({
-              placement: 'top',
-              duration: 5,
-              closable: true,
-              text: 'Ha ocurrido un error. Intente más tarde.'
-            });
-          } finally {
-            setLoading(false);
-          }
-        }),
-        onTaskChange: task => {
-          const newTasks = [];
-          tasks.forEach(item => {
-            if (item.id === task.id) {
-              newTasks.push(task);
-            } else {
-              newTasks.push(item);
-            }
-          });
-          setTasks(newTasks);
+      })), tasks.length > 0 && jsx("div", Object.assign({
+        onClick: () => setOpen(true)
+      }, {
+        children: jsx(Ramen.XFooter, Object.assign({
+          background: 'gradient'
+        }, {
+          children: jsxs(Ramen.XBox, Object.assign({
+            width: 'full'
+          }, {
+            children: [jsx(Ramen.XBox, Object.assign({
+              orientation: 'horizontal',
+              width: 'full',
+              horizontalAlign: 'center',
+              height: 8
+            }, {
+              children: jsx(Ramen.XBox, Object.assign({
+                width: 4
+              }, {
+                children: jsx(Ramen.XDivider, {})
+              }))
+            })), jsxs(Ramen.XBox, Object.assign({
+              width: 'full',
+              orientation: 'horizontal',
+              horizontalAlign: 'between',
+              verticalAlign: 'center'
+            }, {
+              children: [jsx(Ramen.XText, {
+                children: "Productos a solicitar"
+              }), jsxs(Ramen.XBox, Object.assign({
+                orientation: 'horizontal',
+                gap: 'xs'
+              }, {
+                children: [jsx(Ramen.XIcon, {
+                  icon: 'book-outline'
+                }), jsx(Ramen.XBadge, {
+                  value: tasks.length
+                })]
+              }))]
+            }))]
+          }))
+        }))
+      }))]
+    }), selectedCostCenter && jsx(ProductListModal, {
+      open: open,
+      tasks: tasks,
+      miniImageUrl: props.miniImageUrl,
+      onClose: handleCloseProductListModal,
+      onDelete: task => {
+        const newTasks = tasks.filter(item => item.id !== task.id);
+        if (newTasks.length === 0) {
+          handleCloseProductListModal();
         }
-      }), jsx(Ramen.XModal, {
-        closable: true,
-        onClose: goHome,
-        visible: hasError,
-        title: 'Ha ocurrido un error',
-        subtitle: 'Ha ocurrido un error mientras se intentaba cargar informaci\u00F3n.'
-      })]
-    }))
-  });
+        setTasks(newTasks);
+      },
+      onSend: () => __awaiter(void 0, void 0, void 0, function* () {
+        setLoading(true);
+        try {
+          const declarationsDTO = tasks.map(task => ({
+            id: task.id,
+            product: task.product.sku.toString(),
+            costCenter: selectedCostCenter,
+            count: task.count
+          }));
+          yield props.taskClient.createTasks({
+            costCenter: selectedCostCenter,
+            data: declarationsDTO
+          });
+          setTasks([]);
+          setSelectedCostCenter(undefined);
+          Ramen.Api.snackbar.success({
+            placement: 'top',
+            duration: 5,
+            closable: true,
+            text: 'Solicitud enviada con éxito'
+          });
+        } catch (error) {
+          Ramen.Api.snackbar.error({
+            placement: 'top',
+            duration: 5,
+            closable: true,
+            text: 'Ha ocurrido un error. Intente más tarde.'
+          });
+        } finally {
+          setLoading(false);
+        }
+      }),
+      onTaskChange: task => {
+        const newTasks = [];
+        tasks.forEach(item => {
+          if (item.id === task.id) {
+            newTasks.push(task);
+          } else {
+            newTasks.push(item);
+          }
+        });
+        setTasks(newTasks);
+      }
+    }), jsx(Ramen.XModal, {
+      closable: true,
+      onClose: goHome,
+      visible: hasError,
+      title: 'Ha ocurrido un error',
+      subtitle: 'Ha ocurrido un error mientras se intentaba cargar informaci\u00F3n.'
+    })]
+  }));
 };
 
 class ToolPage extends Page {
@@ -11599,6 +11599,7 @@ const CardList$1 = ({
     }), jsx(ConfirmModal, {
       visible: modalType === 'MIX',
       title: "\u00BFDeseas continuar con el proceso?",
+      subTitle: "La solicitud a liberar contiene productos aprobados y rechazados",
       btnActionText: "Continuar",
       onClose: () => setModalType(undefined),
       onConfirm: onBulkTaskRequest,
@@ -13757,6 +13758,683 @@ const ProductDetail = ({
   });
 };
 
+var $$7 = _export;
+var $includes = arrayIncludes.includes;
+var fails$2 = fails$o;
+var addToUnscopables = addToUnscopables$2;
+
+// FF99+ bug
+var BROKEN_ON_SPARSE = fails$2(function () {
+  // eslint-disable-next-line es/no-array-prototype-includes -- detection
+  return !Array(1).includes();
+});
+
+// `Array.prototype.includes` method
+// https://tc39.es/ecma262/#sec-array.prototype.includes
+$$7({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
+  includes: function includes(el /* , fromIndex = 0 */) {
+    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
+addToUnscopables('includes');
+
+var $$6 = _export;
+var uncurryThis$3 = functionUncurryThis;
+var notARegExp = notARegexp;
+var requireObjectCoercible = requireObjectCoercible$a;
+var toString = toString$c;
+var correctIsRegExpLogic = correctIsRegexpLogic;
+
+var stringIndexOf = uncurryThis$3(''.indexOf);
+
+// `String.prototype.includes` method
+// https://tc39.es/ecma262/#sec-string.prototype.includes
+$$6({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
+  includes: function includes(searchString /* , position = 0 */) {
+    return !!~stringIndexOf(
+      toString(requireObjectCoercible(this)),
+      toString(notARegExp(searchString)),
+      arguments.length > 1 ? arguments[1] : undefined
+    );
+  }
+});
+
+/**
+ * Expression Class (Guard Pattern)
+ */
+class Expressions {
+  /**
+   * Execute a callback when the condition is True
+   * @param {boolean} condition Expression to Check
+   * @param {()=>void} callback Function to execute if the condition is True
+   * @param {() => void} [falseCallback] Function to execute if the condition is False
+   */
+  whenTrue(condition, callback, falseCallback) {
+    if (condition) {
+      callback();
+    } else if (falseCallback) {
+      falseCallback();
+    }
+  }
+  /**
+   ** Execute a callback when the condition is False
+   * @param {boolean} condition Expression to Check
+   * @param {()=>void} callback Function to execute if the condition is False
+   * @param {() => void} [trueCallback] Function to execute if the condition is True
+   * @memberof Expressions
+   */
+  whenFalse(condition, callback, trueCallback) {
+    if (!condition) {
+      callback();
+    } else if (trueCallback) {
+      trueCallback();
+    }
+  }
+  /**
+   * Function to execute if the system are in TEST_MODE ENV = true
+   * @param {() => void} callback Function to execute if the condition is True
+   * @memberof Expressions
+   */
+  // whenTestMode(callback: () => void): any {
+  //   if (Secrets.REACT_APP_TEST_MODE === 'true') {
+  //     return callback();
+  //   }
+  // }
+  /**
+   * Function to execute if the user has the admin or developer role
+   * @param {() => void} callback Function to execute if the condition is True
+   * @returns {*}
+   * @memberof Expressions
+   */
+  // whenHasElevatePrivileges(callback: () => void): any {
+  //   const app_client_id = Secrets.REACT_APP_WALMART_PAY_APP_CLIENT_ID;
+  //   if (
+  //     AuthenticationClient.isAuthenticated() &&
+  //     AuthenticationClient.hasRole([
+  //       `${app_client_id}:owner`,
+  //       `${app_client_id}:admin`,
+  //       `${app_client_id}:developer`
+  //     ])
+  //   ) {
+  //     return callback();
+  //   }
+  // }
+  /**
+   * Function to execute if the user has the admin or developer role
+   * @param {() => void} callback Function to execute if the condition is True
+   * @returns {*}
+   * @memberof Expressions
+   */
+  // whenUserIsFromAStore(callback: () => void): any {
+  //   const user = AuthenticationClient.getInfo();
+  //   if (user.businessUnit.toLocaleLowerCase() !== '') {
+  //     return callback();
+  //   }
+  //   return <div></div>;
+  // }
+  /**
+   * Execute a callback when we are in Native Phone (Capacitor)
+   * @param {()=>void} callback Function to execute if we are in a native phone
+   */
+  whenInNativePhone(callback) {
+    if (isPlatform('capacitor')) {
+      callback();
+    }
+  }
+  /**
+   * Execute a callback when we are in Native Phone (Capacitor)
+   * @param {()=>void} callback Function to execute if we are in a native phone
+   */
+  isNativePhone() {
+    return isPlatform('capacitor');
+  }
+  /**
+   * Execute a callback when we are not in Native Phone (Capacitor)
+   * @param {()=>void} inCallback Function to execute if we are in a native phone
+   */
+  whenNotInNativePhone(callback) {
+    if (!isPlatform('capacitor')) {
+      callback();
+    }
+  }
+  /**
+   * Execute a callback when we are not in Native Phone (Capacitor)
+   * @param {()=>void} inCallback Function to execute if we are in a native phone
+   */
+  whenAndroid(callback, notCallback) {
+    if (isPlatform('android')) {
+      callback();
+    } else if (notCallback) {
+      notCallback();
+    }
+  }
+  /**
+   * Execute a callback when we are in IOS Platform
+   * @param {()=>void} inCallback Function to execute if we are in a native phone
+   */
+  whenIos(callback, notCallback) {
+    if (isPlatform('ios')) {
+      callback();
+    } else if (notCallback) {
+      notCallback();
+    }
+  }
+  /**
+   * Return a boolean when we are in PDA Platform
+   * @param {() => boolean}
+   */
+  whenPda() {
+    return __awaiter(this, void 0, void 0, function* () {
+      const deviceInfo = yield Device.getInfo();
+      return isPlatform('capacitor') && isPlatform('android') && (deviceInfo.model || '').includes('EDA51');
+    });
+  }
+  /**
+   * Return a boolean when my device is offline
+   * @param {() => boolean}
+   */
+  whenIsOfflineMyDevice() {
+    return !navigator.onLine;
+  }
+}
+var Expr = new Expressions();
+
+var events = {exports: {}};
+
+var R = typeof Reflect === 'object' ? Reflect : null;
+var ReflectApply = R && typeof R.apply === 'function'
+  ? R.apply
+  : function ReflectApply(target, receiver, args) {
+    return Function.prototype.apply.call(target, receiver, args);
+  };
+
+var ReflectOwnKeys;
+if (R && typeof R.ownKeys === 'function') {
+  ReflectOwnKeys = R.ownKeys;
+} else if (Object.getOwnPropertySymbols) {
+  ReflectOwnKeys = function ReflectOwnKeys(target) {
+    return Object.getOwnPropertyNames(target)
+      .concat(Object.getOwnPropertySymbols(target));
+  };
+} else {
+  ReflectOwnKeys = function ReflectOwnKeys(target) {
+    return Object.getOwnPropertyNames(target);
+  };
+}
+
+function ProcessEmitWarning(warning) {
+  if (console && console.warn) console.warn(warning);
+}
+
+var NumberIsNaN = Number.isNaN || function NumberIsNaN(value) {
+  return value !== value;
+};
+
+function EventEmitter() {
+  EventEmitter.init.call(this);
+}
+events.exports = EventEmitter;
+events.exports.once = once;
+
+// Backwards-compat with node 0.10.x
+EventEmitter.EventEmitter = EventEmitter;
+
+EventEmitter.prototype._events = undefined;
+EventEmitter.prototype._eventsCount = 0;
+EventEmitter.prototype._maxListeners = undefined;
+
+// By default EventEmitters will print a warning if more than 10 listeners are
+// added to it. This is a useful default which helps finding memory leaks.
+var defaultMaxListeners = 10;
+
+function checkListener(listener) {
+  if (typeof listener !== 'function') {
+    throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
+  }
+}
+
+Object.defineProperty(EventEmitter, 'defaultMaxListeners', {
+  enumerable: true,
+  get: function() {
+    return defaultMaxListeners;
+  },
+  set: function(arg) {
+    if (typeof arg !== 'number' || arg < 0 || NumberIsNaN(arg)) {
+      throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + arg + '.');
+    }
+    defaultMaxListeners = arg;
+  }
+});
+
+EventEmitter.init = function() {
+
+  if (this._events === undefined ||
+      this._events === Object.getPrototypeOf(this)._events) {
+    this._events = Object.create(null);
+    this._eventsCount = 0;
+  }
+
+  this._maxListeners = this._maxListeners || undefined;
+};
+
+// Obviously not all Emitters should be limited to 10. This function allows
+// that to be increased. Set to zero for unlimited.
+EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
+  if (typeof n !== 'number' || n < 0 || NumberIsNaN(n)) {
+    throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + n + '.');
+  }
+  this._maxListeners = n;
+  return this;
+};
+
+function _getMaxListeners(that) {
+  if (that._maxListeners === undefined)
+    return EventEmitter.defaultMaxListeners;
+  return that._maxListeners;
+}
+
+EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
+  return _getMaxListeners(this);
+};
+
+EventEmitter.prototype.emit = function emit(type) {
+  var args = [];
+  for (var i = 1; i < arguments.length; i++) args.push(arguments[i]);
+  var doError = (type === 'error');
+
+  var events = this._events;
+  if (events !== undefined)
+    doError = (doError && events.error === undefined);
+  else if (!doError)
+    return false;
+
+  // If there is no 'error' event listener then throw.
+  if (doError) {
+    var er;
+    if (args.length > 0)
+      er = args[0];
+    if (er instanceof Error) {
+      // Note: The comments on the `throw` lines are intentional, they show
+      // up in Node's output if this results in an unhandled exception.
+      throw er; // Unhandled 'error' event
+    }
+    // At least give some kind of context to the user
+    var err = new Error('Unhandled error.' + (er ? ' (' + er.message + ')' : ''));
+    err.context = er;
+    throw err; // Unhandled 'error' event
+  }
+
+  var handler = events[type];
+
+  if (handler === undefined)
+    return false;
+
+  if (typeof handler === 'function') {
+    ReflectApply(handler, this, args);
+  } else {
+    var len = handler.length;
+    var listeners = arrayClone(handler, len);
+    for (var i = 0; i < len; ++i)
+      ReflectApply(listeners[i], this, args);
+  }
+
+  return true;
+};
+
+function _addListener(target, type, listener, prepend) {
+  var m;
+  var events;
+  var existing;
+
+  checkListener(listener);
+
+  events = target._events;
+  if (events === undefined) {
+    events = target._events = Object.create(null);
+    target._eventsCount = 0;
+  } else {
+    // To avoid recursion in the case that type === "newListener"! Before
+    // adding it to the listeners, first emit "newListener".
+    if (events.newListener !== undefined) {
+      target.emit('newListener', type,
+                  listener.listener ? listener.listener : listener);
+
+      // Re-assign `events` because a newListener handler could have caused the
+      // this._events to be assigned to a new object
+      events = target._events;
+    }
+    existing = events[type];
+  }
+
+  if (existing === undefined) {
+    // Optimize the case of one listener. Don't need the extra array object.
+    existing = events[type] = listener;
+    ++target._eventsCount;
+  } else {
+    if (typeof existing === 'function') {
+      // Adding the second element, need to change to array.
+      existing = events[type] =
+        prepend ? [listener, existing] : [existing, listener];
+      // If we've already got an array, just append.
+    } else if (prepend) {
+      existing.unshift(listener);
+    } else {
+      existing.push(listener);
+    }
+
+    // Check for listener leak
+    m = _getMaxListeners(target);
+    if (m > 0 && existing.length > m && !existing.warned) {
+      existing.warned = true;
+      // No error code for this since it is a Warning
+      // eslint-disable-next-line no-restricted-syntax
+      var w = new Error('Possible EventEmitter memory leak detected. ' +
+                          existing.length + ' ' + String(type) + ' listeners ' +
+                          'added. Use emitter.setMaxListeners() to ' +
+                          'increase limit');
+      w.name = 'MaxListenersExceededWarning';
+      w.emitter = target;
+      w.type = type;
+      w.count = existing.length;
+      ProcessEmitWarning(w);
+    }
+  }
+
+  return target;
+}
+
+EventEmitter.prototype.addListener = function addListener(type, listener) {
+  return _addListener(this, type, listener, false);
+};
+
+EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+
+EventEmitter.prototype.prependListener =
+    function prependListener(type, listener) {
+      return _addListener(this, type, listener, true);
+    };
+
+function onceWrapper() {
+  if (!this.fired) {
+    this.target.removeListener(this.type, this.wrapFn);
+    this.fired = true;
+    if (arguments.length === 0)
+      return this.listener.call(this.target);
+    return this.listener.apply(this.target, arguments);
+  }
+}
+
+function _onceWrap(target, type, listener) {
+  var state = { fired: false, wrapFn: undefined, target: target, type: type, listener: listener };
+  var wrapped = onceWrapper.bind(state);
+  wrapped.listener = listener;
+  state.wrapFn = wrapped;
+  return wrapped;
+}
+
+EventEmitter.prototype.once = function once(type, listener) {
+  checkListener(listener);
+  this.on(type, _onceWrap(this, type, listener));
+  return this;
+};
+
+EventEmitter.prototype.prependOnceListener =
+    function prependOnceListener(type, listener) {
+      checkListener(listener);
+      this.prependListener(type, _onceWrap(this, type, listener));
+      return this;
+    };
+
+// Emits a 'removeListener' event if and only if the listener was removed.
+EventEmitter.prototype.removeListener =
+    function removeListener(type, listener) {
+      var list, events, position, i, originalListener;
+
+      checkListener(listener);
+
+      events = this._events;
+      if (events === undefined)
+        return this;
+
+      list = events[type];
+      if (list === undefined)
+        return this;
+
+      if (list === listener || list.listener === listener) {
+        if (--this._eventsCount === 0)
+          this._events = Object.create(null);
+        else {
+          delete events[type];
+          if (events.removeListener)
+            this.emit('removeListener', type, list.listener || listener);
+        }
+      } else if (typeof list !== 'function') {
+        position = -1;
+
+        for (i = list.length - 1; i >= 0; i--) {
+          if (list[i] === listener || list[i].listener === listener) {
+            originalListener = list[i].listener;
+            position = i;
+            break;
+          }
+        }
+
+        if (position < 0)
+          return this;
+
+        if (position === 0)
+          list.shift();
+        else {
+          spliceOne(list, position);
+        }
+
+        if (list.length === 1)
+          events[type] = list[0];
+
+        if (events.removeListener !== undefined)
+          this.emit('removeListener', type, originalListener || listener);
+      }
+
+      return this;
+    };
+
+EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
+
+EventEmitter.prototype.removeAllListeners =
+    function removeAllListeners(type) {
+      var listeners, events, i;
+
+      events = this._events;
+      if (events === undefined)
+        return this;
+
+      // not listening for removeListener, no need to emit
+      if (events.removeListener === undefined) {
+        if (arguments.length === 0) {
+          this._events = Object.create(null);
+          this._eventsCount = 0;
+        } else if (events[type] !== undefined) {
+          if (--this._eventsCount === 0)
+            this._events = Object.create(null);
+          else
+            delete events[type];
+        }
+        return this;
+      }
+
+      // emit removeListener for all listeners on all events
+      if (arguments.length === 0) {
+        var keys = Object.keys(events);
+        var key;
+        for (i = 0; i < keys.length; ++i) {
+          key = keys[i];
+          if (key === 'removeListener') continue;
+          this.removeAllListeners(key);
+        }
+        this.removeAllListeners('removeListener');
+        this._events = Object.create(null);
+        this._eventsCount = 0;
+        return this;
+      }
+
+      listeners = events[type];
+
+      if (typeof listeners === 'function') {
+        this.removeListener(type, listeners);
+      } else if (listeners !== undefined) {
+        // LIFO order
+        for (i = listeners.length - 1; i >= 0; i--) {
+          this.removeListener(type, listeners[i]);
+        }
+      }
+
+      return this;
+    };
+
+function _listeners(target, type, unwrap) {
+  var events = target._events;
+
+  if (events === undefined)
+    return [];
+
+  var evlistener = events[type];
+  if (evlistener === undefined)
+    return [];
+
+  if (typeof evlistener === 'function')
+    return unwrap ? [evlistener.listener || evlistener] : [evlistener];
+
+  return unwrap ?
+    unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
+}
+
+EventEmitter.prototype.listeners = function listeners(type) {
+  return _listeners(this, type, true);
+};
+
+EventEmitter.prototype.rawListeners = function rawListeners(type) {
+  return _listeners(this, type, false);
+};
+
+EventEmitter.listenerCount = function(emitter, type) {
+  if (typeof emitter.listenerCount === 'function') {
+    return emitter.listenerCount(type);
+  } else {
+    return listenerCount.call(emitter, type);
+  }
+};
+
+EventEmitter.prototype.listenerCount = listenerCount;
+function listenerCount(type) {
+  var events = this._events;
+
+  if (events !== undefined) {
+    var evlistener = events[type];
+
+    if (typeof evlistener === 'function') {
+      return 1;
+    } else if (evlistener !== undefined) {
+      return evlistener.length;
+    }
+  }
+
+  return 0;
+}
+
+EventEmitter.prototype.eventNames = function eventNames() {
+  return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
+};
+
+function arrayClone(arr, n) {
+  var copy = new Array(n);
+  for (var i = 0; i < n; ++i)
+    copy[i] = arr[i];
+  return copy;
+}
+
+function spliceOne(list, index) {
+  for (; index + 1 < list.length; index++)
+    list[index] = list[index + 1];
+  list.pop();
+}
+
+function unwrapListeners(arr) {
+  var ret = new Array(arr.length);
+  for (var i = 0; i < ret.length; ++i) {
+    ret[i] = arr[i].listener || arr[i];
+  }
+  return ret;
+}
+
+function once(emitter, name) {
+  return new Promise(function (resolve, reject) {
+    function errorListener(err) {
+      emitter.removeListener(name, resolver);
+      reject(err);
+    }
+
+    function resolver() {
+      if (typeof emitter.removeListener === 'function') {
+        emitter.removeListener('error', errorListener);
+      }
+      resolve([].slice.call(arguments));
+    }
+    eventTargetAgnosticAddListener(emitter, name, resolver, { once: true });
+    if (name !== 'error') {
+      addErrorHandlerIfEventEmitter(emitter, errorListener, { once: true });
+    }
+  });
+}
+
+function addErrorHandlerIfEventEmitter(emitter, handler, flags) {
+  if (typeof emitter.on === 'function') {
+    eventTargetAgnosticAddListener(emitter, 'error', handler, flags);
+  }
+}
+
+function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
+  if (typeof emitter.on === 'function') {
+    if (flags.once) {
+      emitter.once(name, listener);
+    } else {
+      emitter.on(name, listener);
+    }
+  } else if (typeof emitter.addEventListener === 'function') {
+    // EventTarget does not have `error` event semantics like Node
+    // EventEmitters, we do not listen for `error` events here.
+    emitter.addEventListener(name, function wrapListener(arg) {
+      // IE does not have builtin `{ once: true }` support so we
+      // have to do it manually.
+      if (flags.once) {
+        emitter.removeEventListener(name, wrapListener);
+      }
+      listener(arg);
+    });
+  } else {
+    throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof emitter);
+  }
+}
+
+var EVENTS_ENUM;
+(function (EVENTS_ENUM) {
+  EVENTS_ENUM[EVENTS_ENUM["ERROR_NOTIFICATION"] = 0] = "ERROR_NOTIFICATION";
+})(EVENTS_ENUM || (EVENTS_ENUM = {}));
+class EventStreamer {
+  on(event, listener) {
+    EventStreamer.emitter.on(event, listener);
+  }
+  off(event, listener) {
+    EventStreamer.emitter.off(event, listener);
+  }
+  emit(event, ...args) {
+    return EventStreamer.emitter.emit(event, ...args);
+  }
+}
+EventStreamer.emitter = new events.exports.EventEmitter();
+const ICEventStreamer = new EventStreamer();
+
 const TasksPageWrapper = props => {
   const [mode, setMode] = useState('LIST');
   const [loading, setLoading] = useState(true);
@@ -13925,6 +14603,22 @@ const TasksPageWrapper = props => {
     });
     initialLoad();
   }, [loadTasks, props.moduleClient, goOut, props.userLevel]);
+  useEffect(() => {
+    if (Expr.isNativePhone()) {
+      const listener = message => {
+        if ((message === null || message === void 0 ? void 0 : message.action) === 'RELEASE') {
+          loadTasks(user);
+        }
+      };
+      ICEventStreamer.on('ERROR_NOTIFICATION', listener);
+      return () => {
+        ICEventStreamer.off('ERROR_NOTIFICATION', listener);
+      };
+    }
+    return () => {
+      // Nothing
+    };
+  }, [user, loadTasks]);
   const renderCmp = mode => {
     switch (mode) {
       case 'LIST':
@@ -14053,8 +14747,8 @@ var anInstance$1 = function (it, Prototype) {
   throw $TypeError$5('Incorrect invocation');
 };
 
-var uncurryThis$3 = functionUncurryThis;
-var fails$2 = fails$o;
+var uncurryThis$2 = functionUncurryThis;
+var fails$1 = fails$o;
 var isCallable$4 = isCallable$o;
 var classof$1 = classof$6;
 var getBuiltIn$2 = getBuiltIn$7;
@@ -14064,7 +14758,7 @@ var noop = function () { /* empty */ };
 var empty = [];
 var construct = getBuiltIn$2('Reflect', 'construct');
 var constructorRegExp = /^\s*(?:class|function)\b/;
-var exec = uncurryThis$3(constructorRegExp.exec);
+var exec = uncurryThis$2(constructorRegExp.exec);
 var INCORRECT_TO_STRING = !constructorRegExp.exec(noop);
 
 var isConstructorModern = function isConstructor(argument) {
@@ -14098,7 +14792,7 @@ isConstructorLegacy.sham = true;
 
 // `IsConstructor` abstract operation
 // https://tc39.es/ecma262/#sec-isconstructor
-var isConstructor$1 = !construct || fails$2(function () {
+var isConstructor$1 = !construct || fails$1(function () {
   var called;
   return isConstructorModern(isConstructorModern.call)
     || !isConstructorModern(Object)
@@ -14132,11 +14826,11 @@ var speciesConstructor$1 = function (O, defaultConstructor) {
   return C === undefined || isNullOrUndefined$1(S = anObject$4(C)[SPECIES$1]) ? defaultConstructor : aConstructor(S);
 };
 
-var uncurryThis$2 = functionUncurryThisClause;
+var uncurryThis$1 = functionUncurryThisClause;
 var aCallable$5 = aCallable$8;
 var NATIVE_BIND = functionBindNative;
 
-var bind$4 = uncurryThis$2(uncurryThis$2.bind);
+var bind$4 = uncurryThis$1(uncurryThis$1.bind);
 
 // optional / simple context binding
 var functionBindContext = function (fn, that) {
@@ -14146,9 +14840,9 @@ var functionBindContext = function (fn, that) {
   };
 };
 
-var uncurryThis$1 = functionUncurryThis;
+var uncurryThis = functionUncurryThis;
 
-var arraySlice$1 = uncurryThis$1([].slice);
+var arraySlice$1 = uncurryThis([].slice);
 
 var $TypeError$3 = TypeError;
 
@@ -14167,7 +14861,7 @@ var apply = functionApply;
 var bind$3 = functionBindContext;
 var isCallable$3 = isCallable$o;
 var hasOwn = hasOwnProperty_1;
-var fails$1 = fails$o;
+var fails = fails$o;
 var html = html$2;
 var arraySlice = arraySlice$1;
 var createElement = documentCreateElement$2;
@@ -14187,7 +14881,7 @@ var queue$2 = {};
 var ONREADYSTATECHANGE = 'onreadystatechange';
 var $location, defer, channel, port;
 
-fails$1(function () {
+fails(function () {
   // Deno throws a ReferenceError on `location` access without `--location` flag
   $location = global$5.location;
 });
@@ -14254,7 +14948,7 @@ if (!set || !clear) {
     isCallable$3(global$5.postMessage) &&
     !global$5.importScripts &&
     $location && $location.protocol !== 'file:' &&
-    !fails$1(globalPostMessageDefer)
+    !fails(globalPostMessageDefer)
   ) {
     defer = globalPostMessageDefer;
     global$5.addEventListener('message', eventListener, false);
@@ -14491,7 +15185,7 @@ newPromiseCapability$2.f = function (C) {
   return new PromiseCapability(C);
 };
 
-var $$7 = _export;
+var $$5 = _export;
 var IS_NODE = engineIsNode;
 var global$1 = global$n;
 var call$6 = functionCall;
@@ -14771,7 +15465,7 @@ if (FORCED_PROMISE_CONSTRUCTOR$4) {
   }
 }
 
-$$7({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
+$$5({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
   Promise: PromiseConstructor
 });
 
@@ -14957,7 +15651,7 @@ var promiseStaticsIncorrectIteration = FORCED_PROMISE_CONSTRUCTOR$3 || !checkCor
   NativePromiseConstructor$1.all(iterable).then(undefined, function () { /* empty */ });
 });
 
-var $$6 = _export;
+var $$4 = _export;
 var call$2 = functionCall;
 var aCallable$1 = aCallable$8;
 var newPromiseCapabilityModule$2 = newPromiseCapability$2;
@@ -14967,7 +15661,7 @@ var PROMISE_STATICS_INCORRECT_ITERATION$1 = promiseStaticsIncorrectIteration;
 
 // `Promise.all` method
 // https://tc39.es/ecma262/#sec-promise.all
-$$6({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
+$$4({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
   all: function all(iterable) {
     var C = this;
     var capability = newPromiseCapabilityModule$2.f(C);
@@ -14996,7 +15690,7 @@ $$6({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION
   }
 });
 
-var $$5 = _export;
+var $$3 = _export;
 var FORCED_PROMISE_CONSTRUCTOR$2 = promiseConstructorDetection.CONSTRUCTOR;
 var NativePromiseConstructor = promiseNativeConstructor;
 var getBuiltIn$1 = getBuiltIn$7;
@@ -15007,7 +15701,7 @@ var NativePromisePrototype = NativePromiseConstructor && NativePromiseConstructo
 
 // `Promise.prototype.catch` method
 // https://tc39.es/ecma262/#sec-promise.prototype.catch
-$$5({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
+$$3({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
   'catch': function (onRejected) {
     return this.then(undefined, onRejected);
   }
@@ -15021,7 +15715,7 @@ if (isCallable(NativePromiseConstructor)) {
   }
 }
 
-var $$4 = _export;
+var $$2 = _export;
 var call$1 = functionCall;
 var aCallable = aCallable$8;
 var newPromiseCapabilityModule$1 = newPromiseCapability$2;
@@ -15031,7 +15725,7 @@ var PROMISE_STATICS_INCORRECT_ITERATION = promiseStaticsIncorrectIteration;
 
 // `Promise.race` method
 // https://tc39.es/ecma262/#sec-promise.race
-$$4({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
+$$2({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
   race: function race(iterable) {
     var C = this;
     var capability = newPromiseCapabilityModule$1.f(C);
@@ -15047,14 +15741,14 @@ $$4({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION
   }
 });
 
-var $$3 = _export;
+var $$1 = _export;
 var call = functionCall;
 var newPromiseCapabilityModule = newPromiseCapability$2;
 var FORCED_PROMISE_CONSTRUCTOR$1 = promiseConstructorDetection.CONSTRUCTOR;
 
 // `Promise.reject` method
 // https://tc39.es/ecma262/#sec-promise.reject
-$$3({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
+$$1({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
   reject: function reject(r) {
     var capability = newPromiseCapabilityModule.f(this);
     call(capability.reject, undefined, r);
@@ -15075,7 +15769,7 @@ var promiseResolve$1 = function (C, x) {
   return promiseCapability.promise;
 };
 
-var $$2 = _export;
+var $ = _export;
 var getBuiltIn = getBuiltIn$7;
 var FORCED_PROMISE_CONSTRUCTOR = promiseConstructorDetection.CONSTRUCTOR;
 var promiseResolve = promiseResolve$1;
@@ -15084,52 +15778,9 @@ getBuiltIn('Promise');
 
 // `Promise.resolve` method
 // https://tc39.es/ecma262/#sec-promise.resolve
-$$2({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR }, {
+$({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR }, {
   resolve: function resolve(x) {
     return promiseResolve(this, x);
-  }
-});
-
-var $$1 = _export;
-var $includes = arrayIncludes.includes;
-var fails = fails$o;
-var addToUnscopables = addToUnscopables$2;
-
-// FF99+ bug
-var BROKEN_ON_SPARSE = fails(function () {
-  // eslint-disable-next-line es/no-array-prototype-includes -- detection
-  return !Array(1).includes();
-});
-
-// `Array.prototype.includes` method
-// https://tc39.es/ecma262/#sec-array.prototype.includes
-$$1({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
-  includes: function includes(el /* , fromIndex = 0 */) {
-    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
-  }
-});
-
-// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
-addToUnscopables('includes');
-
-var $ = _export;
-var uncurryThis = functionUncurryThis;
-var notARegExp = notARegexp;
-var requireObjectCoercible = requireObjectCoercible$a;
-var toString = toString$c;
-var correctIsRegExpLogic = correctIsRegexpLogic;
-
-var stringIndexOf = uncurryThis(''.indexOf);
-
-// `String.prototype.includes` method
-// https://tc39.es/ecma262/#sec-string.prototype.includes
-$({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
-  includes: function includes(searchString /* , position = 0 */) {
-    return !!~stringIndexOf(
-      toString(requireObjectCoercible(this)),
-      toString(notARegExp(searchString)),
-      arguments.length > 1 ? arguments[1] : undefined
-    );
   }
 });
 
@@ -15536,7 +16187,7 @@ const SummaryPageWrapper = props => {
         placement: 'top',
         duration: 5,
         closable: true,
-        text: 'Solicitud reversada con éxito'
+        text: 'Solicitud enviada con éxito'
       });
       setAwaitTask({
         task: task.id,
@@ -15621,6 +16272,26 @@ const SummaryPageWrapper = props => {
     });
     checkAccess();
   }, []);
+  useEffect(() => {
+    if (Expr.isNativePhone()) {
+      const listener = message => {
+        if ((message === null || message === void 0 ? void 0 : message.action) === 'REVERSED') {
+          if (awaitTask) {
+            setAwaitTask(undefined);
+          } else {
+            loadTasks(activeTab);
+          }
+        }
+      };
+      ICEventStreamer.on('ERROR_NOTIFICATION', listener);
+      return () => {
+        ICEventStreamer.off('ERROR_NOTIFICATION', listener);
+      };
+    }
+    return () => {
+      // Nothing
+    };
+  }, [loadTasks, activeTab, awaitTask]);
   const renderMode = mode => {
     switch (mode) {
       case 'LIST':
@@ -15952,4 +16623,4 @@ class InternalConsumptionModule extends Module {
 }
 InternalConsumptionModule.route = '/internal-consumption';
 
-export { InternalConsumptionModule as default };
+export { ICEventStreamer, InternalConsumptionModule as default };
