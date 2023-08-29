@@ -8,7 +8,10 @@
   "dependencies": {},
   "peerDependencies": {
     "react": "^16.14.0",
-    "@ionic/react": "^7.1.1",
-    "react-router-dom": "^5.3.4"
+    "@ionic/react": "^7.3.0",
+    "react-router-dom": "^5.3.4",
+    "@team_yumi/code-scanner": "^0.0.6",
+    "react-draggable": "^4.4.5",
+    "moment-timezone": "^0.5.43"
   }
 }

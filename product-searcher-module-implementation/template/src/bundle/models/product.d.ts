@@ -1,0 +1,30 @@
+import { Assortment } from './assortment';
+import { Supplier } from './suplier';
+import NextSupplyModel from './INextSupplyModel';
+export interface Product {
+    sku: string;
+    ean: string;
+    description: string;
+    price: number;
+    fisicStock: number;
+    locationHall: string;
+    locationRack: string;
+    availableStock: number;
+    um?: string;
+    dangerousSubstance?: string;
+    assortment: Assortment;
+    trademark?: string;
+    section?: string;
+    sectionDescription?: string;
+    sectionGroup?: string;
+    subrubro?: string;
+    supplier: Supplier;
+    weight: string;
+    recepmerDate: string;
+    recepmerHour: string;
+    unitSoldLastWeek: number;
+    costSoldLastWeek: string;
+    nextSupply: NextSupplyModel;
+    nextSupplyDate: Date;
+    nextCantProxAbastDesp?: number;
+}

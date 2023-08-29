@@ -1,0 +1,7 @@
+#xloading-defaults > div {
+        z-index: 1000;
+}
+
+#xsnackbar-bottom-default > div {
+        z-index: 1000;
+}
