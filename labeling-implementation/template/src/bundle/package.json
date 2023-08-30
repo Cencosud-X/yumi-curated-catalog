@@ -1,0 +1,18 @@
+{
+  "name": "@yumi-labeling/mobile-module",
+  "version": "0.0.1",
+  "module": "./index.js",
+  "main": "./index.js",
+  "type": "module",
+  "types": "./index.d.ts",
+  "dependencies": {},
+  "peerDependencies": {
+    "react": "^16.14.0",
+    "react-router-dom": "^5.3.4",
+    "react-router": "^5.2.0",
+    "lodash": "^4.17.21",
+    "@team_yumi/ramen": "^0.0.3-next.1691622154314",
+    "@team_yumi/sdk": "^0.0.1-next.20230802-d58df76-3af85eb6f1052a838bc33e5a984630ef",
+    "immer": "^10.0.2"
+  }
+}

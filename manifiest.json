@@ -31,6 +31,7 @@
     "yumi-digital-checklist-mobile-implementation/typerc.json",
     "yumi-digital-checklist-portal-implementation/typerc.json",
     "arcus-documentation-implementation/typerc.json",
-    "product-searcher-module-implementation/typerc.json"
+    "product-searcher-module-implementation/typerc.json",
+    "labeling-implementation/typerc.json"
   ]
 }

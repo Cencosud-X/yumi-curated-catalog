@@ -1,0 +1,30 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
+  "name": "Module Implementation",
+  "tags": [
+    "Globalization",
+    "Yumi",
+    "Module",
+    "experimental"
+  ],
+  "kind": "labeling-implementation",
+  "folder": "libs",
+  "icons": {
+    "light": "icons/icon.svg",
+    "dark": "icons/icon.svg"
+  },
+  "descriptions": {
+    "en": "Base template of a Labeling module to integrate into a project.",
+    "es": "Template base de un módulo de Labeling para integrar en un proyecto."
+  },
+  "scripts": {
+    "pre": "scripts/pre.js",
+    "rollback": "scripts/rollback.js",
+    "post": "scripts/post.js"
+  },
+  "interpolations": {
+    "source": "template",
+    "substitutions": {}
+  },
+  "display_name": "Labeling"
+}
