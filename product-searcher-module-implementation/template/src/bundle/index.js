@@ -2,7 +2,7 @@ import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import { IonRouterOutlet, IonHeader, IonContent } from '@ionic/react';
 import * as React from 'react';
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 import Ramen from '@team_yumi/ramen';
 import Draggable from 'react-draggable';
 import { useScanner } from '@team_yumi/code-scanner';
@@ -3026,6 +3026,10 @@ const BarCodeScanner = ({
         })
       })
     }), jsx(Ramen.XButtonIcon, {
+      icon: "arrow-right-extrabold",
+      onClick: handleSearchCodeClick,
+      disabled: searchDisabled || !isCodeValid(barcodeNumber)
+    }), jsx(Ramen.XButtonIcon, {
       icon: "camera-outline",
       onClick: handleCameraClick
     })]
@@ -3038,10 +3042,10 @@ const ProductSearchCmp = _a => {
       searchByText
     } = _a;
     __rest(_a, ["searchByCode", "searchByText"]);
-  const [searchTerm, setSearchTerm] = useState();
-  const searchRef = useRef();
-  return jsxs(Fragment, {
-    children: [jsx(Ramen.XBox, Object.assign({
+  useState();
+  useRef();
+  return jsx(Fragment, {
+    children: jsx(Ramen.XBox, Object.assign({
       orientation: 'vertical',
       verticalAlign: 'between',
       height: 'full'
@@ -3061,48 +3065,7 @@ const ProductSearchCmp = _a => {
           onScan: searchByCode
         })]
       }))
-    })), jsx(Ramen.XFooter, {
-      children: jsxs(Ramen.XBox, Object.assign({
-        width: 'full',
-        orientation: 'vertical',
-        gap: 'm',
-        verticalAlign: 'center',
-        horizontalAlign: 'center'
-      }, {
-        children: [jsx(Ramen.XText, Object.assign({
-          textAlign: 'center'
-        }, {
-          children: "\u00BFNecesitas encontrar un art\u00EDculo?"
-        })), jsx(Ramen.XText, Object.assign({
-          textAlign: 'center',
-          fontSize: 12
-        }, {
-          children: "Encu\u00E9ntralo usando la descripci\u00F3n del producto"
-        })), jsx(Ramen.XSearchInput, {
-          inputRef: searchRef,
-          size: 'l',
-          placeholder: 'Busca aqu\u00ED',
-          onChange: evt => setSearchTerm(evt.target.value),
-          onKeyDown: evt => __awaiter(void 0, void 0, void 0, function* () {
-            if (evt.key === 'Enter' && searchTerm) {
-              Ramen.Api.loading.show({
-                text: 'Buscando ...'
-              });
-              try {
-                const products = yield searchByText(searchTerm);
-                console.log(products);
-                setSearchTerm(undefined);
-                searchRef.current.value = "";
-                Ramen.Api.loading.hide();
-              } catch (error) {
-                // Nothing
-                Ramen.Api.loading.hide();
-              }
-            }
-          })
-        })]
-      }))
-    })]
+    }))
   });
 };
 
@@ -3704,11 +3667,13 @@ const ProductDetailCmp = _a => {
   var _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
   var {
       product,
-      imgUrlResolver
+      imgUrlResolver,
+      mdhCenterUrl
     } = _a;
-    __rest(_a, ["product", "imgUrlResolver"]);
+    __rest(_a, ["product", "imgUrlResolver", "mdhCenterUrl"]);
   console.log(product);
   const [openModal, setOpenModal] = useState(false);
+  const history = useHistory();
   const imageUrl = useMemo(() => imgUrlResolver(product.sku), [product, imgUrlResolver]);
   const location = product.locationHall && product.locationRack ? `${product.locationHall} / ${product.locationRack}` : product.locationHall ? product.locationHall : product.locationRack ? product.locationRack : undefined;
   const lastFourWeeksSales = formatLastsWeekSales({
@@ -4046,7 +4011,7 @@ const ProductDetailCmp = _a => {
       btnActionText: "Confirmar",
       onClose: () => setOpenModal(false),
       onConfirm: () => {
-        console.log('TODO');
+        history.replace(`${mdhCenterUrl}/${product.sku}`);
       },
       ImageCmp: jsx(Image, {})
     })]
@@ -4065,9 +4030,10 @@ const ProductSearchModal = _a => {
   var {
       visible,
       searchByCode,
-      searchByText
+      searchByText,
+      mdhCenterUrl
     } = _a,
-    props = __rest(_a, ["visible", "searchByCode", "searchByText"]);
+    props = __rest(_a, ["visible", "searchByCode", "searchByText", "mdhCenterUrl"]);
   const [mode, setMode] = useState('SEARCH');
   const [product, setProduct] = useState();
   const [loading, setLoading] = useState(false);
@@ -4125,7 +4091,8 @@ const ProductSearchModal = _a => {
         if (product) {
           return jsx(ProductDetailCmp, {
             product: product,
-            imgUrlResolver: imgUrl
+            imgUrlResolver: imgUrl,
+            mdhCenterUrl: mdhCenterUrl
           });
         } else {
           return null;
@@ -4150,13 +4117,16 @@ const FloatingButton = _a => {
   var {
       disabled,
       showOnboarding,
+      onOnboardingEnd,
+      onPositionChange,
       searchByCode,
-      searchByText
-    } = _a;
-    __rest(_a, ["disabled", "showOnboarding", "searchByCode", "searchByText"]);
+      searchByText,
+      mdhCenterUrl
+    } = _a,
+    props = __rest(_a, ["disabled", "showOnboarding", "onOnboardingEnd", "onPositionChange", "searchByCode", "searchByText", "mdhCenterUrl"]);
   const [mode, setMode] = useState(ModeType.FloatingButton);
   const [showedOnboarding, setShowedOnboarding] = useState(!showOnboarding);
-  const [position, setPosition] = useState({
+  const [position, setPosition] = useState(props.position || {
     x: window.innerWidth - 48 - (window.innerWidth - 48) / 20,
     y: window.innerHeight - 48 - (window.innerHeight - 48) / 4 // set initial x position about 10% right
   });
@@ -4180,6 +4150,7 @@ const FloatingButton = _a => {
       handleFloatingButtonClick();
     }
     setLastPosition(position);
+    onPositionChange === null || onPositionChange === void 0 ? void 0 : onPositionChange(position);
   };
   const renderOnboarding = () => {
     switch (onboardingStep) {
@@ -4289,6 +4260,7 @@ const FloatingButton = _a => {
                 onClick: () => {
                   setOnboardingStep(1);
                   setShowedOnboarding(true);
+                  onOnboardingEnd === null || onOnboardingEnd === void 0 ? void 0 : onOnboardingEnd();
                   setMode(ModeType.FloatingButton);
                 },
                 text: "Ok, entendido",
@@ -4333,7 +4305,8 @@ const FloatingButton = _a => {
         visible: modalOpen,
         onClose: () => setModalOpen(false),
         searchByCode: searchByCode,
-        searchByText: searchByText
+        searchByText: searchByText,
+        mdhCenterUrl: mdhCenterUrl
       })]
     });
   };
