@@ -1,3 +1,35 @@
+.index-module_xcard__icon__8iiIf > div {
+  color: var(--color-neutral-dim);
+}
+
+.index-module_text__link__-Y0cR {
+  color: #2CDFA6;
+  font-size: 16px;
+  font-family: Open Sans;
+  font-weight: 600;
+  line-height: 16px;
+  word-wrap: break-word
+}
+.index-module_xcard__SGRh7 {
+  background: var(--color-neutral-lightest);
+  border-radius: var(--xbox-size-11);
+  display: flex;
+  align-items: center;
+  gap: var(--xbox-padding-m);
+  text-align: left;
+}
+
+.index-module_xcard--size-l__9hcCN {
+  padding: var(--xbox-padding-xs) var(--xbox-padding-m);
+}
+
+.index-module_xcard--border-solid__IMoLV {
+  border: 1px solid var(--color-neutral-light);
+}
+
+.index-module_xcard--bg-tone-medium__UYqRA {
+  background: #F0F0F0;
+}
 #xloading-defaults > div {
         z-index: 1000;
 }

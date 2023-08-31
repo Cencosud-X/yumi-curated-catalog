@@ -3006,56 +3006,43 @@ const BarCodeScanner = ({
       barcodeInputRef.current && barcodeInputRef.current.focus();
     }
   }, [autoFocused]);
-  return jsxs(Ramen.XBox, Object.assign({
+  return jsx(Ramen.XBox, Object.assign({
     orientation: "horizontal",
     width: "flex",
     gap: "s"
   }, {
-    children: [jsx(Ramen.XBox, {
-      children: jsx(Ramen.XTextInput, {
-        placeholder: "Escanea o ingresa c\u00F3digo",
-        icon: "scan-outline",
-        size: "l",
-        onChange: e => handleChange(e.target.value),
-        value: barcodeNumber,
-        inputRef: barcodeInputRef,
-        onKeyDown: evt => __awaiter(void 0, void 0, void 0, function* () {
-          if (evt.key === 'Enter') {
-            handleSearchCodeClick();
-          }
-        })
-      })
-    }), jsx(Ramen.XButtonIcon, {
-      icon: "arrow-right-extrabold",
-      onClick: handleSearchCodeClick,
-      disabled: searchDisabled || !isCodeValid(barcodeNumber)
-    }), jsx(Ramen.XButtonIcon, {
-      icon: "camera-outline",
-      onClick: handleCameraClick
-    })]
+    children: jsx(Ramen.XCardScan, {
+      onChange: e => handleChange(e.target.value),
+      onClick: handleCameraClick,
+      onSubmit: handleSearchCodeClick,
+      placeholder: "Ingresa c\u00F3digo",
+      value: barcodeNumber,
+      inputRef: barcodeInputRef
+    })
   }));
 };
 
 const ProductSearchCmp = _a => {
   var {
       searchByCode,
-      searchByText
+      searchByText,
+      onSearchByTextResult
     } = _a;
-    __rest(_a, ["searchByCode", "searchByText"]);
-  useState();
-  useRef();
-  return jsx(Fragment, {
-    children: jsx(Ramen.XBox, Object.assign({
-      orientation: 'vertical',
-      verticalAlign: 'between',
-      height: 'full'
+    __rest(_a, ["searchByCode", "searchByText", "onSearchByTextResult"]);
+  const [searchTerm, setSearchTerm] = useState();
+  const searchRef = useRef();
+  return jsxs(Fragment, {
+    children: [jsx(Ramen.XBox, Object.assign({
+      orientation: "vertical",
+      verticalAlign: "between",
+      height: "full"
     }, {
       children: jsxs(Ramen.XBox, Object.assign({
-        orientation: 'vertical',
-        gap: 'm'
+        orientation: "vertical",
+        gap: "m"
       }, {
         children: [jsx(Ramen.XText, Object.assign({
-          weight: 'bold',
+          weight: "bold",
           fontSize: 8
         }, {
           children: "Consultor de productos"
@@ -3065,7 +3052,48 @@ const ProductSearchCmp = _a => {
           onScan: searchByCode
         })]
       }))
-    }))
+    })), jsx(Ramen.XFooter, {
+      children: jsxs(Ramen.XBox, Object.assign({
+        width: "full",
+        orientation: "vertical",
+        gap: "m",
+        verticalAlign: "center",
+        horizontalAlign: "center"
+      }, {
+        children: [jsx(Ramen.XText, Object.assign({
+          textAlign: "center"
+        }, {
+          children: "\u00BFNecesitas encontrar un art\u00EDculo?"
+        })), jsx(Ramen.XText, Object.assign({
+          textAlign: "center",
+          fontSize: 12
+        }, {
+          children: "Encu\u00E9ntralo usando la descripci\u00F3n del producto"
+        })), jsx(Ramen.XSearchInput, {
+          inputRef: searchRef,
+          size: "l",
+          placeholder: "Busca aqu\u00ED",
+          onChange: evt => setSearchTerm(evt.target.value),
+          onKeyDown: evt => __awaiter(void 0, void 0, void 0, function* () {
+            if (evt.key === 'Enter' && searchTerm) {
+              Ramen.Api.loading.show({
+                text: 'Buscando ...'
+              });
+              try {
+                const result = yield searchByText(searchTerm);
+                setSearchTerm(undefined);
+                searchRef.current.value = '';
+                Ramen.Api.loading.hide();
+                onSearchByTextResult(result);
+              } catch (error) {
+                // Nothing
+                Ramen.Api.loading.hide();
+              }
+            }
+          })
+        })]
+      }))
+    })]
   });
 };
 
@@ -3517,6 +3545,8 @@ const ConfirmModal = ({
   });
 };
 
+var img = "data:image/svg+xml,%3csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3e %3ccircle cx='16.5' cy='16' r='16' fill='%23D13731' /%3e %3cpath fill-rule='evenodd' clip-rule='evenodd' d='M15.3631 18.1545L16.6655 18.1457L16.6617 14.1366L15.3554 14.1366L15.3574 14.5881L15.3057 14.5898C14.9787 14.1891 14.4527 13.9686 13.9096 14.0036C12.7639 14.0036 11.8631 14.8033 11.8631 16.142C11.8631 17.4632 12.8519 18.3032 13.9937 18.3014C14.6669 18.2997 15.1011 18.0845 15.3172 17.6925H15.3669L15.3631 18.1545ZM14.3896 15.1008C14.9672 15.1463 15.3956 15.6101 15.3459 16.1385C15.3459 16.6215 15.1011 17.199 14.2997 17.2007C13.5175 17.2007 13.2134 16.6495 13.2134 16.142C13.2134 15.6608 13.4639 15.0991 14.2385 15.0991C14.2901 15.0956 14.3399 15.0973 14.3896 15.1008ZM21.7734 17.039C21.7734 17.9559 20.6508 18.3007 19.595 18.3007C18.5374 18.3024 17.4434 17.9367 17.4415 17.032H18.83C18.83 17.3155 19.2661 17.4205 19.597 17.4205C19.9202 17.4205 20.339 17.3435 20.339 17.0705C20.339 16.7803 19.9692 16.6997 19.3641 16.5677C19.2502 16.5429 19.128 16.5162 18.9983 16.486C18.1472 16.2848 17.541 15.9523 17.541 15.233C17.541 14.3213 18.5317 14.0081 19.595 14.0063C20.645 14.0063 21.6032 14.3178 21.6032 15.2295L20.2319 15.233C20.2319 14.9793 19.8838 14.8813 19.5931 14.8813C19.3024 14.8813 18.9582 14.9443 18.9582 15.1963C18.9582 15.4824 19.3612 15.5612 19.8755 15.6617L19.8755 15.6617L19.8755 15.6617C19.9809 15.6823 20.091 15.7039 20.2032 15.7283C21.0467 15.9138 21.7715 16.2218 21.7734 17.039ZM26.576 14.1316L24.1337 19.8731L22.7279 19.8696L23.6498 17.9972L21.9916 14.1351L23.3916 14.1351L24.2962 16.6253H24.346L25.1837 14.1316L26.576 14.1316ZM11.1322 16.1125C11.1322 16.2718 11.1092 16.522 11.1092 16.522L7.87895 16.5238C7.9019 16.9875 8.33222 17.348 8.83905 17.327H8.85244C9.17566 17.3637 9.48741 17.2115 9.63658 16.9455L11.0385 16.9472C10.9103 17.5422 10.3347 18.2964 8.8773 18.2982C7.58824 18.3209 6.52486 17.383 6.5 16.2035V16.1143C6.5 14.9033 7.3836 14.0056 8.77785 14.0039C10.0153 13.9479 11.0691 14.8211 11.1303 15.9533C11.1341 16.0075 11.1341 16.06 11.1322 16.1143V16.1125ZM9.74178 15.7135C9.71691 15.2831 9.31336 14.9523 8.84288 14.9751C8.82949 14.9751 8.8161 14.9768 8.80271 14.9786L8.80271 14.9786C8.33222 14.9646 7.92868 15.2866 7.87895 15.7135L9.74178 15.7135ZM7.57641 19.8114C13.1228 19.4579 16.7031 19.4824 20.2662 19.9129C21.1632 20.0214 21.7924 20.0406 21.7943 19.5611C21.7943 19.1114 21.3659 19.0187 19.9506 18.9802C17.5523 18.9119 13.184 19.1429 7.63761 19.5821L7.57641 19.8114Z' fill='%23FBF136' /%3e %3c/svg%3e";
+
 /* eslint-disable react/style-prop-object */
 const Image = () => {
   return jsxs("svg", Object.assign({
@@ -3625,6 +3655,18 @@ const Image = () => {
   }));
 };
 
+var Styles$1 = {"xcard__icon":"index-module_xcard__icon__8iiIf","text__link":"index-module_text__link__-Y0cR"};
+
+var Styles = {"xcard":"index-module_xcard__SGRh7","xcard--size-l":"index-module_xcard--size-l__9hcCN","xcard--border-solid":"index-module_xcard--border-solid__IMoLV","xcard--bg-tone-medium":"index-module_xcard--bg-tone-medium__UYqRA"};
+
+const ShadowedDiv = props => {
+  return jsx("div", Object.assign({
+    className: [Styles['xcard'], Styles['xcard--size-l'], Styles['xcard--border-solid'], Styles['xcard--bg-tone-medium']].join(' ')
+  }, {
+    children: props.children
+  }));
+};
+
 const buildTxt = (data, separator = '/') => {
   if (data && data.length > 0) {
     return data.filter(str => str && str.length > 0).join(` ${separator} `).trim();
@@ -3682,7 +3724,7 @@ const ProductDetailCmp = _a => {
     amount: (product === null || product === void 0 ? void 0 : product.costSoldLastWeek) ? parseFloat(product === null || product === void 0 ? void 0 : product.costSoldLastWeek) : undefined
   });
   return jsxs(Ramen.XBox, Object.assign({
-    gap: 's'
+    gap: "s"
   }, {
     children: [jsxs(Ramen.XBox, Object.assign({
       orientation: "horizontal",
@@ -3702,7 +3744,7 @@ const ProductDetailCmp = _a => {
         })
       })), jsx(Ramen.XBox, Object.assign({
         gap: "xxs",
-        width: 'full'
+        width: "full"
       }, {
         children: jsx(Ramen.XText, Object.assign({
           weight: "bold",
@@ -3785,13 +3827,22 @@ const ProductDetailCmp = _a => {
           weight: "normal",
           textOverflow: "break-word"
         }, {
-          children: [' ', lastFourWeeksSales ? jsx(Ramen.XButton, {
-            text: `${lastFourWeeksSales}`,
+          children: [' ', lastFourWeeksSales ?
+          // <Ramen.XButton
+          //   text={`${lastFourWeeksSales}`}
+          //   onClick={() => {
+          //     console.log('TODO');
+          //   }}
+          //   type="clear"
+          // />
+          jsx("div", Object.assign({
+            className: Styles$1['text__link'],
             onClick: () => {
               console.log('TODO');
-            },
-            type: 'clear'
-          }) : ' - ']
+            }
+          }, {
+            children: `${lastFourWeeksSales}`
+          })) : ' - ']
         }))]
       })), jsxs(Ramen.XBox, Object.assign({
         orientation: "horizontal",
@@ -3804,15 +3855,15 @@ const ProductDetailCmp = _a => {
         }, {
           children: "Atributo surtido"
         })), jsxs(Ramen.XBox, Object.assign({
-          orientation: 'vertical',
-          verticalAlign: 'end'
+          orientation: "vertical",
+          verticalAlign: "end"
         }, {
           children: [jsxs(Ramen.XText, Object.assign({
             colorThone: "darkest",
             fontSize: 10,
             weight: "normal",
             textOverflow: "break-word",
-            textAlign: 'right'
+            textAlign: "right"
           }, {
             children: [' ', `${buildTxt(['Tienda', buildTxt([product === null || product === void 0 ? void 0 : product.assortment.storeCode, product === null || product === void 0 ? void 0 : product.assortment.storeTxt], '-'), '/'], '')}`]
           })), jsxs(Ramen.XText, Object.assign({
@@ -3820,7 +3871,7 @@ const ProductDetailCmp = _a => {
             fontSize: 10,
             weight: "normal",
             textOverflow: "break-word",
-            textAlign: 'right'
+            textAlign: "right"
           }, {
             children: [' ', `${buildTxt(['Cadena', buildTxt([product === null || product === void 0 ? void 0 : product.assortment.networkCode, product === null || product === void 0 ? void 0 : product.assortment.networkTxt], '-')], '')}`]
           }))]
@@ -3852,37 +3903,32 @@ const ProductDetailCmp = _a => {
     }), jsx(Ramen.XBox, Object.assign({
       width: 'full'
     }, {
-      children: jsx(Ramen.XCard, Object.assign({
-        size: "l",
-        borderType: "solid"
-      }, {
+      children: jsx(ShadowedDiv, {
         children: jsxs(Ramen.XBox, Object.assign({
           orientation: "horizontal",
           gap: "m",
           verticalAlign: "between",
           horizontalAlign: "between",
-          width: 'full'
+          width: 'full',
+          height: 'full'
         }, {
           children: [jsx(Ramen.XText, Object.assign({
-            colorThone: 'medium',
+            colorThone: "medium",
             fontSize: 11
           }, {
             children: "\u00DAltima recepci\u00F3n"
           })), jsx(Ramen.XText, Object.assign({
-            fontSize: 10,
+            fontSize: 11,
             weight: "bold"
           }, {
             children: getRecepmerDate(product === null || product === void 0 ? void 0 : product.recepmerDate, product === null || product === void 0 ? void 0 : product.recepmerHour)
           }))]
         }))
-      }))
+      })
     })), jsx(Ramen.XBox, Object.assign({
       width: 'full'
     }, {
-      children: jsx(Ramen.XCard, Object.assign({
-        size: "l",
-        borderType: "solid"
-      }, {
+      children: jsx(ShadowedDiv, {
         children: jsxs(Ramen.XBox, Object.assign({
           orientation: "horizontal",
           gap: "m",
@@ -3891,25 +3937,22 @@ const ProductDetailCmp = _a => {
           width: 'full'
         }, {
           children: [jsx(Ramen.XText, Object.assign({
-            colorThone: 'medium',
+            colorThone: "medium",
             fontSize: 11
           }, {
             children: "Pr\u00F3ximo abastecimiento"
           })), jsx(Ramen.XText, Object.assign({
-            fontSize: 10,
+            fontSize: 11,
             weight: "bold"
           }, {
             children: formatDate(product === null || product === void 0 ? void 0 : product.nextSupplyDate)
           }))]
         }))
-      }))
+      })
     })), jsx(Ramen.XBox, Object.assign({
       width: 'full'
     }, {
-      children: jsx(Ramen.XCard, Object.assign({
-        size: "l",
-        borderType: "solid"
-      }, {
+      children: jsx(ShadowedDiv, {
         children: jsxs(Ramen.XBox, Object.assign({
           orientation: "horizontal",
           gap: "m",
@@ -3918,27 +3961,24 @@ const ProductDetailCmp = _a => {
           width: 'full'
         }, {
           children: [jsx(Ramen.XText, Object.assign({
-            colorThone: 'medium',
+            colorThone: "medium",
             fontSize: 11
           }, {
             children: "Cantidad pr\u00F3ximo abastecimiento"
           })), jsx(Ramen.XText, Object.assign({
-            fontSize: 10,
+            fontSize: 11,
             weight: "bold"
           }, {
             children: !!(product === null || product === void 0 ? void 0 : product.nextCantProxAbastDesp) && `${NumberFormatter$1.toNumber(parseFloat(`${product === null || product === void 0 ? void 0 : product.nextCantProxAbastDesp}`))} ${product === null || product === void 0 ? void 0 : product.um}` || '-'
           }))]
         }))
-      }))
+      })
     })), jsx(Ramen.XBox, Object.assign({
       width: 'full'
     }, {
-      children: jsx(Ramen.XCard, Object.assign({
-        size: "l",
-        borderType: "solid"
-      }, {
+      children: jsx(ShadowedDiv, {
         children: jsxs(Ramen.XBox, Object.assign({
-          orientation: 'vertical',
+          orientation: "vertical",
           width: 'full'
         }, {
           children: [jsxs(Ramen.XBox, Object.assign({
@@ -3960,15 +4000,15 @@ const ProductDetailCmp = _a => {
               children: ((_g = product === null || product === void 0 ? void 0 : product.nextSupply) === null || _g === void 0 ? void 0 : _g.orderNumber) ? (_h = product === null || product === void 0 ? void 0 : product.nextSupply) === null || _h === void 0 ? void 0 : _h.orderNumber : '-'
             }))]
           })), jsxs(Ramen.XBox, Object.assign({
-            orientation: 'horizontal',
+            orientation: "horizontal",
             width: 'full',
-            horizontalAlign: 'between'
+            horizontalAlign: "between"
           }, {
             children: [jsxs(Ramen.XBox, Object.assign({
-              orientation: 'vertical'
+              orientation: "vertical"
             }, {
               children: [jsx(Ramen.XText, Object.assign({
-                colorThone: 'medium',
+                colorThone: "medium",
                 fontSize: 11
               }, {
                 children: "UN. solicitadas"
@@ -3979,11 +4019,11 @@ const ProductDetailCmp = _a => {
                 children: `${NumberFormatter$1.toNumber(parseFloat(`${(_j = product === null || product === void 0 ? void 0 : product.nextSupply) === null || _j === void 0 ? void 0 : _j.quantify}`))}`
               }))]
             })), jsxs(Ramen.XBox, Object.assign({
-              orientation: 'vertical',
-              horizontalAlign: 'end'
+              orientation: "vertical",
+              horizontalAlign: "end"
             }, {
               children: [jsx(Ramen.XText, Object.assign({
-                colorThone: 'medium',
+                colorThone: "medium",
                 fontSize: 11
               }, {
                 children: "Fecha de entrega"
@@ -3996,19 +4036,49 @@ const ProductDetailCmp = _a => {
             }))]
           }))]
         }))
-      }))
+      })
     })), jsx(Ramen.XVSpace, {
       size: "s"
-    }), jsx(Ramen.XButton, {
-      icon: 'arrow-right-outline',
-      iconPosition: 'end',
-      text: 'Disponibilidad de centros',
+    }), jsx(Ramen.XCard, Object.assign({
+      size: "s",
       onClick: () => setOpenModal(true)
-    }), jsx(ConfirmModal, {
+    }, {
+      children: jsxs(Ramen.XBox, Object.assign({
+        orientation: "horizontal",
+        horizontalAlign: "between",
+        verticalAlign: "center",
+        gap: "m",
+        width: 'full'
+      }, {
+        children: [jsxs(Ramen.XBox, Object.assign({
+          orientation: 'horizontal',
+          verticalAlign: "center",
+          gap: 's'
+        }, {
+          children: [jsx(Ramen.XImage, {
+            height: 7,
+            src: img
+          }), jsx(Ramen.XText, Object.assign({
+            colorThone: 'darkest',
+            weight: 'bold',
+            fontSize: 10
+          }, {
+            children: "Disponibilidad de centros"
+          }))]
+        })), jsx("div", Object.assign({
+          className: Styles$1["xcard__icon"]
+        }, {
+          children: jsx(Ramen.XIcon, {
+            size: 's',
+            icon: "chevron-right-outline"
+          })
+        }))]
+      }))
+    })), jsx(ConfirmModal, {
       visible: openModal,
-      title: "¿Deseas abandonar el proceso?",
-      subTitle: "Serás redirigido a otra sección y perderás todo el progreso",
-      btnActionText: "Confirmar",
+      title: '¿Deseas abandonar el proceso?',
+      subTitle: 'Serás redirigido a otra sección y perderás todo el progreso',
+      btnActionText: 'Confirmar',
       onClose: () => setOpenModal(false),
       onConfirm: () => {
         history.replace(`${mdhCenterUrl}/${product.sku}`);
@@ -4016,6 +4086,126 @@ const ProductDetailCmp = _a => {
       ImageCmp: jsx(Image, {})
     })]
   }));
+};
+
+const ProductListCmp = _a => {
+  var {
+      imgUrlResolver,
+      mdhCenterUrl,
+      onBack,
+      searchByText,
+      onProductSelect
+    } = _a,
+    props = __rest(_a, ["imgUrlResolver", "mdhCenterUrl", "onBack", "searchByText", "onProductSelect"]);
+  const [products, setProducts] = useState(props.products);
+  const [searchText, setSearchText] = useState();
+  const handleSearch = () => __awaiter(void 0, void 0, void 0, function* () {
+    if (searchText) {
+      Ramen.Api.loading.show({
+        text: 'Buscando ...'
+      });
+      try {
+        const result = yield searchByText(searchText);
+        setProducts(result);
+      } catch (error) {} finally {
+        Ramen.Api.loading.hide();
+      }
+    } else {
+      setProducts([]);
+    }
+  });
+  const renderProductCard = product => {
+    const {
+      description,
+      sku,
+      ean,
+      price
+    } = product;
+    return jsx(Ramen.XCard, Object.assign({
+      onClick: () => onProductSelect(product)
+    }, {
+      children: jsxs(Ramen.XBox, Object.assign({
+        gap: "xs",
+        orientation: "horizontal",
+        verticalAlign: "center"
+      }, {
+        children: [jsx(Ramen.XBox, {
+          children: jsx(Ramen.XImage, {
+            height: 3,
+            width: 3,
+            src: imgUrlResolver(sku)
+          })
+        }), jsxs(Ramen.XBox, {
+          children: [jsx(Ramen.XText, Object.assign({
+            weight: "bold"
+          }, {
+            children: description
+          })), jsx(Ramen.XText, Object.assign({
+            fontSize: 11,
+            colorThone: "dim"
+          }, {
+            children: `SKU ${sku}`
+          })), jsx(Ramen.XText, Object.assign({
+            fontSize: 11,
+            colorThone: "dim"
+          }, {
+            children: `EAN ${ean}`
+          })), jsx(Ramen.XText, Object.assign({
+            fontSize: 11
+          }, {
+            children: `Precio: ${toCurrency(price)}`
+          }))]
+        }), jsx(Ramen.XIcon, {
+          icon: "chevron-right-outline"
+        })]
+      }))
+    }));
+  };
+  return jsxs(Ramen.XBox, {
+    children: [jsx(Ramen.XButtonIcon, {
+      icon: "arrow-left-outline",
+      onClick: onBack,
+      type: "clear"
+    }), jsx(Ramen.XText, Object.assign({
+      fontSize: 10,
+      lineHeight: "title",
+      weight: "bold"
+    }, {
+      children: "Buscar por descripci\u00F3n de producto"
+    })), jsx(Ramen.XVSpace, {
+      size: "s"
+    }), jsx(Ramen.XSearchInput, {
+      onChange: e => {
+        setSearchText(e.target.value);
+      },
+      onKeyDown: evt => {
+        if (evt.key === 'Enter') {
+          handleSearch();
+        }
+      },
+      placeholder: "Busca aqu\u00ED",
+      size: "l"
+    }), jsx(Ramen.XDivider, {}), jsx(Ramen.XBox, Object.assign({
+      orientation: "horizontal",
+      gap: "xxs"
+    }, {
+      children: products && jsxs(Fragment, {
+        children: [jsx(Ramen.XText, Object.assign({
+          fontSize: 11
+        }, {
+          children: products.length
+        })), jsx(Ramen.XText, Object.assign({
+          fontSize: 11,
+          colorThone: "dim"
+        }, {
+          children: `resultado${products.length != 1 ? 's' : ''}`
+        }))]
+      })
+    })), jsx(Ramen.XList, {
+      dataSource: products,
+      renderItem: renderProductCard
+    })]
+  });
 };
 
 // TODO: Pass as module param
@@ -4036,6 +4226,7 @@ const ProductSearchModal = _a => {
     props = __rest(_a, ["visible", "searchByCode", "searchByText", "mdhCenterUrl"]);
   const [mode, setMode] = useState('SEARCH');
   const [product, setProduct] = useState();
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (loading) {
@@ -4055,6 +4246,8 @@ const ProductSearchModal = _a => {
   }, [product]);
   const onClose = () => {
     setProduct(undefined);
+    setProducts([]);
+    setMode('SEARCH');
     props.onClose();
   };
   const showWarnMsg = msg => Ramen.Api.snackbar.warning({
@@ -4080,12 +4273,17 @@ const ProductSearchModal = _a => {
       setLoading(false);
     }
   });
+  const handleSearchByTextResult = products => {
+    setProducts(products);
+    setMode('PRODUCT_LIST');
+  };
   const renderMode = mode => {
     switch (mode) {
       case 'SEARCH':
         return jsx(ProductSearchCmp, {
           searchByCode: onSearchByCode,
-          searchByText: searchByText
+          searchByText: searchByText,
+          onSearchByTextResult: handleSearchByTextResult
         });
       case 'PRODUCT_DETAIL':
         if (product) {
@@ -4097,6 +4295,19 @@ const ProductSearchModal = _a => {
         } else {
           return null;
         }
+      case 'PRODUCT_LIST':
+        return jsx(ProductListCmp, {
+          products: products,
+          imgUrlResolver: imgUrl,
+          searchByText: searchByText,
+          onBack: () => {
+            setMode('SEARCH');
+          },
+          onProductSelect: product => {
+            onSearchByCode(product.sku);
+            setMode('PRODUCT_DETAIL');
+          }
+        });
       default:
         return null;
     }
