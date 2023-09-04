@@ -1,8 +1,6 @@
-import Module, { IModuleProps } from './bundle'
-import './bundle/index.css'
+import Module from './bundle'
 
-export class {{#pascalCase data.name}}{{/pascalCase}}OverrideModule extends Module {
-    constructor(props: IModuleProps) {
-        super(props, {});
-    }
-}
+export default new Module({
+  country: 'PE',
+});
+
