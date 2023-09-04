@@ -2,11 +2,9 @@ import { _ as __awaiter, u as useWindowSize, a as useGlobal, p as productsClient
 import { jsx, Fragment as Fragment$1, jsxs } from 'react/jsx-runtime';
 import { useState, useRef, Fragment, useEffect } from 'react';
 import Ramen from '@team_yumi/ramen-web';
-import 'react-icons/bi';
 import { useHistory } from 'react-router-dom';
+import 'lodash';
 import classnames from 'classnames';
-import 'react-icons/fi';
-import 'react-icons/ai';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import 'swiper/css';
@@ -14,8 +12,8 @@ import 'swiper/css/navigation';
 import 'axios';
 import 'rxjs';
 import 'swiper/css/pagination';
-import 'react-icons/ti';
-import 'react-icons/ri';
+import 'formik';
+import 'jwt-decode';
 
 const SliderComponent = ({
   items,

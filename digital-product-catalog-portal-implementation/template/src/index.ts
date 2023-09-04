@@ -1,7 +1,7 @@
-import Module, { Header, DrawerCategories, PortalLayout, IModuleProps } from './bundle'
+import Module, { IModuleProps,PortalLayout } from './bundle'
 import './bundle/index.css'
 
-export { Header, DrawerCategories, PortalLayout }
+export{PortalLayout}
 
 export class {{#pascalCase data.name}}{{/pascalCase}}OverrideModule extends Module {
     constructor(props: IModuleProps) {

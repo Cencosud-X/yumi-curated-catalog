@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import './Shop.css';
-import { IFilter } from '../../components/Filter';
+import { IFilter } from '../../../components/Filter';
 export interface IFilterSelected {
     keyParent: string;
     label?: string;

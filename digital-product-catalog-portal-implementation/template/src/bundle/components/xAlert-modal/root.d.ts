@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 export interface IProps {
+    children?: ReactNode;
     visible: boolean;
+    type?: 'confirm' | 'success';
     useCancel?: boolean;
     title?: string;
     message?: string;

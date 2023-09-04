@@ -1,21 +1,19 @@
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import * as React from 'react';
 import React__default, { useContext, createContext, useState, useEffect, memo, useReducer, useCallback, useRef, Fragment as Fragment$1, useMemo, Suspense, lazy } from 'react';
-import { useLocation, Route, useHistory, Link, useParams } from 'react-router-dom';
+import { useLocation, Route, useHistory, Link, BrowserRouter, useParams } from 'react-router-dom';
 import Ramen from '@team_yumi/ramen-web';
 import axios from 'axios';
 import { Subject, filter } from 'rxjs';
-import { BiCart } from 'react-icons/bi';
+import { get as get$2, isEmpty } from 'lodash';
 import classnames from 'classnames';
-import { FiSearch } from 'react-icons/fi';
-import { AiFillCloseCircle } from 'react-icons/ai';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { TiTick } from 'react-icons/ti';
-import { RiCloseFill } from 'react-icons/ri';
+import { useFormik } from 'formik';
+import jwtDecode from 'jwt-decode';
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -5064,6 +5062,70 @@ class AuthApi extends BaseRest {
       }
     });
   }
+  activateUser(params) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.post(`/admin/activate-user-mock`, params);
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  signUp(params) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.post(`${this.prefix}`, params);
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  setPassword(password) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.post(`${this.prefix}/set-password`, {
+          password
+        });
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  resetPassword(email) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.post(`${this.prefix}/reset-password`, {
+          email
+        });
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  resetPasswordWithToken(params) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.post(`${this.prefix}/reset-password-token`, params);
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
   logout() {
     return __awaiter(this, void 0, void 0, function* () {
       try {
@@ -5107,6 +5169,31 @@ class CartRequestApi extends BaseRest {
         const {
           data
         } = yield this.axios.post('/cart-request', params);
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+}
+
+class sapApi extends BaseRest {
+  constructor(config) {
+    super({
+      baseURL: config.baseURL
+    });
+    this.prefix = '/sap';
+  }
+  /**
+   * @param rut
+   * @returns {Promise<any> | AxiosError }
+   */
+  customerValidate(rut) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.get(`${this.prefix}/customer-validate/${rut}`, {});
         return data;
       } catch (error) {
         throw error;
@@ -5733,8 +5820,9 @@ const ShopCart = () => {
       })), jsx("div", Object.assign({
         className: 'button-cart'
       }, {
-        children: jsx(BiCart, {
-          className: "cart-icon"
+        children: jsx(Ramen.XButtonIcon, {
+          icon: 'shopping-cart-outline',
+          size: 'm'
         })
       }))]
     }))
@@ -5771,7 +5859,7 @@ const Button = props => {
   }));
 };
 
-var img$8 = "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='75' height='75'%3e %3cdefs%3e %3cclipPath id='clip-path'%3e %3cpath id='Rect%c3%a1ngulo_108' data-name='Rect%c3%a1ngulo 108' style='fill:none' d='M0 0h75v75H0z'/%3e %3c/clipPath%3e %3cstyle%3e .cls-4%7bfill:%23ddd%7d %3c/style%3e %3c/defs%3e %3cg id='dummy-img' transform='translate(-5 -4.89)'%3e %3cg id='Grupo_131' data-name='Grupo 131' transform='translate(5 4.89)'%3e %3cg id='Grupo_130' data-name='Grupo 130' style='clip-path:url(%23clip-path)'%3e %3cpath id='Rect%c3%a1ngulo_107' data-name='Rect%c3%a1ngulo 107' transform='translate(-.313 -.313)' style='fill:white' d='M0 0h75.625v75.625H0z'/%3e %3c/g%3e %3c/g%3e %3cg id='Grupo_132' data-name='Grupo 132' transform='translate(15 14.89)'%3e %3ccircle id='Elipse_1' data-name='Elipse 1' class='cls-4' cx='5.625' cy='5.625' r='5.625' transform='translate(7.5 7.5)'/%3e %3cpath id='Trazado_445' data-name='Trazado 445' class='cls-4' d='M88.558 36.89H40.442A3.47 3.47 0 0 0 37 40.388v31.864a.769.769 0 1 0 1.538 0V40.388a1.92 1.92 0 0 1 1.9-1.936h48.12a1.92 1.92 0 0 1 1.9 1.936v17.805a.769.769 0 1 0 1.538 0V40.388a3.47 3.47 0 0 0-3.438-3.498z' transform='translate(-37 -36.89)'/%3e %3cpath id='Trazado_446' data-name='Trazado 446' class='cls-4' d='m91.43 97.681-11.762-14.51a1.561 1.561 0 0 0-1.211-.579 1.564 1.564 0 0 0-1.211.575l-5.688 6.976-8.694 10.129L60.8 98.5l-5.549-5.36a1.563 1.563 0 0 0-2.283.118l-13.8 16.429-2.07 2.277a1.5 1.5 0 0 0-.1.117v8.086a3.143 3.143 0 0 0 3.143 3.143h48.716A3.143 3.143 0 0 0 92 120.167V98.4l-.413-.487a1.559 1.559 0 0 0-.157-.232z' transform='translate(-37 -68.31)'/%3e %3c/g%3e %3c/g%3e%3c/svg%3e";
+var img$b = "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='75' height='75'%3e %3cdefs%3e %3cclipPath id='clip-path'%3e %3cpath id='Rect%c3%a1ngulo_108' data-name='Rect%c3%a1ngulo 108' style='fill:none' d='M0 0h75v75H0z'/%3e %3c/clipPath%3e %3cstyle%3e .cls-4%7bfill:%23ddd%7d %3c/style%3e %3c/defs%3e %3cg id='dummy-img' transform='translate(-5 -4.89)'%3e %3cg id='Grupo_131' data-name='Grupo 131' transform='translate(5 4.89)'%3e %3cg id='Grupo_130' data-name='Grupo 130' style='clip-path:url(%23clip-path)'%3e %3cpath id='Rect%c3%a1ngulo_107' data-name='Rect%c3%a1ngulo 107' transform='translate(-.313 -.313)' style='fill:white' d='M0 0h75.625v75.625H0z'/%3e %3c/g%3e %3c/g%3e %3cg id='Grupo_132' data-name='Grupo 132' transform='translate(15 14.89)'%3e %3ccircle id='Elipse_1' data-name='Elipse 1' class='cls-4' cx='5.625' cy='5.625' r='5.625' transform='translate(7.5 7.5)'/%3e %3cpath id='Trazado_445' data-name='Trazado 445' class='cls-4' d='M88.558 36.89H40.442A3.47 3.47 0 0 0 37 40.388v31.864a.769.769 0 1 0 1.538 0V40.388a1.92 1.92 0 0 1 1.9-1.936h48.12a1.92 1.92 0 0 1 1.9 1.936v17.805a.769.769 0 1 0 1.538 0V40.388a3.47 3.47 0 0 0-3.438-3.498z' transform='translate(-37 -36.89)'/%3e %3cpath id='Trazado_446' data-name='Trazado 446' class='cls-4' d='m91.43 97.681-11.762-14.51a1.561 1.561 0 0 0-1.211-.579 1.564 1.564 0 0 0-1.211.575l-5.688 6.976-8.694 10.129L60.8 98.5l-5.549-5.36a1.563 1.563 0 0 0-2.283.118l-13.8 16.429-2.07 2.277a1.5 1.5 0 0 0-.1.117v8.086a3.143 3.143 0 0 0 3.143 3.143h48.716A3.143 3.143 0 0 0 92 120.167V98.4l-.413-.487a1.559 1.559 0 0 0-.157-.232z' transform='translate(-37 -68.31)'/%3e %3c/g%3e %3c/g%3e%3c/svg%3e";
 
 var call$3 = functionCall;
 var fixRegExpWellKnownSymbolLogic$1 = fixRegexpWellKnownSymbolLogic;
@@ -5868,23 +5956,105 @@ class Module extends React.Component {
   }
 }
 
+var $$6 = _export;
+var $includes = arrayIncludes.includes;
+var fails$5 = fails$y;
+var addToUnscopables = addToUnscopables$2;
+
+// FF99+ bug
+var BROKEN_ON_SPARSE = fails$5(function () {
+  // eslint-disable-next-line es/no-array-prototype-includes -- detection
+  return !Array(1).includes();
+});
+
+// `Array.prototype.includes` method
+// https://tc39.es/ecma262/#sec-array.prototype.includes
+$$6({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
+  includes: function includes(el /* , fromIndex = 0 */) {
+    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
+addToUnscopables('includes');
+
+var isObject$1 = isObject$f;
+var classof$1 = classofRaw$2;
+var wellKnownSymbol$4 = wellKnownSymbol$n;
+
+var MATCH$2 = wellKnownSymbol$4('match');
+
+// `IsRegExp` abstract operation
+// https://tc39.es/ecma262/#sec-isregexp
+var isRegexp = function (it) {
+  var isRegExp;
+  return isObject$1(it) && ((isRegExp = it[MATCH$2]) !== undefined ? !!isRegExp : classof$1(it) == 'RegExp');
+};
+
+var isRegExp$1 = isRegexp;
+
+var $TypeError = TypeError;
+
+var notARegexp = function (it) {
+  if (isRegExp$1(it)) {
+    throw $TypeError("The method doesn't accept regular expressions");
+  } return it;
+};
+
+var wellKnownSymbol$3 = wellKnownSymbol$n;
+
+var MATCH$1 = wellKnownSymbol$3('match');
+
+var correctIsRegexpLogic = function (METHOD_NAME) {
+  var regexp = /./;
+  try {
+    '/./'[METHOD_NAME](regexp);
+  } catch (error1) {
+    try {
+      regexp[MATCH$1] = false;
+      return '/./'[METHOD_NAME](regexp);
+    } catch (error2) { /* empty */ }
+  } return false;
+};
+
+var $$5 = _export;
+var uncurryThis$6 = functionUncurryThis;
+var notARegExp = notARegexp;
+var requireObjectCoercible$3 = requireObjectCoercible$a;
+var toString$6 = toString$d;
+var correctIsRegExpLogic = correctIsRegexpLogic;
+
+var stringIndexOf$1 = uncurryThis$6(''.indexOf);
+
+// `String.prototype.includes` method
+// https://tc39.es/ecma262/#sec-string.prototype.includes
+$$5({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
+  includes: function includes(searchString /* , position = 0 */) {
+    return !!~stringIndexOf$1(
+      toString$6(requireObjectCoercible$3(this)),
+      toString$6(notARegExp(searchString)),
+      arguments.length > 1 ? arguments[1] : undefined
+    );
+  }
+});
+
 // a string of all valid unicode whitespaces
 var whitespaces$3 = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' +
   '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
 
-var uncurryThis$6 = functionUncurryThis;
-var requireObjectCoercible$3 = requireObjectCoercible$a;
-var toString$6 = toString$d;
+var uncurryThis$5 = functionUncurryThis;
+var requireObjectCoercible$2 = requireObjectCoercible$a;
+var toString$5 = toString$d;
 var whitespaces$2 = whitespaces$3;
 
-var replace$3 = uncurryThis$6(''.replace);
+var replace$3 = uncurryThis$5(''.replace);
 var ltrim = RegExp('^[' + whitespaces$2 + ']+');
 var rtrim = RegExp('(^|[^' + whitespaces$2 + '])[' + whitespaces$2 + ']+$');
 
 // `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
 var createMethod$1 = function (TYPE) {
   return function ($this) {
-    var string = toString$6(requireObjectCoercible$3($this));
+    var string = toString$5(requireObjectCoercible$2($this));
     if (TYPE & 1) string = replace$3(string, ltrim, '');
     if (TYPE & 2) string = replace$3(string, rtrim, '$1');
     return string;
@@ -5904,9 +6074,9 @@ var stringTrim = {
 };
 
 var global$4 = global$v;
-var fails$5 = fails$y;
-var uncurryThis$5 = functionUncurryThis;
-var toString$5 = toString$d;
+var fails$4 = fails$y;
+var uncurryThis$4 = functionUncurryThis;
+var toString$4 = toString$d;
 var trim = stringTrim.trim;
 var whitespaces$1 = whitespaces$3;
 
@@ -5914,45 +6084,83 @@ var $parseInt$1 = global$4.parseInt;
 var Symbol$1 = global$4.Symbol;
 var ITERATOR$2 = Symbol$1 && Symbol$1.iterator;
 var hex = /^[+-]?0x/i;
-var exec$1 = uncurryThis$5(hex.exec);
+var exec$1 = uncurryThis$4(hex.exec);
 var FORCED = $parseInt$1(whitespaces$1 + '08') !== 8 || $parseInt$1(whitespaces$1 + '0x16') !== 22
   // MS Edge 18- broken with boxed symbols
-  || (ITERATOR$2 && !fails$5(function () { $parseInt$1(Object(ITERATOR$2)); }));
+  || (ITERATOR$2 && !fails$4(function () { $parseInt$1(Object(ITERATOR$2)); }));
 
 // `parseInt` method
 // https://tc39.es/ecma262/#sec-parseint-string-radix
 var numberParseInt = FORCED ? function parseInt(string, radix) {
-  var S = trim(toString$5(string));
+  var S = trim(toString$4(string));
   return $parseInt$1(S, (radix >>> 0) || (exec$1(hex, S) ? 16 : 10));
 } : $parseInt$1;
 
-var $$6 = _export;
+var $$4 = _export;
 var $parseInt = numberParseInt;
 
 // `parseInt` method
 // https://tc39.es/ecma262/#sec-parseint-string-radix
-$$6({ global: true, forced: parseInt != $parseInt }, {
+$$4({ global: true, forced: parseInt != $parseInt }, {
   parseInt: $parseInt
 });
 
-// https://github.com/tc39/proposal-string-pad-start-end
-var uncurryThis$4 = functionUncurryThis;
-var toLength = toLength$8;
-var toString$4 = toString$d;
-var $repeat = stringRepeat;
-var requireObjectCoercible$2 = requireObjectCoercible$a;
+class DniFormatter {
+  toRut(rut) {
+    if (!rut) {
+      return rut;
+    }
+    let result = rut.slice(-4, -1) + '-' + rut.substr(rut.length - 1);
+    for (let i = 4; i < rut.length; i += 3) {
+      result = rut.slice(-3 - i, -i) + '.' + result;
+    }
+    return result;
+  }
+  toRutWithoutDots(rut) {
+    if (!rut) {
+      return rut;
+    }
+    let result = rut.slice(0, -1) + (!rut.includes('-') ? '-' : '') + rut.substr(rut.length - 1);
+    return result;
+  }
+  isRutValid(rut) {
+    if (typeof rut !== 'string') {
+      return false;
+    }
+    if (!/^0*(\d{1,3}(\.?\d{3})*)-?([\dkK])$/.test(rut)) {
+      return false;
+    }
+    let t = parseInt(rut.slice(0, -1), 10);
+    let m = 0;
+    let s = 1;
+    while (t > 0) {
+      s = (s + t % 10 * (9 - m++ % 6)) % 11;
+      t = Math.floor(t / 10);
+    }
+    const v = s > 0 ? '' + (s - 1) : 'K';
+    return v === rut.slice(-1);
+  }
+}
+var DniFormatter$1 = new DniFormatter();
 
-var repeat = uncurryThis$4($repeat);
-var stringSlice$3 = uncurryThis$4(''.slice);
+// https://github.com/tc39/proposal-string-pad-start-end
+var uncurryThis$3 = functionUncurryThis;
+var toLength = toLength$8;
+var toString$3 = toString$d;
+var $repeat = stringRepeat;
+var requireObjectCoercible$1 = requireObjectCoercible$a;
+
+var repeat = uncurryThis$3($repeat);
+var stringSlice$3 = uncurryThis$3(''.slice);
 var ceil = Math.ceil;
 
 // `String.prototype.{ padStart, padEnd }` methods implementation
 var createMethod = function (IS_END) {
   return function ($this, maxLength, fillString) {
-    var S = toString$4(requireObjectCoercible$2($this));
+    var S = toString$3(requireObjectCoercible$1($this));
     var intMaxLength = toLength(maxLength);
     var stringLength = S.length;
-    var fillStr = fillString === undefined ? ' ' : toString$4(fillString);
+    var fillStr = fillString === undefined ? ' ' : toString$3(fillString);
     var fillLen, stringFiller;
     if (intMaxLength <= stringLength || fillStr == '') return S;
     fillLen = intMaxLength - stringLength;
@@ -5976,13 +6184,13 @@ var userAgent = engineUserAgent;
 
 var stringPadWebkitBug = /Version\/10(?:\.\d+){1,2}(?: [\w./]+)?(?: Mobile\/\w+)? Safari\//.test(userAgent);
 
-var $$5 = _export;
+var $$3 = _export;
 var $padStart = stringPad.start;
 var WEBKIT_BUG = stringPadWebkitBug;
 
 // `String.prototype.padStart` method
 // https://tc39.es/ecma262/#sec-string.prototype.padstart
-$$5({ target: 'String', proto: true, forced: WEBKIT_BUG }, {
+$$3({ target: 'String', proto: true, forced: WEBKIT_BUG }, {
   padStart: function padStart(maxLength /* , fillString = ' ' */) {
     return $padStart(this, maxLength, arguments.length > 1 ? arguments[1] : undefined);
   }
@@ -6005,14 +6213,14 @@ var PROPER_FUNCTION_NAME$1 = functionName.PROPER;
 var defineBuiltIn$2 = defineBuiltIn$b;
 var anObject$2 = anObject$i;
 var $toString$1 = toString$d;
-var fails$4 = fails$y;
+var fails$3 = fails$y;
 var getRegExpFlags$1 = regexpGetFlags;
 
 var TO_STRING = 'toString';
 var RegExpPrototype$1 = RegExp.prototype;
 var nativeToString = RegExpPrototype$1[TO_STRING];
 
-var NOT_GENERIC = fails$4(function () { return nativeToString.call({ source: 'a', flags: 'b' }) != '/a/b'; });
+var NOT_GENERIC = fails$3(function () { return nativeToString.call({ source: 'a', flags: 'b' }) != '/a/b'; });
 // FF44- RegExp#toString has a wrong name
 var INCORRECT_NAME = PROPER_FUNCTION_NAME$1 && nativeToString.name != TO_STRING;
 
@@ -6068,7 +6276,7 @@ class NumberFormatter {
 var NumberFormatter$1 = new NumberFormatter();
 
 var PROPER_FUNCTION_NAME = functionName.PROPER;
-var fails$3 = fails$y;
+var fails$2 = fails$y;
 var whitespaces = whitespaces$3;
 
 var non = '\u200B\u0085\u180E';
@@ -6076,37 +6284,24 @@ var non = '\u200B\u0085\u180E';
 // check that a method works with the correct list
 // of whitespaces and has a correct name
 var stringTrimForced = function (METHOD_NAME) {
-  return fails$3(function () {
+  return fails$2(function () {
     return !!whitespaces[METHOD_NAME]()
       || non[METHOD_NAME]() !== non
       || (PROPER_FUNCTION_NAME && whitespaces[METHOD_NAME].name !== METHOD_NAME);
   });
 };
 
-var $$4 = _export;
+var $$2 = _export;
 var $trim = stringTrim.trim;
 var forcedStringTrimMethod = stringTrimForced;
 
 // `String.prototype.trim` method
 // https://tc39.es/ecma262/#sec-string.prototype.trim
-$$4({ target: 'String', proto: true, forced: forcedStringTrimMethod('trim') }, {
+$$2({ target: 'String', proto: true, forced: forcedStringTrimMethod('trim') }, {
   trim: function trim() {
     return $trim(this);
   }
 });
-
-var isObject$1 = isObject$f;
-var classof$1 = classofRaw$2;
-var wellKnownSymbol$4 = wellKnownSymbol$n;
-
-var MATCH$2 = wellKnownSymbol$4('match');
-
-// `IsRegExp` abstract operation
-// https://tc39.es/ecma262/#sec-isregexp
-var isRegexp = function (it) {
-  var isRegExp;
-  return isObject$1(it) && ((isRegExp = it[MATCH$2]) !== undefined ? !!isRegExp : classof$1(it) == 'RegExp');
-};
 
 var defineProperty = objectDefineProperty.f;
 
@@ -6120,35 +6315,35 @@ var proxyAccessor$1 = function (Target, Source, key) {
 
 var DESCRIPTORS$3 = descriptors;
 var global$3 = global$v;
-var uncurryThis$3 = functionUncurryThis;
+var uncurryThis$2 = functionUncurryThis;
 var isForced = isForced_1;
 var inheritIfRequired = inheritIfRequired$2;
 var createNonEnumerableProperty = createNonEnumerableProperty$9;
 var getOwnPropertyNames = objectGetOwnPropertyNames.f;
 var isPrototypeOf$1 = objectIsPrototypeOf;
-var isRegExp$1 = isRegexp;
-var toString$3 = toString$d;
+var isRegExp = isRegexp;
+var toString$2 = toString$d;
 var getRegExpFlags = regexpGetFlags;
 var stickyHelpers = regexpStickyHelpers;
 var proxyAccessor = proxyAccessor$1;
 var defineBuiltIn$1 = defineBuiltIn$b;
-var fails$2 = fails$y;
+var fails$1 = fails$y;
 var hasOwn$2 = hasOwnProperty_1;
 var enforceInternalState = internalState.enforce;
 var setSpecies = setSpecies$3;
-var wellKnownSymbol$3 = wellKnownSymbol$n;
+var wellKnownSymbol$2 = wellKnownSymbol$n;
 var UNSUPPORTED_DOT_ALL = regexpUnsupportedDotAll;
 var UNSUPPORTED_NCG = regexpUnsupportedNcg;
 
-var MATCH$1 = wellKnownSymbol$3('match');
+var MATCH = wellKnownSymbol$2('match');
 var NativeRegExp = global$3.RegExp;
 var RegExpPrototype = NativeRegExp.prototype;
 var SyntaxError = global$3.SyntaxError;
-var exec = uncurryThis$3(RegExpPrototype.exec);
-var charAt$1 = uncurryThis$3(''.charAt);
-var replace$2 = uncurryThis$3(''.replace);
-var stringIndexOf$1 = uncurryThis$3(''.indexOf);
-var stringSlice$2 = uncurryThis$3(''.slice);
+var exec = uncurryThis$2(RegExpPrototype.exec);
+var charAt$1 = uncurryThis$2(''.charAt);
+var replace$2 = uncurryThis$2(''.replace);
+var stringIndexOf = uncurryThis$2(''.indexOf);
+var stringSlice$2 = uncurryThis$2(''.slice);
 // TODO: Use only proper RegExpIdentifierName
 var IS_NCG = /^\?<[^\s\d!#%&*+<=>@^][^\s!#%&*+<=>@^]*>/;
 var re1 = /a/g;
@@ -6161,8 +6356,8 @@ var MISSED_STICKY = stickyHelpers.MISSED_STICKY;
 var UNSUPPORTED_Y = stickyHelpers.UNSUPPORTED_Y;
 
 var BASE_FORCED = DESCRIPTORS$3 &&
-  (!CORRECT_NEW || MISSED_STICKY || UNSUPPORTED_DOT_ALL || UNSUPPORTED_NCG || fails$2(function () {
-    re2[MATCH$1] = false;
+  (!CORRECT_NEW || MISSED_STICKY || UNSUPPORTED_DOT_ALL || UNSUPPORTED_NCG || fails$1(function () {
+    re2[MATCH] = false;
     // RegExp constructor can alter flags and IsRegExp works correct with @@match
     return NativeRegExp(re1) != re1 || NativeRegExp(re2) == re2 || NativeRegExp(re1, 'i') != '/a/i';
   }));
@@ -6240,7 +6435,7 @@ var handleNCG = function (string) {
 if (isForced('RegExp', BASE_FORCED)) {
   var RegExpWrapper = function RegExp(pattern, flags) {
     var thisIsRegExp = isPrototypeOf$1(RegExpPrototype, this);
-    var patternIsRegExp = isRegExp$1(pattern);
+    var patternIsRegExp = isRegExp(pattern);
     var flagsAreUndefined = flags === undefined;
     var groups = [];
     var rawPattern = pattern;
@@ -6255,19 +6450,19 @@ if (isForced('RegExp', BASE_FORCED)) {
       if (flagsAreUndefined) flags = getRegExpFlags(rawPattern);
     }
 
-    pattern = pattern === undefined ? '' : toString$3(pattern);
-    flags = flags === undefined ? '' : toString$3(flags);
+    pattern = pattern === undefined ? '' : toString$2(pattern);
+    flags = flags === undefined ? '' : toString$2(flags);
     rawPattern = pattern;
 
     if (UNSUPPORTED_DOT_ALL && 'dotAll' in re1) {
-      dotAll = !!flags && stringIndexOf$1(flags, 's') > -1;
+      dotAll = !!flags && stringIndexOf(flags, 's') > -1;
       if (dotAll) flags = replace$2(flags, /s/g, '');
     }
 
     rawFlags = flags;
 
     if (MISSED_STICKY && 'sticky' in re1) {
-      sticky = !!flags && stringIndexOf$1(flags, 'y') > -1;
+      sticky = !!flags && stringIndexOf(flags, 'y') > -1;
       if (sticky && UNSUPPORTED_Y) flags = replace$2(flags, /y/g, '');
     }
 
@@ -6297,8 +6492,8 @@ if (isForced('RegExp', BASE_FORCED)) {
     return result;
   };
 
-  for (var keys = getOwnPropertyNames(NativeRegExp), index$1 = 0; keys.length > index$1;) {
-    proxyAccessor(RegExpWrapper, NativeRegExp, keys[index$1++]);
+  for (var keys = getOwnPropertyNames(NativeRegExp), index = 0; keys.length > index;) {
+    proxyAccessor(RegExpWrapper, NativeRegExp, keys[index++]);
   }
 
   RegExpPrototype.constructor = RegExpWrapper;
@@ -6333,6 +6528,51 @@ class StringFormatter {
 }
 var StringFormatter$1 = new StringFormatter();
 
+const validation = params => values => {
+  const errors = {};
+  const fields = Object.keys(params);
+  fields.forEach(field => {
+    const value = get$2(values, field);
+    const action = get$2(params, field);
+    if (Array.isArray(action)) {
+      const actionLength = action.length;
+      for (let i = 0; i < actionLength; i += 1) {
+        const error = action[i](value, values);
+        if (error) {
+          errors[field] = error;
+          break;
+        }
+      }
+    } else {
+      const error = action(value, values);
+      if (error) {
+        errors[field] = error;
+      }
+    }
+  });
+  return errors;
+};
+
+const isRequired = value => {
+  if (!value || isEmpty(value) || value === undefined) {
+    return 'required';
+  }
+  return false;
+};
+const isValidRut = value => {
+  if (!DniFormatter$1.isRutValid(value)) {
+    return 'invalidRut';
+  }
+  return false;
+};
+const validateEmail = emailInput => String(emailInput).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+const isValidEmail = value => {
+  if (!validateEmail(value)) {
+    return 'invalidEmail';
+  }
+  return false;
+};
+
 const ProductCard = ({
   productData
 }) => {
@@ -6347,7 +6587,7 @@ const ProductCard = ({
     history.push(`/products/detail/${productData.sku}`);
   };
   const imageOnErrorHandler = event => {
-    event.currentTarget.src = img$8;
+    event.currentTarget.src = img$b;
   };
   const handleAddToCart = e => {
     e.stopPropagation();
@@ -6366,7 +6606,7 @@ const ProductCard = ({
       children: jsx("img", {
         className: "product-card__image-image",
         loading: "lazy",
-        src: productData.urlImage || img$8,
+        src: productData.urlImage || img$b,
         alt: productData.name,
         onError: imageOnErrorHandler
       })
@@ -6459,7 +6699,7 @@ const ShopCartItem = ({
   }, [item, updateQuantity]);
   const discountPrice = (item.price || 0).toFixed(2);
   const imageOnErrorHandler = event => {
-    event.currentTarget.src = img$8;
+    event.currentTarget.src = img$b;
   };
   return jsxs("div", Object.assign({
     className: "shop-cart__item"
@@ -6552,16 +6792,34 @@ const Loader = ({
   }));
 };
 
-const LoaderScreen = () => {
+var img$a = "data:image/svg+xml,%3csvg width='59' height='59' viewBox='0 0 59 59' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M47.0178 5.81591C47.7185 5.39549 48.5594 5.1152 49.4002 5.1152C51.9228 5.1152 53.9549 7.14727 53.9549 9.66983C53.9549 10.5107 53.7446 11.3515 53.3242 12.0523C56.8979 16.9572 59 22.9834 59 29.5C59 45.8266 45.8266 59 29.5 59C13.2435 59 0 45.8266 0 29.5C0 13.2435 13.1734 0 29.5 0C36.0867 0.0700713 42.1128 2.24228 47.0178 5.81591Z' fill='white'/%3e%3cpath d='M51.0127 14.0142C50.5222 14.2245 49.9617 14.2945 49.4011 14.2945C46.8785 14.2945 44.8465 12.2625 44.8465 9.7399C44.8465 9.17933 44.9866 8.61876 45.1267 8.12826C40.7823 4.97505 35.3868 3.08313 29.5709 3.08313C14.926 3.08313 3.01392 14.9252 3.01392 29.5701C3.01392 44.215 14.856 56.057 29.5009 56.057C44.2158 56.1271 56.0579 44.215 56.0579 29.5701C56.0579 23.7542 54.1659 18.4287 51.0127 14.0142Z' fill='%23DF1122'/%3e%3cpath d='M51.0113 14.0142C50.5208 14.2245 49.9602 14.2945 49.3996 14.2945C46.8771 14.2945 44.845 12.2625 44.845 9.7399C44.845 9.17933 44.9151 8.61876 45.1253 8.12826C40.7809 4.97505 35.3854 3.08313 29.5695 3.08313C14.9246 3.08313 3.08252 14.9252 3.08252 29.5701C3.08252 44.215 14.9246 56.057 29.5695 56.057C44.2143 56.057 56.0564 44.215 56.0564 29.5701C56.0564 23.7542 54.1645 18.4287 51.0113 14.0142Z' stroke='%23DF1122' stroke-width='0.0229017' stroke-miterlimit='3.864'/%3e%3cpath d='M46.9475 9.67003C46.9475 8.2686 48.0686 7.14746 49.4701 7.14746C50.8715 7.14746 51.9926 8.2686 51.9926 9.67003C51.9926 11.0715 50.8715 12.1926 49.4701 12.1926C48.0686 12.1926 46.9475 11.0715 46.9475 9.67003Z' fill='%23DF1122'/%3e%3cpath d='M49.401 12.1926C50.7941 12.1926 51.9235 11.0632 51.9235 9.67003C51.9235 8.27685 50.7941 7.14746 49.401 7.14746C48.0078 7.14746 46.8784 8.27685 46.8784 9.67003C46.8784 11.0632 48.0078 12.1926 49.401 12.1926Z' stroke='%23DF1122' stroke-width='0.021184' stroke-miterlimit='3.864'/%3e%3cpath d='M52.9726 23.1937L47.2968 38.189H44.0035L46.1757 33.284L42.2517 23.1937H45.5451L47.6472 29.7103H47.7873L49.7493 23.1937H52.9726Z' fill='%23FDF737'/%3e%3cpath d='M41.7634 30.7614C41.7634 33.1439 39.1707 34.0548 36.6482 34.0548C34.1957 34.0548 31.603 33.1439 31.603 30.7614H34.8263C34.8263 31.5322 35.8774 31.7424 36.6482 31.7424C37.4189 31.7424 38.3999 31.5322 38.3999 30.8315C38.3999 29.9206 37.2087 29.7804 35.2467 29.2899C33.2847 28.7994 31.8132 27.8885 31.8132 25.9966C31.8132 23.6142 34.1256 22.7733 36.5781 22.7733C39.0306 22.7733 41.2729 23.6142 41.2729 25.9265H38.0496C38.0496 25.2959 37.2087 25.0156 36.5781 25.0156C35.8774 25.0156 35.1066 25.1557 35.1066 25.8564C35.1066 26.7674 36.508 26.8374 38.0496 27.2579C40.0816 27.8885 41.7634 28.6593 41.7634 30.7614Z' fill='%23FDF737'/%3e%3cpath d='M26.7674 28.4485C26.7674 27.047 25.9966 25.7157 24.1748 25.7157C22.3529 25.7157 21.7924 27.1872 21.7924 28.4485C21.7924 29.7798 22.4931 31.1812 24.3149 31.1812C26.2069 31.1812 26.7674 29.7098 26.7674 28.4485ZM29.8506 33.7038H26.8375V32.5126H26.6974C26.2069 33.5637 25.1558 34.1242 23.6142 34.1242C20.9515 34.1242 18.6392 31.952 18.6392 28.5185C18.6392 25.015 20.7413 22.9128 23.404 22.9128C24.8755 22.9128 26.1368 23.5435 26.6974 24.4544H26.8375V23.2632H29.9206L29.8506 33.7038Z' fill='%23FDF737'/%3e%3cpath d='M38.2576 38.259C29.9191 37.1378 21.5806 37.0678 8.61743 37.9787L8.75757 37.4181C21.7208 36.297 31.9512 35.6663 37.4868 35.8766C40.7801 35.9466 41.7611 36.2269 41.7611 37.4181C41.8312 38.6093 40.3597 38.5393 38.2576 38.259Z' fill='%23FDF737'/%3e%3cpath d='M13.6624 27.3273C13.5924 26.6967 13.242 25.4354 11.4902 25.4354C9.87858 25.4354 9.38808 26.7668 9.31801 27.3273H13.6624ZM16.8857 28.3784C16.8857 28.7988 16.8156 29.4295 16.8156 29.4295H9.24794C9.31801 30.6207 10.2289 31.5316 11.4902 31.5316C12.4011 31.5316 13.0318 31.1812 13.3121 30.5506H16.6054C16.3251 32.0922 14.9938 34.0542 11.5603 34.0542C8.26694 34.0542 6.02466 31.4615 6.02466 28.3784C6.02466 25.2252 8.05673 22.9128 11.3501 22.9128C14.7135 22.9128 16.8857 25.2252 16.8857 28.3784Z' fill='%23FDF737'/%3e%3cpath d='M16.3247 44.8457C16.4649 44.7056 16.6751 44.5654 16.8853 44.4954C17.0955 44.4253 17.3057 44.3552 17.5159 44.3552C17.7262 44.3552 17.9364 44.4253 18.1466 44.4954C18.3568 44.5654 18.567 44.7056 18.7071 44.8457L18.9174 45.0559L18.4269 45.5464L18.2166 45.2662C18.1466 45.1961 18.0064 45.126 17.8663 45.0559C17.7262 44.9859 17.586 44.9859 17.5159 44.9859C17.3758 44.9859 17.2357 44.9859 17.1656 45.0559C17.0254 45.126 16.9554 45.1961 16.8152 45.2662C16.7452 45.3362 16.6751 45.4764 16.605 45.6165C16.5349 45.7567 16.5349 45.8968 16.5349 45.9669C16.5349 46.107 16.5349 46.2472 16.605 46.3172C16.6751 46.4574 16.7452 46.5274 16.8152 46.6676C17.0254 46.8778 17.2357 46.9479 17.5159 46.9479C17.6561 46.9479 17.7962 46.9479 17.8663 46.8778C18.0064 46.8077 18.0765 46.7376 18.2166 46.6676L18.4269 46.4574L18.9174 46.9479L18.7071 47.1581C18.567 47.2982 18.3568 47.4384 18.1466 47.5084C17.9364 47.5785 17.7262 47.6486 17.5159 47.6486C17.3057 47.6486 17.0955 47.5785 16.8853 47.5084C16.6751 47.4384 16.5349 47.2982 16.3247 47.1581C16.1846 47.0179 16.0444 46.8077 15.9744 46.5975C15.9043 46.3873 15.8342 46.1771 15.8342 45.9669C15.8342 45.7567 15.9043 45.5464 15.9744 45.3362C16.0444 45.1961 16.1846 44.9859 16.3247 44.8457Z' fill='white'/%3e%3cpath d='M20.1099 45.2665C19.8997 45.4767 19.8296 45.6869 19.8296 45.9672C19.8296 46.1074 19.8296 46.2475 19.8997 46.3877C19.9698 46.3176 20.0398 46.2475 20.18 46.1074C20.3201 45.9672 20.4603 45.8271 20.5303 45.757C20.6705 45.6169 20.8106 45.4767 20.9508 45.3366C21.0909 45.1964 21.161 45.1264 21.231 45.0563C21.0208 44.9862 20.8807 44.9162 20.6705 44.9862C20.4603 45.0563 20.25 45.1264 20.1099 45.2665ZM21.7215 46.4577L22.212 46.9482L22.0018 47.1584C21.8617 47.2986 21.6515 47.4387 21.4413 47.5088C21.231 47.5789 21.0208 47.6489 20.8106 47.6489C20.6004 47.6489 20.3902 47.5789 20.18 47.5088C19.9698 47.4387 19.8296 47.2986 19.6194 47.1584C19.4793 47.0183 19.3391 46.8081 19.269 46.5979C19.199 46.3877 19.1289 46.1774 19.1289 45.9672C19.1289 45.757 19.199 45.5468 19.269 45.3366C19.3391 45.1264 19.4793 44.9862 19.6194 44.776C19.7595 44.6359 19.9698 44.4957 20.18 44.4257C20.3902 44.3556 20.6004 44.2855 20.8106 44.2855C21.0208 44.2855 21.231 44.3556 21.4413 44.4257C21.6515 44.4957 21.8617 44.6359 22.0018 44.776L22.212 44.9862L20.3902 46.8081C20.6004 46.8782 20.7405 46.9482 20.9508 46.8782C21.161 46.8782 21.3712 46.738 21.5113 46.5979L21.7215 46.4577Z' fill='white'/%3e%3cpath d='M22.4236 45.9669C22.4236 45.7567 22.4937 45.5464 22.5637 45.3362C22.6338 45.126 22.7739 44.9859 22.9141 44.8457C23.0542 44.7056 23.2644 44.5654 23.4747 44.4954C23.6849 44.4253 23.8951 44.3552 24.1053 44.3552C24.3155 44.3552 24.5257 44.4253 24.7359 44.4954C24.9461 44.5654 25.0863 44.7056 25.2965 44.8457C25.4366 44.9859 25.5768 45.1961 25.6469 45.3362C25.7169 45.5464 25.787 45.7567 25.787 45.9669V47.6486H25.1564V45.9669C25.1564 45.8267 25.1564 45.6866 25.0863 45.6165C25.0162 45.4764 24.9461 45.4063 24.8761 45.2662C24.806 45.1961 24.6659 45.126 24.5257 45.0559C24.3856 44.9859 24.2454 44.9859 24.1053 44.9859C23.9652 44.9859 23.825 44.9859 23.6849 45.0559C23.5447 45.126 23.4747 45.1961 23.4046 45.2662C23.3345 45.3362 23.2644 45.4764 23.1944 45.6165C23.1243 45.7567 23.1243 45.8267 23.1243 45.9669V47.6486H22.4236V45.9669Z' fill='white'/%3e%3cpath d='M26.4165 44.8457C26.5567 44.7056 26.7669 44.5654 26.9771 44.4954C27.1873 44.4253 27.3975 44.3552 27.6077 44.3552C27.818 44.3552 28.0282 44.4253 28.2384 44.4954C28.4486 44.5654 28.6588 44.7056 28.799 44.8457L29.0092 45.0559L28.5187 45.5464L28.3085 45.3362C28.2384 45.2662 28.0982 45.1961 27.9581 45.126C27.818 45.0559 27.6778 45.0559 27.6077 45.0559C27.4676 45.0559 27.3275 45.0559 27.2574 45.126C27.1172 45.1961 27.0472 45.2662 26.907 45.3362C26.837 45.4063 26.7669 45.5464 26.6968 45.6866C26.6267 45.8267 26.6267 45.9669 26.6267 46.0369C26.6267 46.1771 26.6267 46.3172 26.6968 46.3873C26.7669 46.5274 26.837 46.5975 26.907 46.7376C27.1172 46.9479 27.3275 47.0179 27.6077 47.0179C27.7479 47.0179 27.888 47.0179 27.9581 46.9479C28.0982 46.8778 28.1683 46.8077 28.3085 46.7376L28.5187 46.5274L29.0092 47.0179L28.7289 47.1581C28.5887 47.2982 28.3785 47.4384 28.1683 47.5084C27.9581 47.5785 27.7479 47.6486 27.5377 47.6486C27.3275 47.6486 27.1172 47.5785 26.907 47.5084C26.6968 47.4384 26.5567 47.2982 26.3465 47.1581C26.2063 47.0179 26.0662 46.8077 25.9961 46.5975C25.926 46.3873 25.856 46.1771 25.856 45.9669C25.856 45.7567 25.926 45.5464 25.9961 45.3362C26.1362 45.1961 26.2764 44.9859 26.4165 44.8457Z' fill='white'/%3e%3cpath d='M29.8499 45.9669C29.8499 46.107 29.8499 46.2471 29.92 46.3873C29.99 46.5274 30.0601 46.5975 30.1302 46.7376C30.2002 46.8077 30.3404 46.8778 30.4805 46.9479C30.6207 47.0179 30.7608 47.0179 30.9009 47.0179C31.0411 47.0179 31.1812 47.0179 31.3214 46.9479C31.4615 46.8778 31.5316 46.8077 31.6717 46.7376C31.7418 46.6676 31.8119 46.5274 31.8819 46.3873C31.952 46.2471 31.952 46.107 31.952 45.9669C31.952 45.8267 31.952 45.6866 31.8819 45.6165C31.8119 45.4764 31.7418 45.4063 31.6717 45.2662C31.6017 45.1961 31.4615 45.126 31.3214 45.0559C31.1812 44.9859 31.0411 44.9859 30.9009 44.9859C30.7608 44.9859 30.6207 44.9859 30.4805 45.0559C30.3404 45.126 30.2703 45.1961 30.1302 45.2662C30.0601 45.3362 29.99 45.4764 29.92 45.6165C29.92 45.7567 29.8499 45.8267 29.8499 45.9669ZM29.2192 45.9669C29.2192 45.7567 29.2893 45.5464 29.3594 45.3362C29.4295 45.126 29.5696 44.9859 29.7097 44.8457C29.8499 44.7056 30.0601 44.5654 30.2703 44.4954C30.4805 44.4253 30.6907 44.3552 30.9009 44.3552C31.1112 44.3552 31.3214 44.4253 31.5316 44.4954C31.7418 44.5654 31.8819 44.7056 32.0922 44.8457C32.2323 44.9859 32.3724 45.1961 32.4425 45.3362C32.5126 45.5464 32.5827 45.7567 32.5827 45.9669C32.5827 46.1771 32.5126 46.3873 32.4425 46.5975C32.3724 46.8077 32.2323 46.9479 32.0922 47.1581C31.952 47.2982 31.7418 47.4384 31.5316 47.5084C31.3214 47.5785 31.1112 47.6486 30.9009 47.6486C30.6907 47.6486 30.4805 47.5785 30.2703 47.5084C30.0601 47.4384 29.92 47.2982 29.7097 47.1581C29.5696 47.0179 29.4295 46.8077 29.3594 46.5975C29.2893 46.4574 29.2192 46.2472 29.2192 45.9669Z' fill='white'/%3e%3cpath d='M35.6659 44.3552V44.9859H33.7039C33.6338 44.9859 33.5638 44.9859 33.4937 45.0559C33.4236 45.126 33.4236 45.1961 33.4236 45.2662C33.4236 45.3362 33.4236 45.4063 33.4937 45.4764C33.5638 45.5464 33.6338 45.5464 33.7039 45.5464H35.0353C35.1754 45.5464 35.3155 45.5464 35.3856 45.6165C35.5258 45.6866 35.5958 45.7566 35.6659 45.8267C35.736 45.8968 35.806 46.0369 35.8761 46.1771C35.9462 46.3172 35.9462 46.3873 35.9462 46.5274C35.9462 46.6676 35.9462 46.8077 35.8761 46.9479C35.806 47.088 35.736 47.1581 35.6659 47.2982C35.5958 47.3683 35.4557 47.4384 35.3856 47.5084C35.2455 47.5785 35.1053 47.5785 35.0353 47.5785H33.0733V46.9479H35.0353C35.1053 46.9479 35.2455 46.9479 35.2455 46.8778C35.3155 46.8077 35.3155 46.7377 35.3155 46.6676C35.3155 46.5975 35.3155 46.5274 35.2455 46.4574C35.1754 46.3873 35.1053 46.3873 35.0353 46.3873H33.7039C33.5638 46.3873 33.4236 46.3873 33.2835 46.3172C33.1433 46.2472 33.0733 46.1771 33.0032 46.107C32.9331 46.0369 32.863 45.8968 32.793 45.8267C32.7229 45.6866 32.7229 45.5464 32.7229 45.4063C32.7229 45.2662 32.7229 45.126 32.793 45.0559C32.863 44.9158 32.9331 44.8457 33.0032 44.7056C33.0733 44.6355 33.2134 44.5654 33.2835 44.4954C33.4236 44.4253 33.5638 44.4253 33.7039 44.4253H35.6659V44.3552Z' fill='white'/%3e%3cpath d='M39.5211 44.3552V45.9669C39.5211 46.1771 39.4511 46.3873 39.381 46.5975C39.3109 46.8077 39.1708 46.9479 39.0306 47.1581C38.8905 47.2982 38.6803 47.4384 38.4701 47.5084C38.2599 47.5785 38.0496 47.6486 37.8394 47.6486C37.6292 47.6486 37.419 47.5785 37.2088 47.5084C36.9986 47.4384 36.8584 47.2982 36.6482 47.1581C36.5081 47.0179 36.3679 46.8077 36.2979 46.5975C36.2278 46.3873 36.1577 46.1771 36.1577 45.9669V44.3552H36.7884V45.9669C36.7884 46.107 36.7884 46.2471 36.8584 46.3873C36.9285 46.5274 36.9986 46.5975 37.0686 46.7376C37.1387 46.8077 37.2789 46.8778 37.419 46.9479C37.5591 47.0179 37.6993 47.0179 37.8394 47.0179C37.9796 47.0179 38.1197 47.0179 38.2599 46.9479C38.4 46.8778 38.4701 46.8077 38.6102 46.7376C38.6803 46.6676 38.7504 46.5274 38.8204 46.3873C38.8905 46.2471 38.8905 46.107 38.8905 45.9669V44.3552H39.5211Z' fill='white'/%3e%3cpath d='M41.3424 46.9474C41.4825 46.9474 41.6226 46.9474 41.6927 46.8774C41.8329 46.8073 41.9029 46.7372 41.973 46.6671C42.0431 46.5971 42.1131 46.4569 42.1832 46.3168C42.2533 46.1766 42.2533 46.0365 42.2533 45.8964V44.9154H41.3424C41.2022 44.9154 41.0621 44.9154 40.9219 44.9854C40.7818 45.0555 40.7117 45.1256 40.5716 45.1956C40.5015 45.2657 40.4314 45.4059 40.3614 45.546C40.2913 45.6861 40.2913 45.7562 40.2913 45.8964C40.2913 46.0365 40.2913 46.1766 40.3614 46.3168C40.4314 46.4569 40.5015 46.527 40.5716 46.6671C40.6416 46.7372 40.7818 46.8073 40.9219 46.8774C41.0621 46.9474 41.2022 46.9474 41.3424 46.9474ZM43.0241 43.0234V45.9664C43.0241 46.1766 42.954 46.3869 42.8839 46.5971C42.8138 46.8073 42.6737 46.9474 42.5336 47.1576C42.3934 47.2978 42.1832 47.4379 42.0431 47.508C41.8329 47.5781 41.6226 47.6481 41.4124 47.6481C41.2022 47.6481 40.992 47.5781 40.7818 47.508C40.5716 47.4379 40.4314 47.2978 40.2212 47.1576C40.0811 47.0175 39.9409 46.8073 39.8709 46.5971C39.8008 46.3869 39.7307 46.1766 39.7307 45.9664C39.7307 45.7562 39.8008 45.546 39.8709 45.3358C39.9409 45.1256 40.0811 44.9854 40.2212 44.8453C40.3614 44.7051 40.5716 44.565 40.7818 44.4949C40.992 44.4249 41.2022 44.3548 41.4124 44.3548H42.3934V43.0234H43.0241Z' fill='white'/%3e%3c/svg%3e";
+
+const LoaderScreen = ({
+  loading
+}) => {
   const {
     isLoading
   } = useGlobal();
-  return jsx("div", Object.assign({
-    className: `loading-screen ${isLoading ? 'show' : ''}`
+  return jsxs("div", Object.assign({
+    className: `loading-screen ${isLoading || loading ? 'show' : ''}`
   }, {
-    children: jsx(Loader, {
-      color: 'white'
-    })
+    children: [jsx("div", Object.assign({
+      style: {
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }
+    }, {
+      children: jsx("img", {
+        src: img$a,
+        alt: "\u2026",
+        height: "70",
+        width: "70"
+      })
+    })), jsx(Loader, {
+      color: "white"
+    })]
   }));
 };
 
@@ -6614,7 +6872,7 @@ const ElevatorButton = ({
   }));
 };
 
-var img$7 = "data:image/png;base64,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";
+var img$9 = "data:image/svg+xml,%3csvg width='200' height='200' viewBox='0 0 200 200' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23clip0_2685_7436)'%3e%3cg clip-path='url(%23clip1_2685_7436)'%3e%3cpath d='M230.871 0H-181.858V199.821H230.871V0Z' fill='%23D6D6D6'/%3e%3cpath d='M22.0701 0.0810547H-77.5996V131.093H22.0701V0.0810547Z' fill='%23F5F5F5'/%3e%3cpath d='M126.471 0.0810547H26.8009V131.093H126.471V0.0810547Z' fill='%23F5F5F5'/%3e%3cpath d='M230.871 0.0810547H131.201V131.093H230.871V0.0810547Z' fill='%23F5F5F5'/%3e%3cpath d='M231.323 132.473H-181.138V199.729H231.323V132.473Z' fill='%23EAEAEA'/%3e%3cpath d='M231.334 149.157H-181.811V150.342H231.334V149.157Z' fill='%23D6D6D6'/%3e%3cpath d='M231.334 163.076H-181.811V164.261H231.334V163.076Z' fill='%23D6D6D6'/%3e%3cpath d='M231.334 182.628H-181.811V183.813H231.334V182.628Z' fill='%23D6D6D6'/%3e%3cpath d='M231.334 138.794H-181.811V139.979H231.334V138.794Z' fill='%23D6D6D6'/%3e%3cpath d='M222.771 200L161.625 131.093L160.878 131.932L221.284 200H222.771Z' fill='%23D6D6D6'/%3e%3cpath d='M166.907 200L124.095 131.093L123.233 131.769L165.625 200H166.907Z' fill='%23D6D6D6'/%3e%3cpath d='M116.463 200L87.9476 131.093L86.9962 131.591L115.301 200H116.463Z' fill='%23D6D6D6'/%3e%3cpath d='M69.2037 200L52.8199 131.093L51.8002 131.401L68.1157 200H69.2037Z' fill='%23D6D6D6'/%3e%3cpath d='M25.2876 131.093H24.2363V200H25.2876V131.093Z' fill='%23D6D6D6'/%3e%3c/g%3e%3cpath d='M157.427 127.256L151.161 129.774L158.617 148.329L164.883 145.811L157.427 127.256Z' fill='%236E64CA'/%3e%3cpath d='M161.391 142.023L159.23 142.891C156.568 143.961 155.91 148.559 157.759 153.162L177.554 202.419C179.404 207.023 183.061 209.887 185.723 208.817L187.884 207.949C190.545 206.879 191.204 202.281 189.354 197.678L169.559 148.421C167.71 143.817 164.052 140.953 161.391 142.023Z' fill='%23564BC1'/%3e%3cpath d='M159.118 48.7508C147.792 43.9264 135.035 43.7487 123.649 48.257C112.263 52.7653 103.181 61.5906 98.3984 72.7934C93.6156 84.003 93.5289 96.6737 98.1576 108.018C102.786 119.362 111.751 128.451 123.08 133.285C134.408 138.116 147.171 138.297 158.562 133.788C169.953 129.279 179.039 120.449 183.821 109.241C186.189 103.69 187.429 97.721 187.47 91.676C187.51 85.631 186.35 79.6282 184.056 74.0106C181.762 68.3931 178.379 63.2709 174.1 58.9367C169.821 54.6025 164.73 51.1413 159.118 48.7508ZM126.618 124.921C122.116 123.002 118.032 120.223 114.6 116.745C111.167 113.266 108.454 109.156 106.614 104.648C104.774 100.141 103.844 95.3244 103.877 90.4742C103.91 85.6239 104.905 80.8347 106.805 76.3804C110.646 67.3863 117.939 60.302 127.082 56.6854C136.224 53.0687 146.467 53.2161 155.558 57.0949C164.646 60.9754 171.838 68.268 175.552 77.3698C179.265 86.4716 179.197 96.6373 175.362 105.632C171.524 114.626 164.233 121.712 155.092 125.329C145.95 128.947 135.708 128.8 126.618 124.921Z' fill='black' fill-opacity='0.1'/%3e%3cpath d='M158.535 47.4388C146.75 42.4188 133.453 42.2832 121.568 47.0621C109.683 51.841 100.182 61.1431 95.1526 72.9243C90.1228 84.7126 89.9819 98.0162 94.7609 109.908C99.5399 121.801 108.847 131.307 120.636 136.337C132.423 141.364 145.725 141.503 157.615 136.723C169.506 131.944 179.011 122.637 184.04 110.85C186.531 105.012 187.847 98.7406 187.913 92.3937C187.979 86.0467 186.794 79.7489 184.426 73.8601C182.057 67.9713 178.552 62.6069 174.109 58.0734C169.667 53.5399 164.374 49.9262 158.535 47.4388ZM124.357 127.542C119.672 125.544 115.427 122.644 111.863 119.005C108.3 115.367 105.488 111.062 103.588 106.337C101.689 101.612 100.738 96.5584 100.792 91.4659C100.846 86.3733 101.902 81.3411 103.901 76.6568C107.939 67.1983 115.569 59.7312 125.112 55.8975C134.656 52.0638 145.331 52.1776 154.791 56.2137C164.248 60.2516 171.714 67.8796 175.548 77.421C179.383 86.9623 179.271 97.6358 175.238 107.095C171.202 116.554 163.574 124.022 154.032 127.856C144.49 131.691 133.815 131.578 124.357 127.542Z' fill='%237C7AE3'/%3e%3cpath d='M46.8531 77.0385C44.1092 67.9362 42.418 52.3748 53.9563 41.7323C62.7744 33.5987 86.5973 32.7791 94.8843 50.5166C96.2678 53.4776 94.377 58.1184 90.6562 57.9495C89.194 57.8819 88.2885 62.5106 87.4429 65.3824C88.6268 77.0384 99.174 77.2537 104.524 86.1606C111.12 97.141 103.002 113.358 83.553 113.358C64.1038 113.358 52.9544 97.2778 46.8531 77.0385Z' fill='%23E67542'/%3e%3cpath d='M62.0633 89.6036C62.0633 86.5629 62.058 71.4982 62.0631 71.2448C53.7053 72.4753 54.4144 56.6624 62.8706 60.5478C64.731 61.7303 70.5163 64.5062 70.0089 54.7083C77.9556 58.4321 84.5778 56.6927 83.2534 52.0625C88.5511 59.3385 90.1114 56.0312 90.1114 58.4321C91.3531 71.1474 90.104 84.4543 82.1927 84.4553C81.3272 84.4448 80.1315 83.9733 79.2811 83.8125V89.6036C79.2811 92.9822 79.2811 94.6715 79.2811 94.6715C79.2811 94.6715 75.1856 104.571 70.8195 104.516C66.4533 104.461 62.0633 94.6715 62.0633 94.6715C62.0633 94.6715 62.0633 92.9822 62.0633 89.6036Z' fill='%23FFDCC0'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M75.9921 59.9145C75.095 60.1249 74.3467 60.48 73.9445 60.7326C73.7532 60.8528 73.5006 60.7953 73.3803 60.6042C73.26 60.4132 73.3175 60.1609 73.5088 60.0407C73.986 59.7409 74.8181 59.3502 75.805 59.1188C76.7922 58.8872 77.9655 58.8078 79.1046 59.1686C79.32 59.2369 79.4392 59.4666 79.3709 59.6817C79.3026 59.8969 79.0726 60.016 78.8572 59.9478C77.9032 59.6456 76.889 59.7042 75.9921 59.9145Z' fill='%23E67542'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M85.7026 59.8254C85.181 59.7953 84.696 59.9285 84.4231 60.0537C84.2178 60.1479 83.9748 60.058 83.8805 59.8529C83.7862 59.6478 83.8762 59.4051 84.0816 59.3109C84.4593 59.1376 85.0772 58.9705 85.7499 59.0094C86.4327 59.0488 87.1891 59.3032 87.7843 59.9939C87.9317 60.165 87.9123 60.423 87.7411 60.5703C87.5698 60.7175 87.3115 60.6982 87.164 60.5271C86.7433 60.0389 86.214 59.855 85.7026 59.8254Z' fill='%23E67542'/%3e%3cpath d='M77.0996 63.9649C77.0996 64.9725 76.7575 65.7584 76.2583 65.7786C75.7591 65.7987 75.3338 65.0329 75.2784 64.0455C75.2229 63.0581 75.6112 62.252 76.1196 62.2318C76.6281 62.2117 77.0626 62.9875 77.0996 63.9649Z' fill='%23232E36'/%3e%3cpath d='M86.4354 63.9649C86.4354 64.9725 86.0933 65.7584 85.5941 65.7786C85.0948 65.7987 84.6695 65.0329 84.6141 64.0455C84.5586 63.0581 84.9562 62.252 85.4554 62.2318C85.9547 62.2117 86.4354 62.9875 86.4354 63.9649Z' fill='%23232E36'/%3e%3cpath d='M78.2915 75.4701C78.9306 76.0538 79.7983 76.3947 80.7129 76.4206C81.1585 76.4206 81.604 76.3482 82.0144 76.1984C82.4248 76.0486 82.8001 75.8265 83.1108 75.5424C83.4215 75.2583 83.6678 74.9277 83.8319 74.5609C83.9961 74.1942 84.0723 73.8016 84.0606 73.409L77.3007 73.3057C77.3007 74.1115 77.6583 74.8915 78.2915 75.4701Z' fill='%235C3737'/%3e%3cpath d='M78.7541 75.8158C78.1758 75.4439 77.7375 74.932 77.5015 74.338C78.2922 74.1933 79.1258 74.3281 79.8044 74.7103C80.4829 75.0926 80.9932 75.7022 81.1761 76.3944C81.0345 76.4099 80.8731 76.4188 80.7315 76.4239C80.0175 76.4033 79.3264 76.1877 78.7541 75.8158Z' fill='%23FFC3A6'/%3e%3cpath d='M77.4011 73.6226C77.3609 73.5695 77.3228 73.3892 77.3088 73.3057L84.0625 73.4089C84.0692 73.5445 84.0429 73.7897 84.0289 73.8953C83.6262 73.9469 77.4515 73.6889 77.4011 73.6226Z' fill='white'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M82.4947 62.969C82.6259 62.9165 82.7761 62.9794 82.8303 63.1095C83.2588 64.1398 83.8126 65.6086 83.9869 66.9362C84.0741 67.5997 84.0698 68.2503 83.8914 68.8009C83.7097 69.3619 83.3465 69.8179 82.7364 70.0637C82.6054 70.1165 82.455 70.054 82.4005 69.924C82.3461 69.7941 82.4082 69.6459 82.5393 69.5931C82.9906 69.4112 83.2594 69.0825 83.4018 68.6427C83.5477 68.1925 83.5598 67.6263 83.4773 66.9978C83.3123 65.7416 82.7821 64.3261 82.3551 63.2996C82.301 63.1695 82.3635 63.0215 82.4947 62.969Z' fill='%23ECA06F'/%3e%3cg style='mix-blend-mode:multiply' opacity='0.7'%3e%3cpath d='M79.0528 84.1773C75.0571 83.2547 71.2722 81.5291 67.9071 79.0957C67.9071 79.0957 70.6752 86.2169 79.0368 87.5544L79.0528 84.1773Z' fill='%23FFDCC0'/%3e%3c/g%3e%3cpath d='M102.072 102.02L98.993 116.825C98.6641 118.414 98.2957 120.002 97.8878 121.591C97.4536 123.333 96.9536 125.063 96.4274 126.781L88.6121 152.059L88.27 153.177L87.9279 154.271L87.1122 156.908L86.3359 159.426H57.9166L57.1535 156.908L56.2457 153.93L56.022 153.177L55.2326 150.564L48.2725 127.652C47.6672 125.651 47.1541 123.615 46.7199 121.579C46.2989 119.579 45.97 117.566 45.7332 115.554L42.1956 103.343L48.1277 99.1253L56.1667 95.9714L56.522 95.8302L61.8506 93.7472L66.6407 92.5938H78.9402L82.1388 93.3235L84.5465 94.3709L87.4674 95.6419L93.1907 98.1485L102.072 102.02Z' fill='%23ADDECE'/%3e%3cpath d='M79.28 95.3721V90.4268H62.0623V94.1804C62.0623 94.1804 67.3167 104.925 71.7616 104.979C76.2065 105.032 79.28 95.3721 79.28 95.3721Z' fill='%23FFDCC0'/%3e%3cpath d='M104.847 197.166L73.1521 214.547L37.9043 200.567C40.2857 187.574 47.0748 173.97 51.9034 165.474C54.8901 160.213 57.1399 156.906 57.1399 156.906H87.1118C88.888 159.425 90.5984 162.355 92.2167 165.474C99.4926 179.466 104.847 197.166 104.847 197.166Z' fill='%233A6598'/%3e%3cpath d='M85.7166 287.171C80.1117 287.171 75.533 283.193 75.362 278.18L73.02 202.427C73.02 194.296 80.4538 187.646 89.5453 187.646C98.6368 187.646 106.071 194.296 106.071 202.427C108.926 227.8 104.636 256.868 95.5318 280.898C94.1108 284.652 90.1505 287.171 85.7166 287.171Z' fill='%233A6598'/%3e%3cpath d='M58.1271 287.418C63.732 287.418 68.3107 283.44 68.4817 278.427L70.8237 202.675C70.8237 194.543 63.3899 187.894 54.2984 187.894C45.2069 187.894 37.7731 194.543 37.7731 202.675C34.918 228.047 39.2072 257.115 48.3119 281.145C49.7329 284.9 53.6932 287.418 58.1271 287.418Z' fill='%233A6598'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M131.022 161.745C135.099 159.058 136.346 153.383 133.808 149.07L109.616 108.673C107.077 104.359 101.714 103.04 97.6369 105.725L97.1227 105.27C93.046 107.957 92.3123 114.087 94.8514 118.402L119.043 158.798C121.581 163.112 126.944 164.431 131.022 161.745Z' fill='%23FFDCC0'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M104.674 135.406L93.8706 116.917C91.2659 112.46 92.5575 106.543 96.7397 103.767C100.922 100.992 106.475 102.368 109.079 106.825L120.338 124.988L104.674 135.406Z' fill='%23ADDECE'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M137.785 100.591C140.514 101.144 142.397 103.61 142.059 106.191L135.542 155.999C134.782 160.55 130.202 163.47 125.358 162.49C120.47 161.501 117.225 156.934 118.175 152.38L131.915 103.914C132.599 101.498 135.144 100.057 137.785 100.591Z' fill='%23FFDCC0'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M145.118 89.5562C145.118 89.5562 145.161 103.118 140.925 107.802C137.456 111.637 133.867 106.644 133.867 106.644C133.867 106.644 131.142 104.047 129.024 99.2193C127.629 96.0388 125.609 89.6385 127.23 88.4552C129.345 86.9116 131.204 94.3434 132.947 93.7152C134.736 93.0714 134.884 91.7857 135.449 87.8481C135.803 85.3863 135.989 82.8341 136.058 80.6385C136.175 76.9469 143.854 77.0273 145.118 89.5562Z' fill='%23FFDCC0'/%3e%3cpath d='M137.662 78.7788C137.826 78.7209 138.004 78.8148 138.058 78.9885C138.101 79.1235 138.057 79.2671 137.958 79.3515L137.946 79.3592L137.942 79.372C137.937 79.3955 137.931 79.4256 137.927 79.4616L137.921 79.5197C137.906 79.693 137.911 79.9342 137.932 80.2224C137.946 80.4033 137.966 80.5966 137.991 80.7955L138.034 81.1228C138.048 81.2194 138.061 81.3026 138.072 81.3694C138.362 83.8269 138.271 86.0476 137.941 87.9431C137.875 88.3256 137.804 88.6631 137.732 88.9527L137.658 89.2324C137.649 89.2669 137.64 89.2951 137.633 89.317C137.579 89.4908 137.402 89.5849 137.237 89.5272C137.073 89.4695 136.984 89.2819 137.039 89.1082L137.06 89.037C137.072 88.9921 137.088 88.9335 137.107 88.8614L137.126 88.7848C137.194 88.5109 137.262 88.1893 137.325 87.8232C137.643 85.9914 137.732 83.8382 137.453 81.4682L137.426 81.2996C137.407 81.1694 137.388 81.0284 137.369 80.8813C137.344 80.6723 137.323 80.4684 137.308 80.2755L137.29 80.0052C137.252 79.2803 137.319 78.8998 137.662 78.7788Z' fill='%23FFC3A6'/%3e%3cpath d='M140.584 79.0201C140.757 79.0352 140.885 79.1953 140.87 79.3778C140.856 79.5603 140.705 79.6959 140.532 79.6808C140.111 79.6439 139.931 79.9489 139.921 80.6265C139.917 80.8895 139.943 81.1766 139.99 81.4632L140.027 81.6716C140.038 81.729 140.048 81.7729 140.054 81.7994L140.079 81.8906C140.093 81.9475 140.111 82.0214 140.132 82.1117C140.189 82.3589 140.245 82.6463 140.297 82.9711C140.638 85.0795 140.654 87.5508 140.135 90.2313C140.1 90.4107 139.935 90.5262 139.765 90.4895C139.596 90.4527 139.486 90.2775 139.521 90.0982C140.024 87.504 140.008 85.1145 139.68 83.0827C139.64 82.8349 139.598 82.6109 139.555 82.412L139.489 82.1235C139.474 82.0616 139.461 82.0144 139.451 81.9796L139.423 81.8532C139.407 81.7774 139.39 81.6835 139.372 81.5753C139.32 81.2513 139.29 80.925 139.294 80.6157C139.309 79.6459 139.672 78.9943 140.484 79.0144L140.584 79.0201Z' fill='%23FFC3A6'/%3e%3cpath d='M142.628 85.3933C143.071 87.9808 142.98 90.0654 142.553 91.6608C142.415 92.1784 142.274 92.527 142.152 92.7442L141.976 92.9969L141.798 93.2587C141.705 93.3965 141.608 93.5445 141.505 93.7017C141.019 94.451 140.532 95.2563 140.077 96.0857C139.561 97.0283 139.121 97.9421 138.781 98.8031C137.906 101.014 137.762 102.686 138.489 103.597C138.6 103.737 138.583 103.946 138.451 104.064C138.319 104.182 138.121 104.164 138.01 104.025C137.082 102.861 137.245 100.969 138.203 98.5472C138.555 97.6574 139.007 96.719 139.535 95.7534C139.998 94.908 140.494 94.0886 140.989 93.3261L141.191 93.0185L141.537 92.5085C141.588 92.4354 141.622 92.3871 141.631 92.3776L141.677 92.2829C141.69 92.2523 141.706 92.2152 141.724 92.1716C141.8 91.9828 141.878 91.7525 141.951 91.4803C142.367 89.9218 142.444 87.839 141.952 85.1636L141.946 85.0316C141.932 84.5835 141.943 84.0804 141.999 83.5994C142.08 82.9065 142.239 82.384 142.528 82.0778C142.651 81.9482 142.849 81.9481 142.972 82.0774C143.08 82.1924 143.093 82.371 143.008 82.5003L142.972 82.5462C142.81 82.7176 142.686 83.1245 142.621 83.6806C142.58 84.0334 142.565 84.4056 142.568 84.7536L142.574 85.0878L142.628 85.3933Z' fill='%23FFC3A6'/%3e%3cpath d='M133.142 94.315C133.26 94.1753 133.463 94.1635 133.595 94.2887L133.736 94.4274L133.909 94.6044C133.97 94.6674 134.033 94.7343 134.099 94.8048C134.473 95.2075 134.848 95.6483 135.198 96.1141C135.835 96.9622 136.321 97.7971 136.593 98.592C136.908 99.5118 136.925 100.348 136.577 101.062C136.495 101.229 136.302 101.294 136.144 101.208C135.987 101.122 135.925 100.917 136.006 100.75C136.262 100.227 136.248 99.5803 135.989 98.8235C135.744 98.1086 135.293 97.3325 134.695 96.537C134.36 96.0914 134.001 95.668 133.641 95.2813L133.46 95.0895L133.294 94.9205C133.232 94.8584 133.189 94.8158 133.166 94.7947C133.034 94.6695 133.023 94.4547 133.142 94.315Z' fill='%23FFC3A6'/%3e%3cpath d='M44.0387 135.714C46.2067 124.38 44.8392 111.432 43.0334 104.531C42.2859 101.675 42.614 98.1907 45.3751 97.145C47.3877 96.3829 49.7936 95.7973 52.0894 95.37C55.3755 94.7584 58.301 97.2698 59.2979 100.46C62.153 109.598 69.0188 118.752 72.7019 122.777V185.699H50.7474C47.6101 185.699 44.9869 183.309 44.6393 180.191C43.2432 167.668 41.0663 151.252 44.0387 135.714Z' fill='%23E00109'/%3e%3cpath d='M72.7019 122.777C81.3146 117.004 83.1433 106.642 84.5908 99.0913C85.1072 96.3977 87.4927 94.5085 90.1947 94.9787C92.8597 95.4425 95.4461 96.2269 97.5609 97.0534C100.565 98.2276 100.221 101.414 99.5103 104.56C98.152 110.573 100.971 120.012 102.535 127.481C104.168 135.278 101.469 166.162 99.7171 180.559C99.3562 183.525 96.8224 185.699 93.8344 185.699H72.7019V122.777Z' fill='%23E00109'/%3e%3cpath opacity='0.3' d='M79.7214 163.847V161.743C81.4763 161.977 84.5181 162.444 89.6658 162.444C94.8135 162.444 99.0252 161.977 99.6102 161.743V163.847C99.2202 164.197 95.8664 165.249 90.2508 165.249C84.6351 165.249 81.2813 164.314 79.7214 163.847Z' fill='black'/%3e%3cpath opacity='0.3' d='M46.9635 163.847V161.743C48.7184 161.977 51.7602 162.444 56.9079 162.444C62.0555 162.444 66.2673 161.977 66.8522 161.743V163.847C66.4623 164.197 62.5235 165.249 56.9079 165.249C51.2922 165.249 48.5234 164.314 46.9635 163.847Z' fill='black'/%3e%3cg opacity='0.5'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M72.7019 185.699V122.596H73.8718V185.699H72.7019Z' fill='black'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M72.7019 122.899V122.596H73.8718V122.899H72.7019ZM72.7019 124.113V123.506H73.8718V124.113H72.7019ZM72.7019 125.326V124.719H73.8718V125.326H72.7019ZM72.7019 126.54V125.933H73.8718V126.54H72.7019ZM72.7019 127.753V127.146H73.8718V127.753H72.7019ZM72.7019 128.967V128.36H73.8718V128.967H72.7019ZM72.7019 130.18V129.573H73.8718V130.18H72.7019ZM72.7019 131.394V130.787H73.8718V131.394H72.7019ZM72.7019 132.607V132H73.8718V132.607H72.7019ZM72.7019 133.821V133.214H73.8718V133.821H72.7019ZM72.7019 135.034V134.428H73.8718V135.034H72.7019ZM72.7019 136.248V135.641H73.8718V136.248H72.7019ZM72.7019 137.461V136.855H73.8718V137.461H72.7019ZM72.7019 138.675V138.068H73.8718V138.675H72.7019ZM72.7019 139.888V139.282H73.8718V139.888H72.7019ZM72.7019 141.102V140.495H73.8718V141.102H72.7019ZM72.7019 142.315V141.709H73.8718V142.315H72.7019ZM72.7019 143.529V142.922H73.8718V143.529H72.7019ZM72.7019 144.742V144.136H73.8718V144.742H72.7019ZM72.7019 145.956V145.349H73.8718V145.956H72.7019ZM72.7019 147.17V146.563H73.8718V147.17H72.7019ZM72.7019 148.383V147.776H73.8718V148.383H72.7019ZM72.7019 149.597V148.99H73.8718V149.597H72.7019ZM72.7019 150.81V150.203H73.8718V150.81H72.7019ZM72.7019 152.024V151.417H73.8718V152.024H72.7019ZM72.7019 153.237V152.63H73.8718V153.237H72.7019ZM72.7019 154.451V153.844H73.8718V154.451H72.7019ZM72.7019 155.664V155.057H73.8718V155.664H72.7019ZM72.7019 156.878V156.271H73.8718V156.878H72.7019ZM72.7019 158.091V157.484H73.8718V158.091H72.7019ZM72.7019 159.305V158.698H73.8718V159.305H72.7019ZM72.7019 160.518V159.911H73.8718V160.518H72.7019ZM72.7019 161.732V161.125H73.8718V161.732H72.7019ZM72.7019 162.945V162.339H73.8718V162.945H72.7019ZM72.7019 164.159V163.552H73.8718V164.159H72.7019ZM72.7019 165.372V164.766H73.8718V165.372H72.7019ZM72.7019 166.586V165.979H73.8718V166.586H72.7019ZM72.7019 167.799V167.193H73.8718V167.799H72.7019ZM72.7019 169.013V168.406H73.8718V169.013H72.7019ZM72.7019 170.226V169.62H73.8718V170.226H72.7019ZM72.7019 171.44V170.833H73.8718V171.44H72.7019ZM72.7019 172.653V172.047H73.8718V172.653H72.7019ZM72.7019 173.867V173.26H73.8718V173.867H72.7019ZM72.7019 175.081V174.474H73.8718V175.081H72.7019ZM72.7019 176.294V175.687H73.8718V176.294H72.7019ZM72.7019 177.508V176.901H73.8718V177.508H72.7019ZM72.7019 178.721V178.114H73.8718V178.721H72.7019ZM72.7019 179.935V179.328H73.8718V179.935H72.7019ZM72.7019 181.148V180.541H73.8718V181.148H72.7019ZM72.7019 182.362V181.755H73.8718V182.362H72.7019ZM72.7019 183.575V182.968H73.8718V183.575H72.7019ZM72.7019 184.789V184.182H73.8718V184.789H72.7019ZM72.7019 185.699V185.395H73.8718V185.699H72.7019Z' fill='white'/%3e%3c/g%3e%3cg filter='url(%23filter0_d_2685_7436)'%3e%3cpath d='M92.4002 121.081C92.5522 121.005 92.7308 120.962 92.9047 120.976C93.4264 121.018 93.8125 121.472 93.7701 121.993C93.7559 122.167 93.6983 122.337 93.5996 122.475C94.2562 123.548 94.5897 124.828 94.4802 126.174C94.2058 129.547 91.26 132.047 87.8835 131.773C84.5216 131.5 82.0041 128.556 82.2785 125.184C82.5517 121.826 85.4987 119.311 88.8751 119.585C90.2361 119.71 91.4459 120.26 92.4002 121.081Z' fill='white'/%3e%3cpath d='M93.0886 122.841C92.9837 122.876 92.8666 122.881 92.7506 122.872C92.2289 122.83 91.8429 122.376 91.8852 121.855C91.8947 121.739 91.9331 121.625 91.9703 121.526C91.1248 120.802 90.0408 120.321 88.838 120.223C85.8093 119.977 83.1468 122.224 82.9007 125.249C82.6545 128.274 84.9045 130.919 87.9332 131.165C90.9752 131.426 93.6244 129.164 93.8706 126.139C93.9683 124.938 93.6666 123.806 93.0886 122.841Z' fill='%23E00109'/%3e%3cpath d='M93.0883 122.841C92.9833 122.876 92.8662 122.881 92.7503 122.872C92.2286 122.829 91.8425 122.376 91.8849 121.854C91.8943 121.739 91.9182 121.624 91.97 121.526C91.1245 120.802 90.0405 120.321 88.8377 120.223C85.809 119.977 83.161 122.225 82.9148 125.25C82.6687 128.275 84.9187 130.92 87.9474 131.166C90.9761 131.412 93.6241 129.164 93.8702 126.139C93.968 124.938 93.6662 123.806 93.0883 122.841Z' stroke='%23E00109' stroke-width='0.0385495' stroke-miterlimit='3.864'/%3e%3cpath d='M92.3209 121.876C92.3444 121.586 92.5951 121.373 92.885 121.397C93.1748 121.42 93.3878 121.671 93.3643 121.96C93.3407 122.25 93.09 122.463 92.8002 122.439C92.5104 122.415 92.2973 122.165 92.3209 121.876Z' fill='%23E00109'/%3e%3cpath d='M92.7859 122.438C93.074 122.461 93.3266 122.247 93.35 121.959C93.3734 121.672 93.1588 121.419 92.8707 121.396C92.5826 121.372 92.33 121.587 92.3066 121.875C92.2832 122.162 92.4978 122.415 92.7859 122.438Z' stroke='%23E00109' stroke-width='0.0356583' stroke-miterlimit='3.864'/%3e%3cpath d='M93.3396 124.77L91.9138 127.772L91.2327 127.717L91.7644 126.74L91.1224 124.59L91.8035 124.645L92.1287 126.027L92.1577 126.029L92.673 124.716L93.3396 124.77Z' fill='%23FDF737'/%3e%3cpath d='M90.8944 126.145C90.8543 126.637 90.3028 126.782 89.7811 126.739C89.2739 126.698 88.7531 126.466 88.7931 125.974L89.4597 126.028C89.4468 126.188 89.6606 126.249 89.82 126.262C89.9794 126.275 90.1858 126.248 90.1976 126.103C90.2129 125.915 89.9689 125.866 89.5714 125.732C89.1739 125.597 88.8849 125.384 88.9167 124.994C88.9567 124.501 89.4491 124.367 89.9562 124.408C90.4634 124.449 90.913 124.66 90.8742 125.138L90.2076 125.084C90.2182 124.954 90.049 124.882 89.9186 124.871C89.7737 124.859 89.6119 124.875 89.6001 125.02C89.5848 125.208 89.8735 125.246 90.1852 125.359C90.5948 125.523 90.9297 125.711 90.8944 126.145Z' fill='%23FDF737'/%3e%3cpath d='M87.8319 125.416C87.8554 125.126 87.7184 124.838 87.3416 124.808C86.9648 124.777 86.8242 125.072 86.803 125.332C86.7806 125.607 86.902 125.908 87.2787 125.939C87.67 125.971 87.8107 125.676 87.8319 125.416ZM88.3811 126.553L87.758 126.502L87.778 126.256L87.7491 126.254C87.63 126.463 87.4032 126.561 87.0844 126.535C86.5337 126.49 86.092 126.003 86.1497 125.294C86.2086 124.57 86.6786 124.171 87.2293 124.216C87.5336 124.24 87.7839 124.392 87.8845 124.589L87.9135 124.592L87.9335 124.346L88.5711 124.397L88.3811 126.553Z' fill='%23FDF737'/%3e%3cpath d='M90.0433 127.635C88.3377 127.263 86.6144 127.109 83.9182 127.079L83.9566 126.966C86.6564 126.952 88.7827 126.993 89.924 127.13C90.6039 127.199 90.802 127.274 90.782 127.52C90.7765 127.767 90.4734 127.728 90.0433 127.635Z' fill='%23FDF737'/%3e%3cpath d='M85.1405 124.964C85.1366 124.832 85.0853 124.566 84.7231 124.537C84.3898 124.51 84.2659 124.776 84.242 124.891L85.1405 124.964ZM85.7894 125.235C85.7824 125.322 85.7573 125.451 85.7573 125.451L84.1922 125.324C84.1867 125.571 84.3598 125.775 84.6206 125.796C84.809 125.811 84.9453 125.749 85.0139 125.624L85.695 125.679C85.6111 125.993 85.3028 126.376 84.5927 126.318C83.9116 126.263 83.4915 125.69 83.5433 125.053C83.5963 124.401 84.0554 123.958 84.7365 124.013C85.4321 124.07 85.8424 124.584 85.7894 125.235Z' fill='%23FDF737'/%3e%3cpath d='M85.3967 128.628C85.428 128.602 85.4738 128.576 85.5185 128.565C85.5631 128.554 85.6078 128.543 85.6513 128.547C85.6947 128.55 85.737 128.568 85.7793 128.586C85.8216 128.604 85.8627 128.637 85.8894 128.668L85.9293 128.715L85.8196 128.808L85.7809 128.747C85.7675 128.731 85.7397 128.714 85.7119 128.697C85.6841 128.681 85.6551 128.678 85.6407 128.677C85.6117 128.675 85.5827 128.672 85.567 128.686C85.5369 128.698 85.5212 128.711 85.491 128.723C85.4754 128.736 85.4585 128.764 85.4417 128.792C85.4248 128.82 85.4225 128.849 85.4213 128.863C85.4189 128.892 85.4166 128.921 85.4299 128.937C85.442 128.967 85.4553 128.983 85.4675 129.013C85.5074 129.06 85.5497 129.078 85.6077 129.082C85.6367 129.085 85.6656 129.087 85.6813 129.074C85.7115 129.062 85.7271 129.048 85.7573 129.036L85.8043 128.996L85.8975 129.106L85.8505 129.146C85.8192 129.172 85.7733 129.198 85.7287 129.209C85.684 129.22 85.6394 129.231 85.5959 129.227C85.5524 129.224 85.5101 129.206 85.4678 129.188C85.4255 129.17 85.3989 129.138 85.3578 129.106C85.3312 129.074 85.3057 129.029 85.2948 128.984C85.2838 128.939 85.2728 128.895 85.2764 128.851C85.2799 128.808 85.2979 128.766 85.316 128.724C85.3328 128.696 85.3653 128.655 85.3967 128.628Z' fill='white'/%3e%3cpath d='M86.1724 128.778C86.1253 128.818 86.1073 128.86 86.1026 128.918C86.1003 128.947 86.0979 128.976 86.11 129.006C86.1257 128.992 86.1414 128.979 86.1727 128.953C86.2041 128.926 86.2354 128.899 86.2511 128.886C86.2824 128.859 86.3137 128.833 86.3451 128.806C86.3764 128.78 86.3921 128.766 86.4077 128.753C86.3655 128.735 86.3376 128.718 86.293 128.729C86.2483 128.74 86.2037 128.751 86.1724 128.778ZM86.4856 129.051L86.5788 129.16L86.5318 129.2C86.5005 129.227 86.4547 129.252 86.41 129.263C86.3654 129.274 86.3207 129.285 86.2772 129.282C86.2338 129.278 86.1915 129.26 86.1492 129.242C86.1069 129.224 86.0802 129.193 86.0391 129.16C86.0125 129.129 85.987 129.083 85.9761 129.039C85.9651 128.994 85.9542 128.949 85.9577 128.906C85.9612 128.863 85.9793 128.82 85.9973 128.778C86.0153 128.736 86.0466 128.709 86.0792 128.668C86.1105 128.642 86.1563 128.616 86.201 128.605C86.2456 128.594 86.2903 128.583 86.3338 128.587C86.3772 128.59 86.4195 128.608 86.4618 128.626C86.5041 128.644 86.5452 128.677 86.5719 128.708L86.6118 128.755L86.2044 129.101C86.2467 129.119 86.2745 129.136 86.3192 129.125C86.3626 129.128 86.4085 129.103 86.4398 129.076L86.4856 129.051Z' fill='white'/%3e%3cpath d='M86.6391 128.962C86.6426 128.918 86.6606 128.876 86.6786 128.834C86.6967 128.792 86.728 128.765 86.7593 128.738C86.7907 128.712 86.8365 128.686 86.8812 128.675C86.9258 128.665 86.9705 128.654 87.0139 128.657C87.0574 128.661 87.0997 128.679 87.142 128.697C87.1843 128.715 87.2109 128.746 87.252 128.778C87.2787 128.81 87.3041 128.856 87.3162 128.886C87.3272 128.93 87.3382 128.975 87.3346 129.018L87.3064 129.366L87.1759 129.355L87.2042 129.008C87.2066 128.979 87.2089 128.95 87.1956 128.934C87.1835 128.904 87.1702 128.888 87.158 128.858C87.1447 128.843 87.1169 128.826 87.0891 128.809C87.0613 128.792 87.0323 128.79 87.0033 128.787C86.9743 128.785 86.9454 128.783 86.9152 128.795C86.885 128.807 86.8694 128.82 86.8537 128.834C86.838 128.847 86.8212 128.875 86.8043 128.902C86.7875 128.93 86.7863 128.945 86.784 128.974L86.7557 129.321L86.6108 129.309L86.6391 128.962Z' fill='white'/%3e%3cpath d='M87.4838 128.797C87.5151 128.771 87.561 128.745 87.6056 128.734C87.6503 128.723 87.6949 128.712 87.7384 128.716C87.7819 128.719 87.8242 128.737 87.8664 128.755C87.9087 128.773 87.9499 128.806 87.9765 128.837L88.0164 128.884L87.9067 128.977L87.8668 128.93C87.8535 128.915 87.8257 128.898 87.7979 128.881C87.7701 128.864 87.7411 128.862 87.7266 128.861C87.6976 128.858 87.6686 128.856 87.653 128.869C87.6228 128.881 87.6071 128.895 87.577 128.907C87.5613 128.92 87.5445 128.948 87.5276 128.976C87.5108 129.003 87.5084 129.032 87.5072 129.047C87.5049 129.076 87.5025 129.105 87.5158 129.12C87.528 129.151 87.5413 129.166 87.5534 129.196C87.5934 129.243 87.6357 129.261 87.6936 129.266C87.7226 129.268 87.7516 129.271 87.7673 129.257C87.7974 129.245 87.8131 129.232 87.8433 129.22L87.8903 129.18L87.9835 129.289L87.9231 129.314C87.8918 129.34 87.846 129.366 87.8013 129.377C87.7567 129.388 87.712 129.399 87.6685 129.395C87.6251 129.392 87.5828 129.374 87.5405 129.356C87.4982 129.338 87.4715 129.306 87.4304 129.274C87.4038 129.242 87.3784 129.197 87.3674 129.152C87.3564 129.107 87.3455 129.063 87.349 129.019C87.3525 128.976 87.3706 128.934 87.3886 128.892C87.4199 128.865 87.4524 128.824 87.4838 128.797Z' fill='white'/%3e%3cpath d='M88.175 129.087C88.1726 129.116 88.1703 129.145 88.1824 129.175C88.1946 129.205 88.2079 129.22 88.22 129.251C88.2333 129.266 88.2611 129.283 88.2889 129.3C88.3167 129.317 88.3457 129.319 88.3747 129.321C88.4037 129.324 88.4327 129.326 88.4628 129.314C88.493 129.302 88.5086 129.289 88.5388 129.276C88.5545 129.263 88.5713 129.235 88.5882 129.208C88.605 129.18 88.6074 129.151 88.6097 129.122C88.6121 129.093 88.6144 129.064 88.6011 129.048C88.589 129.018 88.5757 129.003 88.5635 128.973C88.5502 128.957 88.5224 128.94 88.4946 128.923C88.4668 128.906 88.4378 128.904 88.4088 128.902C88.3799 128.899 88.3509 128.897 88.3207 128.909C88.2906 128.921 88.2749 128.935 88.2447 128.947C88.2291 128.96 88.2122 128.988 88.1954 129.015C88.193 129.044 88.1773 129.058 88.175 129.087ZM88.0446 129.076C88.0481 129.033 88.0661 128.99 88.0842 128.948C88.1022 128.906 88.1335 128.879 88.1649 128.853C88.1962 128.826 88.242 128.801 88.2867 128.79C88.3313 128.779 88.376 128.768 88.4194 128.771C88.4629 128.775 88.5052 128.793 88.5475 128.811C88.5898 128.829 88.6164 128.86 88.6576 128.893C88.6842 128.924 88.7096 128.97 88.7218 129C88.7327 129.045 88.7437 129.089 88.7402 129.133C88.7366 129.176 88.7186 129.218 88.7006 129.26C88.6825 129.303 88.6512 129.329 88.6187 129.37C88.5874 129.397 88.5415 129.422 88.4969 129.433C88.4522 129.444 88.4076 129.455 88.3641 129.452C88.3206 129.448 88.2783 129.43 88.236 129.412C88.1937 129.394 88.1671 129.363 88.126 129.33C88.0994 129.299 88.0739 129.253 88.063 129.209C88.0508 129.179 88.0399 129.134 88.0446 129.076Z' fill='white'/%3e%3cpath d='M89.4048 128.851L89.3942 128.981L88.9884 128.948C88.9739 128.947 88.9594 128.946 88.9438 128.959C88.9281 128.973 88.9269 128.987 88.9257 129.002C88.9246 129.016 88.9234 129.031 88.9367 129.046C88.95 129.062 88.9645 129.063 88.979 129.064L89.2543 129.087C89.2833 129.089 89.3123 129.091 89.3256 129.107C89.3534 129.124 89.3667 129.139 89.38 129.155C89.3934 129.171 89.4055 129.201 89.4176 129.231C89.4298 129.261 89.4286 129.276 89.4262 129.305C89.4239 129.334 89.4215 129.362 89.4047 129.39C89.3878 129.418 89.3722 129.431 89.3553 129.459C89.3396 129.472 89.3095 129.485 89.2938 129.498C89.2637 129.51 89.2347 129.508 89.2202 129.506L88.8144 129.473L88.825 129.343L89.2308 129.376C89.2453 129.377 89.2743 129.38 89.2754 129.365C89.2911 129.352 89.2923 129.337 89.2935 129.323C89.2946 129.308 89.2958 129.294 89.2825 129.278C89.2692 129.263 89.2547 129.262 89.2402 129.26L88.9649 129.238C88.9359 129.236 88.9069 129.233 88.8791 129.216C88.8513 129.2 88.838 129.184 88.8247 129.168C88.8114 129.153 88.7992 129.123 88.7859 129.107C88.7738 129.077 88.7761 129.048 88.7785 129.019C88.7808 128.99 88.7832 128.961 88.7989 128.948C88.8157 128.92 88.8314 128.907 88.8482 128.879C88.8639 128.866 88.894 128.853 88.9097 128.84C88.9399 128.828 88.9689 128.83 88.9978 128.833L89.4036 128.866L89.4048 128.851Z' fill='white'/%3e%3cpath d='M90.2022 128.916L90.1751 129.249C90.1716 129.292 90.1535 129.334 90.1355 129.377C90.1175 129.419 90.0861 129.446 90.0536 129.487C90.0223 129.513 89.9765 129.539 89.9318 129.55C89.8872 129.56 89.8425 129.571 89.799 129.568C89.7556 129.564 89.7133 129.546 89.671 129.528C89.6287 129.51 89.602 129.479 89.5609 129.447C89.5343 129.415 89.5088 129.37 89.4979 129.325C89.4869 129.28 89.476 129.236 89.4795 129.192L89.5066 128.859L89.637 128.87L89.6099 129.203C89.6076 129.232 89.6052 129.261 89.6174 129.291C89.6295 129.321 89.6428 129.337 89.6549 129.367C89.6683 129.382 89.6961 129.399 89.7239 129.416C89.7517 129.433 89.7806 129.435 89.8096 129.438C89.8386 129.44 89.8676 129.442 89.8978 129.43C89.9279 129.418 89.9436 129.405 89.9737 129.393C89.9894 129.379 90.0063 129.352 90.0231 129.324C90.04 129.296 90.0423 129.267 90.0447 129.238L90.0718 128.905L90.2022 128.916Z' fill='white'/%3e%3cpath d='M90.5352 129.482C90.5642 129.485 90.5931 129.487 90.6088 129.474C90.639 129.461 90.6546 129.448 90.6703 129.435C90.686 129.422 90.7028 129.394 90.7197 129.366C90.7365 129.338 90.7389 129.309 90.7412 129.28L90.7577 129.078L90.5693 129.062C90.5403 129.06 90.5114 129.058 90.4812 129.07C90.451 129.082 90.4354 129.095 90.4052 129.107C90.3895 129.121 90.3727 129.148 90.3558 129.176C90.339 129.204 90.3378 129.218 90.3355 129.247C90.3331 129.276 90.3308 129.305 90.3429 129.335C90.355 129.366 90.3683 129.381 90.3805 129.411C90.3938 129.427 90.4216 129.444 90.4494 129.461C90.4772 129.477 90.5062 129.48 90.5352 129.482ZM90.9489 128.7L90.8995 129.308C90.8959 129.351 90.8779 129.393 90.8599 129.436C90.8418 129.478 90.8105 129.505 90.778 129.546C90.7467 129.572 90.7008 129.598 90.6707 129.61C90.626 129.621 90.5814 129.632 90.5379 129.628C90.4944 129.625 90.4521 129.607 90.4098 129.589C90.3675 129.571 90.3409 129.539 90.2998 129.507C90.2732 129.475 90.2477 129.43 90.2367 129.385C90.2258 129.34 90.2148 129.296 90.2184 129.252C90.2219 129.209 90.2399 129.167 90.2579 129.125C90.276 129.082 90.3073 129.056 90.3386 129.029C90.37 129.003 90.4158 128.977 90.4605 128.966C90.5051 128.955 90.5498 128.944 90.5932 128.948L90.7961 128.964L90.8185 128.689L90.9489 128.7Z' fill='white'/%3e%3c/g%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M76.5196 183.985C76.5196 183.985 68.1527 181.634 67.6483 176.597C67.1911 172.033 71.7368 171.069 71.7368 171.069C71.7368 171.069 76.0974 169.401 81.308 169.529C84.7402 169.615 91.2571 170.43 91.4693 172.218C91.7465 174.549 84.422 173.202 84.0957 174.876C83.7604 176.592 85.2539 176.982 88.3635 178.968C90.3063 180.209 92.711 180.681 94.158 182.043C96.9861 184.703 88.7804 188.543 76.5196 183.985Z' fill='%23FFDCC0'/%3e%3cpath d='M83.6497 179.343C83.7727 179.231 83.9648 179.24 84.0789 179.362L84.1778 179.462C84.2359 179.518 84.3128 179.59 84.4087 179.675C84.6921 179.926 85.033 180.196 85.4312 180.475C87.4077 181.859 89.9347 182.892 93.011 183.249C93.1777 183.268 93.2981 183.417 93.2798 183.582C93.2615 183.746 93.1115 183.864 92.9448 183.845C89.7611 183.476 87.1389 182.404 85.0826 180.964C84.6647 180.672 84.3055 180.387 84.005 180.12L83.8629 179.992C83.7565 179.893 83.6801 179.817 83.6337 179.767C83.5196 179.645 83.5268 179.455 83.6497 179.343Z' fill='%23FFC3A6'/%3e%3cpath d='M81.5398 181.728C81.6373 181.594 81.827 181.564 81.9635 181.661C84.0502 183.151 86.4669 184.027 88.7854 184.447L89.0906 184.499C89.1878 184.515 89.2806 184.529 89.3685 184.541L89.676 184.58C89.7062 184.583 89.7299 184.585 89.7468 184.587C89.914 184.601 90.0388 184.746 90.0257 184.912C90.0125 185.077 89.8663 185.199 89.699 185.185L89.5625 185.171C89.5223 185.166 89.4756 185.16 89.4227 185.153C89.2049 185.125 88.9561 185.087 88.6804 185.037C86.2799 184.602 83.7814 183.697 81.6103 182.147C81.4739 182.05 81.4423 181.862 81.5398 181.728Z' fill='%23FFC3A6'/%3e%3cpath d='M78.5574 182.752C78.6685 182.629 78.8605 182.619 78.9861 182.73L79.0381 182.773C79.0718 182.8 79.1171 182.835 79.1744 182.877L79.2356 182.922C79.458 183.083 79.7328 183.261 80.0622 183.452C81.4359 184.246 83.2681 184.984 85.6028 185.559C85.7658 185.599 85.8661 185.762 85.8267 185.923C85.7874 186.084 85.6233 186.182 85.4603 186.142C83.069 185.553 81.1825 184.793 79.7585 183.969C79.4689 183.802 79.2176 183.642 79.0035 183.494L78.8795 183.406C78.7329 183.3 78.635 183.221 78.5837 183.176C78.4581 183.065 78.4463 182.876 78.5574 182.752Z' fill='%23FFC3A6'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M74.2543 176.481C75.2058 174.198 74.1651 171.565 71.8933 170.504L28.0341 150.04C23.9418 148.291 19.2168 150.173 17.5292 154.226C15.8266 158.315 17.8782 163.012 22.0691 164.624L68.5418 179.106C70.8576 179.828 73.3351 178.69 74.2543 176.481Z' fill='%23FFDCC0'/%3e%3cpath d='M40.8568 104.808C38.7956 105.615 37.0421 107.214 36.0862 109.41L17.7526 151.541C15.8442 155.925 17.8384 161.031 22.2064 162.947L22.3665 163.017C26.7345 164.932 31.8222 162.93 33.7306 158.546L48.227 125.234L40.8568 104.808Z' fill='%23FFDCC0'/%3e%3cpath d='M42.1956 103.657C38.8845 103.657 36.3152 106.288 35.2736 108.6L26.2958 128.523L46.1624 135.962L49.13 127.748C49.13 127.748 55.9049 112.284 51.4667 106.964C48.1556 102.995 42.1956 103.657 42.1956 103.657Z' fill='%23ADDECE'/%3e%3c/g%3e%3cdefs%3e%3cfilter id='filter0_d_2685_7436' x='51.4636' y='94.8345' width='73.8315' height='73.816' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3e%3cfeFlood flood-opacity='0' result='BackgroundImageFix'/%3e%3cfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3e%3cfeOffset dy='6.06383'/%3e%3cfeGaussianBlur stdDeviation='15.1596'/%3e%3cfeComposite in2='hardAlpha' operator='out'/%3e%3cfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0'/%3e%3cfeBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_2685_7436'/%3e%3cfeBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow_2685_7436' result='shape'/%3e%3c/filter%3e%3cclipPath id='clip0_2685_7436'%3e%3crect width='200' height='200' rx='100' fill='white'/%3e%3c/clipPath%3e%3cclipPath id='clip1_2685_7436'%3e%3crect width='413.333' height='200' fill='white' transform='translate(-182)'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e";
 
 const EmptyResultsComponent = ({
   emptyMessage,
@@ -6629,7 +6887,7 @@ const EmptyResultsComponent = ({
     height: 'full'
   }, {
     children: [jsx(Ramen.XImage, {
-      src: emptyImage || img$7
+      src: emptyImage || img$9
     }), jsxs(Ramen.XText, {
       children: [emptyMessage || 'Oops! tu cotización esta vacia', " "]
     }), !!descriptionMessage && jsxs(Ramen.XText, Object.assign({
@@ -6689,20 +6947,24 @@ const UserContextProvider = ({
     }
   });
   const getMe = () => __awaiter(void 0, void 0, void 0, function* () {
-    const tokenAuth = clientRequest.getToken();
-    const data = yield sessionStorage.getItem(storageName);
-    if (!!tokenAuth && !!data) {
-      //get info data User
-      const userData = yield clientRequest.me();
-      updateStateContext({
-        isAuthenticated: !!data,
-        user: JSON.parse(data),
-        userData,
-        provider: ''
-      });
-      return userData;
+    try {
+      const tokenAuth = clientRequest.getToken();
+      const data = yield sessionStorage.getItem(storageName);
+      if (!!tokenAuth && !!data) {
+        //get info data User
+        const userData = yield clientRequest.me();
+        updateStateContext({
+          isAuthenticated: !!data,
+          user: JSON.parse(data),
+          userData,
+          provider: ''
+        });
+        return userData;
+      }
+      return null;
+    } catch (error) {
+      return null;
     }
-    return null;
   });
   const logout = () => __awaiter(void 0, void 0, void 0, function* () {
     yield clientRequest.logout();
@@ -6743,9 +7005,11 @@ var cartClient = new CartRequestApi({
   baseURL: 'https://api.staging.cencox.xyz/ebisu/api-bff'
 });
 
-var img$6 = "data:image/svg+xml,%3csvg width='111' height='111' viewBox='0 0 111 111' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M71.0041 21.3933C63.6175 18.102 55.365 17.2867 47.4772 19.0688C39.5895 20.851 32.4891 25.1351 27.2351 31.2823C21.9811 37.4295 18.8549 45.1104 18.3228 53.1794C17.7908 61.2485 19.8813 69.2734 24.2826 76.0573C28.684 82.8411 35.1603 88.0205 42.7458 90.8229C50.3313 93.6254 58.6194 93.9007 66.3741 91.6079C74.1289 89.3151 80.9347 84.5769 85.7765 78.1001C90.6184 71.6233 93.2369 63.7548 93.2415 55.6683V51.8373C93.2415 49.5361 95.107 47.6707 97.4082 47.6707C99.7094 47.6707 101.575 49.5361 101.575 51.8373V55.6707C101.569 65.5543 98.3688 75.1736 92.451 83.0897C86.5331 91.0058 78.2149 96.7969 68.7369 99.5992C59.2589 102.402 49.129 102.065 39.8579 98.6399C30.5867 95.2147 22.6712 88.8843 17.2918 80.5929C11.9123 72.3015 9.35725 62.4933 10.0076 52.6311C10.6579 42.769 14.4787 33.3812 20.9003 25.868C27.3219 18.3547 36.0001 13.1185 45.6407 10.9404C55.2813 8.76221 65.3678 9.75875 74.3957 13.7814C76.4977 14.718 77.4424 17.1812 76.5058 19.2832C75.5693 21.3851 73.106 22.3299 71.0041 21.3933Z' fill='black'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M100.353 19.3896C101.981 21.016 101.982 23.6541 100.356 25.2821L58.6893 66.9905C57.908 67.7725 56.848 68.212 55.7426 68.2123C54.6371 68.2126 53.5769 67.7736 52.7953 66.9919L40.2953 54.4919C38.6681 52.8647 38.6681 50.2266 40.2953 48.5994C41.9224 46.9722 44.5606 46.9722 46.1878 48.5994L55.7401 58.1516L94.4604 19.3925C96.0868 17.7645 98.725 17.7632 100.353 19.3896Z' fill='black'/%3e%3c/svg%3e";
+var img$8 = "data:image/svg+xml,%3csvg width='111' height='111' viewBox='0 0 111 111' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M71.0041 21.3933C63.6175 18.102 55.365 17.2867 47.4772 19.0688C39.5895 20.851 32.4891 25.1351 27.2351 31.2823C21.9811 37.4295 18.8549 45.1104 18.3228 53.1794C17.7908 61.2485 19.8813 69.2734 24.2826 76.0573C28.684 82.8411 35.1603 88.0205 42.7458 90.8229C50.3313 93.6254 58.6194 93.9007 66.3741 91.6079C74.1289 89.3151 80.9347 84.5769 85.7765 78.1001C90.6184 71.6233 93.2369 63.7548 93.2415 55.6683V51.8373C93.2415 49.5361 95.107 47.6707 97.4082 47.6707C99.7094 47.6707 101.575 49.5361 101.575 51.8373V55.6707C101.569 65.5543 98.3688 75.1736 92.451 83.0897C86.5331 91.0058 78.2149 96.7969 68.7369 99.5992C59.2589 102.402 49.129 102.065 39.8579 98.6399C30.5867 95.2147 22.6712 88.8843 17.2918 80.5929C11.9123 72.3015 9.35725 62.4933 10.0076 52.6311C10.6579 42.769 14.4787 33.3812 20.9003 25.868C27.3219 18.3547 36.0001 13.1185 45.6407 10.9404C55.2813 8.76221 65.3678 9.75875 74.3957 13.7814C76.4977 14.718 77.4424 17.1812 76.5058 19.2832C75.5693 21.3851 73.106 22.3299 71.0041 21.3933Z' fill='black'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M100.353 19.3896C101.981 21.016 101.982 23.6541 100.356 25.2821L58.6893 66.9905C57.908 67.7725 56.848 68.212 55.7426 68.2123C54.6371 68.2126 53.5769 67.7736 52.7953 66.9919L40.2953 54.4919C38.6681 52.8647 38.6681 50.2266 40.2953 48.5994C41.9224 46.9722 44.5606 46.9722 46.1878 48.5994L55.7401 58.1516L94.4604 19.3925C96.0868 17.7645 98.725 17.7632 100.353 19.3896Z' fill='black'/%3e%3c/svg%3e";
 
-var Styles$5 = {"xalert-modal":"root-module_xalert-modal__DrLKB","xalert-modal__backdrop":"root-module_xalert-modal__backdrop__mPVil","xalert-modal__content":"root-module_xalert-modal__content__EOPQX","xalert-modal__header":"root-module_xalert-modal__header__XoAND","xalert-modal__body":"root-module_xalert-modal__body__z3zBz","xalert-modal__body__image":"root-module_xalert-modal__body__image__LfNCK","xalert-modal__body__title":"root-module_xalert-modal__body__title__E4y6R","xalert-modal__body__message":"root-module_xalert-modal__body__message__qOIrH","xalert-modal__actions":"root-module_xalert-modal__actions__TiEa5"};
+var img$7 = "data:image/svg+xml,%3csvg width='110' height='110' viewBox='0 0 110 110' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M54.9997 13.75C32.2179 13.75 13.7497 32.2183 13.7497 55C13.7497 77.7818 32.2179 96.25 54.9997 96.25C77.7814 96.25 96.2497 77.7818 96.2497 55C96.2497 32.2183 77.7814 13.75 54.9997 13.75ZM4.58301 55C4.58301 27.1557 27.1553 4.58337 54.9997 4.58337C82.844 4.58337 105.416 27.1557 105.416 55C105.416 82.8444 82.844 105.417 54.9997 105.417C27.1553 105.417 4.58301 82.8444 4.58301 55Z' fill='black'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M54.9997 32.0834C57.531 32.0834 59.583 34.1354 59.583 36.6667V55C59.583 57.5313 57.531 59.5834 54.9997 59.5834C52.4684 59.5834 50.4163 57.5313 50.4163 55V36.6667C50.4163 34.1354 52.4684 32.0834 54.9997 32.0834Z' fill='black'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M50.4163 73.3334C50.4163 70.8021 52.4684 68.75 54.9997 68.75H55.0455C57.5768 68.75 59.6288 70.8021 59.6288 73.3334C59.6288 75.8647 57.5768 77.9167 55.0455 77.9167H54.9997C52.4684 77.9167 50.4163 75.8647 50.4163 73.3334Z' fill='black'/%3e%3c/svg%3e";
+
+var Styles$6 = {"xalert-modal":"root-module_xalert-modal__DrLKB","xalert-modal__backdrop":"root-module_xalert-modal__backdrop__mPVil","xalert-modal__content":"root-module_xalert-modal__content__EOPQX","xalert-modal__header":"root-module_xalert-modal__header__XoAND","xalert-modal__body":"root-module_xalert-modal__body__z3zBz","xalert-modal__body__image":"root-module_xalert-modal__body__image__LfNCK","xalert-modal__body__title":"root-module_xalert-modal__body__title__E4y6R","xalert-modal__body__message":"root-module_xalert-modal__body__message__qOIrH","xalert-modal__actions":"root-module_xalert-modal__actions__TiEa5"};
 
 const XAlertModal = props => {
   const onCloseModalHandler = () => {
@@ -6766,17 +7030,25 @@ const XAlertModal = props => {
   if (!props.visible) {
     return null;
   }
-  const rootClass = classnames(Styles$5['xalert-modal']);
+  const rootClass = classnames(Styles$6['xalert-modal']);
+  const getImage = type => {
+    switch (type) {
+      case 'success':
+        return img$8;
+      default:
+        return img$7;
+    }
+  };
   return jsxs("div", Object.assign({
     className: rootClass
   }, {
     children: [jsx("div", {
-      className: Styles$5['xalert-modal__backdrop']
+      className: Styles$6['xalert-modal__backdrop']
     }), jsxs("div", Object.assign({
-      className: Styles$5['xalert-modal__content']
+      className: Styles$6['xalert-modal__content']
     }, {
       children: [jsx("div", Object.assign({
-        className: Styles$5['xalert-modal__header']
+        className: Styles$6['xalert-modal__header']
       }, {
         children: jsx(Ramen.XButtonIcon, {
           size: "s",
@@ -6785,16 +7057,16 @@ const XAlertModal = props => {
           onClick: onCloseModalHandler
         })
       })), jsxs("div", Object.assign({
-        className: Styles$5['xalert-modal__body']
+        className: Styles$6['xalert-modal__body']
       }, {
         children: [jsx("div", Object.assign({
-          className: Styles$5['xalert-modal__body__image']
+          className: Styles$6['xalert-modal__body__image']
         }, {
           children: jsx(Ramen.XImage, {
-            src: img$6
+            src: getImage(`${props.type}`)
           })
         })), props.title && jsx("div", Object.assign({
-          className: Styles$5['xalert-modal__body__title']
+          className: Styles$6['xalert-modal__body__title']
         }, {
           children: jsx(Ramen.XText, Object.assign({
             weight: "bold",
@@ -6803,18 +7075,18 @@ const XAlertModal = props => {
             children: props.title
           }))
         })), props.message && jsx("div", Object.assign({
-          className: Styles$5['xalert-modal__body__message']
+          className: Styles$6['xalert-modal__body__message']
         }, {
           children: jsx(Ramen.XText, Object.assign({
-            colorThone: 'dim',
+            colorThone: "dim",
             weight: "lighter",
             fontSize: 10
           }, {
             children: props.message
           }))
-        }))]
+        })), props.children]
       })), jsxs("div", Object.assign({
-        className: Styles$5['xalert-modal__actions']
+        className: Styles$6['xalert-modal__actions']
       }, {
         children: [props.useCancel && jsx(Ramen.XButton, {
           size: "xl",
@@ -6837,6 +7109,7 @@ XAlertModal.defaultProps = {
   title: undefined,
   message: undefined,
   cancelText: 'Cancelar',
+  type: 'confirm',
   confirmText: 'Confirmar'
 };
 
@@ -6870,6 +7143,7 @@ const ModalCart = ({
   const titleOkButton = isAuthenticated ? 'Enviar cotización' : "Iniciar sesión";
   const openLogin = () => __awaiter(void 0, void 0, void 0, function* () {
     setIsOpenModalLogin(true);
+    setIsOpenModal(false);
   });
   const sentCart = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -6942,7 +7216,6 @@ const ModalCart = ({
           className: "cart-wrapper__body"
         }, {
           children: cart.length <= 0 ? jsx(EmptyResultsComponent, {
-            emptyImage: img$7,
             emptyMessage: emptyModalMessage
           }) : jsx(Ramen.XList, {
             dataSource: cart,
@@ -6994,6 +7267,7 @@ const ModalCart = ({
         }))]
       }))]
     })), jsx(XAlertModal, {
+      type: 'success',
       visible: showModal,
       confirmText: 'Finalizar',
       onClose: () => setShoModal(false),
@@ -7101,9 +7375,8 @@ const loadingMoreRenderProduct = () => {
 };
 const emptyResultsRender = () => {
   return jsx(EmptyResultsComponent, {
-    emptyImage: 'https://easycl.vtexassets.com/arquivos/nuestrosLocalesHome.png',
-    emptyMessage: "Oops!",
-    descriptionMessage: 'No hay productos'
+    emptyMessage: "Error en la carga de productos",
+    descriptionMessage: 'Tuvimos un error en el servicio.'
   });
 };
 const ProductsList = ({
@@ -7126,7 +7399,7 @@ const ProductsList = ({
   loadMoreProducts: loadMoreProducts
 });
 
-var Styles$4 = {"filter-component":"root-module_filter-component__C4Mmr","filter-container":"root-module_filter-container__cbkC0"};
+var Styles$5 = {"filter-component":"root-module_filter-component__C4Mmr","filter-container":"root-module_filter-container__cbkC0"};
 
 const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState({
@@ -7147,76 +7420,7 @@ const useWindowSize = () => {
   return windowSize;
 };
 
-var $$3 = _export;
-var $includes = arrayIncludes.includes;
-var fails$1 = fails$y;
-var addToUnscopables = addToUnscopables$2;
-
-// FF99+ bug
-var BROKEN_ON_SPARSE = fails$1(function () {
-  // eslint-disable-next-line es/no-array-prototype-includes -- detection
-  return !Array(1).includes();
-});
-
-// `Array.prototype.includes` method
-// https://tc39.es/ecma262/#sec-array.prototype.includes
-$$3({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
-  includes: function includes(el /* , fromIndex = 0 */) {
-    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
-  }
-});
-
-// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
-addToUnscopables('includes');
-
-var isRegExp = isRegexp;
-
-var $TypeError = TypeError;
-
-var notARegexp = function (it) {
-  if (isRegExp(it)) {
-    throw $TypeError("The method doesn't accept regular expressions");
-  } return it;
-};
-
-var wellKnownSymbol$2 = wellKnownSymbol$n;
-
-var MATCH = wellKnownSymbol$2('match');
-
-var correctIsRegexpLogic = function (METHOD_NAME) {
-  var regexp = /./;
-  try {
-    '/./'[METHOD_NAME](regexp);
-  } catch (error1) {
-    try {
-      regexp[MATCH] = false;
-      return '/./'[METHOD_NAME](regexp);
-    } catch (error2) { /* empty */ }
-  } return false;
-};
-
-var $$2 = _export;
-var uncurryThis$2 = functionUncurryThis;
-var notARegExp = notARegexp;
-var requireObjectCoercible$1 = requireObjectCoercible$a;
-var toString$2 = toString$d;
-var correctIsRegExpLogic = correctIsRegexpLogic;
-
-var stringIndexOf = uncurryThis$2(''.indexOf);
-
-// `String.prototype.includes` method
-// https://tc39.es/ecma262/#sec-string.prototype.includes
-$$2({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
-  includes: function includes(searchString /* , position = 0 */) {
-    return !!~stringIndexOf(
-      toString$2(requireObjectCoercible$1(this)),
-      toString$2(notARegExp(searchString)),
-      arguments.length > 1 ? arguments[1] : undefined
-    );
-  }
-});
-
-var Styles$3 = {"xcontainer_filter":"root-module_xcontainer_filter__cEYyE","container_filter__item":"root-module_container_filter__item__IchDn","xcontainer_filter__title":"root-module_xcontainer_filter__title__ZdzKr","xcontainer_filter__item":"root-module_xcontainer_filter__item__dyeBW","xcontainer_filter__item--selected":"root-module_xcontainer_filter__item--selected__93n0o"};
+var Styles$4 = {"xcontainer_filter":"root-module_xcontainer_filter__cEYyE","container_filter__item":"root-module_container_filter__item__IchDn","xcontainer_filter__title":"root-module_xcontainer_filter__title__ZdzKr","xcontainer_filter__item":"root-module_xcontainer_filter__item__dyeBW","xcontainer_filter__item--selected":"root-module_xcontainer_filter__item--selected__93n0o"};
 
 const Root = ({
   filter,
@@ -7247,23 +7451,23 @@ const Root = ({
   };
   const checkIfIsActive = (filter, option) => filter.multiple ? (activeFilters[filter.key] || []).includes(option.key) : activeFilters[filter.key] === option.key;
   return jsxs("div", Object.assign({
-    className: classnames(Styles$3['xcontainer_filter__title'])
+    className: classnames(Styles$4['xcontainer_filter__title'])
   }, {
     children: [jsx(Ramen.XVSpace, {
       size: "m"
     }), jsx("div", Object.assign({
-      className: classnames(Styles$3['xcontainer_filter__title'])
+      className: classnames(Styles$4['xcontainer_filter__title'])
     }, {
       children: filter.label
     })), jsx(Ramen.XVSpace, {
       size: "s"
     }), jsx("div", Object.assign({
-      className: classnames(Styles$3['xcontainer_filter'])
+      className: classnames(Styles$4['xcontainer_filter'])
     }, {
       children: filter.options.map(option => {
         const isActive = checkIfIsActive(filter, option);
-        const itemClasses = classnames(Styles$3['xcontainer_filter__item'], {
-          [Styles$3['xcontainer_filter__item--selected']]: isActive
+        const itemClasses = classnames(Styles$4['xcontainer_filter__item'], {
+          [Styles$4['xcontainer_filter__item--selected']]: isActive
         });
         return jsxs("div", Object.assign({
           className: itemClasses,
@@ -7329,10 +7533,10 @@ const FilterComponent = ({
   };
   const renderFilters = () => {
     return jsxs("div", Object.assign({
-      className: Styles$4['filter-component']
+      className: Styles$5['filter-component']
     }, {
       children: [jsx("div", Object.assign({
-        className: Styles$4['filter-container']
+        className: Styles$5['filter-container']
       }, {
         children: filters.map(filter => jsx(Root, {
           filter: filter,
@@ -7369,7 +7573,7 @@ const FilterComponent = ({
   });
 };
 
-var Styles$2 = {"categories-wrapper__body":"root-module_categories-wrapper__body__ytY1c","categories-wrapper__body__list":"root-module_categories-wrapper__body__list__HXHrh","categories_item":"root-module_categories_item__0lWDM","categories_item__selected":"root-module_categories_item__selected__tR3wv","categories_item__list":"root-module_categories_item__list__L8jwG","categories_item__list__name":"root-module_categories_item__list__name__FFurE","categories_seeAll":"root-module_categories_seeAll__DC3fe"};
+var Styles$3 = {"categories-wrapper__body":"root-module_categories-wrapper__body__ytY1c","categories-wrapper__body__list":"root-module_categories-wrapper__body__list__HXHrh","categories_item":"root-module_categories_item__0lWDM","categories_item__selected":"root-module_categories_item__selected__tR3wv","categories_item__list":"root-module_categories_item__list__L8jwG","categories_item__list__name":"root-module_categories_item__list__name__FFurE","categories_seeAll":"root-module_categories_seeAll__DC3fe"};
 
 // `SameValue` abstract operation
 // https://tc39.es/ecma262/#sec-samevalue
@@ -7909,19 +8113,29 @@ const SearchComponentFilter = ({
   return jsxs("div", Object.assign({
     className: "search-component-filter"
   }, {
-    children: [jsx(FiSearch, {
+    children: [jsx("div", Object.assign({
       className: "search-icon"
-    }), jsx("input", {
+    }, {
+      children: jsx(Ramen.XIcon, {
+        size: 's',
+        icon: 'search-outline'
+      })
+    })), jsx("input", {
       className: `search-input ${_classNameExtra}`,
       value: currentValue,
       onChange: handleValue,
       onKeyDown: e => e.key === 'Enter' && handleSearch(),
       placeholder: placeholder || "Search products",
       type: "text"
-    }), !!currentValue && jsx(AiFillCloseCircle, {
+    }), !!currentValue && jsx("div", Object.assign({
       className: "close-icon",
       onClick: handleClear
-    })]
+    }, {
+      children: jsx(Ramen.XIcon, {
+        icon: 'close-outline',
+        size: 'xs'
+      })
+    }))]
   }));
 };
 
@@ -7966,7 +8180,7 @@ const CategoryItemList = ({
 }) => {
   return jsxs(Fragment, {
     children: [jsx("div", Object.assign({
-      className: classnames(Styles$2['categories_item__list__name']),
+      className: classnames(Styles$3['categories_item__list__name']),
       onClick: () => onItemSelected === null || onItemSelected === void 0 ? void 0 : onItemSelected(category)
     }, {
       children: jsx(Ramen.XText, Object.assign({
@@ -7982,7 +8196,7 @@ const CategoryItemList = ({
 const SeeAllComponent = ({
   onClick
 }) => jsxs("div", Object.assign({
-  className: classnames(Styles$2['categories_seeAll'])
+  className: classnames(Styles$3['categories_seeAll'])
 }, {
   children: [jsxs(Ramen.XText, Object.assign({
     fontSize: 11
@@ -8006,7 +8220,7 @@ const CategoryList = ({
   onItemHover
 }) => {
   return jsxs("div", Object.assign({
-    className: classnames(Styles$2['categories_item__list'])
+    className: classnames(Styles$3['categories_item__list'])
   }, {
     children: [jsx(Ramen.XVSpace, {
       size: "m"
@@ -8042,8 +8256,8 @@ const CategoryItem = ({
   onItemHover
 }) => {
   return jsx("div", Object.assign({
-    className: classnames(Styles$2['categories_item'], {
-      [Styles$2[`categories_item__selected`]]: isActive
+    className: classnames(Styles$3['categories_item'], {
+      [Styles$3[`categories_item__selected`]]: isActive
     }),
     onClick: () => onItemSelected === null || onItemSelected === void 0 ? void 0 : onItemSelected(category),
     onMouseEnter: () => onItemHover === null || onItemHover === void 0 ? void 0 : onItemHover(true, category)
@@ -8123,7 +8337,7 @@ const DrawerCategories = ({
     }
   }, [isShown]);
   return jsx("div", Object.assign({
-    className: classnames(Styles$2['categories_drawer'])
+    className: classnames(Styles$3['categories_drawer'])
   }, {
     children: jsxs(Ramen.XDrawer, Object.assign({
       size: isShown && !isMobile ? 'xl' : 's',
@@ -8135,11 +8349,11 @@ const DrawerCategories = ({
       mountNode
     }, {
       children: [jsxs("div", Object.assign({
-        className: classnames(Styles$2['categories-wrapper__body']),
+        className: classnames(Styles$3['categories-wrapper__body']),
         ref: refElement
       }, {
         children: [jsxs("div", Object.assign({
-          className: classnames(Styles$2['categories-wrapper__body__list'])
+          className: classnames(Styles$3['categories-wrapper__body__list'])
         }, {
           children: [isMobile && jsxs(Fragment, {
             children: [jsx(GlobalSearchComponent, {}), jsx(Ramen.XVSpace, {
@@ -8207,26 +8421,24 @@ const DrawerCategories = ({
     }))
   }));
 };
-var index = /*#__PURE__*/memo(DrawerCategories);
+var DrawerCategories$1 = /*#__PURE__*/memo(DrawerCategories);
 
-var img$5 = "data:image/svg+xml,%3csvg width='59' height='59' viewBox='0 0 59 59' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M47.0178 5.81591C47.7185 5.39549 48.5594 5.1152 49.4002 5.1152C51.9228 5.1152 53.9549 7.14727 53.9549 9.66983C53.9549 10.5107 53.7446 11.3515 53.3242 12.0523C56.8979 16.9572 59 22.9834 59 29.5C59 45.8266 45.8266 59 29.5 59C13.2435 59 0 45.8266 0 29.5C0 13.2435 13.1734 0 29.5 0C36.0867 0.0700713 42.1128 2.24228 47.0178 5.81591Z' fill='white'/%3e%3cpath d='M51.0127 14.0142C50.5222 14.2245 49.9617 14.2945 49.4011 14.2945C46.8785 14.2945 44.8465 12.2625 44.8465 9.7399C44.8465 9.17933 44.9866 8.61876 45.1267 8.12826C40.7823 4.97505 35.3868 3.08313 29.5709 3.08313C14.926 3.08313 3.01392 14.9252 3.01392 29.5701C3.01392 44.215 14.856 56.057 29.5009 56.057C44.2158 56.1271 56.0579 44.215 56.0579 29.5701C56.0579 23.7542 54.1659 18.4287 51.0127 14.0142Z' fill='%23DF1122'/%3e%3cpath d='M51.0113 14.0142C50.5208 14.2245 49.9602 14.2945 49.3996 14.2945C46.8771 14.2945 44.845 12.2625 44.845 9.7399C44.845 9.17933 44.9151 8.61876 45.1253 8.12826C40.7809 4.97505 35.3854 3.08313 29.5695 3.08313C14.9246 3.08313 3.08252 14.9252 3.08252 29.5701C3.08252 44.215 14.9246 56.057 29.5695 56.057C44.2143 56.057 56.0564 44.215 56.0564 29.5701C56.0564 23.7542 54.1645 18.4287 51.0113 14.0142Z' stroke='%23DF1122' stroke-width='0.0229017' stroke-miterlimit='3.864'/%3e%3cpath d='M46.9475 9.67003C46.9475 8.2686 48.0686 7.14746 49.4701 7.14746C50.8715 7.14746 51.9926 8.2686 51.9926 9.67003C51.9926 11.0715 50.8715 12.1926 49.4701 12.1926C48.0686 12.1926 46.9475 11.0715 46.9475 9.67003Z' fill='%23DF1122'/%3e%3cpath d='M49.401 12.1926C50.7941 12.1926 51.9235 11.0632 51.9235 9.67003C51.9235 8.27685 50.7941 7.14746 49.401 7.14746C48.0078 7.14746 46.8784 8.27685 46.8784 9.67003C46.8784 11.0632 48.0078 12.1926 49.401 12.1926Z' stroke='%23DF1122' stroke-width='0.021184' stroke-miterlimit='3.864'/%3e%3cpath d='M52.9726 23.1937L47.2968 38.189H44.0035L46.1757 33.284L42.2517 23.1937H45.5451L47.6472 29.7103H47.7873L49.7493 23.1937H52.9726Z' fill='%23FDF737'/%3e%3cpath d='M41.7634 30.7614C41.7634 33.1439 39.1707 34.0548 36.6482 34.0548C34.1957 34.0548 31.603 33.1439 31.603 30.7614H34.8263C34.8263 31.5322 35.8774 31.7424 36.6482 31.7424C37.4189 31.7424 38.3999 31.5322 38.3999 30.8315C38.3999 29.9206 37.2087 29.7804 35.2467 29.2899C33.2847 28.7994 31.8132 27.8885 31.8132 25.9966C31.8132 23.6142 34.1256 22.7733 36.5781 22.7733C39.0306 22.7733 41.2729 23.6142 41.2729 25.9265H38.0496C38.0496 25.2959 37.2087 25.0156 36.5781 25.0156C35.8774 25.0156 35.1066 25.1557 35.1066 25.8564C35.1066 26.7674 36.508 26.8374 38.0496 27.2579C40.0816 27.8885 41.7634 28.6593 41.7634 30.7614Z' fill='%23FDF737'/%3e%3cpath d='M26.7674 28.4485C26.7674 27.047 25.9966 25.7157 24.1748 25.7157C22.3529 25.7157 21.7924 27.1872 21.7924 28.4485C21.7924 29.7798 22.4931 31.1812 24.3149 31.1812C26.2069 31.1812 26.7674 29.7098 26.7674 28.4485ZM29.8506 33.7038H26.8375V32.5126H26.6974C26.2069 33.5637 25.1558 34.1242 23.6142 34.1242C20.9515 34.1242 18.6392 31.952 18.6392 28.5185C18.6392 25.015 20.7413 22.9128 23.404 22.9128C24.8755 22.9128 26.1368 23.5435 26.6974 24.4544H26.8375V23.2632H29.9206L29.8506 33.7038Z' fill='%23FDF737'/%3e%3cpath d='M38.2576 38.259C29.9191 37.1378 21.5806 37.0678 8.61743 37.9787L8.75757 37.4181C21.7208 36.297 31.9512 35.6663 37.4868 35.8766C40.7801 35.9466 41.7611 36.2269 41.7611 37.4181C41.8312 38.6093 40.3597 38.5393 38.2576 38.259Z' fill='%23FDF737'/%3e%3cpath d='M13.6624 27.3273C13.5924 26.6967 13.242 25.4354 11.4902 25.4354C9.87858 25.4354 9.38808 26.7668 9.31801 27.3273H13.6624ZM16.8857 28.3784C16.8857 28.7988 16.8156 29.4295 16.8156 29.4295H9.24794C9.31801 30.6207 10.2289 31.5316 11.4902 31.5316C12.4011 31.5316 13.0318 31.1812 13.3121 30.5506H16.6054C16.3251 32.0922 14.9938 34.0542 11.5603 34.0542C8.26694 34.0542 6.02466 31.4615 6.02466 28.3784C6.02466 25.2252 8.05673 22.9128 11.3501 22.9128C14.7135 22.9128 16.8857 25.2252 16.8857 28.3784Z' fill='%23FDF737'/%3e%3cpath d='M16.3247 44.8457C16.4649 44.7056 16.6751 44.5654 16.8853 44.4954C17.0955 44.4253 17.3057 44.3552 17.5159 44.3552C17.7262 44.3552 17.9364 44.4253 18.1466 44.4954C18.3568 44.5654 18.567 44.7056 18.7071 44.8457L18.9174 45.0559L18.4269 45.5464L18.2166 45.2662C18.1466 45.1961 18.0064 45.126 17.8663 45.0559C17.7262 44.9859 17.586 44.9859 17.5159 44.9859C17.3758 44.9859 17.2357 44.9859 17.1656 45.0559C17.0254 45.126 16.9554 45.1961 16.8152 45.2662C16.7452 45.3362 16.6751 45.4764 16.605 45.6165C16.5349 45.7567 16.5349 45.8968 16.5349 45.9669C16.5349 46.107 16.5349 46.2472 16.605 46.3172C16.6751 46.4574 16.7452 46.5274 16.8152 46.6676C17.0254 46.8778 17.2357 46.9479 17.5159 46.9479C17.6561 46.9479 17.7962 46.9479 17.8663 46.8778C18.0064 46.8077 18.0765 46.7376 18.2166 46.6676L18.4269 46.4574L18.9174 46.9479L18.7071 47.1581C18.567 47.2982 18.3568 47.4384 18.1466 47.5084C17.9364 47.5785 17.7262 47.6486 17.5159 47.6486C17.3057 47.6486 17.0955 47.5785 16.8853 47.5084C16.6751 47.4384 16.5349 47.2982 16.3247 47.1581C16.1846 47.0179 16.0444 46.8077 15.9744 46.5975C15.9043 46.3873 15.8342 46.1771 15.8342 45.9669C15.8342 45.7567 15.9043 45.5464 15.9744 45.3362C16.0444 45.1961 16.1846 44.9859 16.3247 44.8457Z' fill='white'/%3e%3cpath d='M20.1099 45.2665C19.8997 45.4767 19.8296 45.6869 19.8296 45.9672C19.8296 46.1074 19.8296 46.2475 19.8997 46.3877C19.9698 46.3176 20.0398 46.2475 20.18 46.1074C20.3201 45.9672 20.4603 45.8271 20.5303 45.757C20.6705 45.6169 20.8106 45.4767 20.9508 45.3366C21.0909 45.1964 21.161 45.1264 21.231 45.0563C21.0208 44.9862 20.8807 44.9162 20.6705 44.9862C20.4603 45.0563 20.25 45.1264 20.1099 45.2665ZM21.7215 46.4577L22.212 46.9482L22.0018 47.1584C21.8617 47.2986 21.6515 47.4387 21.4413 47.5088C21.231 47.5789 21.0208 47.6489 20.8106 47.6489C20.6004 47.6489 20.3902 47.5789 20.18 47.5088C19.9698 47.4387 19.8296 47.2986 19.6194 47.1584C19.4793 47.0183 19.3391 46.8081 19.269 46.5979C19.199 46.3877 19.1289 46.1774 19.1289 45.9672C19.1289 45.757 19.199 45.5468 19.269 45.3366C19.3391 45.1264 19.4793 44.9862 19.6194 44.776C19.7595 44.6359 19.9698 44.4957 20.18 44.4257C20.3902 44.3556 20.6004 44.2855 20.8106 44.2855C21.0208 44.2855 21.231 44.3556 21.4413 44.4257C21.6515 44.4957 21.8617 44.6359 22.0018 44.776L22.212 44.9862L20.3902 46.8081C20.6004 46.8782 20.7405 46.9482 20.9508 46.8782C21.161 46.8782 21.3712 46.738 21.5113 46.5979L21.7215 46.4577Z' fill='white'/%3e%3cpath d='M22.4236 45.9669C22.4236 45.7567 22.4937 45.5464 22.5637 45.3362C22.6338 45.126 22.7739 44.9859 22.9141 44.8457C23.0542 44.7056 23.2644 44.5654 23.4747 44.4954C23.6849 44.4253 23.8951 44.3552 24.1053 44.3552C24.3155 44.3552 24.5257 44.4253 24.7359 44.4954C24.9461 44.5654 25.0863 44.7056 25.2965 44.8457C25.4366 44.9859 25.5768 45.1961 25.6469 45.3362C25.7169 45.5464 25.787 45.7567 25.787 45.9669V47.6486H25.1564V45.9669C25.1564 45.8267 25.1564 45.6866 25.0863 45.6165C25.0162 45.4764 24.9461 45.4063 24.8761 45.2662C24.806 45.1961 24.6659 45.126 24.5257 45.0559C24.3856 44.9859 24.2454 44.9859 24.1053 44.9859C23.9652 44.9859 23.825 44.9859 23.6849 45.0559C23.5447 45.126 23.4747 45.1961 23.4046 45.2662C23.3345 45.3362 23.2644 45.4764 23.1944 45.6165C23.1243 45.7567 23.1243 45.8267 23.1243 45.9669V47.6486H22.4236V45.9669Z' fill='white'/%3e%3cpath d='M26.4165 44.8457C26.5567 44.7056 26.7669 44.5654 26.9771 44.4954C27.1873 44.4253 27.3975 44.3552 27.6077 44.3552C27.818 44.3552 28.0282 44.4253 28.2384 44.4954C28.4486 44.5654 28.6588 44.7056 28.799 44.8457L29.0092 45.0559L28.5187 45.5464L28.3085 45.3362C28.2384 45.2662 28.0982 45.1961 27.9581 45.126C27.818 45.0559 27.6778 45.0559 27.6077 45.0559C27.4676 45.0559 27.3275 45.0559 27.2574 45.126C27.1172 45.1961 27.0472 45.2662 26.907 45.3362C26.837 45.4063 26.7669 45.5464 26.6968 45.6866C26.6267 45.8267 26.6267 45.9669 26.6267 46.0369C26.6267 46.1771 26.6267 46.3172 26.6968 46.3873C26.7669 46.5274 26.837 46.5975 26.907 46.7376C27.1172 46.9479 27.3275 47.0179 27.6077 47.0179C27.7479 47.0179 27.888 47.0179 27.9581 46.9479C28.0982 46.8778 28.1683 46.8077 28.3085 46.7376L28.5187 46.5274L29.0092 47.0179L28.7289 47.1581C28.5887 47.2982 28.3785 47.4384 28.1683 47.5084C27.9581 47.5785 27.7479 47.6486 27.5377 47.6486C27.3275 47.6486 27.1172 47.5785 26.907 47.5084C26.6968 47.4384 26.5567 47.2982 26.3465 47.1581C26.2063 47.0179 26.0662 46.8077 25.9961 46.5975C25.926 46.3873 25.856 46.1771 25.856 45.9669C25.856 45.7567 25.926 45.5464 25.9961 45.3362C26.1362 45.1961 26.2764 44.9859 26.4165 44.8457Z' fill='white'/%3e%3cpath d='M29.8499 45.9669C29.8499 46.107 29.8499 46.2471 29.92 46.3873C29.99 46.5274 30.0601 46.5975 30.1302 46.7376C30.2002 46.8077 30.3404 46.8778 30.4805 46.9479C30.6207 47.0179 30.7608 47.0179 30.9009 47.0179C31.0411 47.0179 31.1812 47.0179 31.3214 46.9479C31.4615 46.8778 31.5316 46.8077 31.6717 46.7376C31.7418 46.6676 31.8119 46.5274 31.8819 46.3873C31.952 46.2471 31.952 46.107 31.952 45.9669C31.952 45.8267 31.952 45.6866 31.8819 45.6165C31.8119 45.4764 31.7418 45.4063 31.6717 45.2662C31.6017 45.1961 31.4615 45.126 31.3214 45.0559C31.1812 44.9859 31.0411 44.9859 30.9009 44.9859C30.7608 44.9859 30.6207 44.9859 30.4805 45.0559C30.3404 45.126 30.2703 45.1961 30.1302 45.2662C30.0601 45.3362 29.99 45.4764 29.92 45.6165C29.92 45.7567 29.8499 45.8267 29.8499 45.9669ZM29.2192 45.9669C29.2192 45.7567 29.2893 45.5464 29.3594 45.3362C29.4295 45.126 29.5696 44.9859 29.7097 44.8457C29.8499 44.7056 30.0601 44.5654 30.2703 44.4954C30.4805 44.4253 30.6907 44.3552 30.9009 44.3552C31.1112 44.3552 31.3214 44.4253 31.5316 44.4954C31.7418 44.5654 31.8819 44.7056 32.0922 44.8457C32.2323 44.9859 32.3724 45.1961 32.4425 45.3362C32.5126 45.5464 32.5827 45.7567 32.5827 45.9669C32.5827 46.1771 32.5126 46.3873 32.4425 46.5975C32.3724 46.8077 32.2323 46.9479 32.0922 47.1581C31.952 47.2982 31.7418 47.4384 31.5316 47.5084C31.3214 47.5785 31.1112 47.6486 30.9009 47.6486C30.6907 47.6486 30.4805 47.5785 30.2703 47.5084C30.0601 47.4384 29.92 47.2982 29.7097 47.1581C29.5696 47.0179 29.4295 46.8077 29.3594 46.5975C29.2893 46.4574 29.2192 46.2472 29.2192 45.9669Z' fill='white'/%3e%3cpath d='M35.6659 44.3552V44.9859H33.7039C33.6338 44.9859 33.5638 44.9859 33.4937 45.0559C33.4236 45.126 33.4236 45.1961 33.4236 45.2662C33.4236 45.3362 33.4236 45.4063 33.4937 45.4764C33.5638 45.5464 33.6338 45.5464 33.7039 45.5464H35.0353C35.1754 45.5464 35.3155 45.5464 35.3856 45.6165C35.5258 45.6866 35.5958 45.7566 35.6659 45.8267C35.736 45.8968 35.806 46.0369 35.8761 46.1771C35.9462 46.3172 35.9462 46.3873 35.9462 46.5274C35.9462 46.6676 35.9462 46.8077 35.8761 46.9479C35.806 47.088 35.736 47.1581 35.6659 47.2982C35.5958 47.3683 35.4557 47.4384 35.3856 47.5084C35.2455 47.5785 35.1053 47.5785 35.0353 47.5785H33.0733V46.9479H35.0353C35.1053 46.9479 35.2455 46.9479 35.2455 46.8778C35.3155 46.8077 35.3155 46.7377 35.3155 46.6676C35.3155 46.5975 35.3155 46.5274 35.2455 46.4574C35.1754 46.3873 35.1053 46.3873 35.0353 46.3873H33.7039C33.5638 46.3873 33.4236 46.3873 33.2835 46.3172C33.1433 46.2472 33.0733 46.1771 33.0032 46.107C32.9331 46.0369 32.863 45.8968 32.793 45.8267C32.7229 45.6866 32.7229 45.5464 32.7229 45.4063C32.7229 45.2662 32.7229 45.126 32.793 45.0559C32.863 44.9158 32.9331 44.8457 33.0032 44.7056C33.0733 44.6355 33.2134 44.5654 33.2835 44.4954C33.4236 44.4253 33.5638 44.4253 33.7039 44.4253H35.6659V44.3552Z' fill='white'/%3e%3cpath d='M39.5211 44.3552V45.9669C39.5211 46.1771 39.4511 46.3873 39.381 46.5975C39.3109 46.8077 39.1708 46.9479 39.0306 47.1581C38.8905 47.2982 38.6803 47.4384 38.4701 47.5084C38.2599 47.5785 38.0496 47.6486 37.8394 47.6486C37.6292 47.6486 37.419 47.5785 37.2088 47.5084C36.9986 47.4384 36.8584 47.2982 36.6482 47.1581C36.5081 47.0179 36.3679 46.8077 36.2979 46.5975C36.2278 46.3873 36.1577 46.1771 36.1577 45.9669V44.3552H36.7884V45.9669C36.7884 46.107 36.7884 46.2471 36.8584 46.3873C36.9285 46.5274 36.9986 46.5975 37.0686 46.7376C37.1387 46.8077 37.2789 46.8778 37.419 46.9479C37.5591 47.0179 37.6993 47.0179 37.8394 47.0179C37.9796 47.0179 38.1197 47.0179 38.2599 46.9479C38.4 46.8778 38.4701 46.8077 38.6102 46.7376C38.6803 46.6676 38.7504 46.5274 38.8204 46.3873C38.8905 46.2471 38.8905 46.107 38.8905 45.9669V44.3552H39.5211Z' fill='white'/%3e%3cpath d='M41.3424 46.9474C41.4825 46.9474 41.6226 46.9474 41.6927 46.8774C41.8329 46.8073 41.9029 46.7372 41.973 46.6671C42.0431 46.5971 42.1131 46.4569 42.1832 46.3168C42.2533 46.1766 42.2533 46.0365 42.2533 45.8964V44.9154H41.3424C41.2022 44.9154 41.0621 44.9154 40.9219 44.9854C40.7818 45.0555 40.7117 45.1256 40.5716 45.1956C40.5015 45.2657 40.4314 45.4059 40.3614 45.546C40.2913 45.6861 40.2913 45.7562 40.2913 45.8964C40.2913 46.0365 40.2913 46.1766 40.3614 46.3168C40.4314 46.4569 40.5015 46.527 40.5716 46.6671C40.6416 46.7372 40.7818 46.8073 40.9219 46.8774C41.0621 46.9474 41.2022 46.9474 41.3424 46.9474ZM43.0241 43.0234V45.9664C43.0241 46.1766 42.954 46.3869 42.8839 46.5971C42.8138 46.8073 42.6737 46.9474 42.5336 47.1576C42.3934 47.2978 42.1832 47.4379 42.0431 47.508C41.8329 47.5781 41.6226 47.6481 41.4124 47.6481C41.2022 47.6481 40.992 47.5781 40.7818 47.508C40.5716 47.4379 40.4314 47.2978 40.2212 47.1576C40.0811 47.0175 39.9409 46.8073 39.8709 46.5971C39.8008 46.3869 39.7307 46.1766 39.7307 45.9664C39.7307 45.7562 39.8008 45.546 39.8709 45.3358C39.9409 45.1256 40.0811 44.9854 40.2212 44.8453C40.3614 44.7051 40.5716 44.565 40.7818 44.4949C40.992 44.4249 41.2022 44.3548 41.4124 44.3548H42.3934V43.0234H43.0241Z' fill='white'/%3e%3c/svg%3e";
-
-var Styles$1 = {"xdivider__vertical":"root-module_xdivider__vertical__gCbVo"};
+var Styles$2 = {"xdivider__vertical":"root-module_xdivider__vertical__gCbVo"};
 
 const XDividerVertical = () => {
-  const rootClass = classnames(Styles$1['xdivider__vertical'], {});
+  const rootClass = classnames(Styles$2['xdivider__vertical'], {});
   return jsx("hr", {
     className: rootClass
   });
 };
 XDividerVertical.defaultProps = {};
 
-var Styles = {"xheader":"root-module_xheader__viI2o","xheader__profile":"root-module_xheader__profile__L66F1","xheader__profile-clickable":"root-module_xheader__profile-clickable__Q-xd-","xheader__profile_logout":"root-module_xheader__profile_logout__zJOkY"};
+var Styles$1 = {"xheader":"root-module_xheader__viI2o","xheader__profile":"root-module_xheader__profile__L66F1","xheader__profile-clickable":"root-module_xheader__profile-clickable__Q-xd-","xheader__profile_logout":"root-module_xheader__profile_logout__zJOkY"};
 
-var img$4 = "data:image/svg+xml,%3csvg width='52' height='53' viewBox='0 0 52 53' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M52 26.041C52 40.4004 40.3594 52.041 26 52.041C11.6406 52.041 0 40.4004 0 26.041C0 11.6816 11.6406 0.0410156 26 0.0410156C40.3594 0.0410156 52 11.6816 52 26.041ZM26 49.2553C38.8209 49.2553 49.2143 38.8619 49.2143 26.041C49.2143 13.2201 38.8209 2.82673 26 2.82673C13.1791 2.82673 2.78571 13.2201 2.78571 26.041C2.78571 38.8619 13.1791 49.2553 26 49.2553Z' fill='white'/%3e%3cmask id='mask0_316_28843' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='2' y='2' width='48' height='48'%3e%3cpath d='M2.78578 26.0405C2.78578 38.8614 13.1792 49.2547 26.0001 49.2547C38.821 49.2547 49.2144 38.8614 49.2144 26.0405C49.2144 13.2196 38.821 2.82617 26.0001 2.82617C13.1792 2.82617 2.78578 13.2196 2.78578 26.0405Z' fill='white'/%3e%3cpath d='M2.78578 26.0405C2.78578 38.8614 13.1792 49.2547 26.0001 49.2547C38.821 49.2547 49.2144 38.8614 49.2144 26.0405C49.2144 13.2196 38.821 2.82617 26.0001 2.82617C13.1792 2.82617 2.78578 13.2196 2.78578 26.0405Z' stroke='white'/%3e%3c/mask%3e%3cg mask='url(%23mask0_316_28843)'%3e%3cpath d='M49.2142 26.0405C49.2142 38.8614 38.8208 49.2547 25.9999 49.2547C13.179 49.2547 2.78564 38.8614 2.78564 26.0405C2.78564 13.2196 13.179 2.82617 25.9999 2.82617C38.8208 2.82617 49.2142 13.2196 49.2142 26.0405Z' fill='%23D2D8E7'/%3e%3cpath d='M34.1482 36.1611C31.311 38.2246 28.4736 39.8754 25.6363 39.8754C22.7991 39.8754 19.9617 38.2246 17.1244 36.1611C19.4631 35.4492 20.6496 34.3865 20.6839 32.973C20.6839 32.7211 20.6821 32.3633 20.6804 31.6914C20.6804 31.5848 20.6801 31.4755 20.6796 31.3636C20.675 29.5622 20.6674 27.1851 20.6567 24.7708C18.4387 21.8958 19.2535 18.5252 19.9485 18.6093C20.8006 18.7129 28.1832 11.7072 29.5993 11.348C31.0154 10.9888 34.6125 12.1484 35.2316 15.3791C35.8506 18.6097 36.1094 26.753 33.7613 30.0041C33.0932 30.9292 32.0408 31.2911 30.6042 31.0897C30.6022 31.7659 30.5982 32.1454 30.5887 32.9111C30.6071 34.3889 31.7935 35.45 34.1482 36.1611Z' fill='%23C7CFE2'/%3e%3cg style='mix-blend-mode:multiply' opacity='0.6'%3e%3cpath d='M30.5894 31.0896C27.1846 30.7027 25.0179 29.2324 25.0179 29.2324C25.0179 29.2324 27.4941 32.3277 30.5894 32.9467V31.0896Z' fill='black' fill-opacity='0.2'/%3e%3c/g%3e%3cpath d='M19.5236 24.8192C18.4573 22.2548 14.1843 17.032 17.8676 13.782C19.1057 7.74629 25.9462 8.4144 30.5117 9.80725C33.5801 10.7434 35.8974 12.593 36.3926 11.2001C39.4879 13.782 37.9378 16.3073 35.8974 17.032C34.0455 17.6897 30.914 18.3475 25.5893 17.7284C24.6381 17.6178 24.8373 20.5309 24.3291 20.8458C23.5666 21.3183 22.9748 18.3475 20.8842 19.2395C18.7937 20.1316 20.0343 24.2677 22.2783 24.2677C23.0521 24.2677 23.4391 26.3952 21.3498 27.4012C19.8331 28.1465 20.2164 26.4855 19.5236 24.8192Z' fill='%23B7C0D8'/%3e%3cpath d='M9.38658 40.8832C7.91324 43.879 7.06515 50.788 7.06515 50.788H44.208C44.208 50.788 43.3596 43.8782 41.8866 40.8832C40.4136 37.8883 31.8116 35.1105 31.8116 35.1105C26.2169 35.1094 24.3598 35.1094 19.4661 35.1094C19.4661 35.1094 10.8599 37.8875 9.38658 40.8832Z' fill='%23B7C0D8'/%3e%3c/g%3e%3c/svg%3e";
+var img$6 = "data:image/svg+xml,%3csvg width='52' height='53' viewBox='0 0 52 53' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M52 26.041C52 40.4004 40.3594 52.041 26 52.041C11.6406 52.041 0 40.4004 0 26.041C0 11.6816 11.6406 0.0410156 26 0.0410156C40.3594 0.0410156 52 11.6816 52 26.041ZM26 49.2553C38.8209 49.2553 49.2143 38.8619 49.2143 26.041C49.2143 13.2201 38.8209 2.82673 26 2.82673C13.1791 2.82673 2.78571 13.2201 2.78571 26.041C2.78571 38.8619 13.1791 49.2553 26 49.2553Z' fill='white'/%3e%3cmask id='mask0_316_28843' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='2' y='2' width='48' height='48'%3e%3cpath d='M2.78578 26.0405C2.78578 38.8614 13.1792 49.2547 26.0001 49.2547C38.821 49.2547 49.2144 38.8614 49.2144 26.0405C49.2144 13.2196 38.821 2.82617 26.0001 2.82617C13.1792 2.82617 2.78578 13.2196 2.78578 26.0405Z' fill='white'/%3e%3cpath d='M2.78578 26.0405C2.78578 38.8614 13.1792 49.2547 26.0001 49.2547C38.821 49.2547 49.2144 38.8614 49.2144 26.0405C49.2144 13.2196 38.821 2.82617 26.0001 2.82617C13.1792 2.82617 2.78578 13.2196 2.78578 26.0405Z' stroke='white'/%3e%3c/mask%3e%3cg mask='url(%23mask0_316_28843)'%3e%3cpath d='M49.2142 26.0405C49.2142 38.8614 38.8208 49.2547 25.9999 49.2547C13.179 49.2547 2.78564 38.8614 2.78564 26.0405C2.78564 13.2196 13.179 2.82617 25.9999 2.82617C38.8208 2.82617 49.2142 13.2196 49.2142 26.0405Z' fill='%23D2D8E7'/%3e%3cpath d='M34.1482 36.1611C31.311 38.2246 28.4736 39.8754 25.6363 39.8754C22.7991 39.8754 19.9617 38.2246 17.1244 36.1611C19.4631 35.4492 20.6496 34.3865 20.6839 32.973C20.6839 32.7211 20.6821 32.3633 20.6804 31.6914C20.6804 31.5848 20.6801 31.4755 20.6796 31.3636C20.675 29.5622 20.6674 27.1851 20.6567 24.7708C18.4387 21.8958 19.2535 18.5252 19.9485 18.6093C20.8006 18.7129 28.1832 11.7072 29.5993 11.348C31.0154 10.9888 34.6125 12.1484 35.2316 15.3791C35.8506 18.6097 36.1094 26.753 33.7613 30.0041C33.0932 30.9292 32.0408 31.2911 30.6042 31.0897C30.6022 31.7659 30.5982 32.1454 30.5887 32.9111C30.6071 34.3889 31.7935 35.45 34.1482 36.1611Z' fill='%23C7CFE2'/%3e%3cg style='mix-blend-mode:multiply' opacity='0.6'%3e%3cpath d='M30.5894 31.0896C27.1846 30.7027 25.0179 29.2324 25.0179 29.2324C25.0179 29.2324 27.4941 32.3277 30.5894 32.9467V31.0896Z' fill='black' fill-opacity='0.2'/%3e%3c/g%3e%3cpath d='M19.5236 24.8192C18.4573 22.2548 14.1843 17.032 17.8676 13.782C19.1057 7.74629 25.9462 8.4144 30.5117 9.80725C33.5801 10.7434 35.8974 12.593 36.3926 11.2001C39.4879 13.782 37.9378 16.3073 35.8974 17.032C34.0455 17.6897 30.914 18.3475 25.5893 17.7284C24.6381 17.6178 24.8373 20.5309 24.3291 20.8458C23.5666 21.3183 22.9748 18.3475 20.8842 19.2395C18.7937 20.1316 20.0343 24.2677 22.2783 24.2677C23.0521 24.2677 23.4391 26.3952 21.3498 27.4012C19.8331 28.1465 20.2164 26.4855 19.5236 24.8192Z' fill='%23B7C0D8'/%3e%3cpath d='M9.38658 40.8832C7.91324 43.879 7.06515 50.788 7.06515 50.788H44.208C44.208 50.788 43.3596 43.8782 41.8866 40.8832C40.4136 37.8883 31.8116 35.1105 31.8116 35.1105C26.2169 35.1094 24.3598 35.1094 19.4661 35.1094C19.4661 35.1094 10.8599 37.8875 9.38658 40.8832Z' fill='%23B7C0D8'/%3e%3c/g%3e%3c/svg%3e";
 
 const XHeaderProfile = props => {
-  const rootClass = classnames(Styles['xheader']);
+  const rootClass = classnames(Styles$1['xheader']);
   const onSignOutClickHandler = () => {
     if (props.onSignOutClick) {
       props.onSignOutClick();
@@ -8237,8 +8449,8 @@ const XHeaderProfile = props => {
       props.onProfileClick();
     }
   };
-  const profileClasses = classnames(Styles['xheader__profile'], {
-    [Styles['xheader__profile-clickable']]: props.onProfileClick
+  const profileClasses = classnames(Styles$1['xheader__profile'], {
+    [Styles$1['xheader__profile-clickable']]: props.onProfileClick
   });
   return jsx("div", Object.assign({
     className: rootClass
@@ -8283,7 +8495,7 @@ const XHeaderProfile = props => {
                 src: props.profile.avatar,
                 size: 'l'
               }) : jsx(Ramen.XAvatar, {
-                src: img$4,
+                src: img$6,
                 size: 'l'
               })
             })]
@@ -8291,7 +8503,7 @@ const XHeaderProfile = props => {
         })), jsx("div", {
           children: props.children
         }), props.auth && jsx("div", Object.assign({
-          className: classnames(Styles['xheader__profile_logout'], {})
+          className: classnames(Styles$1['xheader__profile_logout'], {})
         }, {
           children: jsx(Ramen.XButtonIcon, {
             icon: "log-out-outline",
@@ -8362,7 +8574,7 @@ const Header = () => {
         }, {
           children: jsx("img", {
             className: "header-logo",
-            src: img$5,
+            src: img$a,
             alt: "logo of website"
           })
         })), width > 715 && jsx(XDividerVertical, {}), jsx(Nav$1, {
@@ -8516,13 +8728,13 @@ const ProductSlider = ({
   }));
 };
 
-var img$3 = "data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23clip0_457_16451)'%3e%3cpath d='M22.008 0.75H1.99127C1.30562 0.750395 0.75 1.30632 0.75 1.99194V22.0088C0.750395 22.6944 1.30634 23.25 1.99198 23.25H22.008C22.6937 23.25 23.2496 22.6944 23.25 22.0088V1.99123C23.2496 1.3056 22.6937 0.75 22.008 0.75Z' fill='%233D3D3D'/%3e%3cpath d='M17.5852 21.75V13.2095H20.4716L20.9039 9.86653H17.5838V7.73773C17.5838 6.77234 17.8522 6.117 19.241 6.117H21V3.13204C20.1436 3.04131 19.2828 2.99732 18.4216 3.00013C15.87 3.00013 14.1244 4.55053 14.1244 7.40583V9.86582H11.25V13.2088H14.1258V21.7493L17.5852 21.75Z' fill='white'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='clip0_457_16451'%3e%3crect width='24' height='24' fill='white'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e";
+var img$5 = "data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23clip0_457_16451)'%3e%3cpath d='M22.008 0.75H1.99127C1.30562 0.750395 0.75 1.30632 0.75 1.99194V22.0088C0.750395 22.6944 1.30634 23.25 1.99198 23.25H22.008C22.6937 23.25 23.2496 22.6944 23.25 22.0088V1.99123C23.2496 1.3056 22.6937 0.75 22.008 0.75Z' fill='%233D3D3D'/%3e%3cpath d='M17.5852 21.75V13.2095H20.4716L20.9039 9.86653H17.5838V7.73773C17.5838 6.77234 17.8522 6.117 19.241 6.117H21V3.13204C20.1436 3.04131 19.2828 2.99732 18.4216 3.00013C15.87 3.00013 14.1244 4.55053 14.1244 7.40583V9.86582H11.25V13.2088H14.1258V21.7493L17.5852 21.75Z' fill='white'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='clip0_457_16451'%3e%3crect width='24' height='24' fill='white'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e";
 
-var img$2 = "data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M23.1875 7.36279C23.1684 6.43029 22.9914 5.50776 22.6641 4.63439C22.382 3.8825 21.9392 3.20128 21.3665 2.63834C20.8046 2.06592 20.1246 1.62291 19.3739 1.3402C18.5004 1.01312 17.5777 0.836383 16.6452 0.817492C15.4417 0.762924 15.059 0.75 12.0029 0.75C8.94677 0.75 8.56332 0.762924 7.36342 0.817492C6.43084 0.836699 5.50824 1.01367 4.63476 1.34091C3.8828 1.6229 3.20152 2.06569 2.63852 2.63834C2.06594 3.20041 1.62288 3.88061 1.34025 4.63151C1.01314 5.50493 0.836391 6.42746 0.817499 7.35992C0.762925 8.56257 0.75 8.94598 0.75 12.0018C0.75 15.0576 0.762925 15.441 0.818217 16.6408C0.837109 17.5733 1.01386 18.4958 1.34097 19.3692C1.62342 20.1198 2.06623 20.7998 2.63852 21.3617C3.20066 21.934 3.88094 22.3768 4.63189 22.6591C5.50535 22.9864 6.42796 23.1634 7.36055 23.1825C8.56045 23.2371 8.9439 23.25 12 23.25C15.0561 23.25 15.4396 23.2371 16.6395 23.1825C17.572 23.1634 18.4947 22.9864 19.3681 22.6591C20.8796 22.0746 22.0745 20.8799 22.659 19.3685C22.9864 18.4951 23.1634 17.5726 23.1825 16.6401C23.2371 15.4403 23.25 15.0569 23.25 12.0011C23.25 8.94526 23.2421 8.56257 23.1875 7.36279ZM21.1619 16.546C21.1536 17.2595 21.0226 17.9663 20.7748 18.6354C20.3963 19.6167 19.6206 20.3923 18.6393 20.7708C17.9701 21.0186 17.2633 21.1495 16.5497 21.1578C15.3634 21.2123 15.0073 21.2231 12.0029 21.2231C8.99847 21.2231 8.64231 21.2116 7.45534 21.1578C6.74178 21.1494 6.03497 21.0185 5.36575 20.7708C4.8775 20.5902 4.43585 20.3027 4.07323 19.9293C3.69972 19.5667 3.41216 19.1251 3.23165 18.6369C2.98318 17.9674 2.85177 17.2601 2.84317 16.546C2.78932 15.3599 2.77783 15.0038 2.77783 11.9997C2.77783 8.99554 2.78932 8.63941 2.84317 7.45255C2.85158 6.73907 2.98249 6.03233 3.23021 5.36317C3.41079 4.87498 3.69834 4.43339 4.07179 4.07077C4.43435 3.69724 4.87602 3.4097 5.36432 3.22927C6.03347 2.98122 6.7403 2.85007 7.4539 2.84155C8.64015 2.7877 8.99632 2.77621 12.0007 2.77621C15.0051 2.77621 15.3613 2.7877 16.5483 2.84227C17.2618 2.8506 17.9686 2.98151 18.6378 3.22927C19.1261 3.40985 19.5677 3.69737 19.9304 4.07077C20.3039 4.4333 20.5915 4.87492 20.7719 5.36317C21.0201 6.03223 21.1513 6.73901 21.1597 7.45255C21.2136 8.63869 21.225 8.99482 21.225 11.9989C21.225 15.0031 21.215 15.3621 21.1619 16.546Z' fill='%233D3D3D'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M12.0352 6C8.70207 6 6 8.70207 6 12.0352C6 15.3684 8.70207 18.0705 12.0352 18.0705C15.3684 18.0705 18.0705 15.3684 18.0705 12.0352C18.0705 8.70207 15.3684 6 12.0352 6ZM12.0353 15.9532C9.8714 15.9532 8.11725 14.1991 8.11725 12.0353C8.11725 9.8714 9.8714 8.11725 12.0353 8.11725C14.1991 8.11725 15.9532 9.8714 15.9532 12.0353C15.9532 14.1991 14.1991 15.9532 12.0353 15.9532Z' fill='%233D3D3D'/%3e%3cpath d='M19.125 5.81248C19.125 6.34339 18.8051 6.82202 18.3146 7.02512C17.8241 7.22823 17.2595 7.11581 16.8842 6.7403C16.5089 6.36479 16.3968 5.80015 16.6001 5.30973C16.8035 4.81932 17.2823 4.49972 17.8132 4.5C18.1612 4.5 18.495 4.6383 18.741 4.88446C18.9871 5.13061 19.1252 5.46446 19.125 5.81248Z' fill='%233D3D3D'/%3e%3c/svg%3e";
+var img$4 = "data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M23.1875 7.36279C23.1684 6.43029 22.9914 5.50776 22.6641 4.63439C22.382 3.8825 21.9392 3.20128 21.3665 2.63834C20.8046 2.06592 20.1246 1.62291 19.3739 1.3402C18.5004 1.01312 17.5777 0.836383 16.6452 0.817492C15.4417 0.762924 15.059 0.75 12.0029 0.75C8.94677 0.75 8.56332 0.762924 7.36342 0.817492C6.43084 0.836699 5.50824 1.01367 4.63476 1.34091C3.8828 1.6229 3.20152 2.06569 2.63852 2.63834C2.06594 3.20041 1.62288 3.88061 1.34025 4.63151C1.01314 5.50493 0.836391 6.42746 0.817499 7.35992C0.762925 8.56257 0.75 8.94598 0.75 12.0018C0.75 15.0576 0.762925 15.441 0.818217 16.6408C0.837109 17.5733 1.01386 18.4958 1.34097 19.3692C1.62342 20.1198 2.06623 20.7998 2.63852 21.3617C3.20066 21.934 3.88094 22.3768 4.63189 22.6591C5.50535 22.9864 6.42796 23.1634 7.36055 23.1825C8.56045 23.2371 8.9439 23.25 12 23.25C15.0561 23.25 15.4396 23.2371 16.6395 23.1825C17.572 23.1634 18.4947 22.9864 19.3681 22.6591C20.8796 22.0746 22.0745 20.8799 22.659 19.3685C22.9864 18.4951 23.1634 17.5726 23.1825 16.6401C23.2371 15.4403 23.25 15.0569 23.25 12.0011C23.25 8.94526 23.2421 8.56257 23.1875 7.36279ZM21.1619 16.546C21.1536 17.2595 21.0226 17.9663 20.7748 18.6354C20.3963 19.6167 19.6206 20.3923 18.6393 20.7708C17.9701 21.0186 17.2633 21.1495 16.5497 21.1578C15.3634 21.2123 15.0073 21.2231 12.0029 21.2231C8.99847 21.2231 8.64231 21.2116 7.45534 21.1578C6.74178 21.1494 6.03497 21.0185 5.36575 20.7708C4.8775 20.5902 4.43585 20.3027 4.07323 19.9293C3.69972 19.5667 3.41216 19.1251 3.23165 18.6369C2.98318 17.9674 2.85177 17.2601 2.84317 16.546C2.78932 15.3599 2.77783 15.0038 2.77783 11.9997C2.77783 8.99554 2.78932 8.63941 2.84317 7.45255C2.85158 6.73907 2.98249 6.03233 3.23021 5.36317C3.41079 4.87498 3.69834 4.43339 4.07179 4.07077C4.43435 3.69724 4.87602 3.4097 5.36432 3.22927C6.03347 2.98122 6.7403 2.85007 7.4539 2.84155C8.64015 2.7877 8.99632 2.77621 12.0007 2.77621C15.0051 2.77621 15.3613 2.7877 16.5483 2.84227C17.2618 2.8506 17.9686 2.98151 18.6378 3.22927C19.1261 3.40985 19.5677 3.69737 19.9304 4.07077C20.3039 4.4333 20.5915 4.87492 20.7719 5.36317C21.0201 6.03223 21.1513 6.73901 21.1597 7.45255C21.2136 8.63869 21.225 8.99482 21.225 11.9989C21.225 15.0031 21.215 15.3621 21.1619 16.546Z' fill='%233D3D3D'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M12.0352 6C8.70207 6 6 8.70207 6 12.0352C6 15.3684 8.70207 18.0705 12.0352 18.0705C15.3684 18.0705 18.0705 15.3684 18.0705 12.0352C18.0705 8.70207 15.3684 6 12.0352 6ZM12.0353 15.9532C9.8714 15.9532 8.11725 14.1991 8.11725 12.0353C8.11725 9.8714 9.8714 8.11725 12.0353 8.11725C14.1991 8.11725 15.9532 9.8714 15.9532 12.0353C15.9532 14.1991 14.1991 15.9532 12.0353 15.9532Z' fill='%233D3D3D'/%3e%3cpath d='M19.125 5.81248C19.125 6.34339 18.8051 6.82202 18.3146 7.02512C17.8241 7.22823 17.2595 7.11581 16.8842 6.7403C16.5089 6.36479 16.3968 5.80015 16.6001 5.30973C16.8035 4.81932 17.2823 4.49972 17.8132 4.5C18.1612 4.5 18.495 4.6383 18.741 4.88446C18.9871 5.13061 19.1252 5.46446 19.125 5.81248Z' fill='%233D3D3D'/%3e%3c/svg%3e";
 
-var img$1 = "data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M7.82508 20.9993C16.3149 20.9993 20.9603 14.0731 20.9603 8.06572C20.9603 7.86923 20.956 7.67346 20.9474 7.4784C21.8508 6.83475 22.6304 6.0378 23.25 5.12492C22.4078 5.49257 21.5142 5.73367 20.5993 5.84015C21.5606 5.27251 22.2803 4.38081 22.6248 3.33048C21.7188 3.8597 20.7277 4.23281 19.6942 4.43372C18.2634 2.93467 15.9889 2.56777 14.1471 3.53891C12.3053 4.51002 11.3548 6.57745 11.8288 8.58095C8.11684 8.39714 4.6588 6.66997 2.31548 3.82944C1.09026 5.90626 1.71604 8.56309 3.74454 9.89692C3.01192 9.87582 2.29511 9.68193 1.65439 9.3315C1.65439 9.35059 1.65439 9.36897 1.65439 9.38946C1.65602 11.552 3.20459 13.414 5.35738 13.842C4.67864 14.024 3.96661 14.0506 3.27583 13.9197C3.8797 15.7696 5.61017 17.0377 7.58321 17.0761C5.94829 18.3395 3.92929 19.0246 1.85106 19.0211C1.48311 19.0213 1.11546 19.0003 0.75 18.9582C2.86034 20.2935 5.31656 21.0024 7.82508 21' fill='%233D3D3D'/%3e%3c/svg%3e";
+var img$3 = "data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M7.82508 20.9993C16.3149 20.9993 20.9603 14.0731 20.9603 8.06572C20.9603 7.86923 20.956 7.67346 20.9474 7.4784C21.8508 6.83475 22.6304 6.0378 23.25 5.12492C22.4078 5.49257 21.5142 5.73367 20.5993 5.84015C21.5606 5.27251 22.2803 4.38081 22.6248 3.33048C21.7188 3.8597 20.7277 4.23281 19.6942 4.43372C18.2634 2.93467 15.9889 2.56777 14.1471 3.53891C12.3053 4.51002 11.3548 6.57745 11.8288 8.58095C8.11684 8.39714 4.6588 6.66997 2.31548 3.82944C1.09026 5.90626 1.71604 8.56309 3.74454 9.89692C3.01192 9.87582 2.29511 9.68193 1.65439 9.3315C1.65439 9.35059 1.65439 9.36897 1.65439 9.38946C1.65602 11.552 3.20459 13.414 5.35738 13.842C4.67864 14.024 3.96661 14.0506 3.27583 13.9197C3.8797 15.7696 5.61017 17.0377 7.58321 17.0761C5.94829 18.3395 3.92929 19.0246 1.85106 19.0211C1.48311 19.0213 1.11546 19.0003 0.75 18.9582C2.86034 20.2935 5.31656 21.0024 7.82508 21' fill='%233D3D3D'/%3e%3c/svg%3e";
 
-var img = "data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M22.7877 6.215C22.5254 5.24801 21.7695 4.49293 20.8023 4.23166C19.0414 3.75 11.9996 3.75 11.9996 3.75C11.9996 3.75 4.95706 3.75 3.19697 4.21371C2.23201 4.48915 1.48037 5.2476 1.21363 6.215C0.894382 8.00072 0.739397 9.81194 0.750631 11.6259C0.738787 13.44 0.893771 15.2512 1.21363 17.0369C1.47556 18.0033 2.23052 18.7583 3.19697 19.0202C4.97573 19.5019 11.9996 19.5019 11.9996 19.5019C11.9996 19.5019 19.0414 19.5019 20.8023 19.0382C21.7694 18.777 22.5252 18.0223 22.7877 17.0555C23.1059 15.2702 23.26 13.4595 23.2479 11.646C23.2703 9.82508 23.1162 8.00624 22.7877 6.215Z' fill='%233D3D3D'/%3e%3cpath d='M10.5 15.3L16.6185 11.775L10.5 8.25L10.5 15.3Z' fill='white'/%3e%3c/svg%3e";
+var img$2 = "data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M22.7877 6.215C22.5254 5.24801 21.7695 4.49293 20.8023 4.23166C19.0414 3.75 11.9996 3.75 11.9996 3.75C11.9996 3.75 4.95706 3.75 3.19697 4.21371C2.23201 4.48915 1.48037 5.2476 1.21363 6.215C0.894382 8.00072 0.739397 9.81194 0.750631 11.6259C0.738787 13.44 0.893771 15.2512 1.21363 17.0369C1.47556 18.0033 2.23052 18.7583 3.19697 19.0202C4.97573 19.5019 11.9996 19.5019 11.9996 19.5019C11.9996 19.5019 19.0414 19.5019 20.8023 19.0382C21.7694 18.777 22.5252 18.0223 22.7877 17.0555C23.1059 15.2702 23.26 13.4595 23.2479 11.646C23.2703 9.82508 23.1162 8.00624 22.7877 6.215Z' fill='%233D3D3D'/%3e%3cpath d='M10.5 15.3L16.6185 11.775L10.5 8.25L10.5 15.3Z' fill='white'/%3e%3c/svg%3e";
 
 const linksFooter = [{
   name: 'Easy',
@@ -8590,16 +8802,16 @@ const linksFooter = [{
   name: 'Síguenos',
   type: 'images',
   menu: [{
-    icon: img$3,
+    icon: img$5,
     url: 'https://es-la.facebook.com/easychile'
   }, {
-    icon: img$2,
+    icon: img$4,
     url: 'https://www.instagram.com/easytienda'
   }, {
-    icon: img$1,
+    icon: img$3,
     url: 'https://twitter.com/easytienda'
   }, {
-    icon: img,
+    icon: img$2,
     url: 'https://www.youtube.com/user/easychile'
   }]
 }];
@@ -8804,7 +9016,7 @@ const Footer = () => {
 };
 
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-var AuthClient = new AuthApi({
+var authClient = new AuthApi({
   baseURL: 'https://api.staging.cencox.xyz/ebisu/api-bff'
 });
 
@@ -8826,6 +9038,8 @@ const useForm = (submitFunction, defaultValue = {}) => {
   };
 };
 
+var Styles = {"xlogin_request_access":"root-module_xlogin_request_access__Dt-oZ"};
+
 const LoginDrawer = () => {
   const {
     isOpenModalLogin,
@@ -8836,6 +9050,7 @@ const LoginDrawer = () => {
   } = useUserContext();
   const [isLoadingRequest, setIsLoadingRequest] = useState(false);
   const [showError, setShowError] = useState(false);
+  const history = useHistory();
   const onHandleLogin = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
       setIsLoadingRequest(true);
@@ -8863,6 +9078,16 @@ const LoginDrawer = () => {
     e.target.name = name;
     handleChange(e);
   };
+  const onClickRequestAccess = () => {
+    history.push('/signup');
+    setIsOpenModalLogin(false);
+  };
+  const onClickForgotPassword = () => {
+    history.push('/forgot-password', {
+      email: values.email || ''
+    });
+    setIsOpenModalLogin(false);
+  };
   useEffect(() => {
     if (showError) {
       setTimeout(() => setShowError(false), 3000);
@@ -8883,7 +9108,7 @@ const LoginDrawer = () => {
     }, {
       children: [jsx(Ramen.XImage, {
         height: 1,
-        src: img$5
+        src: img$a
       }), jsx(Ramen.XText, Object.assign({
         fontSize: 6,
         weight: "bold"
@@ -8928,23 +9153,46 @@ const LoginDrawer = () => {
             })
           })), jsx(Ramen.XFormItem, Object.assign({
             error: "",
-            label: "Correo corporativo (*)"
+            label: "Contrase\u00F1a (*)"
           }, {
-            children: jsx(Ramen.XPasswordInput, {
-              size: "l",
-              disabled: isLoadingRequest,
-              placeholder: "Ingresa tu contrase\u00F1a",
-              onChange: e => onChangeInput(e, 'password')
+            children: jsxs(Fragment, {
+              children: [jsx(Ramen.XPasswordInput, {
+                size: "l",
+                disabled: isLoadingRequest,
+                placeholder: "Ingresa tu contrase\u00F1a",
+                onChange: e => onChangeInput(e, 'password')
+              }), jsx(Ramen.XText, Object.assign({
+                fontSize: 12,
+                weight: 'normal'
+              }, {
+                children: jsx("span", Object.assign({
+                  className: classnames(Styles['xlogin_request_access']),
+                  onClick: onClickForgotPassword
+                }, {
+                  children: "\u00BF Olvidaste tu contrase\u00F1a ?"
+                }))
+              }))]
             })
           })), jsx(Ramen.XVSpace, {
-            size: "xs"
+            size: "xxs"
           }), jsx(Ramen.XButton, {
             disabled: !values,
             loading: isLoadingRequest,
             text: "Ingresar",
             type: "solid",
             size: "l"
-          })]
+          }), jsx(Ramen.XBox, Object.assign({
+            horizontalAlign: "center"
+          }, {
+            children: jsxs(Ramen.XText, {
+              children: ["\u00BFNo tiene una cuenta?", ' ', jsx("span", Object.assign({
+                className: classnames(Styles['xlogin_request_access']),
+                onClick: onClickRequestAccess
+              }, {
+                children: "Solicitar acceso"
+              }))]
+            })
+          }))]
         }))
       }))]
     }))]
@@ -8956,7 +9204,7 @@ const PortalContextComponent = ({
   children
 }) => {
   return jsx(UserContextProvider, Object.assign({
-    clientRequest: AuthClient
+    clientRequest: authClient
   }, {
     children: jsx(GlobalContextProvider, {
       children: jsx(CartContextProvider, {
@@ -8975,23 +9223,10 @@ const LayoutApp = ({
     country: "cl"
   }, {
     children: jsx(Ramen.XApp, {
-      children: jsxs(Ramen.XPage, {
-        children: [jsx(Ramen.XVSpace, {
-          size: "xl"
-        }), jsx("div", Object.assign({
-          style: {
-            marginTop: '8rem'
-          }
-        }, {
-          children: jsxs(Ramen.XBox, Object.assign({
-            horizontalAlign: "center",
-            verticalAlign: "around",
-            height: "full",
-            width: 'full'
-          }, {
-            children: [jsx(LoaderScreen, {}), children]
-          }))
-        })), jsx(Footer, {}), jsx(ElevatorButton, {}), jsx(ModalCart$1, {}), jsx(LoginDrawer$1, {})]
+      children: jsx(Ramen.XPage, {
+        children: jsxs(BrowserRouter, {
+          children: [children, jsx(DrawerCategories$1, {}), jsx(ElevatorButton, {}), jsx(ModalCart$1, {}), jsx(LoginDrawer$1, {})]
+        })
       })
     })
   }));
@@ -9006,17 +9241,36 @@ const Flow = ({
   });
 };
 
+const MainLayout = ({
+  children
+}) => {
+  return jsxs(Fragment, {
+    children: [jsx(Header, {}), jsx("div", {
+      children: jsxs(Ramen.XBox, Object.assign({
+        horizontalAlign: "center",
+        verticalAlign: "around",
+        height: "full",
+        width: 'full'
+      }, {
+        children: [jsx(LoaderScreen, {}), children]
+      }))
+    }), jsx(Footer, {})]
+  });
+};
+
 const Home = () => {
   const NewProduct = /*#__PURE__*/lazy(() => import('./NewProduct.js'));
   const Container = /*#__PURE__*/lazy(() => Promise.resolve().then(function () { return Container$1; }));
   return jsx(Fragment, {
     children: jsx(Suspense, Object.assign({
-      fallback: jsx("h2", {
-        children: "loading"
+      fallback: jsx(LoaderScreen, {
+        loading: true
       })
     }, {
-      children: jsx(Container, {
-        children: jsx(NewProduct, {})
+      children: jsx(MainLayout, {
+        children: jsx(Container, {
+          children: jsx(NewProduct, {})
+        })
       })
     }))
   });
@@ -9145,121 +9399,121 @@ const Product = () => {
   const discountPrice = (product.price || 0).toFixed(2);
   const isAddToCart = cart.find(item => item.id === product.id) ? true : false;
   const ImagesURl = [product.urlImage || 'assets/svg/dummy-img.svg', product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage];
-  return jsxs(Container, {
-    children: [jsxs("div", Object.assign({
-      className: 'product-page__path'
-    }, {
-      children: [jsx(Link, Object.assign({
-        className: 'product-page__path-link',
-        to: '/'
+  return jsx(MainLayout, {
+    children: jsxs(Container, {
+      children: [jsxs("div", Object.assign({
+        className: 'product-page__path'
       }, {
-        children: "Home"
-      })), ' ', "/", ' ', jsx(Link, Object.assign({
-        className: 'product-page__path-link',
-        to: '/products'
-      }, {
-        children: "Productos"
-      })), ' ', "/ ", product.name]
-    })), jsxs("div", Object.assign({
-      className: 'product-page'
-    }, {
-      children: [jsx("div", Object.assign({
-        className: 'product-page__image'
-      }, {
-        children: jsx(ProductSlider, {
-          images: ImagesURl
-        })
+        children: [jsx(Link, Object.assign({
+          className: 'product-page__path-link',
+          to: '/'
+        }, {
+          children: "Home"
+        })), ' ', "/", ' ', jsx(Link, Object.assign({
+          className: 'product-page__path-link',
+          to: '/products'
+        }, {
+          children: "Productos"
+        })), ' ', "/ ", product.name]
       })), jsxs("div", Object.assign({
-        className: 'product-page__content'
+        className: 'product-page'
       }, {
-        children: [jsx("h2", Object.assign({
-          className: 'product-page__content__title'
+        children: [jsx("div", Object.assign({
+          className: 'product-page__image'
         }, {
-          children: product.brandName
-        })), jsx("h2", Object.assign({
-          className: 'product-page__content__title'
+          children: jsx(ProductSlider, {
+            images: ImagesURl
+          })
+        })), jsxs("div", Object.assign({
+          className: 'product-page__content'
         }, {
-          children: product.name
-        })), jsx("div", Object.assign({
-          className: 'product-page__content__prices'
-        }, {
-          children: jsxs("h4", Object.assign({
-            className: 'product-page__content__price'
+          children: [jsx("h2", Object.assign({
+            className: 'product-page__content__title'
           }, {
-            children: [!!discountPrice ? NumberFormatter$1.toCurrency(Number(discountPrice)) : '-', ' ']
-          }))
-        })), jsx("hr", {
-          className: 'product-page__line'
-        }), jsx("div", Object.assign({
-          className: 'product-page__status'
-        }, {
-          children: jsxs("h4", Object.assign({
-            className: 'product-page__status__stock'
+            children: product.brandName
+          })), jsx("h2", Object.assign({
+            className: 'product-page__content__title'
           }, {
-            children: [jsx("span", Object.assign({
-              style: {
-                color: '#0000009d'
-              }
+            children: product.name
+          })), jsx("div", Object.assign({
+            className: 'product-page__content__prices'
+          }, {
+            children: jsxs("h4", Object.assign({
+              className: 'product-page__content__price'
             }, {
-              children: "Disponibilidad :"
-            })), ' ', product.inStock ? jsxs("span", Object.assign({
-              className: 'product-page__status__stock-text'
+              children: [!!discountPrice ? NumberFormatter$1.toCurrency(Number(discountPrice)) : '-', ' ']
+            }))
+          })), jsx("hr", {
+            className: 'product-page__line'
+          }), jsx("div", Object.assign({
+            className: 'product-page__status'
+          }, {
+            children: jsxs("h4", Object.assign({
+              className: 'product-page__status__stock'
             }, {
-              children: ["En stock ", jsx(TiTick, {
-                className: 'product-page__status__stock-icon'
+              children: [jsx("span", Object.assign({
+                style: {
+                  color: '#0000009d'
+                }
+              }, {
+                children: "Disponibilidad :"
+              })), ' ', product.inStock ? jsx("span", Object.assign({
+                className: 'product-page__status__stock-text'
+              }, {
+                children: "En stock"
+              })) : jsx("span", Object.assign({
+                className: 'product-page__status__stock-text'
+              }, {
+                children: "Fuera de stock"
+              }))]
+            }))
+          })), jsx("hr", {
+            className: 'product-page__line'
+          }), jsxs("form", Object.assign({
+            className: 'product-page__buy-section',
+            onSubmit: handleSubmit
+          }, {
+            children: [jsxs("div", Object.assign({
+              className: 'product-page__buy-section__input'
+            }, {
+              children: [jsx("h4", {
+                children: "Cantidad:"
+              }), jsx(Input, {
+                min: 1,
+                max: 9999,
+                onChange: handleChange,
+                value: values.quantity,
+                name: 'quantity',
+                type: 'number'
               })]
-            })) : jsxs("span", Object.assign({
-              className: 'product-page__status__stock-text'
-            }, {
-              children: ["Fuera de stock ", jsx(RiCloseFill, {
-                className: 'product-page__status__out-stock-icon'
-              })]
-            }))]
-          }))
-        })), jsx("hr", {
-          className: 'product-page__line'
-        }), jsxs("form", Object.assign({
-          className: 'product-page__buy-section',
-          onSubmit: handleSubmit
-        }, {
-          children: [jsxs("div", Object.assign({
-            className: 'product-page__buy-section__input'
-          }, {
-            children: [jsx("h4", {
-              children: "Cantidad:"
-            }), jsx(Input, {
-              min: 1,
-              max: 9999,
-              onChange: handleChange,
-              value: values.quantity,
-              name: 'quantity',
-              type: 'number'
+            })), jsx(Ramen.XButton, {
+              type: 'solid',
+              text: isAddToCart ? 'Actualizar en cotización' : 'Añadir a cotización'
             })]
-          })), jsx(Ramen.XButton, {
-            type: 'solid',
-            text: isAddToCart ? 'Actualizar en cotización' : 'Añadir a cotización'
-          })]
+          }))]
         }))]
-      }))]
-    })), jsx("hr", {
-      className: 'product-page__line'
-    }), jsxs("div", Object.assign({
-      className: 'product-page__discription'
-    }, {
-      children: [jsx("h4", Object.assign({
-        className: 'product-page__discription__title'
+      })), jsx("hr", {
+        className: 'product-page__line'
+      }), jsxs("div", Object.assign({
+        className: 'product-page__discription'
       }, {
-        children: "Informaci\u00F3n del producto:"
-      })), jsx("p", Object.assign({
-        className: 'product-page__discription__text'
-      }, {
-        children: product.description
-      }))]
-    })), jsx("hr", {
-      className: 'product-page__line'
-    })]
+        children: [jsx("h4", Object.assign({
+          className: 'product-page__discription__title'
+        }, {
+          children: "Informaci\u00F3n del producto:"
+        })), jsx("p", Object.assign({
+          className: 'product-page__discription__text'
+        }, {
+          children: product.description
+        }))]
+      })), jsx("hr", {
+        className: 'product-page__line'
+      })]
+    })
   });
 };
+
+var img$1 = "data:image/png;base64,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";
 
 const Cart = () => {
   const history = useHistory();
@@ -9325,7 +9579,7 @@ const Cart = () => {
       }, {
         children: [cart.length <= 0 && jsxs(Fragment, {
           children: [jsx("img", {
-            src: img$7,
+            src: img$1,
             alt: "empty cart",
             className: "cart-page__left__empty-cart"
           }), jsx("h4", Object.assign({
@@ -9686,41 +9940,917 @@ const Shop = () => {
     }
   }, [errors]);
   return jsx(Fragment, {
-    children: jsx(Container, {
-      children: jsx("div", Object.assign({
-        className: "shop"
+    children: jsx(MainLayout, {
+      children: jsx(Container, {
+        children: jsx("div", Object.assign({
+          className: "shop"
+        }, {
+          children: jsxs(Ramen.XBox, Object.assign({
+            orientation: "horizontal"
+          }, {
+            children: [width > 750 && jsx(Ramen.XBox, Object.assign({
+              gap: "l",
+              padding: "l"
+            }, {
+              children: jsx(FilterComponent, {
+                filters: filter,
+                selectdFilters: activeFilters,
+                onChange: handleFilterChange
+              })
+            })), jsxs(Ramen.XBox, Object.assign({
+              width: 'full'
+            }, {
+              children: [jsx(BreadCumbs, {}), jsx(SectionFiltersOrder, {
+                activeFilters: activeFilters,
+                filters: filter,
+                onChangeFilter: handleFilterChange
+              }), jsx(ProductsList, {
+                data: data,
+                loading: loading,
+                filters: filters,
+                loadMoreLoading: loadMoreLoading,
+                useInfinite: true,
+                loadMoreProducts: loadMore
+              })]
+            }))]
+          }))
+        }))
+      })
+    })
+  });
+};
+
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+var sapClient = new sapApi({
+  baseURL: 'https://api.staging.cencox.xyz/ebisu/api-bff'
+});
+
+var img = "data:image/svg+xml,%3csvg width='25' height='24' viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M10.4075 9.72727C9.87164 9.72727 9.43723 10.1617 9.43723 10.6976V18.8479C9.43723 19.3838 9.87164 19.8182 10.4075 19.8182H18.5579C19.0937 19.8182 19.5281 19.3838 19.5281 18.8479V10.6976C19.5281 10.1617 19.0937 9.72727 18.5579 9.72727H10.4075ZM7.75542 10.6976C7.75542 9.23284 8.9428 8.04545 10.4075 8.04545H18.5579C20.0226 8.04545 21.21 9.23284 21.21 10.6976V18.8479C21.21 20.3126 20.0226 21.5 18.5579 21.5H10.4075C8.9428 21.5 7.75542 20.3126 7.75542 18.8479V10.6976Z' fill='black'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M5.36206 4.68182C5.10472 4.68182 4.85793 4.78404 4.67597 4.96601C4.494 5.14797 4.39178 5.39476 4.39178 5.6521V13.8024C4.39178 14.0598 4.494 14.3066 4.67597 14.4885C4.85793 14.6705 5.10473 14.7727 5.36206 14.7727H6.26765C6.73207 14.7727 7.10856 15.1492 7.10856 15.6136C7.10856 16.0781 6.73207 16.4545 6.26765 16.4545H5.36206C4.65868 16.4545 3.98411 16.1751 3.48674 15.6778C2.98938 15.1804 2.70996 14.5058 2.70996 13.8024V5.6521C2.70996 4.94872 2.98938 4.27415 3.48674 3.77678C3.98411 3.27942 4.65868 3 5.36206 3H13.5124C14.2158 3 14.8904 3.27942 15.3877 3.77678C15.8851 4.27415 16.1645 4.94872 16.1645 5.6521V6.55769C16.1645 7.02211 15.788 7.3986 15.3236 7.3986C14.8592 7.3986 14.4827 7.02211 14.4827 6.55769V5.6521C14.4827 5.39476 14.3805 5.14797 14.1985 4.96601C14.0165 4.78404 13.7697 4.68182 13.5124 4.68182H5.36206Z' fill='black'/%3e%3c/svg%3e";
+
+const errorsMessage$2 = {
+  email: {
+    required: 'Por favor, ingresa un correo electrónico válido.',
+    invalidEmail: 'Por favor, ingresa un correo electrónico válido.'
+  },
+  name: {
+    required: 'Por favor, Ingresa tu nombre y apellidos'
+  },
+  rut: {
+    required: 'Por favor, ingresa un rut válido',
+    invalidRut: 'Por favor, ingresa un rut válido'
+  },
+  address: {
+    required: 'Por favor, selecciona una dirección de despacho'
+  }
+};
+const valueEmail = 'feliperodriguez@easy.cl';
+const FormRequestAccess = () => {
+  const history = useHistory();
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    setFieldValue,
+    values,
+    errors,
+    isValid,
+    dirty
+  } = useFormik({
+    initialValues: {
+      email: '',
+      rut: '',
+      address: '',
+      name: ''
+    },
+    validate: values => {
+      const configValidation = {
+        email: [isRequired, isValidEmail],
+        rut: [isRequired, isValidRut],
+        address: [isRequired],
+        name: [isRequired]
+      };
+      return validation(configValidation)(values);
+    },
+    onSubmit: values => {
+      onSubmit(values);
+    }
+  });
+  const [address, setAddress] = useState([]);
+  const [hasCreditLine, setHasCreditLine] = useState(null);
+  const [hasNotRegisterInSap, setHasNotRegisterInSap] = useState(false);
+  const onSubmit = values => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+      Ramen.Api.loading.show({
+        text: 'Solicitando acceso...'
+      });
+      const {
+          rut: company_id
+        } = values,
+        otherValues = __rest(values, ["rut"]);
+      const input = Object.assign({
+        company_id
+      }, otherValues);
+      const data = yield authClient.signUp(input);
+      if (hasCreditLine || !data.access_token) {
+        goToWaitRequest();
+      } else {
+        goToSetPassword({
+          token: data.access_token,
+          email: input.email
+        });
+      }
+      Ramen.Api.loading.hide();
+    } catch (error) {
+      const message = get$2(error, ['response', 'data', 'message'], 'No pudimos crear tu cuenta, por favor inténtalo nuevamente');
+      Ramen.Api.loading.hide();
+      Ramen.Api.notification.error({
+        description: 'Ocurrió un error',
+        message
+      });
+    }
+  });
+  const getDataByRut = rut => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+      Ramen.Api.loading.show({
+        text: 'Buscando información del Rut...'
+      });
+      setAddress([]);
+      setFieldValue('address', undefined);
+      setHasCreditLine(null);
+      const data = yield sapClient.customerValidate(rut);
+      const {
+        address,
+        hasCreditLine
+      } = data;
+      let newAddress = [];
+      if (address.length) {
+        newAddress = address.map(item => ({
+          label: item,
+          value: item
+        }));
+      }
+      setHasCreditLine(hasCreditLine);
+      setAddress(newAddress);
+      Ramen.Api.loading.hide();
+    } catch (error) {
+      if ((error === null || error === void 0 ? void 0 : error.status) === 404) {
+        setHasNotRegisterInSap(true);
+      } else {
+        Ramen.Api.notification.error({
+          description: 'Ocurrió un error',
+          message: 'No pudimos obtener información del Rut, por favor inténtalo nuevamente.'
+        });
+        setHasNotRegisterInSap(false);
+      }
+      setHasCreditLine(null);
+      setAddress([]);
+      Ramen.Api.loading.hide();
+    }
+  });
+  const onChangeField = (e, name) => {
+    if (name) {
+      e.target.name = name;
+    }
+    handleChange(e);
+    switch (name) {
+      case 'rut':
+        if (!isValidRut(e.target.value)) {
+          setTimeout(() => getDataByRut(e.target.value), 1000);
+        }
+        break;
+    }
+  };
+  const onChangeSelect = value => {
+    onChangeField({
+      target: {
+        name: 'address',
+        value
+      }
+    });
+  };
+  const onBlurField = (e, name) => {
+    e.target.name = name;
+    handleBlur(e);
+  };
+  const goToHome = () => {
+    setHasNotRegisterInSap(false);
+    history.push('/');
+  };
+  const goToWaitRequest = () => {
+    history.push('/wait-request');
+  };
+  const goToSetPassword = params => {
+    history.push('/set-password/', params);
+  };
+  const copyToClipBoard = () => {
+    navigator.clipboard.writeText(valueEmail);
+  };
+  return jsxs(Fragment, {
+    children: [jsx("form", Object.assign({
+      onSubmit: handleSubmit
+    }, {
+      children: jsxs(Ramen.XBox, Object.assign({
+        orientation: "vertical",
+        verticalAlign: "center",
+        gap: "m",
+        width: 'full'
+      }, {
+        children: [jsx(Ramen.XFormItem, Object.assign({
+          error: !errors.email ? '' : errorsMessage$2.email[errors.email],
+          label: "Correo corporativo (*)"
+        }, {
+          children: jsx(Ramen.XEmailInput, {
+            size: "l",
+            placeholder: "ejemplo@empresa.cl",
+            value: values.email,
+            onChange: e => onChangeField(e, 'email'),
+            onBlur: e => onBlurField(e, 'email')
+          })
+        })), jsx(Ramen.XFormItem, Object.assign({
+          error: !errors.rut ? '' : errorsMessage$2.rut[errors.rut],
+          label: "RUT Empresa(*)"
+        }, {
+          children: jsx(Ramen.XTextInput, {
+            size: "l",
+            placeholder: "Ingresa el RUT",
+            value: values.rut,
+            onChange: e => onChangeField(e, 'rut'),
+            onBlur: e => onBlurField(e, 'rut')
+          })
+        })), jsx(Ramen.XFormItem, Object.assign({
+          error: !errors.name ? '' : errorsMessage$2.name[errors.name],
+          label: "Nombre y apellido (*)"
+        }, {
+          children: jsx(Ramen.XTextInput, {
+            size: "l",
+            placeholder: "Ingresa tu nombre y apellido",
+            value: values.name,
+            onChange: e => onChangeField(e, 'name'),
+            onBlur: e => onBlurField(e, 'name')
+          })
+        })), jsx(Ramen.XFormItem, Object.assign({
+          error: !errors.address ? '' : errorsMessage$2.address[errors.address],
+          label: "Direcci\u00F3n de empresa (*)"
+        }, {
+          children: jsx(Ramen.XSelect, {
+            size: "l",
+            disabled: !address.length,
+            options: address,
+            placeholder: "Selecciona direcci\u00F3n de despacho",
+            value: values.address,
+            onChange: onChangeSelect
+          })
+        })), jsx(Ramen.XVSpace, {
+          size: "xxs"
+        }), jsx(Ramen.XButton, {
+          text: "Continuar",
+          disabled: !dirty || !isValid,
+          type: "solid",
+          size: "l"
+        })]
+      }))
+    })), jsx(XAlertModal, Object.assign({
+      visible: hasNotRegisterInSap,
+      confirmText: "Volver al inicio",
+      onClose: () => setHasNotRegisterInSap(false),
+      useCancel: false,
+      onConfirm: () => goToHome(),
+      title: "A\u00FAn no eres parte de Easy venta empresas \u2639\uFE0F",
+      message: "Pero no te preocupes! Cont\u00E1ctanos y comencemos este viaje juntos."
+    }, {
+      children: jsxs(Ramen.XBox, {
+        children: [jsx(Ramen.XVSpace, {
+          size: "l"
+        }), jsxs(Ramen.XBox, Object.assign({
+          orientation: "horizontal",
+          gap: "m",
+          verticalAlign: "center"
+        }, {
+          children: [jsx(Ramen.XButtonIcon, {
+            icon: 'mail-outline',
+            type: 'tonal'
+          }), jsxs(Ramen.XBox, Object.assign({
+            orientation: "vertical"
+          }, {
+            children: [jsx(Ramen.XText, Object.assign({
+              fontSize: 10,
+              colorThone: 'dim'
+            }, {
+              children: "Correo electr\u00F3nico"
+            })), jsxs(Ramen.XBox, Object.assign({
+              orientation: "horizontal",
+              gap: "xxs",
+              verticalAlign: "center"
+            }, {
+              children: [jsx(Ramen.XText, Object.assign({
+                fontSize: 9,
+                weight: 'bold'
+              }, {
+                children: valueEmail
+              })), jsx("div", Object.assign({
+                style: {
+                  cursor: 'pointer'
+                },
+                onClick: copyToClipBoard
+              }, {
+                children: jsx(Ramen.XImage, {
+                  src: img
+                })
+              }))]
+            }))]
+          }))]
+        }))]
+      })
+    }))]
+  });
+};
+const SignUp = () => {
+  const ContainerUnauthorized = /*#__PURE__*/lazy(() => import('./root.js'));
+  return jsx(Fragment, {
+    children: jsx(Suspense, Object.assign({
+      fallback: jsx(LoaderScreen, {
+        loading: true
+      })
+    }, {
+      children: jsx(ContainerUnauthorized, {
+        children: jsxs(Ramen.XBox, Object.assign({
+          orientation: "vertical",
+          verticalAlign: "center",
+          padding: "xl",
+          gap: "xl"
+        }, {
+          children: [jsx(Ramen.XText, Object.assign({
+            fontSize: 6,
+            weight: "bold"
+          }, {
+            children: "Solicitud de acceso"
+          })), jsx(Ramen.XText, Object.assign({
+            fontSize: 9,
+            colorThone: "dim"
+          }, {
+            children: "Por favor, d\u00E9janos tu correo electr\u00F3nico y el RUT de empresa para solicitar tu acceso."
+          })), jsx(FormRequestAccess, {})]
+        }))
+      })
+    }))
+  });
+};
+
+const PendingApprove = () => {
+  const history = useHistory();
+  const ContainerUnauthorized = /*#__PURE__*/lazy(() => import('./root.js'));
+  const goBack = () => {
+    history.push('/');
+  };
+  return jsx(Fragment, {
+    children: jsx(Suspense, Object.assign({
+      fallback: jsx(LoaderScreen, {
+        loading: true
+      })
+    }, {
+      children: jsx(ContainerUnauthorized, {
+        children: jsxs(Ramen.XBox, Object.assign({
+          orientation: "vertical",
+          verticalAlign: "center",
+          padding: "xl",
+          gap: "xl"
+        }, {
+          children: [jsx(Ramen.XIcon, {
+            icon: 'clock-outline',
+            size: 'xl'
+          }), jsx(Ramen.XText, Object.assign({
+            fontSize: 6,
+            weight: "bold"
+          }, {
+            children: "Estamos verificando tu informaci\u00F3n."
+          })), jsx(Ramen.XText, Object.assign({
+            fontSize: 9,
+            colorThone: "dim"
+          }, {
+            children: "Te enviaremos un correo una vez que tu cuenta est\u00E9 activada."
+          })), jsx(Ramen.XButton, {
+            text: "Volver al inicio",
+            type: "solid",
+            size: "l",
+            onClick: goBack
+          })]
+        }))
+      })
+    }))
+  });
+};
+
+const errorsMessage$1 = {
+  email: {
+    required: 'Por favor, ingresa un correo electrónico válido.'
+  },
+  password: {
+    required: 'Por favor, ingresa una contraseña válida, debe tener 8 caracteres mínimo.',
+    invalidPassword: 'Por favor, La contraseña debe tener 8 caracteres mínimo.'
+  },
+  confirmPassword: {
+    required: 'Por favor, la confirmación debe ser igual a tu contraseña válida',
+    invalidConfirmPassword: 'Por favor, la confirmación debe ser igual a tu contraseña válida'
+  }
+};
+const FormSetPassword = ({
+  title,
+  description,
+  showEmail: _showEmail = true,
+  showDescription: _showDescription = true,
+  onSubmit
+}) => {
+  const history = useHistory();
+  const {
+    token: tokenValue
+  } = useParams();
+  const {
+    email
+  } = history.location.state || {};
+  let initialEmail = email;
+  if (!!tokenValue) {
+    const infoToken = jwtDecode(tokenValue);
+    const {
+      email: emailFromToken
+    } = infoToken;
+    initialEmail = emailFromToken;
+  }
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    values,
+    errors,
+    isValid,
+    dirty
+  } = useFormik({
+    initialValues: {
+      email: initialEmail,
+      password: '',
+      confirmPassword: ''
+    },
+    validate: values => {
+      const configValidation = {
+        password: [isRequired, isValidPassword],
+        confirmPassword: [isRequired, isValidConfirmPassword]
+      };
+      return validation(configValidation)(values);
+    },
+    onSubmit: values => {
+      onSubmit(values);
+    }
+  });
+  const isValidConfirmPassword = value => {
+    if (values.password !== value) {
+      return 'invalidConfirmPassword';
+    }
+    return false;
+  };
+  const isValidPassword = value => {
+    if (!value || value.length < 8) {
+      return 'invalidPassword';
+    }
+    return false;
+  };
+  const onChangeField = (e, name) => {
+    if (name) {
+      e.target.name = name;
+    }
+    handleChange(e);
+  };
+  const onBlurField = (e, name) => {
+    e.target.name = name;
+    handleBlur(e);
+  };
+  return jsx(Fragment, {
+    children: jsxs(Ramen.XBox, Object.assign({
+      orientation: "vertical",
+      verticalAlign: "center",
+      padding: "xl",
+      gap: "xl"
+    }, {
+      children: [jsx(Ramen.XText, Object.assign({
+        fontSize: 6,
+        weight: "bold"
+      }, {
+        children: title
+      })), _showDescription && jsx(Ramen.XText, Object.assign({
+        fontSize: 9,
+        colorThone: "dim"
+      }, {
+        children: description
+      })), jsx("form", Object.assign({
+        onSubmit: handleSubmit
       }, {
         children: jsxs(Ramen.XBox, Object.assign({
-          orientation: "horizontal"
+          orientation: "vertical",
+          verticalAlign: "center",
+          gap: "xl"
         }, {
-          children: [width > 750 && jsx(Ramen.XBox, Object.assign({
-            gap: "l",
-            padding: "l"
+          children: [_showEmail && jsx(Ramen.XFormItem, Object.assign({
+            error: "",
+            label: "Correo corporativo (*)"
           }, {
-            children: jsx(FilterComponent, {
-              filters: filter,
-              selectdFilters: activeFilters,
-              onChange: handleFilterChange
+            children: jsx(Ramen.XEmailInput, {
+              size: "l",
+              value: values.email,
+              disabled: true,
+              placeholder: "ejemplo@empresa.cl"
             })
-          })), jsxs(Ramen.XBox, Object.assign({
-            width: 'full'
+          })), jsx(Ramen.XFormItem, Object.assign({
+            error: !errors.password ? '' : errorsMessage$1.password[errors.password],
+            label: "Contrase\u00F1a (*)"
           }, {
-            children: [jsx(BreadCumbs, {}), jsx(SectionFiltersOrder, {
-              activeFilters: activeFilters,
-              filters: filter,
-              onChangeFilter: handleFilterChange
-            }), jsx(ProductsList, {
-              data: data,
-              loading: loading,
-              filters: filters,
-              loadMoreLoading: loadMoreLoading,
-              useInfinite: true,
-              loadMoreProducts: loadMore
-            })]
-          }))]
+            children: jsx(Ramen.XPasswordInput, {
+              size: "l",
+              placeholder: "Ingresa tu contrase\u00F1a",
+              value: values.password,
+              onChange: e => onChangeField(e, 'password'),
+              onBlur: e => onBlurField(e, 'password')
+            })
+          })), jsx(Ramen.XFormItem, Object.assign({
+            error: !errors.confirmPassword ? '' : errorsMessage$1.confirmPassword[errors.confirmPassword],
+            label: "Confirma tu contrase\u00F1a (*)"
+          }, {
+            children: jsx(Ramen.XPasswordInput, {
+              size: "l",
+              placeholder: "Ingresa tu contrase\u00F1a",
+              value: values.confirmPassword,
+              onChange: e => onChangeField(e, 'confirmPassword'),
+              onBlur: e => onBlurField(e, 'confirmPassword')
+            })
+          })), jsx(Ramen.XVSpace, {
+            size: "xxs"
+          }), jsx(Ramen.XButton, {
+            disabled: !dirty || !isValid,
+            text: "Continuar",
+            type: "solid",
+            size: "l"
+          })]
         }))
-      }))
-    })
+      }))]
+    }))
+  });
+};
+
+const SetPassword = () => {
+  const ContainerUnauthorized = /*#__PURE__*/lazy(() => import('./root.js'));
+  const {
+    login
+  } = useUserContext();
+  const history = useHistory();
+  const {
+    token: tokenValue
+  } = useParams();
+  const {
+    token
+  } = history.location.state || {};
+  const access_token = tokenValue || token;
+  const goRoute = () => {
+    history.push('/');
+  };
+  const onSubmit = values => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+      Ramen.Api.loading.show({
+        text: 'Acceso...'
+      });
+      yield authClient.setToken(access_token, false);
+      yield authClient.setPassword(values.password);
+      yield login(values.email, values.password);
+      Ramen.Api.notification.success({
+        description: 'Cuenta creada con éxito.',
+        message: '¡Estamos emocionados de tenerte a bordo y empezar esta increíble experiencia juntos! 💪'
+      });
+      goRoute();
+      Ramen.Api.loading.hide();
+    } catch (error) {
+      Ramen.Api.loading.hide();
+      Ramen.Api.notification.error({
+        description: 'Ocurrió un error',
+        message: 'No pudimos validar tu cuenta, por favor inténtalo nuevamente.'
+      });
+    }
+  });
+  return jsx(Fragment, {
+    children: jsx(Suspense, Object.assign({
+      fallback: jsx(LoaderScreen, {
+        loading: true
+      })
+    }, {
+      children: jsx(ContainerUnauthorized, {
+        children: jsx(FormSetPassword, {
+          onSubmit: onSubmit,
+          title: "Est\u00E1s a un paso de ingresar \uD83E\uDD13",
+          description: "Crea tu contrase\u00F1a, la utilizar\u00E1s para iniciar sesi\u00F3n en tu cuenta."
+        })
+      })
+    }))
+  });
+};
+
+const ActiveAccount = () => {
+  const ContainerUnauthorized = /*#__PURE__*/lazy(() => import('./root.js'));
+  const history = useHistory();
+  const {
+    token
+  } = useParams();
+  const [statusUser, setStatusUser] = useState(false);
+  const goBack = () => {
+    history.push('/');
+  };
+  const getData = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+      Ramen.Api.loading.show({
+        text: 'Activando usuario...'
+      });
+      yield authClient.activateUser({
+        token
+      });
+      Ramen.Api.notification.success({
+        description: "El usuario se ha activado correctamente."
+      });
+      setStatusUser(true);
+      Ramen.Api.loading.hide();
+    } catch (error) {
+      Ramen.Api.loading.hide();
+      Ramen.Api.notification.error({
+        description: 'Ocurrió un error',
+        message: 'No pudimos activar el usuario, por favor inténtalo nuevamente.'
+      });
+    }
+  });
+  const propsButton = {
+    text: statusUser ? 'Volver al inicio' : 'Reintentar',
+    onClick: statusUser ? goBack : getData
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+  return jsx(Fragment, {
+    children: jsx(Suspense, Object.assign({
+      fallback: jsx(LoaderScreen, {
+        loading: true
+      })
+    }, {
+      children: jsx(ContainerUnauthorized, {
+        children: jsxs(Ramen.XBox, Object.assign({
+          orientation: "vertical",
+          verticalAlign: "center",
+          padding: "xl",
+          gap: "xl"
+        }, {
+          children: [jsx(Ramen.XIcon, {
+            icon: 'clock-outline',
+            size: 'xl'
+          }), jsx(Ramen.XText, Object.assign({
+            fontSize: 6,
+            weight: "bold"
+          }, {
+            children: "Estamos activando el usuario"
+          })), jsx(Ramen.XText, Object.assign({
+            fontSize: 9,
+            colorThone: "dim"
+          }, {
+            children: "Le enviamos un correo al usuario una vez que su cuenta est\u00E9 activada."
+          })), jsx(Ramen.XButton, Object.assign({
+            type: "solid",
+            size: "l"
+          }, propsButton))]
+        }))
+      })
+    }))
+  });
+};
+
+const PendingResetPassword = () => {
+  const history = useHistory();
+  const ContainerUnauthorized = /*#__PURE__*/lazy(() => import('./root.js'));
+  const goBack = () => {
+    history.push('/');
+  };
+  return jsx(Fragment, {
+    children: jsx(Suspense, Object.assign({
+      fallback: jsx(LoaderScreen, {
+        loading: true
+      })
+    }, {
+      children: jsx(ContainerUnauthorized, {
+        children: jsxs(Ramen.XBox, Object.assign({
+          orientation: "vertical",
+          verticalAlign: "center",
+          padding: "xl",
+          gap: "xl"
+        }, {
+          children: [jsx(Ramen.XIcon, {
+            icon: 'mail-outline',
+            size: 'xl'
+          }), jsx(Ramen.XText, Object.assign({
+            fontSize: 6,
+            weight: "bold"
+          }, {
+            children: "Revisa tu correo"
+          })), jsx(Ramen.XText, Object.assign({
+            fontSize: 9,
+            colorThone: "dim"
+          }, {
+            children: "Te  hemos enviado un enlace de recuperaci\u00F3n a tu correo registrado."
+          })), jsx(Ramen.XButton, {
+            text: "Volver al inicio",
+            type: "solid",
+            size: "l",
+            onClick: goBack
+          })]
+        }))
+      })
+    }))
+  });
+};
+
+const errorsMessage = {
+  email: {
+    required: 'Por favor, ingresa un correo electrónico válido.',
+    invalidEmail: 'Por favor, ingresa un correo electrónico válido.'
+  }
+};
+const FormForgotPassword = ({
+  title,
+  description
+}) => {
+  const history = useHistory();
+  const {
+    email
+  } = history.location.state || {};
+  const emailValue = email || '';
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    values,
+    errors,
+    isValid,
+    dirty
+  } = useFormik({
+    initialValues: {
+      email: emailValue
+    },
+    validate: values => {
+      const configValidation = {
+        email: [isRequired, isValidEmail]
+      };
+      return validation(configValidation)(values);
+    },
+    onSubmit: values => {
+      onSubmit(values);
+    }
+  });
+  const onSubmit = values => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+      Ramen.Api.loading.show({
+        text: 'Enviando información...'
+      });
+      yield authClient.resetPassword(values.email);
+      goRoute();
+      Ramen.Api.loading.hide();
+    } catch (error) {
+      Ramen.Api.loading.hide();
+      Ramen.Api.notification.error({
+        description: 'Ocurrió un error',
+        message: 'Por favor inténtalo nuevamente.'
+      });
+    }
+  });
+  const onChangeField = (e, name) => {
+    if (name) {
+      e.target.name = name;
+    }
+    handleChange(e);
+  };
+  const onBlurField = (e, name) => {
+    e.target.name = name;
+    handleBlur(e);
+  };
+  const goRoute = () => {
+    history.push('/wait-password');
+  };
+  return jsx(Fragment, {
+    children: jsxs(Ramen.XBox, Object.assign({
+      orientation: "vertical",
+      verticalAlign: "center",
+      padding: "xl",
+      gap: "xl"
+    }, {
+      children: [jsx(Ramen.XText, Object.assign({
+        fontSize: 6,
+        weight: "bold"
+      }, {
+        children: title
+      })), jsx(Ramen.XText, Object.assign({
+        fontSize: 9,
+        colorThone: "dim"
+      }, {
+        children: description
+      })), jsx("form", Object.assign({
+        onSubmit: handleSubmit
+      }, {
+        children: jsxs(Ramen.XBox, Object.assign({
+          orientation: "vertical",
+          verticalAlign: "center",
+          gap: "xl"
+        }, {
+          children: [jsx(Ramen.XFormItem, Object.assign({
+            error: !errors.email ? '' : errorsMessage.email[errors.email],
+            label: "Correo corporativo (*)"
+          }, {
+            children: jsx(Ramen.XEmailInput, {
+              size: "l",
+              placeholder: "ejemplo@empresa.cl",
+              value: values.email,
+              onChange: e => onChangeField(e, 'email'),
+              onBlur: e => onBlurField(e, 'email')
+            })
+          })), jsx(Ramen.XButton, {
+            disabled: !isValid,
+            text: "Continuar",
+            type: "solid",
+            size: "l"
+          })]
+        }))
+      }))]
+    }))
+  });
+};
+const ForgotPassword = () => {
+  const ContainerUnauthorized = /*#__PURE__*/lazy(() => import('./root.js'));
+  return jsx(Fragment, {
+    children: jsx(Suspense, Object.assign({
+      fallback: jsx(LoaderScreen, {
+        loading: true
+      })
+    }, {
+      children: jsx(ContainerUnauthorized, {
+        children: jsx(FormForgotPassword, {
+          title: "\u00BFOlvidaste tu contrase\u00F1a?",
+          description: "No te preocupes, ingresa el correo que registraste y te enviaremos un enlace para restablecer tu contrase\u00F1a."
+        })
+      })
+    }))
+  });
+};
+
+const ResetPassword = () => {
+  const ContainerUnauthorized = /*#__PURE__*/lazy(() => import('./root.js'));
+  const {
+    login
+  } = useUserContext();
+  const history = useHistory();
+  const {
+    token: tokenValue
+  } = useParams();
+  const {
+    token
+  } = history.location.state || {};
+  const access_token = tokenValue || token;
+  const goRoute = () => {
+    history.push('/');
+  };
+  const onSubmit = values => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+      Ramen.Api.loading.show({
+        text: 'Actualizando contraseña...'
+      });
+      yield authClient.resetPasswordWithToken({
+        token: access_token,
+        password: values.password
+      });
+      yield login(values.email, values.password);
+      Ramen.Api.notification.success({
+        description: 'Contraseña actualizada con éxito.'
+      });
+      goRoute();
+      Ramen.Api.loading.hide();
+    } catch (error) {
+      Ramen.Api.loading.hide();
+      Ramen.Api.notification.error({
+        description: 'Ocurrió un error',
+        message: 'No pudimos actualizar tu contraseña, por favor inténtalo nuevamente.'
+      });
+    }
+  });
+  return jsx(Fragment, {
+    children: jsx(Suspense, Object.assign({
+      fallback: jsx(LoaderScreen, {
+        loading: true
+      })
+    }, {
+      children: jsx(ContainerUnauthorized, {
+        children: jsx(FormSetPassword, {
+          onSubmit: onSubmit,
+          showEmail: false,
+          showDescription: false,
+          title: "Crea tu nueva contrase\u00F1a \uD83E\uDD13"
+        })
+      })
+    }))
   });
 };
 
@@ -9732,12 +10862,40 @@ const HomePage = props => {
   return jsx(Home, {});
 };
 
+const SignUpPage = props => {
+  return jsx(SignUp, {});
+};
+
+const PendingApprovePage = props => {
+  return jsx(PendingApprove, {});
+};
+
 const ProductsDetailsPage = props => {
   return jsx(Product, {});
 };
 
 const ProductListPage = props => {
   return jsx(Shop, {});
+};
+
+const CreatePasswordPage = props => {
+  return jsx(SetPassword, {});
+};
+
+const ActiveAccountPage = props => {
+  return jsx(ActiveAccount, {});
+};
+
+const PendingResetPasswordPage = props => {
+  return jsx(PendingResetPassword, {});
+};
+
+const ForgotPasswordPage = props => {
+  return jsx(ForgotPassword, {});
+};
+
+const ResetPasswordPage = props => {
+  return jsx(ResetPassword, {});
 };
 
 class PortalModule extends Module {
@@ -9755,6 +10913,30 @@ class PortalModule extends Module {
       }, {
         path: 'cart',
         page: CartPage
+      }, {
+        path: 'signup',
+        page: SignUpPage
+      }, {
+        path: 'wait-request',
+        page: PendingApprovePage
+      }, {
+        path: 'set-password/:token',
+        page: CreatePasswordPage
+      }, {
+        path: 'set-password',
+        page: CreatePasswordPage
+      }, {
+        path: 'active-account/:token',
+        page: ActiveAccountPage
+      }, {
+        path: 'forgot-password',
+        page: ForgotPasswordPage
+      }, {
+        path: 'wait-password',
+        page: PendingResetPasswordPage
+      }, {
+        path: 'reset-password/:token',
+        page: ResetPasswordPage
       }],
       override
     });
@@ -9762,4 +10944,4 @@ class PortalModule extends Module {
 }
 PortalModule.route = '/';
 
-export { Flow as F, Header as H, ModalCart$1 as M, ProductsList as P, __awaiter as _, useGlobal as a, PortalModule as b, index as i, productsClient as p, useWindowSize as u };
+export { DrawerCategories$1 as D, Flow as F, Header as H, ModalCart$1 as M, ProductsList as P, __awaiter as _, useGlobal as a, PortalModule as b, img$a as i, productsClient as p, useWindowSize as u };
