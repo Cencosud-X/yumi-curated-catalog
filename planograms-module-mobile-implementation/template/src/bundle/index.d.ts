@@ -1,14 +1,17 @@
-import { IHomePageExtension } from './flow/home-page';
-import { Components } from './sdk';
-export interface IHelloWorldModuleOverride extends Components.IModuleOverride {
-    extensions?: {
-        home_page: IHomePageExtension;
-    };
-    routes?: Components.IModuleRoute[];
+import React from 'react';
+import * as SDK from '@team_yumi/sdk';
+import { IStaticParams } from './models';
+import { IMenuItem } from '@team_yumi/ramen/components/web/xsidebar/root';
+import CardTool from './components/card-tool';
+interface IProps {
+    params: IStaticParams;
 }
-export interface IModuleProps extends Components.IModuleProps {
+export default class Module extends SDK.Lib.BaseModule<IStaticParams> {
+    defaultPath: string;
+    onNewCount?: (count: number) => void;
+    Flow: React.FC<IProps>;
+    CardTool: typeof CardTool;
+    constructor(params: IStaticParams);
+    getSidebarMenu(count?: number): IMenuItem;
 }
-export default abstract class HelloWorldModule extends Components.Module<IHelloWorldModuleOverride> {
-    static route: string;
-    constructor(props: IModuleProps, override: IHelloWorldModuleOverride);
-}
+export {};
