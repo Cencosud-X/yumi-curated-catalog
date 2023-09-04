@@ -4,15 +4,15 @@ const readline = require('readline');
 
 const toPascalCase = (str) => {
   return str
-    .replace(/[_\s-]/ig, '|')  // remove all spaces , - and _ and replace for a |
+    .replace(/[_\s-]/gi, '|') // remove all spaces , - and _ and replace for a |
     .split('|') // split phrase by |
     .map((str) => str.charAt(0).toUpperCase() + str.slice(1)) // Capitalize each fragment
-    .join('') // Join into a single word with all together ^^
-}
+    .join(''); // Join into a single word with all together ^^
+};
 
 module.exports = async (runner, args) => {
   try {
-    console.log("> PRE: Installing prerequisites (API):");
+    console.log('> PRE: Installing prerequisites (API):');
 
     const rc = args.rc;
     await runner.execute(
@@ -23,13 +23,14 @@ module.exports = async (runner, args) => {
         'npm install react@^18.2.0',
         'npm install react-dom@^18.2.0',
         'npm install react-router-dom@^5.3.4',
+        'npm install i18next',
+        'npm install react-i18next',
+        'npm install @team_yumi/sdk@^0.0.1-next.20230726-1b95187-dc6ce1615ad2c85339c9a70e70a13307',
       ],
       {
         cwd: rc.workspace_path,
       }
     );
-
-
 
     /*
       WE NEED TO DO THE FOLLOWING FLOW
@@ -48,41 +49,37 @@ module.exports = async (runner, args) => {
 
     const YUMI_MAIN_FILE_PATH = settingsJSON['meta_data']['YUMI_MAIN_FILE_PATH'];
 
-
     // Get the npmScope from nx.json (we need this variable to "build" the import path)
     const nxPath = path.join(workspacePath, 'nx.json');
     const nxJSON = JSON.parse(fs.readFileSync(nxPath, 'utf8'));
     const npmScope = nxJSON.npmScope;
 
-
     // Get the App.tsx file path for start the injection process
     const appTsxPathToInject = path.join(workspacePath, YUMI_MAIN_FILE_PATH);
 
     if (!fs.existsSync(appTsxPathToInject)) {
-      console.warn('THE INJECTION PROCCESS DOESNT OCCURRS BECAUSE THE App.tsx WASNT FOUND')
-      console.warn(`> ${appTsxPathToInject}`)
+      console.warn('THE INJECTION PROCCESS DOESNT OCCURRS BECAUSE THE App.tsx WASNT FOUND');
+      console.warn(`> ${appTsxPathToInject}`);
       return;
     }
-
 
     /*
       - if the file exists (App.tsx), we need to inject the module implementation,
     */
-    const moduleOverrideName = `${toPascalCase(rc.name)}OverrideModule`
+    const moduleOverrideName = `${toPascalCase(rc.name)}OverrideModule`;
     const modifiedAppTsx = [];
 
     // Read the original App.tsx to find the "special keywords"
     var lineReader = readline.createInterface({ input: fs.createReadStream(appTsxPathToInject) });
 
     lineReader.on('line', function (line) {
-
       /*
         We need to put a "keyword inside the App.tsx" which pattern is:
           // END_YUMMI_IMPORT_INJECTION (DONT REMOVE THIS COMMENT) <-- we need to get this line!
         In this "part" we need to put the IMPORT clause
       */
-      if (line.indexOf("END_YUMMI_IMPORT_INJECTION") >= 0) {
-        modifiedAppTsx.push(`import {${moduleOverrideName}} from '@${npmScope}/${rc.path}'`)
+      if (line.indexOf('END_YUMMI_IMPORT_INJECTION') >= 0) {
+        modifiedAppTsx.push(`import {${moduleOverrideName}} from '@${npmScope}/${rc.path}'`);
       }
 
       /*
@@ -90,21 +87,22 @@ module.exports = async (runner, args) => {
         {END_YUMMI_ROUTE_INJECTION (DONT REMOVE THIS COMMENT)/} <-- we need to get this line!
         In this "part" we need to put the ROUTE clause
       */
-      if (line.indexOf("END_YUMMI_ROUTE_INJECTION") >= 0) {
-        modifiedAppTsx.push(`<Route path={${moduleOverrideName}.route} component={${moduleOverrideName}} />`)
+      if (line.indexOf('END_YUMMI_ROUTE_INJECTION') >= 0) {
+        modifiedAppTsx.push(
+          `<Route path={${moduleOverrideName}.route} component={${moduleOverrideName}} />`
+        );
       }
 
-      modifiedAppTsx.push(line)
+      modifiedAppTsx.push(line);
     });
 
     lineReader.on('close', function () {
-      fs.writeFileSync(appTsxPathToInject, modifiedAppTsx.join("\n"))
+      fs.writeFileSync(appTsxPathToInject, modifiedAppTsx.join('\n'));
     });
 
-
-    console.log("> PRE: requisites ✅ DONE");
+    console.log('> PRE: requisites ✅ DONE');
   } catch (ex) {
     console.error(ex);
-    throw new Error("failed to execute pre script");
+    throw new Error('failed to execute pre script');
   }
 };
