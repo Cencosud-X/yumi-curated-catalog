@@ -18,8 +18,8 @@ module.exports = async (runner, args) => {
     await runner.execute(
       [
         `npx nx g @nrwl/react:lib ${rc.path}`,
-        `npm install formik@^2.4.3`,
-        `npm install jwt-decode@^3.1.2`,
+        `npm install formik`,
+        `npm install jwt-decode`,
       ],
       {
         cwd: rc.workspace_path,
