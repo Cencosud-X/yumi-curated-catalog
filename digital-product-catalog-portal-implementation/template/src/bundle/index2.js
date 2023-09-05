@@ -6140,6 +6140,23 @@ class DniFormatter {
     const v = s > 0 ? '' + (s - 1) : 'K';
     return v === rut.slice(-1);
   }
+  isEnterpriseRutValid(rut) {
+    if (typeof rut !== 'string') {
+      return false;
+    }
+    if (!/^0*(\d{1,3}(\.?\d{3})*)-([\dkK])$/.test(rut)) {
+      return false;
+    }
+    let t = parseInt(rut.slice(0, -1), 10);
+    let m = 0;
+    let s = 1;
+    while (t > 0) {
+      s = (s + t % 10 * (9 - m++ % 6)) % 11;
+      t = Math.floor(t / 10);
+    }
+    const v = s > 0 ? '' + (s - 1) : 'K';
+    return v === rut.slice(-1);
+  }
 }
 var DniFormatter$1 = new DniFormatter();
 
@@ -6559,8 +6576,8 @@ const isRequired = value => {
   }
   return false;
 };
-const isValidRut = value => {
-  if (!DniFormatter$1.isRutValid(value)) {
+const isValidEnterpriseRut = value => {
+  if (!DniFormatter$1.isEnterpriseRutValid(value)) {
     return 'invalidRut';
   }
   return false;
@@ -9996,8 +10013,8 @@ const errorsMessage$2 = {
     required: 'Por favor, Ingresa tu nombre y apellidos'
   },
   rut: {
-    required: 'Por favor, ingresa un rut válido',
-    invalidRut: 'Por favor, ingresa un rut válido'
+    required: 'Por favor, ingresa rut sin puntos, con guión y dígito verificador (12345678-K)',
+    invalidRut: 'Por favor, ingresa rut sin puntos, con guión y dígito verificador (12345678-K)'
   },
   address: {
     required: 'Por favor, selecciona una dirección de despacho'
@@ -10025,7 +10042,7 @@ const FormRequestAccess = () => {
     validate: values => {
       const configValidation = {
         email: [isRequired, isValidEmail],
-        rut: [isRequired, isValidRut],
+        rut: [isRequired, isValidEnterpriseRut],
         address: [isRequired],
         name: [isRequired]
       };
@@ -10114,7 +10131,7 @@ const FormRequestAccess = () => {
     handleChange(e);
     switch (name) {
       case 'rut':
-        if (!isValidRut(e.target.value)) {
+        if (!isValidEnterpriseRut(e.target.value)) {
           setTimeout(() => getDataByRut(e.target.value), 1000);
         }
         break;
