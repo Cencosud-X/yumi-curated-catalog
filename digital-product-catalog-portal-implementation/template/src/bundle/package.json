@@ -12,10 +12,10 @@
     "@team_yumi/ramen-web": "^0.0.3-next.1691419706173",
     "classnames": "^2.3.1",
     "swiper": "^8.1.4",
+    "jwt-decode": "^3.1.2",
+    "formik": "^2.4.3",
     "axios": "^1.4.0",
     "rxjs": "^7.0.0",
-    "formik": "^2.4.3",
-    "lodash": "^4.17.21",
-    "jwt-decode": "^3.1.2"
+    "lodash": "^4.17.21"
   }
 }

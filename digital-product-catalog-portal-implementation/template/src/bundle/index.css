@@ -10,7 +10,7 @@
   min-width: 460px;
   height: 100vh;
   background-color: var(--primary-color);
-  background-image: url(../../assets/image/XBackgroundImage.png) ;
+  background-image: url('../../assets/image/XBackgroundImage.png') ;
   display: flex;
   flex-direction: column;
   justify-content: center;

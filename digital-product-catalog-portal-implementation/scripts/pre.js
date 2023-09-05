@@ -18,9 +18,8 @@ module.exports = async (runner, args) => {
     await runner.execute(
       [
         `npx nx g @nrwl/react:lib ${rc.path}`,
-        // 'npm install react@^16.14.0',
-        // 'npm install react-dom@^16.14.0',
-        // 'npm install react-router-dom@^5.3.0',
+        `npm install formik@^2.4.3`,
+        `npm install jwt-decode@^3.1.2`,
       ],
       {
         cwd: rc.workspace_path,
