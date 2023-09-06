@@ -5100,6 +5100,20 @@ class AuthApi extends BaseRest {
       }
     });
   }
+  setPasswordDirect(password) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.post(`${this.prefix}/set-password-direct`, {
+          password
+        });
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
   resetPassword(email) {
     return __awaiter(this, void 0, void 0, function* () {
       try {
@@ -10526,13 +10540,15 @@ const SetPassword = () => {
   const goRoute = () => {
     history.push('/');
   };
+  const isDirect = !tokenValue && !!token;
+  console.log(isDirect, tokenValue, token);
   const onSubmit = values => __awaiter(void 0, void 0, void 0, function* () {
     try {
       Ramen.Api.loading.show({
         text: 'Acceso...'
       });
       yield authClient.setToken(access_token, false);
-      yield authClient.setPassword(values.password);
+      isDirect ? yield authClient.setPasswordDirect(values.password) : yield authClient.setPassword(values.password);
       yield login(values.email, values.password);
       Ramen.Api.notification.success({
         description: 'Cuenta creada con éxito.',

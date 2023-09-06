@@ -18,6 +18,7 @@ export default class AuthApi extends BaseRest {
     }): Promise<any | AxiosError>;
     signUp(params: ISignUpValues): Promise<any | AxiosError>;
     setPassword(password: string): Promise<any | AxiosError>;
+    setPasswordDirect(password: string): Promise<any | AxiosError>;
     resetPassword(email: string): Promise<any | AxiosError>;
     resetPasswordWithToken(params: {
         password: string;
