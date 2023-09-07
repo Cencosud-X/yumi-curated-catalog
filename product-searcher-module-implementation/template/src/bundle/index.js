@@ -3710,10 +3710,11 @@ const ProductDetailCmp = _a => {
   var {
       product,
       imgUrlResolver,
-      mdhCenterUrl
+      mdhCenterUrl,
+      onBack,
+      typeSearch
     } = _a;
-    __rest(_a, ["product", "imgUrlResolver", "mdhCenterUrl"]);
-  console.log(product);
+    __rest(_a, ["product", "imgUrlResolver", "mdhCenterUrl", "onBack", "typeSearch"]);
   const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
   const imageUrl = useMemo(() => imgUrlResolver(product.sku), [product, imgUrlResolver]);
@@ -3726,7 +3727,11 @@ const ProductDetailCmp = _a => {
   return jsxs(Ramen.XBox, Object.assign({
     gap: "s"
   }, {
-    children: [jsxs(Ramen.XBox, Object.assign({
+    children: [typeSearch != 'code' && jsx(Ramen.XButtonIcon, {
+      icon: "arrow-left-outline",
+      onClick: onBack,
+      type: "clear"
+    }), jsxs(Ramen.XBox, Object.assign({
       orientation: "horizontal",
       gap: "s",
       verticalAlign: "center",
@@ -4228,6 +4233,7 @@ const ProductSearchModal = _a => {
   const [product, setProduct] = useState();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [typeSearch, setTypeSearch] = useState('');
   useEffect(() => {
     if (loading) {
       Ramen.Api.loading.show({
@@ -4258,6 +4264,7 @@ const ProductSearchModal = _a => {
   const onSearchByCode = code => __awaiter(void 0, void 0, void 0, function* () {
     var _b, _c, _d;
     console.log('PCode', code);
+    setTypeSearch('code');
     setLoading(true);
     try {
       const _product = yield searchByCode(code);
@@ -4290,7 +4297,11 @@ const ProductSearchModal = _a => {
           return jsx(ProductDetailCmp, {
             product: product,
             imgUrlResolver: imgUrl,
-            mdhCenterUrl: mdhCenterUrl
+            mdhCenterUrl: mdhCenterUrl,
+            onBack: () => {
+              setMode('PRODUCT_LIST');
+            },
+            typeSearch: typeSearch
           });
         } else {
           return null;
