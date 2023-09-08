@@ -10,6 +10,14 @@ interface IRenderList {
     miniImageUrl: (sku: string, ean: string) => string;
     onSelectCard: (task: Task) => void;
     bulkTaskRequest: (data: IRetryAction[]) => void;
+    taskStates: {
+        task: Task;
+        state: ICardState;
+    }[];
+    setStaskStates: React.Dispatch<React.SetStateAction<{
+        task: Task;
+        state: ICardState;
+    }[]>>;
 }
 export declare type ICardState = 'FREE' | 'REJECT';
 declare const CardList: React.FC<IRenderList>;

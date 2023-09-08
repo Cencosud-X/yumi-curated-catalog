@@ -2853,29 +2853,20 @@ const BarCodeScanner = /*#__PURE__*/React__default.forwardRef((props, barcodeInp
       focusInput();
     }
   }, [autoFocused]);
-  return jsxs(Ramen.XBox, Object.assign({
+  return jsx(Ramen.XBox, Object.assign({
     orientation: "horizontal",
     width: "flex",
     gap: "s"
   }, {
-    children: [jsx(Ramen.XBox, {
-      children: jsx(Ramen.XTextInput, {
-        placeholder: "Ingresa c\u00F3digo",
-        icon: "scan-outline",
-        size: "l",
-        onChange: e => handleChange(e.target.value),
-        value: barcodeNumber,
-        inputRef: barcodeInputRef
-      })
-    }), jsx(Ramen.XButtonIcon, {
-      icon: "arrow-right-extrabold",
-      onClick: handleSearchCodeClick,
-      disabled: searchDisabled || !isCodeValid(barcodeNumber)
-    }), jsx(Ramen.XButtonIcon, {
-      disabled: searchDisabled,
-      icon: "camera-outline",
-      onClick: handleCameraClick
-    })]
+    children: jsx(Ramen.XCardScan, {
+      onChange: e => handleChange(e.target.value),
+      onClick: handleCameraClick,
+      onSubmit: handleSearchCodeClick,
+      placeholder: "Ingresa c\u00F3digo",
+      value: barcodeNumber,
+      inputRef: barcodeInputRef,
+      onlyNumbers: true
+    })
   }));
 });
 
@@ -3016,6 +3007,7 @@ const TaskCard = ({
         width: 'full'
       }, {
         children: [jsx(Ramen.XCounter, {
+          editable: true,
           defaultCount: task.count,
           onChange: count => onCountChange(Object.assign(Object.assign({}, task), {
             count
@@ -11496,9 +11488,11 @@ const CardList$1 = ({
   miniImageUrl,
   goHome,
   onSelectCard,
-  bulkTaskRequest
+  bulkTaskRequest,
+  taskStates,
+  setStaskStates
 }) => {
-  const [taskStates, setStaskStates] = useState([]);
+  // const [taskStates, setStaskStates] = useState<{task: Task, state: ICardState}[]>([]);
   const [modalType, setModalType] = useState();
   const onMarkTask = (task, state) => {
     setStaskStates(stateList => {
@@ -13697,6 +13691,7 @@ const ProductDetail = ({
               }, {
                 children: "Editar cantidad solicitada"
               })), jsx(Ramen.XCounter, {
+                editable: true,
                 defaultCount: selectedTask.meta_data.count,
                 onChange: n => setQty(n),
                 count: qty
@@ -14442,6 +14437,7 @@ const TasksPageWrapper = props => {
   const [user, setUser] = useState();
   const [selectedTask, setSelectedTask] = useState();
   const [actionError, setActionError] = useState();
+  const [taskStates, setStaskStates] = useState([]);
   const history = useHistory();
   const goHome = useCallback(() => {
     if (history) {
@@ -14630,7 +14626,9 @@ const TasksPageWrapper = props => {
           miniImageUrl: props.miniImageUrl,
           tasks: tasks,
           onSelectCard: onSelectCard,
-          bulkTaskRequest: bulkTaskRequest
+          bulkTaskRequest: bulkTaskRequest,
+          taskStates: taskStates,
+          setStaskStates: setStaskStates
         });
       case 'PRODUCT_DETAIL':
         if (selectedTask) return jsx(ProductDetail, {

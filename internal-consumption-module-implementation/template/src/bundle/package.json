@@ -10,7 +10,7 @@
     "react": "^16.14.0",
     "@ionic/react": "^7.1.1",
     "react-router-dom": "^5.3.4",
-    "@team_yumi/code-scanner": "^0.0.6",
+    "@team_yumi/code-scanner": "0.0.7",
     "@capacitor/device": "^4.0.1",
     "moment-timezone": "^0.5.43",
     "zod": "^3.19.1"
