@@ -1,9 +1,11 @@
 import { Dispatch } from 'react';
 import { ModuleStore, ModuleAction, IModuleProperties } from '../../types';
 export declare enum ActionType {
-    Load = "@documentation/load",
-    SetModule = "@documentation/set-module",
-    SetBootSettings = "@documentation/set-boot-settings"
+    Load = "@labeling/load",
+    SetModule = "@labeling/set-module",
+    SetBootSettings = "@labeling/set-boot-settings",
+    SetPrinters = "@labeling/set-printers",
+    SetSelectedPrinter = "@labeling/set-selected-printer"
 }
 export interface IActionReducer {
     type: ActionType;

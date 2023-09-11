@@ -1,2 +1,4 @@
 import { HomePage } from './home';
-export { HomePage };
+import { PrinterPage } from './printer';
+import { PrintingPage } from './printing';
+export { HomePage, PrinterPage, PrintingPage };

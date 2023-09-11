@@ -1,4 +1,5 @@
 import { HTMLAttributes } from 'react';
+import { PrinterStatus, PrinterType } from './core/enums';
 export interface Filter {
     [key: string]: unknown;
 }
@@ -21,9 +22,22 @@ export interface DataSource {
     sort?: Sort;
     pagination?: Pagination;
 }
+export interface IPrinter {
+    id: string;
+    name: string;
+    label: string;
+    type: PrinterType;
+    status: PrinterStatus;
+    settings?: {
+        printer_mode?: string;
+        fleje_type?: string;
+    };
+    enabled?: boolean;
+}
 export interface ModuleAction {
     onBootSettings?(parameters?: Partial<ModuleStore>): void;
     onLoad?(parameters?: Partial<ModuleStore>): void;
+    onSelectedPrinter?(parameters?: Partial<ModuleStore>): void;
 }
 export interface ModuleStore {
     path?: string;
@@ -33,6 +47,8 @@ export interface ModuleStore {
     store?: string;
     flag?: string;
     currentUser?: any;
+    printers?: IPrinter[];
+    selectedPrinter?: IPrinter;
     [key: string]: unknown;
 }
 export interface IModuleProperties extends HTMLAttributes<ModuleAction>, Partial<ModuleStore> {
