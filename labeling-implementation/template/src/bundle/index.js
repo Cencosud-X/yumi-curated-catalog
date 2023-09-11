@@ -1,11 +1,13 @@
-import { jsx, jsxs, Fragment as Fragment$1 } from 'react/jsx-runtime';
-import { useContext, useReducer, useMemo, createContext, useCallback, useState, Fragment, useEffect } from 'react';
+import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
+import React, { useContext, useReducer, useMemo, createContext, useState, useCallback, useEffect, Fragment as Fragment$1 } from 'react';
 import { useHistory as useHistory$1, useLocation, Switch, Route } from 'react-router';
 import { BrowserRouter, useHistory } from 'react-router-dom';
 import * as _ from 'lodash';
 import * as SDK from '@team_yumi/sdk';
 import { produce } from 'immer';
 import Ramen from '@team_yumi/ramen';
+import '@team_yumi/code-scanner/index.css';
+import { useScanner } from '@team_yumi/code-scanner';
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -3841,6 +3843,12 @@ const mockPrinters = [{
   label: 'Impresora 1',
   type: PrinterType.INKJET,
   status: PrinterStatus.CONNECTED
+}, {
+  id: '2',
+  name: 'printer_2',
+  label: 'Impresora 2',
+  type: PrinterType.INKJET,
+  status: PrinterStatus.CONNECTED
 }];
 class PrinterClient {
   loadPrinters() {
@@ -4049,35 +4057,172 @@ function RootProvider(properties) {
   }));
 }
 
+var ModeType;
+(function (ModeType) {
+  ModeType[ModeType["Loading"] = 0] = "Loading";
+  ModeType[ModeType["Home"] = 1] = "Home";
+  ModeType[ModeType["Warning"] = 2] = "Warning";
+})(ModeType || (ModeType = {}));
 function HomePage() {
   const [store, actions] = useRootContext();
   const history = useHistory();
-  // TODO: Remove this is only mockData
-  const onSelectPrinter = useCallback(() => {
-    const {
-      printers = []
-    } = store;
-    if ((printers === null || printers === void 0 ? void 0 : printers.length) === 1 && printers[0].status === PrinterStatus.CONNECTED) {
-      actions.onSelectedPrinter({
-        selectedPrinter: printers[0]
-      });
-      history.push(`printer?id=${printers[0].id}`);
-    }
-  }, [store.printers]);
-  return jsxs(Ramen.XPage, {
-    children: [jsx(Ramen.XHeader, {
-      title: store.title,
-      onBack: () => history.goBack()
-    }), jsxs(Ramen.XBody, {
-      children: [jsx("div", {
-        children: "Labeling Home Page"
-      }), jsx("button", Object.assign({
-        onClick: onSelectPrinter
-      }, {
-        children: "Select - Printer"
-      }))]
-    })]
-  });
+  const [mode, setMode] = useState(ModeType.Loading);
+  const onSelectedPrinter = useCallback(printer => {
+    Ramen.Api.loading.show({
+      text: 'Conexión en proceso...'
+    });
+    actions.onSelectedPrinter({
+      selectedPrinter: printer
+    });
+    const timeout = setTimeout(() => {
+      Ramen.Api.loading.hide();
+      clearTimeout(timeout);
+      history.push(`printer?id=${printer.id}`);
+    }, 3000);
+  }, []);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setMode(ModeType.Home);
+      clearTimeout(timeout);
+    }, 2000);
+  }, []);
+  const renderLoading = () => {
+    return jsxs(Ramen.XPage, {
+      children: [jsx(Ramen.XHeader, {
+        title: ''
+      }), jsxs(Ramen.XBody, {
+        children: [jsxs(Ramen.XBox, Object.assign({
+          gap: 'm',
+          padding: 'm'
+        }, {
+          children: [jsx(Ramen.XSkeleton, {
+            size: "xl",
+            type: "icon",
+            width: "s"
+          }), jsx(Ramen.XSkeleton, {
+            size: "xl",
+            type: "text",
+            width: "m"
+          })]
+        })), jsxs(Ramen.XBox, Object.assign({
+          gap: 'm',
+          padding: 'm'
+        }, {
+          children: [jsx(Ramen.XSkeleton, {
+            size: "xl",
+            type: "image",
+            width: "xl"
+          }), jsx(Ramen.XSkeleton, {
+            size: "xl",
+            type: "image",
+            width: "xl"
+          }), jsx(Ramen.XSkeleton, {
+            size: "xl",
+            type: "image",
+            width: "xl"
+          }), jsx(Ramen.XSkeleton, {
+            size: "xl",
+            type: "image",
+            width: "xl"
+          })]
+        }))]
+      })]
+    });
+  };
+  const renderHome = () => {
+    return jsxs(Ramen.XPage, {
+      children: [jsx(Ramen.XHeader, {
+        title: store.title,
+        onBack: () => history.goBack()
+      }), jsxs(Ramen.XBody, {
+        children: [jsxs(Ramen.XBox, Object.assign({
+          gap: 'm'
+        }, {
+          children: [jsx(Ramen.XText, Object.assign({
+            weight: 'bold'
+          }, {
+            children: "Selecciona una impresora"
+          })), store.printers.map(printer => jsx(Ramen.XCard, {
+            onClick: () => onSelectedPrinter(printer),
+            size: "s",
+            title: printer.label
+          }, `printer-${printer.id}`))]
+        })), jsx(Ramen.XFooter, {
+          children: jsx(Ramen.XButton, {
+            type: "outline",
+            text: "Conectar impresora port\u00E1til",
+            onClick: () => history.push('codeprinter'),
+            size: 'xl'
+          })
+        })]
+      })]
+    });
+  };
+  const renderWarning = () => {
+    return jsxs(Ramen.XPage, {
+      children: [jsx(Ramen.XHeader, {
+        title: store.title,
+        onBack: () => history.goBack()
+      }), jsxs(Ramen.XBody, {
+        children: [jsx(Ramen.XBox, {
+          padding: "xl"
+        }), jsx(Ramen.XBox, Object.assign({
+          gap: 'xl',
+          horizontalAlign: 'center',
+          height: "auto",
+          padding: 'xl'
+        }, {
+          children: jsx(Ramen.XImage, {
+            height: "full",
+            src: "data:image/png;base64,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",
+            width: 1
+          })
+        })), jsxs(Ramen.XBox, Object.assign({
+          gap: 'xl',
+          padding: 'xl'
+        }, {
+          children: [jsx(Ramen.XText, Object.assign({
+            weight: "bold",
+            fontSize: 8,
+            textAlign: 'center'
+          }, {
+            children: "\u00A1Ups! no conseguimos impresoras disponibles"
+          })), jsx(Ramen.XText, Object.assign({
+            weight: "lighter",
+            fontSize: 10,
+            textAlign: 'center'
+          }, {
+            children: "Aseg\u00FArate de que las impresoras est\u00E9n correctamente conectadas."
+          })), jsx(Ramen.XButton, {
+            type: "solid",
+            text: "Reintentar",
+            onClick: () => {
+              console.log("reintentar");
+            },
+            size: 'xl'
+          })]
+        }))]
+      })]
+    });
+  };
+  const renders = new Map();
+  renders.set(ModeType.Loading, renderLoading);
+  renders.set(ModeType.Home, renderHome);
+  renders.set(ModeType.Warning, renderWarning);
+  const render = mode => {
+    return jsx(Fragment, {
+      children: (() => {
+        const customRender = renders.get(mode);
+        if (!customRender) {
+          return jsx("div", {
+            children: mode
+          });
+        }
+        return customRender();
+      })()
+    });
+  };
+  return render(mode);
 }
 
 var $$3 = _export;
@@ -4335,8 +4480,8 @@ const GroupRadioButton = properties => {
           options,
           hidden
         } = group;
-        return jsx(Fragment, {
-          children: !hidden && jsxs(Fragment$1, {
+        return jsx(Fragment$1, {
+          children: !hidden && jsxs(Fragment, {
             children: [index > 0 && jsx(Ramen.XDivider, {}), label && jsx(Ramen.XText, Object.assign({
               weight: "bold",
               fontSize: 10
@@ -4492,6 +4637,108 @@ function PrintingPage() {
   });
 }
 
+const BarCodeScanner = /*#__PURE__*/React.forwardRef((props, barcodeInputRef) => {
+  const {
+    searchDisabled,
+    autoFocused,
+    onScan,
+    focusInput
+  } = props;
+  const [barcodeNumber, setBarcodeNumber] = useState('');
+  const printWhenMainClick = () => {
+    focusInput();
+  };
+  const {
+    startScan
+  } = useScanner(printWhenMainClick);
+  const handleChange = value => {
+    const oldCodeNumber = barcodeNumber;
+    setBarcodeNumber(value);
+    if (
+    // Si el nuevo codigo es distinto al anterior
+    oldCodeNumber !== value
+    // Si tamaño de nuevo codigo es mayor que 1
+    && value.length > 1
+    // Si la diferencia entre los tamaños es mayor que 1 (significa que no se está borrando o escribiendo)
+    && Math.abs(value.length - oldCodeNumber.length) > 1 && onScan) {
+      onScan(value).then(() => {
+        setBarcodeNumber("");
+      });
+    }
+  };
+  const handleCameraClick = () => {
+    if (startScan) {
+      startScan(code => {
+        setBarcodeNumber(code);
+        !searchDisabled && onScan && onScan(code).then(() => {
+          setBarcodeNumber("");
+        });
+      });
+    }
+  };
+  const handleSearchCodeClick = () => {
+    if (barcodeNumber && onScan) {
+      onScan(barcodeNumber).then(() => {
+        setBarcodeNumber("");
+      });
+    }
+  };
+  useEffect(() => {
+    if (autoFocused) {
+      focusInput();
+    }
+  }, [autoFocused]);
+  return jsx(Ramen.XBox, Object.assign({
+    orientation: "horizontal",
+    width: "flex",
+    gap: "s"
+  }, {
+    children: jsx(Ramen.XCardScan, {
+      onChange: e => handleChange(e.target.value),
+      onClick: handleCameraClick,
+      onSubmit: handleSearchCodeClick,
+      placeholder: "Ingresa c\u00F3digo",
+      value: barcodeNumber,
+      inputRef: barcodeInputRef
+    })
+  }));
+});
+
+function CodePrinterPage() {
+  const [store, actions] = useRootContext();
+  const history = useHistory();
+  const [barcodeNumber, setbarcodeNumber] = useState('');
+  const focusInput = () => {
+    barcodeInputRef.current && barcodeInputRef.current.focus();
+  };
+  const barcodeInputRef = React.useRef(null);
+  console.log("store", store);
+  return jsxs(Ramen.XPage, {
+    children: [jsx(Ramen.XHeader, {
+      title: 'Ingresar el código de la impresora móvil',
+      onBack: () => history.goBack()
+    }), jsx(Ramen.XBody, {
+      children: jsxs(Ramen.XBox, Object.assign({
+        gap: 'm'
+      }, {
+        children: [jsx(BarCodeScanner, {
+          searchDisabled: false,
+          autoFocused: true,
+          ref: barcodeInputRef,
+          focusInput: focusInput,
+          onScan: code => __awaiter(this, void 0, void 0, function* () {
+            console.log('PCode', code);
+            setbarcodeNumber(code);
+          })
+        }), jsx(Ramen.XAlert, {
+          type: 'info',
+          title: 'Si no funciona el escaner puedes, puedes ingresar manualmente el c\u00F3digo.'
+        })]
+      }))
+    })]
+  });
+}
+
 function toPages() {
   return [{
     path: '/home',
@@ -4505,6 +4752,10 @@ function toPages() {
     path: '/printing',
     exact: true,
     component: PrintingPage
+  }, {
+    path: '/codeprinter',
+    exact: true,
+    component: CodePrinterPage
   }];
 }
 function Application(props) {
