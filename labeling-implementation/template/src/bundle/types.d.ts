@@ -29,8 +29,8 @@ export interface IPrinter {
     type: PrinterType;
     status: PrinterStatus;
     settings?: {
-        printer_mode?: string;
-        fleje_type?: string;
+        printerMode?: string;
+        labelingType?: string;
     };
     enabled?: boolean;
 }
@@ -48,6 +48,9 @@ export interface ModuleStore {
     flag?: string;
     currentUser?: any;
     printers?: IPrinter[];
+    labelings?: {
+        [key: string]: any;
+    };
     selectedPrinter?: IPrinter;
     [key: string]: unknown;
 }

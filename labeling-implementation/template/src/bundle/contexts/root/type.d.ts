@@ -5,7 +5,8 @@ export declare enum ActionType {
     SetModule = "@labeling/set-module",
     SetBootSettings = "@labeling/set-boot-settings",
     SetPrinters = "@labeling/set-printers",
-    SetSelectedPrinter = "@labeling/set-selected-printer"
+    SetSelectedPrinter = "@labeling/set-selected-printer",
+    SetLabelings = "@labeling/set-labelings"
 }
 export interface IActionReducer {
     type: ActionType;
