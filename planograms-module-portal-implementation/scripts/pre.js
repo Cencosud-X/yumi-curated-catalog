@@ -23,6 +23,9 @@ module.exports = async (runner, args) => {
         'npm install react@^18.2.0',
         'npm install react-dom@^18.2.0',
         'npm install react-router-dom@^5.3.4',
+        'npm install antd@^5.8.4',
+        'npm install classnames@^2.3.2',
+        'npm install styled-components@^6.0.7',
       ],
       {
         cwd: rc.workspace_path,

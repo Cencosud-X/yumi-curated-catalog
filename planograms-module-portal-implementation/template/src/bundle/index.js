@@ -3,7 +3,6 @@ import * as SDK from '@team_yumi/sdk';
 import { useHistory, useRouteMatch, Switch, Route } from 'react-router-dom';
 import Ramen from '@team_yumi/ramen-web';
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import { StatusTypes } from '@yumi-planograms-module/models';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { Table, Typography, DatePicker, Upload, ConfigProvider } from 'antd';
@@ -1766,6 +1765,24 @@ const translateStatus = status => {
   return status ? i18n.t(`status_structure.${status}`) : '';
 };
 
+var NotificationTypeEnum;
+(function (NotificationTypeEnum) {
+  NotificationTypeEnum["SUCCESS"] = "success";
+  NotificationTypeEnum["WARNING"] = "warning";
+  NotificationTypeEnum["ERROR"] = "error";
+  NotificationTypeEnum["INFO"] = "info";
+})(NotificationTypeEnum || (NotificationTypeEnum = {}));
+
+var StatusTypes;
+(function (StatusTypes) {
+  StatusTypes["TO_LOAD"] = "TO_LOAD";
+  StatusTypes["LOADED"] = "LOADED";
+  StatusTypes["DELIVERED"] = "DELIVERED";
+  StatusTypes["IMPLEMENTED"] = "IMPLEMENTED";
+  StatusTypes["EXPIRED"] = "EXPIRED";
+  StatusTypes["TO_CORRECT"] = "TO_CORRECT";
+})(StatusTypes || (StatusTypes = {}));
+
 const StatusStructure = ({
   status,
   action
@@ -3192,14 +3209,6 @@ const PlanogramFilterDrawer = () => {
     }))
   }));
 };
-
-var NotificationTypeEnum;
-(function (NotificationTypeEnum) {
-  NotificationTypeEnum["SUCCESS"] = "success";
-  NotificationTypeEnum["WARNING"] = "warning";
-  NotificationTypeEnum["ERROR"] = "error";
-  NotificationTypeEnum["INFO"] = "info";
-})(NotificationTypeEnum || (NotificationTypeEnum = {}));
 
 let _ = t => t,
   _t,

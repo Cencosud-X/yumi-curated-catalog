@@ -21,6 +21,7 @@ export type { GetCategoriesResponse } from './dto/responses/get-categories.respo
 export type { PostValidatePlanogramResponse } from './dto/responses/post-validate-planogram.response';
 export type { PostUploadPlanogramResponse } from './dto/responses/post-upload-planogram.response';
 export { NotificationTypeEnum } from './enums/notification-type.enum';
+export { StatusTypes } from './enums/status.enum';
 export type { NotificationInterface } from './interfaces/notification.interface';
 export type { StateType } from './types/state-type.type';
 export { IStaticParams, IConfig, OptionInterface, StoreInterface, IFilters, IQueryData, StructureInterface, SectionInterface, CategoryInterface, };
