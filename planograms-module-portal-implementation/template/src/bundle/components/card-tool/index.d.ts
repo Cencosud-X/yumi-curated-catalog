@@ -1,8 +1,6 @@
 /// <reference types="react" />
 interface IProps {
     pathModule: string;
-    title?: string;
-    subTitle?: string;
 }
-declare function CardTool(props: IProps): JSX.Element;
+declare const CardTool: React.FC<IProps>;
 export default CardTool;

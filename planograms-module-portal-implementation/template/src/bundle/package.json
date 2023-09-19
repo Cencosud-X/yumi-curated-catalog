@@ -8,16 +8,17 @@
   "dependencies": {},
   "peerDependencies": {
     "@team_yumi/sdk": "^0.0.1-next.20230726-1b95187-dc6ce1615ad2c85339c9a70e70a13307",
+    "axios": "^1.4.0",
     "react": "^16.14.0",
+    "styled-components": "^6.0.7",
+    "antd": "^5.8.4",
     "@team_yumi/ramen-web": "^0.0.4",
     "react-router-dom": "^5.3.4",
-    "classnames": "^2.3.2",
-    "use-debounce": "^9.0.4",
-    "antd": "^5.8.4",
-    "styled-components": "^6.0.7",
-    "dayjs": "^1.11.9",
     "i18next": "^23.4.4",
     "react-i18next": "^13.0.2",
+    "dayjs": "^1.11.9",
+    "classnames": "^2.3.2",
+    "use-debounce": "^9.0.4",
     "@team_yumi/ramen": "^0.0.4"
   }
 }
