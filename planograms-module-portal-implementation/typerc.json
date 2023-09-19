@@ -7,7 +7,7 @@
     "Module",
     "experimental"
   ],
-  "kind": "module-implementation",
+  "kind": "planograms-module-portal-implementation",
   "folder": "libs",
   "icons": {
     "light": "icons/icon.svg",
@@ -26,5 +26,5 @@
     "source": "template",
     "substitutions": {}
   },
-  "display_name": "Planograms portal"
+  "display_name": "Planograms Module Portal"
 }
