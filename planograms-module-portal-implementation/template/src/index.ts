@@ -1,6 +1,5 @@
-import Module from './bundle'
+import Module from './bundle';
 
 export default new Module({
   country: 'PE',
 });
-

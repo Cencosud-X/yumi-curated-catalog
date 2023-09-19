@@ -3508,14 +3508,14 @@ const PlanogramUploadModal = props => {
       } = yield postValidatePlanogram(request);
       if (data === null || data === void 0 ? void 0 : data.length) {
         if ((_a = data[0].errors) === null || _a === void 0 ? void 0 : _a.length) {
-          newObj.status = 'error';
+          newObj.status = "error";
           newObj.error = data[0].errors[0];
         } else {
-          newObj.status = 'success';
+          newObj.status = "success";
           newObj.structureId = data[0].structureId;
         }
       } else {
-        newObj.status = 'error';
+        newObj.status = "error";
         newObj.error = '';
       }
       setFiles(prev => addOrUpdateFile(newObj));
@@ -3533,11 +3533,11 @@ const PlanogramUploadModal = props => {
   const actionUploadFile = () => __awaiter(void 0, void 0, void 0, function* () {
     setDisabled(true);
     const formData = new FormData();
-    formData.append('file', files[0].originFileObj);
-    formData.append('structureId', files[0].structureId);
-    formData.append('category', JSON.stringify(categoriesSelected));
-    formData.append('store', JSON.stringify(storesSelected));
-    formData.append('implementationDate', implementationDate);
+    formData.append("file", files[0].originFileObj);
+    formData.append("structureId", files[0].structureId);
+    formData.append("category", JSON.stringify(categoriesSelected));
+    formData.append("store", JSON.stringify(storesSelected));
+    formData.append("implementationDate", implementationDate);
     const data = yield postUploadPlanogram(formData);
     setDisabled(false);
     if (data) {
