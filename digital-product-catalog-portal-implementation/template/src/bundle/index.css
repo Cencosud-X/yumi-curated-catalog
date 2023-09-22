@@ -442,7 +442,7 @@
 }
 
 .shop-cart__item__data{
-  width: 170px;
+  width: 200px;
   cursor: pointer;
 }
 
@@ -1393,6 +1393,18 @@
   font-family: var(--semibold-body-m-14);
 }
 
+.root-module_xlinkcards_container__4EMfG{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.root-module_xlinkcards_item__0DWB4{
+  width: 292px;
+  cursor: pointer;
+}
+
 .product-slider {
   display: flex;
   flex-direction: row-reverse;
@@ -1949,5 +1961,176 @@
   .catagory__image,
   .catagory__link {
     width: 100%;
+  }
+}
+
+.root-module_xprofile-container__czIm0 {
+  width: 94vw;
+  min-height: calc(100vh - 31.6rem);
+}
+
+.root-module_xprofile-container_credit_card__Jm-HV{
+  > div {
+    background: var(--easy, linear-gradient(92deg, #DF1122 3.86%, #ED5328 96.9%));
+  }
+}
+
+.root-module_xprofile-container_content__eOUnE {
+  min-height: 90vh;
+  width: 100%;
+  border-radius: 24px;
+  border: 1px solid var(--global-neutral-dark-20, #F5F5F5);
+  background: var(--global-neutral-white, #FFF);
+}
+
+.root-module_xcredit-card-image__0gFkK {
+  border-radius: 999px;
+  padding: 4px;
+  border: 1px solid var(--global-neutral-dark-20, #F5F5F5);
+  background: var(--global-neutral-white, #FFF);
+}
+
+
+.root-module_xavatar-component_button_edit__6oFl0{
+  position: absolute;
+  left: 90px;
+  top: 40px;
+}
+
+.root-module_xsidebar__st05C {
+  position: relative;
+  width: 116px;
+  height: 100%;
+  border-radius: 24px;
+  border: 1px solid var(--global-neutral-dark-20, #F5F5F5);
+  background: var(--global-neutral-white, #FFF);
+}
+
+.root-module_xsidebar--expanded__rf9cW {
+  width: 324px;
+}
+
+.root-module_xsidebar__shadow__USOyG {
+  background: transparent;
+  height: 90vh;
+}
+
+.root-module_xsidebar__logo__K73S1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 40px;
+}
+
+.root-module_xsidebar__logo__K73S1 > div {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 16px;
+}
+
+.root-module_xsidebar--expanded__rf9cW .root-module_xsidebar__logo__K73S1 > div {
+  width: 324px;
+  height: 132px;
+}
+
+.root-module_xsidebar__menu__QvWTs {
+  margin-left: -8px;
+  width: 100%;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.root-module_xsidebar--expanded__rf9cW .root-module_xsidebar__menu__QvWTs {
+  margin-left: -6px;
+  gap: 8px;
+}
+
+.root-module_xsidebar__menu__item_action__mS4vt {
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  cursor: pointer;
+  width: 100%; /* 6px is for the shadow div right attr */
+  border: 2px solid transparent;
+  border-radius: 50%;
+  height: 42px;
+}
+
+.root-module_xsidebar--expanded__rf9cW .root-module_xsidebar__menu__item_action__mS4vt {
+  padding: 12px 16px 12px 16px;
+  border: 1px solid transparent;
+  border-radius: 24px;
+  height: auto;
+  border-radius: 24px;
+  background: var(--global-neutral-white, #FFF);
+}
+
+.root-module_xsidebar__menu__item_action--selected__BnoPo,
+.root-module_xsidebar--expanded__rf9cW .root-module_xsidebar__menu__item_action--selected__BnoPo {
+  border: 1.5px solid var(--Easy-gradient, #DF1122);
+  font-weight: bold;
+}
+
+.root-module_xsidebar--expanded__rf9cW .root-module_xsidebar__menu__item_action--selected__BnoPo > div:nth-child(2) {
+  font-weight: var(--xtext-weight-bold);
+}
+
+.root-module_xsidebar__menu__item_action__mS4vt:hover {
+  background: #f5f5f5;
+}
+
+.root-module_xsidebar__menu__item_action--selected__BnoPo:hover {
+  background: transparent;
+}
+
+.root-module_xsidebar__menu__item_divider__pUhVJ {
+  opacity: 0.5;
+  padding: 16px 16px 16px 12px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+.root-module_xsidebar__expander__niS7U {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+
+  width: 24px;
+  height: 24px;
+  opacity: 0.3;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.root-module_xsidebar__footer__2-24a {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+
+  padding: 6px;
+  cursor: pointer;
+}
+
+.root-module_x-myaccount_card_container__DZGUV{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap:24px;
+}
+
+.root-module_x-myaccount_card_item__GOnHu{
+  width: 410px;
+  cursor: pointer;
+}
+
+.root-module_x-address-container__yS8n- {
+  width: 100%;
+  > div {
+    padding: 16px;
+    /* background-color: #F5F5F5; */
   }
 }

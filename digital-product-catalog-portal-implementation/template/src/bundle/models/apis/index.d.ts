@@ -5,4 +5,5 @@ import AuthApi from './authApi';
 import BaseRest from './baseRest';
 import CartRequestApi from './cartsApi';
 import sapApi from './sapApi';
-export { CategoriesApi, ProductsApi, FilesApi, BaseRest, AuthApi, CartRequestApi, sapApi };
+import companyApi from './companyApi';
+export { CategoriesApi, ProductsApi, FilesApi, BaseRest, AuthApi, CartRequestApi, sapApi, companyApi };

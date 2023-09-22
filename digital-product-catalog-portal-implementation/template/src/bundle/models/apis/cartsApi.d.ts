@@ -10,7 +10,12 @@ export default class CartRequestApi extends BaseRest {
      * @param params
      * @returns {Promise<any> | AxiosError }
      */
-    getCart(): Promise<any | AxiosError>;
+    getHistory(filters: any): Promise<any | AxiosError>;
+    /**
+     * @param params
+     * @returns {Promise<any> | AxiosError }
+     */
+    getDetailCart(cartId: any): Promise<any | AxiosError>;
     createIntention(params: any): Promise<any>;
 }
 export {};

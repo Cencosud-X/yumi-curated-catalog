@@ -14,6 +14,7 @@ import { IActiveAccountExtension } from './flow/active-account-page';
 import { IPendingResetPasswordExtension } from './flow/wait-password-page';
 import { IForgotPasswordExtension } from './flow/forgot-password-page';
 import { IResetPasswordExtension } from './flow/reset-password-page';
+import { IProfilePageExtension } from './flow/profile-page';
 export interface IPortalModuleOverride extends Components.IModuleOverride {
     extensions?: {
         home_page: IHomePageExtension;
@@ -27,6 +28,7 @@ export interface IPortalModuleOverride extends Components.IModuleOverride {
         wait_password_page: IPendingResetPasswordExtension;
         forgot_password_page: IForgotPasswordExtension;
         reset_password_page: IResetPasswordExtension;
+        profile_page: IProfilePageExtension;
     };
     routes?: Components.IModuleRoute[];
 }

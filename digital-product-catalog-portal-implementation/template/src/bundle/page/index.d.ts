@@ -13,4 +13,5 @@ import ActiveAccount from './UnAuthorizedPages/ActiveAccount/ActiveAccount';
 import PendingResetPassword from './UnAuthorizedPages/PendingResetPassword/PendingResetPassword';
 import ForgotPassword from './UnAuthorizedPages/ForgotPassword/ForgotPassword';
 import ResetPassword from './UnAuthorizedPages/ResetPassword/ResetPassword';
-export { Home, Product, Cart, Shop, NotFound, ProductContainer, Category, CategoryPage, SignUp, PendingApprove, CreatePassword, ActiveAccount, PendingResetPassword, ForgotPassword, ResetPassword };
+import ProfileContainer from './AuthPages/Profile/Profile';
+export { Home, Product, Cart, Shop, NotFound, ProductContainer, Category, CategoryPage, SignUp, PendingApprove, CreatePassword, ActiveAccount, PendingResetPassword, ForgotPassword, ResetPassword, ProfileContainer };

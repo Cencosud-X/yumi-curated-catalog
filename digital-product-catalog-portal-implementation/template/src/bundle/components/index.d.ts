@@ -15,4 +15,5 @@ import ProductsList from './ProductList';
 import ListWrapper from './ListWrapper';
 import Filter from './Filter/index';
 import DrawerCategories from './DrawerCategories/index';
-export { ProductCardLoading, Nav, ShopCart, MobileNav, Button, ProductCard, Input, ShopCartItem, Loader, LoaderPage, LoaderScreen, ElevatorButton, ModalCart, ProductsList, ListWrapper, Filter, DrawerCategories };
+import AuthRouterLoader from './Router/AuthRouterLoader';
+export { ProductCardLoading, Nav, ShopCart, MobileNav, Button, ProductCard, Input, ShopCartItem, Loader, LoaderPage, LoaderScreen, ElevatorButton, ModalCart, ProductsList, ListWrapper, Filter, DrawerCategories, AuthRouterLoader };

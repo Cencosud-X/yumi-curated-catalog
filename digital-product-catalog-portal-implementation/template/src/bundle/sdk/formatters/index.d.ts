@@ -1,4 +1,5 @@
 import DniFormatter from "./DniFormatter";
 import NumberFormatter from "./NumberFormatter";
 import StringFormatter from "./StringFormatter";
-export { DniFormatter, NumberFormatter, StringFormatter };
+import DateFormatter from "./DateFormatter";
+export { DniFormatter, DateFormatter, NumberFormatter, StringFormatter };

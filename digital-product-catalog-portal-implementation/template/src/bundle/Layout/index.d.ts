@@ -6,4 +6,5 @@ import ProductSlider from './ProductSlider/ProductSlider';
 import RelatedProduct from './RelatedProduct/RelatedProduct';
 import Footer from './Footer/Footer';
 import PortalLayout from './PortalLayout';
-export { Header, Container, Slider, HomeLayout, ProductSlider, RelatedProduct, Footer, PortalLayout, };
+import LinksCardsHome from './LinksCardsHome';
+export { Header, Container, Slider, HomeLayout, ProductSlider, RelatedProduct, Footer, PortalLayout, LinksCardsHome };

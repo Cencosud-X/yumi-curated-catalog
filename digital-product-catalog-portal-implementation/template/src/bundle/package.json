@@ -9,13 +9,13 @@
   "peerDependencies": {
     "react": "^16.14.0",
     "react-router-dom": "^5.3.4",
-    "@team_yumi/ramen-web": "^0.0.3-next.1691419706173",
+    "@team_yumi/ramen-web": "^0.0.4-next.20230913-f2f5cf0-ea0703c2198e522df9a5cfc0cdaab758",
     "classnames": "^2.3.1",
     "swiper": "^8.1.4",
     "jwt-decode": "^3.1.2",
     "formik": "^2.4.3",
+    "lodash": "^4.17.21",
     "axios": "^1.4.0",
-    "rxjs": "^7.0.0",
-    "lodash": "^4.17.21"
+    "rxjs": "^7.0.0"
   }
 }

@@ -1,4 +1,4 @@
-export { D as DrawerCategories, H as Header, M as ModalCart, F as PortalLayout, b as default } from './index2.js';
+export { D as DrawerCategories, H as Header, M as ModalCart, F as PortalLayout, d as default } from './index2.js';
 import 'react/jsx-runtime';
 import 'swiper/react';
 import 'swiper';

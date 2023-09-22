@@ -15,6 +15,7 @@ interface IReducer {
         payload: any;
     }) => void;
     addToCart: (productData: Interfaces.ProductsInterfaces.IProduct, quantity: number) => void;
+    updateCart: (productData: Interfaces.ProductsInterfaces.IProduct[]) => void;
     updateQuantity: (productData: Interfaces.ProductsInterfaces.IProduct, quantity: number) => void;
     deleteFromCart: (item: Interfaces.ProductsInterfaces.IProduct) => void;
     increaseQuantity: (item: Interfaces.ProductsInterfaces.IProduct) => void;

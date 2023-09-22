@@ -1,3 +1,4 @@
 import * as ProductsInterfaces from './producstinterface';
 import * as CartInterfaces from './cartinterfaces';
-export { ProductsInterfaces, CartInterfaces };
+import * as CompanyInterfaces from './companyinterfaces';
+export { ProductsInterfaces, CartInterfaces, CompanyInterfaces };

@@ -14,5 +14,5 @@ export interface IReturnHookQueryCollection<T> {
     getData: any;
     loadMore: any;
 }
-declare const _default: <T>(request: (filters?: any) => any, params: any) => IReturnHookQueryCollection<T>;
+declare const _default: <T>(request: (filters?: any) => any, params: any, useInfinite?: boolean) => IReturnHookQueryCollection<T>;
 export default _default;

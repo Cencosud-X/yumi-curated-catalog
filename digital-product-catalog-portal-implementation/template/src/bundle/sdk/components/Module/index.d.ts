@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { IPageExtensions, Page } from '../Page';
 export interface IModuleRoute {
     path: string;
+    exact?: boolean;
     page: typeof Page;
 }
 export interface IModuleOverride {
