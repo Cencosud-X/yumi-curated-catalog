@@ -8,9 +8,11 @@ export interface IFilter {
     label: string;
     type?: 'select' | 'search';
     multiple?: boolean;
+    useSearch?: boolean;
     options: IOption[];
 }
 interface IProps {
+    loading?: boolean;
     filters: IFilter[];
     selectdFilters?: {
         [key: string]: string;

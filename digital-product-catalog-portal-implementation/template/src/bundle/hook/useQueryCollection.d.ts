@@ -13,6 +13,7 @@ export interface IReturnHookQueryCollection<T> {
     setErrors: any;
     getData: any;
     loadMore: any;
+    otherResults: any;
 }
 declare const _default: <T>(request: (filters?: any) => any, params: any, useInfinite?: boolean) => IReturnHookQueryCollection<T>;
 export default _default;

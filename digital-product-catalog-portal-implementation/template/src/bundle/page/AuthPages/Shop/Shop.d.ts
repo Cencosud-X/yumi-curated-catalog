@@ -1,12 +1,13 @@
 import { FC } from 'react';
 import './Shop.css';
-import { IFilter } from '../../../components/Filter';
-export interface IFilterSelected {
-    keyParent: string;
+export interface IItemSummary {
+    key: string;
     label?: string;
-    value: any;
-    multiple?: boolean;
-    filter: IFilter;
+    value: number;
+}
+export interface ISummaryData {
+    data: IItemSummary[];
+    type: string;
 }
 declare const Shop: FC;
 export default Shop;

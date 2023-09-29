@@ -8,5 +8,5 @@ export declare class IListParams<T> {
     filter?: FilterQuery;
     offset?: number;
     limit?: number;
-    sort?: ListParamsSort;
+    sort?: ListParamsSort | ListParamsSort[];
 }

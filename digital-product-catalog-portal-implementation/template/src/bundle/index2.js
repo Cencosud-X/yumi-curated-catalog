@@ -1,11 +1,11 @@
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import * as React from 'react';
 import React__default, { useContext, createContext, useState, useEffect, memo, useReducer, useCallback, useRef, Fragment as Fragment$1, useMemo, Suspense, lazy } from 'react';
-import { useLocation, Route, useHistory, Switch, Redirect, Link, BrowserRouter, useParams } from 'react-router-dom';
+import { Route, useLocation, useHistory, Switch, Redirect, Link, BrowserRouter, useParams } from 'react-router-dom';
 import Ramen from '@team_yumi/ramen-web';
 import axios from 'axios';
 import { Subject, filter } from 'rxjs';
-import { get as get$2, isEmpty, map, reduce, uniq } from 'lodash';
+import { get as get$2, isEmpty, map, reduce, filter as filter$1, groupBy, uniq } from 'lodash';
 import classnames from 'classnames';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
@@ -5031,966 +5031,13 @@ exportTypedArrayMethod('toLocaleString', function toLocaleString() {
   );
 }, FORCED$3);
 
-class AuthApi extends BaseRest {
-  constructor(config) {
-    super({
-      baseURL: config.baseURL
-    });
-    this.prefix = '/users';
-  }
-  /**
-   * @param params
-   * @returns {Promise<any> | AxiosError }
-   */
-  me() {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        const {
-          data
-        } = yield this.axios.get(`${this.prefix}/me`);
-        return data;
-      } catch (error) {
-        throw error;
-      }
-    });
-  }
-  login(params) {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        const {
-          data
-        } = yield this.axios.post(`${this.prefix}/login`, params);
-        return data;
-      } catch (error) {
-        throw error;
-      }
-    });
-  }
-  activateUser(params) {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        const {
-          data
-        } = yield this.axios.post(`/admin/activate-user-mock`, params);
-        return data;
-      } catch (error) {
-        throw error;
-      }
-    });
-  }
-  signUp(params) {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        const {
-          data
-        } = yield this.axios.post(`${this.prefix}`, params);
-        return data;
-      } catch (error) {
-        throw error;
-      }
-    });
-  }
-  setPassword(password) {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        const {
-          data
-        } = yield this.axios.post(`${this.prefix}/set-password`, {
-          password
-        });
-        return data;
-      } catch (error) {
-        throw error;
-      }
-    });
-  }
-  setPasswordDirect(password) {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        const {
-          data
-        } = yield this.axios.post(`${this.prefix}/set-password-direct`, {
-          password
-        });
-        return data;
-      } catch (error) {
-        throw error;
-      }
-    });
-  }
-  resetPassword(email) {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        const {
-          data
-        } = yield this.axios.post(`${this.prefix}/reset-password`, {
-          email
-        });
-        return data;
-      } catch (error) {
-        throw error;
-      }
-    });
-  }
-  resetPasswordWithToken(params) {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        const {
-          data
-        } = yield this.axios.post(`${this.prefix}/reset-password-token`, params);
-        return data;
-      } catch (error) {
-        throw error;
-      }
-    });
-  }
-  logout() {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        const {
-          data
-        } = yield this.axios.post(`${this.prefix}/logout`, {});
-        return data;
-      } catch (error) {
-        throw error;
-      }
-    });
-  }
-}
-
-class CartRequestApi extends BaseRest {
-  constructor(config) {
-    super({
-      baseURL: config.baseURL
-    });
-  }
-  /**
-   * @param params
-   * @returns {Promise<any> | AxiosError }
-   */
-  getHistory(filters) {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        const {
-          data
-        } = yield this.axios.post('/cart-request/search', Object.assign({}, filters));
-        return data;
-      } catch (error) {
-        throw error;
-      }
-    });
-  }
-  /**
-   * @param params
-   * @returns {Promise<any> | AxiosError }
-   */
-  getDetailCart(cartId) {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        const {
-          data
-        } = yield this.axios.get(`/cart-request/${cartId}`, {});
-        return data;
-      } catch (error) {
-        throw error;
-      }
-    });
-  }
-  createIntention(params) {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        console.log('params', params);
-        const {
-          data
-        } = yield this.axios.post('/cart-request', params);
-        return data;
-      } catch (error) {
-        throw error;
-      }
-    });
-  }
-}
-
-class sapApi extends BaseRest {
-  constructor(config) {
-    super({
-      baseURL: config.baseURL
-    });
-    this.prefix = '/sap';
-  }
-  /**
-   * @param rut
-   * @returns {Promise<any> | AxiosError }
-   */
-  customerValidate(rut) {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        const {
-          data
-        } = yield this.axios.get(`${this.prefix}/customer-validate/${rut}`, {});
-        return data;
-      } catch (error) {
-        throw error;
-      }
-    });
-  }
-  /**
-  * @param rut
-  * @returns {Promise<any> | AxiosError }
-  */
-  getInfoCompany(sapCode) {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        const {
-          data
-        } = yield this.axios.get(`${this.prefix}/customerDetail/${sapCode}`, {});
-        return data;
-      } catch (error) {
-        throw error;
-      }
-    });
-  }
-}
-
-class CompanyApi extends BaseRest {
-  constructor(config) {
-    super({
-      baseURL: config.baseURL
-    });
-  }
-  /**
-  * Get product by filter
-  * @param params
-  * @returns {Promise<Product.IProduct> | error }
-  * @memberof ProductClient
-  */
-  getAssignedSellersOffices(filter) {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        const {
-          data
-        } = yield this.axios.get('/sellers', filter);
-        console.log(data);
-        return data;
-      } catch (error) {
-        throw error;
-      }
-    });
-  }
-  /**
-   * Get product by filter
-   * @param params
-   * @returns {Promise<Product.IProduct> | error }
-   * @memberof ProductClient
-   */
-  getAddress(filter) {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        const {
-          data
-        } = yield this.axios.get('/companies/address', filter);
-        console.log(data);
-        return data;
-      } catch (error) {
-        throw error;
-      }
-    });
-  }
-  /**
-   * Post product by filter
-   * @param params
-   * @returns {Promise<Product.IProduct> | error }
-   * @memberof ProductClient
-   */
-  updateAddress(body) {
-    return __awaiter(this, void 0, void 0, function* () {
-      try {
-        const {
-          data
-        } = yield this.axios.post('/companies/address', body);
-        console.log(data);
-        return data;
-      } catch (error) {
-        throw error;
-      }
-    });
-  }
-}
-
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-var categoriesClient = new CategoriesApi({
-  baseURL: 'https://api.staging.cencox.xyz/ebisu/api-bff'
-});
-
-const getIconCategories = type => {
-  switch (type) {
-    case 'icon-electro':
-      return 'homeappliances-electro-sm';
-    case 'icon-muebles':
-      return 'furniture-hdeco-sm';
-    case 'icon-jardin':
-      return 'gardenaccessories-exterior-sm';
-    case 'icon-decoracion':
-      return 'endings-mdh';
-    case 'icon-cocina':
-      return 'kitchen-bathroom-mdh';
-    case 'icon-bano':
-      return 'hygiene-hbeauty-sm';
-    case 'icon-mascotas':
-      return 'pets-exterior-sm';
-    case 'icon-puertas':
-      return 'door-window-mdh';
-    case 'icon-pisos':
-      return 'flooring-mdh';
-    case 'icon-pinturas':
-      return 'paint-mdh';
-    case "icon-herramientas":
-      return 'electric-tools-mdh';
-    case "icon-auto":
-      return 'automotive-mdh';
-    case "icon-electricidad":
-      return 'electricity-mdh';
-    case "icon-ferreteria":
-      return 'hardware-store-mdh';
-    case "icon-salud":
-      return 'protection-neutral';
-    case "icon-materiales":
-      return 'construction-mdh';
-    case "icon-servicios":
-      return 'generic-neutral';
-    case "icon-dormitorio":
-      return 'bed-hdeco-sm';
-    case "icon-organizacion":
-      return 'general-cleaning-sm';
-    default:
-      return '';
-  }
-};
-const mappingChildrenCategory = data => {
-  return data.map(category => {
-    const icon = getIconCategories(category.icon);
-    if (category.menu) {
-      const menu = mappingChildrenCategory(category.menu).sort((a, b) => a.order - b.order);
-      return Object.assign(Object.assign({}, category), {
-        menu,
-        icon,
-        url: `/category/${category.slug}`
-      });
-    } else {
-      return Object.assign(Object.assign({}, category), {
-        icon,
-        url: `/category/${category.slug}`
-      });
-    }
-  });
-};
-
-const GlobalContext = /*#__PURE__*/createContext({});
-const GlobalContextProvider = ({
-  children
-}) => {
-  const [isLoading, setLoader] = useState(false);
-  const [categoriesNav, setCategoriesNav] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [isOpenModalCategories, setIsOpenModalCategories] = useState(false);
-  const [isOpenModalLogin, setIsOpenModalLogin] = useState(false);
-  useEffect(() => {
-    getData();
-    return () => {};
-  }, []);
-  const getData = () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-      setLoader(true);
-      const {
-        data
-      } = yield categoriesClient.list();
-      const categoriesMapped = mappingChildrenCategory(data).sort((a, b) => a.order - b.order);
-      const menuData = [{
-        name: 'Categorías',
-        url: '/category',
-        submenu: [...categoriesMapped]
-      }];
-      setCategories(categoriesMapped);
-      setCategoriesNav(menuData);
-      setLoader(false);
-    } catch (error) {
-      Ramen.Api.notification.error({
-        description: 'Error',
-        message: 'We have errors please try again'
-      });
-    }
-  });
-  return jsx(GlobalContext.Provider, Object.assign({
-    value: {
-      isLoading,
-      setLoader,
-      categories,
-      categoriesNav,
-      isOpenModalCategories,
-      setIsOpenModalCategories,
-      isOpenModalLogin,
-      setIsOpenModalLogin
-    }
-  }, {
-    children: children
-  }));
-};
-const useGlobal = () => useContext(GlobalContext);
-
-const Nav = ({
-  links
-}) => {
-  const {
-    isOpenModalCategories,
-    setIsOpenModalCategories
-  } = useGlobal();
-  return jsx("nav", {
-    children: jsx("ul", Object.assign({
-      className: "nav-wrapper"
-    }, {
-      children: (links || []).map((link, index) => jsx("li", Object.assign({
-        className: "nav-item"
-      }, {
-        children: link.submenu && jsx(Ramen.XButton, {
-          type: "tonal",
-          text: link.name,
-          icon: isOpenModalCategories ? 'close-outline' : 'list-outline',
-          onClick: () => setIsOpenModalCategories(!isOpenModalCategories)
-        })
-      }), index))
-    }))
-  });
-};
-var Nav$1 = /*#__PURE__*/memo(Nav);
-
-var aCallable = aCallable$b;
-var toObject = toObject$9;
-var IndexedObject = indexedObject;
-var lengthOfArrayLike = lengthOfArrayLike$9;
-
-var $TypeError$1 = TypeError;
-
-// `Array.prototype.{ reduce, reduceRight }` methods implementation
-var createMethod$2 = function (IS_RIGHT) {
-  return function (that, callbackfn, argumentsLength, memo) {
-    aCallable(callbackfn);
-    var O = toObject(that);
-    var self = IndexedObject(O);
-    var length = lengthOfArrayLike(O);
-    var index = IS_RIGHT ? length - 1 : 0;
-    var i = IS_RIGHT ? -1 : 1;
-    if (argumentsLength < 2) while (true) {
-      if (index in self) {
-        memo = self[index];
-        index += i;
-        break;
-      }
-      index += i;
-      if (IS_RIGHT ? index < 0 : length <= index) {
-        throw $TypeError$1('Reduce of empty array with no initial value');
-      }
-    }
-    for (;IS_RIGHT ? index >= 0 : length > index; index += i) if (index in self) {
-      memo = callbackfn(memo, self[index], index, O);
-    }
-    return memo;
-  };
-};
-
-var arrayReduce = {
-  // `Array.prototype.reduce` method
-  // https://tc39.es/ecma262/#sec-array.prototype.reduce
-  left: createMethod$2(false),
-  // `Array.prototype.reduceRight` method
-  // https://tc39.es/ecma262/#sec-array.prototype.reduceright
-  right: createMethod$2(true)
-};
-
-var $$8 = _export;
-var $reduce = arrayReduce.left;
-var arrayMethodIsStrict = arrayMethodIsStrict$2;
-var CHROME_VERSION = engineV8Version;
-var IS_NODE = engineIsNode;
-
-// Chrome 80-82 has a critical bug
-// https://bugs.chromium.org/p/chromium/issues/detail?id=1049982
-var CHROME_BUG = !IS_NODE && CHROME_VERSION > 79 && CHROME_VERSION < 83;
-var FORCED$2 = CHROME_BUG || !arrayMethodIsStrict('reduce');
-
-// `Array.prototype.reduce` method
-// https://tc39.es/ecma262/#sec-array.prototype.reduce
-$$8({ target: 'Array', proto: true, forced: FORCED$2 }, {
-  reduce: function reduce(callbackfn /* , initialValue */) {
-    var length = arguments.length;
-    return $reduce(this, callbackfn, length, length > 1 ? arguments[1] : undefined);
-  }
-});
-
-var uncurryThis$8 = functionUncurryThis;
-
-// `thisNumberValue` abstract operation
-// https://tc39.es/ecma262/#sec-thisnumbervalue
-var thisNumberValue$1 = uncurryThis$8(1.0.valueOf);
-
-var toIntegerOrInfinity$1 = toIntegerOrInfinity$9;
-var toString$8 = toString$d;
-var requireObjectCoercible$5 = requireObjectCoercible$a;
-
-var $RangeError$1 = RangeError;
-
-// `String.prototype.repeat` method implementation
-// https://tc39.es/ecma262/#sec-string.prototype.repeat
-var stringRepeat = function repeat(count) {
-  var str = toString$8(requireObjectCoercible$5(this));
-  var result = '';
-  var n = toIntegerOrInfinity$1(count);
-  if (n < 0 || n == Infinity) throw $RangeError$1('Wrong number of repetitions');
-  for (;n > 0; (n >>>= 1) && (str += str)) if (n & 1) result += str;
-  return result;
-};
-
-var $$7 = _export;
-var uncurryThis$7 = functionUncurryThis;
-var toIntegerOrInfinity = toIntegerOrInfinity$9;
-var thisNumberValue = thisNumberValue$1;
-var $repeat$1 = stringRepeat;
-var fails$6 = fails$y;
-
-var $RangeError = RangeError;
-var $String = String;
-var floor = Math.floor;
-var repeat$1 = uncurryThis$7($repeat$1);
-var stringSlice$4 = uncurryThis$7(''.slice);
-var nativeToFixed = uncurryThis$7(1.0.toFixed);
-
-var pow = function (x, n, acc) {
-  return n === 0 ? acc : n % 2 === 1 ? pow(x, n - 1, acc * x) : pow(x * x, n / 2, acc);
-};
-
-var log = function (x) {
-  var n = 0;
-  var x2 = x;
-  while (x2 >= 4096) {
-    n += 12;
-    x2 /= 4096;
-  }
-  while (x2 >= 2) {
-    n += 1;
-    x2 /= 2;
-  } return n;
-};
-
-var multiply = function (data, n, c) {
-  var index = -1;
-  var c2 = c;
-  while (++index < 6) {
-    c2 += n * data[index];
-    data[index] = c2 % 1e7;
-    c2 = floor(c2 / 1e7);
-  }
-};
-
-var divide = function (data, n) {
-  var index = 6;
-  var c = 0;
-  while (--index >= 0) {
-    c += data[index];
-    data[index] = floor(c / n);
-    c = (c % n) * 1e7;
-  }
-};
-
-var dataToString = function (data) {
-  var index = 6;
-  var s = '';
-  while (--index >= 0) {
-    if (s !== '' || index === 0 || data[index] !== 0) {
-      var t = $String(data[index]);
-      s = s === '' ? t : s + repeat$1('0', 7 - t.length) + t;
-    }
-  } return s;
-};
-
-var FORCED$1 = fails$6(function () {
-  return nativeToFixed(0.00008, 3) !== '0.000' ||
-    nativeToFixed(0.9, 0) !== '1' ||
-    nativeToFixed(1.255, 2) !== '1.25' ||
-    nativeToFixed(1000000000000000128.0, 0) !== '1000000000000000128';
-}) || !fails$6(function () {
-  // V8 ~ Android 4.3-
-  nativeToFixed({});
-});
-
-// `Number.prototype.toFixed` method
-// https://tc39.es/ecma262/#sec-number.prototype.tofixed
-$$7({ target: 'Number', proto: true, forced: FORCED$1 }, {
-  toFixed: function toFixed(fractionDigits) {
-    var number = thisNumberValue(this);
-    var fractDigits = toIntegerOrInfinity(fractionDigits);
-    var data = [0, 0, 0, 0, 0, 0];
-    var sign = '';
-    var result = '0';
-    var e, z, j, k;
-
-    // TODO: ES2018 increased the maximum number of fraction digits to 100, need to improve the implementation
-    if (fractDigits < 0 || fractDigits > 20) throw $RangeError('Incorrect fraction digits');
-    // eslint-disable-next-line no-self-compare -- NaN check
-    if (number != number) return 'NaN';
-    if (number <= -1e21 || number >= 1e21) return $String(number);
-    if (number < 0) {
-      sign = '-';
-      number = -number;
-    }
-    if (number > 1e-21) {
-      e = log(number * pow(2, 69, 1)) - 69;
-      z = e < 0 ? number * pow(2, -e, 1) : number / pow(2, e, 1);
-      z *= 0x10000000000000;
-      e = 52 - e;
-      if (e > 0) {
-        multiply(data, 0, z);
-        j = fractDigits;
-        while (j >= 7) {
-          multiply(data, 1e7, 0);
-          j -= 7;
-        }
-        multiply(data, pow(10, j, 1), 0);
-        j = e - 1;
-        while (j >= 23) {
-          divide(data, 1 << 23);
-          j -= 23;
-        }
-        divide(data, 1 << j);
-        multiply(data, 1, 1);
-        divide(data, 2);
-        result = dataToString(data);
-      } else {
-        multiply(data, 0, z);
-        multiply(data, 1 << -e, 0);
-        result = dataToString(data) + repeat$1('0', fractDigits);
-      }
-    }
-    if (fractDigits > 0) {
-      k = result.length;
-      result = sign + (k <= fractDigits
-        ? '0.' + repeat$1('0', fractDigits - k) + result
-        : stringSlice$4(result, 0, k - fractDigits) + '.' + stringSlice$4(result, k - fractDigits));
-    } else {
-      result = sign + result;
-    } return result;
-  }
-});
-
-const useLocalStorage = () => {
-  const getStorage = key => {
-    return JSON.parse(localStorage.getItem(key) || '[]');
-  };
-  const setStorage = (key, data) => {
-    localStorage.setItem(key, JSON.stringify(data));
-  };
-  return {
-    setStorage,
-    getStorage
-  };
-};
-
-const cartReducer = (state, action) => {
-  var _a, _b;
-  switch (action.type) {
-    case 'ADD_TO_CART':
-      return Object.assign(Object.assign({}, state), {
-        products: action.payload
-      });
-    case 'REMOVE_FROM_CART':
-      return Object.assign(Object.assign({}, state), {
-        products: state.products.filter(item => item.id !== action.payload)
-      });
-    case 'INCRESE_COUNT':
-      return Object.assign(Object.assign({}, state), {
-        products: state.products.map(item => {
-          if (item.id === action.payload) {
-            return Object.assign(Object.assign({}, item), {
-              quantity: item.quantity + 1
-            });
-          }
-          return item;
-        })
-      });
-    case 'UPDATE_COUNT':
-      const id = (_a = action.payload) === null || _a === void 0 ? void 0 : _a.id;
-      const quantity = (_b = action.payload) === null || _b === void 0 ? void 0 : _b.quantity;
-      return Object.assign(Object.assign({}, state), {
-        products: state.products.map(item => {
-          if (item.id === id) {
-            return Object.assign(Object.assign({}, item), {
-              quantity
-            });
-          }
-          return item;
-        })
-      });
-    case 'DECRESE_COUNT':
-      return Object.assign(Object.assign({}, state), {
-        products: state.products.map(item => {
-          if (item.id === action.payload) {
-            return Object.assign(Object.assign({}, item), {
-              quantity: item.quantity - 1
-            });
-          }
-          return item;
-        })
-      });
-    case 'SET_TOTAL_PRICE':
-      return Object.assign(Object.assign({}, state), {
-        totalPrice: action.payload
-      });
-    case 'SET_CART':
-      return Object.assign(Object.assign({}, state), {
-        products: action.payload
-      });
-    case 'CLEAR_CART':
-      return {
-        totalPrice: 0,
-        products: []
-      };
-    default:
-      return state;
-  }
-};
-
-const initialState = {
-  totalPrice: 0,
-  products: []
-};
-const CartContext = /*#__PURE__*/createContext(initialState);
-const CartContextProvider = ({
-  children
-}) => {
-  const [state, dispath] = useReducer(cartReducer, initialState);
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const {
-    getStorage,
-    setStorage
-  } = useLocalStorage();
-  const addToCart = (productData, quantity = 1) => {
-    const {
-      products
-    } = state;
-    // add count to the new product and set it to 1 as default
-    if (products.find(product => product.id === productData.id)) {
-      const product = products.find(product => product.id === productData.id);
-      product.quantity += quantity;
-      const newState = products.filter(newProduct => newProduct.id !== (product === null || product === void 0 ? void 0 : product.id));
-      setStorage('SHOP_CART', [...newState, product]);
-      dispath({
-        type: 'SET_CART',
-        payload: [...newState, product]
-      });
-    } else {
-      // if allready have count and added to cart, add one to count
-      productData.quantity = quantity;
-      const cartData = getStorage('SHOP_CART');
-      setStorage('SHOP_CART', [...cartData, productData]);
-      dispath({
-        type: 'ADD_TO_CART',
-        payload: [...products, productData]
-      });
-    }
-  };
-  const updateCart = products => {
-    setStorage('SHOP_CART', products);
-    dispath({
-      type: 'SET_CART',
-      payload: products
-    });
-  };
-  const deleteFromCart = item => {
-    dispath({
-      type: 'REMOVE_FROM_CART',
-      payload: item.id
-    });
-    // delete from local storage
-    const cartCopy = Object.assign({}, state);
-    const filterdCart = cartCopy.products.filter(product => product.id !== item.id);
-    setStorage('SHOP_CART', filterdCart);
-  };
-  const increaseQuantity = item => {
-    dispath({
-      type: 'INCRESE_COUNT',
-      payload: item.id
-    });
-    const newProducts = state.products.map(productItem => {
-      if (productItem.id === item.id) {
-        return Object.assign(Object.assign({}, productItem), {
-          quantity: item.quantity + 1
-        });
-      }
-      return productItem;
-    });
-    setStorage('SHOP_CART', newProducts);
-  };
-  const updateQuantity = (item, quantity) => {
-    console.log(quantity);
-    if (quantity === 0) {
-      return;
-    } else {
-      dispath({
-        type: "UPDATE_COUNT",
-        payload: {
-          id: item.id,
-          quantity
-        }
-      });
-      const newProducts = state.products.map(productItem => {
-        if (productItem.id === item.id) {
-          console.log(Object.assign(Object.assign({}, productItem), {
-            quantity
-          }));
-          return Object.assign(Object.assign({}, productItem), {
-            quantity
-          });
-        }
-        return productItem;
-      });
-      setStorage("SHOP_CART", newProducts);
-    }
-  };
-  const decreaseQuantity = item => {
-    dispath({
-      type: 'DECRESE_COUNT',
-      payload: item.id
-    });
-    const newProducts = state.products.map(productItem => {
-      if (productItem.id === item.id) {
-        return Object.assign(Object.assign({}, productItem), {
-          quantity: item.quantity - 1
-        });
-      }
-      return productItem;
-    });
-    setStorage('SHOP_CART', newProducts);
-    if (item.quantity <= 1) {
-      deleteFromCart(item);
-    }
-  };
-  const clearCart = () => {
-    dispath({
-      type: 'CLEAR_CART'
-    });
-    setStorage('SHOP_CART', []);
-  };
-  const setTotalPrice = price => {
-    dispath({
-      type: 'SET_TOTAL_PRICE',
-      payload: price
-    });
-  };
-  useEffect(() => {
-    let totalPrice = state.products.reduce((prev, item) => prev += item.price * item.quantity, 0).toFixed(2);
-    setTotalPrice(totalPrice);
-  }, [state.products]);
-  return jsx(CartContext.Provider, Object.assign({
-    value: {
-      cart: state.products,
-      totalPrice: state.totalPrice,
-      isOpenModal,
-      setIsOpenModal,
-      dispath,
-      updateCart,
-      clearCart,
-      addToCart,
-      deleteFromCart,
-      increaseQuantity,
-      updateQuantity,
-      decreaseQuantity,
-      setTotalPrice
-    }
-  }, {
-    children: children
-  }));
-};
-const useCartContext = () => useContext(CartContext);
-
-const ShopCart = () => {
-  const {
-    cart,
-    setIsOpenModal,
-    isOpenModal
-  } = useCartContext();
-  const {
-    pathname
-  } = useLocation();
-  const [addAnimation, setAddAnimation] = useState(false);
-  useEffect(() => {
-    setAddAnimation(true);
-    setTimeout(() => {
-      setAddAnimation(false);
-    }, 1000);
-  }, [cart]);
-  useEffect(() => {
-    setIsOpenModal(false);
-  }, [pathname]);
-  return jsx("div", Object.assign({
-    onClick: () => setIsOpenModal(!isOpenModal),
-    className: "cart"
-  }, {
-    children: jsxs("div", Object.assign({
-      className: "cart-icons"
-    }, {
-      children: [cart.length > 0 && jsx("span", Object.assign({
-        className: `cart-quantity ${addAnimation ? 'active' : ''}`
-      }, {
-        children: cart.reduce((prev, pro) => prev += pro.quantity, 0)
-      })), jsx("div", Object.assign({
-        className: 'button-cart'
-      }, {
-        children: jsx(Ramen.XButtonIcon, {
-          icon: 'shopping-cart-outline',
-          size: 'm'
-        })
-      }))]
-    }))
-  }));
-};
-var ShopCart$1 = /*#__PURE__*/memo(ShopCart);
-
-const MobileNav = () => {
-  const {
-    isOpenModalCategories,
-    setIsOpenModalCategories
-  } = useGlobal();
-  return jsx("div", Object.assign({
-    className: "mobile-nav"
-  }, {
-    children: jsx(Ramen.XButtonIcon, {
-      type: "tonal",
-      icon: isOpenModalCategories ? 'close-outline' : 'list-outline',
-      onClick: () => setIsOpenModalCategories(!isOpenModalCategories)
-    })
-  }));
-};
-
-const Button = props => {
-  const {
-      children,
-      className
-    } = props,
-    rest = __rest(props, ["children", "className"]);
-  return jsx("button", Object.assign({
-    className: `button-default ${className}`
-  }, rest, {
-    children: children
-  }));
-};
-
-var img$c = "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='75' height='75'%3e %3cdefs%3e %3cclipPath id='clip-path'%3e %3cpath id='Rect%c3%a1ngulo_108' data-name='Rect%c3%a1ngulo 108' style='fill:none' d='M0 0h75v75H0z'/%3e %3c/clipPath%3e %3cstyle%3e .cls-4%7bfill:%23ddd%7d %3c/style%3e %3c/defs%3e %3cg id='dummy-img' transform='translate(-5 -4.89)'%3e %3cg id='Grupo_131' data-name='Grupo 131' transform='translate(5 4.89)'%3e %3cg id='Grupo_130' data-name='Grupo 130' style='clip-path:url(%23clip-path)'%3e %3cpath id='Rect%c3%a1ngulo_107' data-name='Rect%c3%a1ngulo 107' transform='translate(-.313 -.313)' style='fill:white' d='M0 0h75.625v75.625H0z'/%3e %3c/g%3e %3c/g%3e %3cg id='Grupo_132' data-name='Grupo 132' transform='translate(15 14.89)'%3e %3ccircle id='Elipse_1' data-name='Elipse 1' class='cls-4' cx='5.625' cy='5.625' r='5.625' transform='translate(7.5 7.5)'/%3e %3cpath id='Trazado_445' data-name='Trazado 445' class='cls-4' d='M88.558 36.89H40.442A3.47 3.47 0 0 0 37 40.388v31.864a.769.769 0 1 0 1.538 0V40.388a1.92 1.92 0 0 1 1.9-1.936h48.12a1.92 1.92 0 0 1 1.9 1.936v17.805a.769.769 0 1 0 1.538 0V40.388a3.47 3.47 0 0 0-3.438-3.498z' transform='translate(-37 -36.89)'/%3e %3cpath id='Trazado_446' data-name='Trazado 446' class='cls-4' d='m91.43 97.681-11.762-14.51a1.561 1.561 0 0 0-1.211-.579 1.564 1.564 0 0 0-1.211.575l-5.688 6.976-8.694 10.129L60.8 98.5l-5.549-5.36a1.563 1.563 0 0 0-2.283.118l-13.8 16.429-2.07 2.277a1.5 1.5 0 0 0-.1.117v8.086a3.143 3.143 0 0 0 3.143 3.143h48.716A3.143 3.143 0 0 0 92 120.167V98.4l-.413-.487a1.559 1.559 0 0 0-.157-.232z' transform='translate(-37 -68.31)'/%3e %3c/g%3e %3c/g%3e%3c/svg%3e";
-
 var call$3 = functionCall;
 var fixRegExpWellKnownSymbolLogic$1 = fixRegexpWellKnownSymbolLogic;
 var anObject$3 = anObject$i;
 var isNullOrUndefined$1 = isNullOrUndefined$7;
 var toLength$1 = toLength$8;
-var toString$7 = toString$d;
-var requireObjectCoercible$4 = requireObjectCoercible$a;
+var toString$8 = toString$d;
+var requireObjectCoercible$5 = requireObjectCoercible$a;
 var getMethod$1 = getMethod$6;
 var advanceStringIndex = advanceStringIndex$2;
 var regExpExec$1 = regexpExecAbstract;
@@ -6001,15 +5048,15 @@ fixRegExpWellKnownSymbolLogic$1('match', function (MATCH, nativeMatch, maybeCall
     // `String.prototype.match` method
     // https://tc39.es/ecma262/#sec-string.prototype.match
     function match(regexp) {
-      var O = requireObjectCoercible$4(this);
+      var O = requireObjectCoercible$5(this);
       var matcher = isNullOrUndefined$1(regexp) ? undefined : getMethod$1(regexp, MATCH);
-      return matcher ? call$3(matcher, regexp, O) : new RegExp(regexp)[MATCH](toString$7(O));
+      return matcher ? call$3(matcher, regexp, O) : new RegExp(regexp)[MATCH](toString$8(O));
     },
     // `RegExp.prototype[@@match]` method
     // https://tc39.es/ecma262/#sec-regexp.prototype-@@match
     function (string) {
       var rx = anObject$3(this);
-      var S = toString$7(string);
+      var S = toString$8(string);
       var res = maybeCallNative(nativeMatch, rx, S);
 
       if (res.done) return res.value;
@@ -6022,7 +5069,7 @@ fixRegExpWellKnownSymbolLogic$1('match', function (MATCH, nativeMatch, maybeCall
       var n = 0;
       var result;
       while ((result = regExpExec$1(rx, S)) !== null) {
-        var matchStr = toString$7(result[0]);
+        var matchStr = toString$8(result[0]);
         A[n] = matchStr;
         if (matchStr === '') rx.lastIndex = advanceStringIndex(S, toLength$1(rx.lastIndex), fullUnicode);
         n++;
@@ -6080,20 +5127,20 @@ class Module extends React.Component {
   }
 }
 
-var $$6 = _export;
+var $$8 = _export;
 var $includes = arrayIncludes.includes;
-var fails$5 = fails$y;
+var fails$6 = fails$y;
 var addToUnscopables = addToUnscopables$2;
 
 // FF99+ bug
-var BROKEN_ON_SPARSE = fails$5(function () {
+var BROKEN_ON_SPARSE = fails$6(function () {
   // eslint-disable-next-line es/no-array-prototype-includes -- detection
   return !Array(1).includes();
 });
 
 // `Array.prototype.includes` method
 // https://tc39.es/ecma262/#sec-array.prototype.includes
-$$6({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
+$$8({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
   includes: function includes(el /* , fromIndex = 0 */) {
     return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
   }
@@ -6117,11 +5164,11 @@ var isRegexp = function (it) {
 
 var isRegExp$1 = isRegexp;
 
-var $TypeError = TypeError;
+var $TypeError$1 = TypeError;
 
 var notARegexp = function (it) {
   if (isRegExp$1(it)) {
-    throw $TypeError("The method doesn't accept regular expressions");
+    throw $TypeError$1("The method doesn't accept regular expressions");
   } return it;
 };
 
@@ -6141,22 +5188,22 @@ var correctIsRegexpLogic = function (METHOD_NAME) {
   } return false;
 };
 
-var $$5 = _export;
-var uncurryThis$6 = functionUncurryThis;
+var $$7 = _export;
+var uncurryThis$8 = functionUncurryThis;
 var notARegExp = notARegexp;
-var requireObjectCoercible$3 = requireObjectCoercible$a;
-var toString$6 = toString$d;
+var requireObjectCoercible$4 = requireObjectCoercible$a;
+var toString$7 = toString$d;
 var correctIsRegExpLogic = correctIsRegexpLogic;
 
-var stringIndexOf$1 = uncurryThis$6(''.indexOf);
+var stringIndexOf$1 = uncurryThis$8(''.indexOf);
 
 // `String.prototype.includes` method
 // https://tc39.es/ecma262/#sec-string.prototype.includes
-$$5({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
+$$7({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
   includes: function includes(searchString /* , position = 0 */) {
     return !!~stringIndexOf$1(
-      toString$6(requireObjectCoercible$3(this)),
-      toString$6(notARegExp(searchString)),
+      toString$7(requireObjectCoercible$4(this)),
+      toString$7(notARegExp(searchString)),
       arguments.length > 1 ? arguments[1] : undefined
     );
   }
@@ -6166,19 +5213,19 @@ $$5({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }
 var whitespaces$3 = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' +
   '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
 
-var uncurryThis$5 = functionUncurryThis;
-var requireObjectCoercible$2 = requireObjectCoercible$a;
-var toString$5 = toString$d;
+var uncurryThis$7 = functionUncurryThis;
+var requireObjectCoercible$3 = requireObjectCoercible$a;
+var toString$6 = toString$d;
 var whitespaces$2 = whitespaces$3;
 
-var replace$3 = uncurryThis$5(''.replace);
+var replace$3 = uncurryThis$7(''.replace);
 var ltrim = RegExp('^[' + whitespaces$2 + ']+');
 var rtrim = RegExp('(^|[^' + whitespaces$2 + '])[' + whitespaces$2 + ']+$');
 
 // `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
-var createMethod$1 = function (TYPE) {
+var createMethod$2 = function (TYPE) {
   return function ($this) {
-    var string = toString$5(requireObjectCoercible$2($this));
+    var string = toString$6(requireObjectCoercible$3($this));
     if (TYPE & 1) string = replace$3(string, ltrim, '');
     if (TYPE & 2) string = replace$3(string, rtrim, '$1');
     return string;
@@ -6188,19 +5235,19 @@ var createMethod$1 = function (TYPE) {
 var stringTrim = {
   // `String.prototype.{ trimLeft, trimStart }` methods
   // https://tc39.es/ecma262/#sec-string.prototype.trimstart
-  start: createMethod$1(1),
+  start: createMethod$2(1),
   // `String.prototype.{ trimRight, trimEnd }` methods
   // https://tc39.es/ecma262/#sec-string.prototype.trimend
-  end: createMethod$1(2),
+  end: createMethod$2(2),
   // `String.prototype.trim` method
   // https://tc39.es/ecma262/#sec-string.prototype.trim
-  trim: createMethod$1(3)
+  trim: createMethod$2(3)
 };
 
 var global$4 = global$v;
-var fails$4 = fails$y;
-var uncurryThis$4 = functionUncurryThis;
-var toString$4 = toString$d;
+var fails$5 = fails$y;
+var uncurryThis$6 = functionUncurryThis;
+var toString$5 = toString$d;
 var trim = stringTrim.trim;
 var whitespaces$1 = whitespaces$3;
 
@@ -6208,24 +5255,24 @@ var $parseInt$1 = global$4.parseInt;
 var Symbol$1 = global$4.Symbol;
 var ITERATOR$2 = Symbol$1 && Symbol$1.iterator;
 var hex = /^[+-]?0x/i;
-var exec$1 = uncurryThis$4(hex.exec);
-var FORCED = $parseInt$1(whitespaces$1 + '08') !== 8 || $parseInt$1(whitespaces$1 + '0x16') !== 22
+var exec$1 = uncurryThis$6(hex.exec);
+var FORCED$2 = $parseInt$1(whitespaces$1 + '08') !== 8 || $parseInt$1(whitespaces$1 + '0x16') !== 22
   // MS Edge 18- broken with boxed symbols
-  || (ITERATOR$2 && !fails$4(function () { $parseInt$1(Object(ITERATOR$2)); }));
+  || (ITERATOR$2 && !fails$5(function () { $parseInt$1(Object(ITERATOR$2)); }));
 
 // `parseInt` method
 // https://tc39.es/ecma262/#sec-parseint-string-radix
-var numberParseInt = FORCED ? function parseInt(string, radix) {
-  var S = trim(toString$4(string));
+var numberParseInt = FORCED$2 ? function parseInt(string, radix) {
+  var S = trim(toString$5(string));
   return $parseInt$1(S, (radix >>> 0) || (exec$1(hex, S) ? 16 : 10));
 } : $parseInt$1;
 
-var $$4 = _export;
+var $$6 = _export;
 var $parseInt = numberParseInt;
 
 // `parseInt` method
 // https://tc39.es/ecma262/#sec-parseint-string-radix
-$$4({ global: true, forced: parseInt != $parseInt }, {
+$$6({ global: true, forced: parseInt != $parseInt }, {
   parseInt: $parseInt
 });
 
@@ -6284,6 +5331,160 @@ class DniFormatter {
 }
 var DniFormatter$1 = new DniFormatter();
 
+var uncurryThis$5 = functionUncurryThis;
+
+// `thisNumberValue` abstract operation
+// https://tc39.es/ecma262/#sec-thisnumbervalue
+var thisNumberValue$1 = uncurryThis$5(1.0.valueOf);
+
+var toIntegerOrInfinity$1 = toIntegerOrInfinity$9;
+var toString$4 = toString$d;
+var requireObjectCoercible$2 = requireObjectCoercible$a;
+
+var $RangeError$1 = RangeError;
+
+// `String.prototype.repeat` method implementation
+// https://tc39.es/ecma262/#sec-string.prototype.repeat
+var stringRepeat = function repeat(count) {
+  var str = toString$4(requireObjectCoercible$2(this));
+  var result = '';
+  var n = toIntegerOrInfinity$1(count);
+  if (n < 0 || n == Infinity) throw $RangeError$1('Wrong number of repetitions');
+  for (;n > 0; (n >>>= 1) && (str += str)) if (n & 1) result += str;
+  return result;
+};
+
+var $$5 = _export;
+var uncurryThis$4 = functionUncurryThis;
+var toIntegerOrInfinity = toIntegerOrInfinity$9;
+var thisNumberValue = thisNumberValue$1;
+var $repeat$1 = stringRepeat;
+var fails$4 = fails$y;
+
+var $RangeError = RangeError;
+var $String = String;
+var floor = Math.floor;
+var repeat$1 = uncurryThis$4($repeat$1);
+var stringSlice$4 = uncurryThis$4(''.slice);
+var nativeToFixed = uncurryThis$4(1.0.toFixed);
+
+var pow = function (x, n, acc) {
+  return n === 0 ? acc : n % 2 === 1 ? pow(x, n - 1, acc * x) : pow(x * x, n / 2, acc);
+};
+
+var log = function (x) {
+  var n = 0;
+  var x2 = x;
+  while (x2 >= 4096) {
+    n += 12;
+    x2 /= 4096;
+  }
+  while (x2 >= 2) {
+    n += 1;
+    x2 /= 2;
+  } return n;
+};
+
+var multiply = function (data, n, c) {
+  var index = -1;
+  var c2 = c;
+  while (++index < 6) {
+    c2 += n * data[index];
+    data[index] = c2 % 1e7;
+    c2 = floor(c2 / 1e7);
+  }
+};
+
+var divide = function (data, n) {
+  var index = 6;
+  var c = 0;
+  while (--index >= 0) {
+    c += data[index];
+    data[index] = floor(c / n);
+    c = (c % n) * 1e7;
+  }
+};
+
+var dataToString = function (data) {
+  var index = 6;
+  var s = '';
+  while (--index >= 0) {
+    if (s !== '' || index === 0 || data[index] !== 0) {
+      var t = $String(data[index]);
+      s = s === '' ? t : s + repeat$1('0', 7 - t.length) + t;
+    }
+  } return s;
+};
+
+var FORCED$1 = fails$4(function () {
+  return nativeToFixed(0.00008, 3) !== '0.000' ||
+    nativeToFixed(0.9, 0) !== '1' ||
+    nativeToFixed(1.255, 2) !== '1.25' ||
+    nativeToFixed(1000000000000000128.0, 0) !== '1000000000000000128';
+}) || !fails$4(function () {
+  // V8 ~ Android 4.3-
+  nativeToFixed({});
+});
+
+// `Number.prototype.toFixed` method
+// https://tc39.es/ecma262/#sec-number.prototype.tofixed
+$$5({ target: 'Number', proto: true, forced: FORCED$1 }, {
+  toFixed: function toFixed(fractionDigits) {
+    var number = thisNumberValue(this);
+    var fractDigits = toIntegerOrInfinity(fractionDigits);
+    var data = [0, 0, 0, 0, 0, 0];
+    var sign = '';
+    var result = '0';
+    var e, z, j, k;
+
+    // TODO: ES2018 increased the maximum number of fraction digits to 100, need to improve the implementation
+    if (fractDigits < 0 || fractDigits > 20) throw $RangeError('Incorrect fraction digits');
+    // eslint-disable-next-line no-self-compare -- NaN check
+    if (number != number) return 'NaN';
+    if (number <= -1e21 || number >= 1e21) return $String(number);
+    if (number < 0) {
+      sign = '-';
+      number = -number;
+    }
+    if (number > 1e-21) {
+      e = log(number * pow(2, 69, 1)) - 69;
+      z = e < 0 ? number * pow(2, -e, 1) : number / pow(2, e, 1);
+      z *= 0x10000000000000;
+      e = 52 - e;
+      if (e > 0) {
+        multiply(data, 0, z);
+        j = fractDigits;
+        while (j >= 7) {
+          multiply(data, 1e7, 0);
+          j -= 7;
+        }
+        multiply(data, pow(10, j, 1), 0);
+        j = e - 1;
+        while (j >= 23) {
+          divide(data, 1 << 23);
+          j -= 23;
+        }
+        divide(data, 1 << j);
+        multiply(data, 1, 1);
+        divide(data, 2);
+        result = dataToString(data);
+      } else {
+        multiply(data, 0, z);
+        multiply(data, 1 << -e, 0);
+        result = dataToString(data) + repeat$1('0', fractDigits);
+      }
+    }
+    if (fractDigits > 0) {
+      k = result.length;
+      result = sign + (k <= fractDigits
+        ? '0.' + repeat$1('0', fractDigits - k) + result
+        : stringSlice$4(result, 0, k - fractDigits) + '.' + stringSlice$4(result, k - fractDigits));
+    } else {
+      result = sign + result;
+    } return result;
+  }
+});
+
 // https://github.com/tc39/proposal-string-pad-start-end
 var uncurryThis$3 = functionUncurryThis;
 var toLength = toLength$8;
@@ -6296,7 +5497,7 @@ var stringSlice$3 = uncurryThis$3(''.slice);
 var ceil = Math.ceil;
 
 // `String.prototype.{ padStart, padEnd }` methods implementation
-var createMethod = function (IS_END) {
+var createMethod$1 = function (IS_END) {
   return function ($this, maxLength, fillString) {
     var S = toString$3(requireObjectCoercible$1($this));
     var intMaxLength = toLength(maxLength);
@@ -6314,10 +5515,10 @@ var createMethod = function (IS_END) {
 var stringPad = {
   // `String.prototype.padStart` method
   // https://tc39.es/ecma262/#sec-string.prototype.padstart
-  start: createMethod(false),
+  start: createMethod$1(false),
   // `String.prototype.padEnd` method
   // https://tc39.es/ecma262/#sec-string.prototype.padend
-  end: createMethod(true)
+  end: createMethod$1(true)
 };
 
 // https://github.com/zloirock/core-js/issues/280
@@ -6325,13 +5526,13 @@ var userAgent = engineUserAgent;
 
 var stringPadWebkitBug = /Version\/10(?:\.\d+){1,2}(?: [\w./]+)?(?: Mobile\/\w+)? Safari\//.test(userAgent);
 
-var $$3 = _export;
+var $$4 = _export;
 var $padStart = stringPad.start;
 var WEBKIT_BUG = stringPadWebkitBug;
 
 // `String.prototype.padStart` method
 // https://tc39.es/ecma262/#sec-string.prototype.padstart
-$$3({ target: 'String', proto: true, forced: WEBKIT_BUG }, {
+$$4({ target: 'String', proto: true, forced: WEBKIT_BUG }, {
   padStart: function padStart(maxLength /* , fillString = ' ' */) {
     return $padStart(this, maxLength, arguments.length > 1 ? arguments[1] : undefined);
   }
@@ -6432,13 +5633,13 @@ var stringTrimForced = function (METHOD_NAME) {
   });
 };
 
-var $$2 = _export;
+var $$3 = _export;
 var $trim = stringTrim.trim;
 var forcedStringTrimMethod = stringTrimForced;
 
 // `String.prototype.trim` method
 // https://tc39.es/ecma262/#sec-string.prototype.trim
-$$2({ target: 'String', proto: true, forced: forcedStringTrimMethod('trim') }, {
+$$3({ target: 'String', proto: true, forced: forcedStringTrimMethod('trim') }, {
   trim: function trim() {
     return $trim(this);
   }
@@ -12421,9 +11622,952 @@ const isValidEmail = value => {
   return false;
 };
 
+const maxFile = 5;
+const maxFilePdf = 5;
+const validateSize = file => {
+  const sizeMax = (file === null || file === void 0 ? void 0 : file.type) === 'application/pdf' ? maxFilePdf : maxFile;
+  const size = file === null || file === void 0 ? void 0 : file.size;
+  if (!size) {
+    return false;
+  }
+  const fileSize = size / 1024 / 1024; // in MiB
+  return fileSize > sizeMax;
+};
+
+class FilesApi extends BaseRest {
+  constructor(config) {
+    super({
+      baseURL: config.baseURL
+    });
+  }
+  save(data, fileName) {
+    return __awaiter(this, void 0, void 0, function* () {
+      const formData = new FormData();
+      formData.append('file', data, fileName);
+      try {
+        const response = yield this.axios.post('/load-files', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        return response.data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  uploadPhotoUser(urlImage) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const response = yield this.axios.post('/users/set-image', {
+          image: urlImage
+        });
+        return response.data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  delete(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        yield this.axios.delete(`/load-files/${id}`);
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  getBase64(event, onSucces, onError) {
+    let file = event.target.files[0];
+    if (file && !validateSize(file)) {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function () {
+        onSucces === null || onSucces === void 0 ? void 0 : onSucces(reader.result);
+      };
+      reader.onerror = function (error) {
+        onError === null || onError === void 0 ? void 0 : onError(error);
+      };
+    } else {
+      const textError = `La imagen que desea subir es mayor que ${maxFile} MB`;
+      onError === null || onError === void 0 ? void 0 : onError({
+        message: textError
+      });
+    }
+  }
+  arrayBufferToBase64(buffer) {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  }
+  get(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        if (id) {
+          const response = yield this.axios.get(`/load-files/${id}`, {
+            responseType: 'arraybuffer'
+          });
+          if (response.data) return this.arrayBufferToBase64(response.data);
+        }
+      } catch (error) {
+        throw error;
+      }
+      return undefined;
+    });
+  }
+}
+
+class AuthApi extends BaseRest {
+  constructor(config) {
+    super({
+      baseURL: config.baseURL
+    });
+    this.prefix = '/users';
+  }
+  /**
+   * @param params
+   * @returns {Promise<any> | AxiosError }
+   */
+  me() {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.get(`${this.prefix}/me`);
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  login(params) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.post(`${this.prefix}/login`, params);
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  activateUser(params) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.post(`/admin/activate-user-mock`, params);
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  signUp(params) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.post(`${this.prefix}`, params);
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  setPassword(password) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.post(`${this.prefix}/set-password`, {
+          password
+        });
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  setPasswordDirect(password) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.post(`${this.prefix}/set-password-direct`, {
+          password
+        });
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  resetPassword(email) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.post(`${this.prefix}/reset-password`, {
+          email
+        });
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  resetPasswordWithToken(params) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.post(`${this.prefix}/reset-password-token`, params);
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  logout() {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.post(`${this.prefix}/logout`, {});
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+}
+
+class CartRequestApi extends BaseRest {
+  constructor(config) {
+    super({
+      baseURL: config.baseURL
+    });
+  }
+  /**
+   * @param params
+   * @returns {Promise<any> | AxiosError }
+   */
+  getHistory(filters) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.post('/cart-request/search', Object.assign({}, filters));
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  /**
+   * @param params
+   * @returns {Promise<any> | AxiosError }
+   */
+  getDetailCart(cartId) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.get(`/cart-request/${cartId}`, {});
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  createIntention(params) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.post('/cart-request', params);
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+}
+
+class sapApi extends BaseRest {
+  constructor(config) {
+    super({
+      baseURL: config.baseURL
+    });
+    this.prefix = '/sap';
+  }
+  /**
+   * @param rut
+   * @returns {Promise<any> | AxiosError }
+   */
+  customerValidate(rut) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.get(`${this.prefix}/customer-validate/${rut}`, {});
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  /**
+  * @param rut
+  * @returns {Promise<any> | AxiosError }
+  */
+  getInfoCompany(sapCode) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.get(`${this.prefix}/customerDetail/${sapCode}`, {});
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+}
+
+class CompanyApi extends BaseRest {
+  constructor(config) {
+    super({
+      baseURL: config.baseURL
+    });
+  }
+  /**
+  * Get product by filter
+  * @param params
+  * @returns {Promise<Product.IProduct> | error }
+  * @memberof ProductClient
+  */
+  getAssignedSellersOffices(filter) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.get('/sellers', filter);
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  /**
+   * Get product by filter
+   * @param params
+   * @returns {Promise<Product.IProduct> | error }
+   * @memberof ProductClient
+   */
+  getAddress(filter) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.get('/companies/address', filter);
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+  /**
+   * Post product by filter
+   * @param params
+   * @returns {Promise<Product.IProduct> | error }
+   * @memberof ProductClient
+   */
+  updateAddress(body) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const {
+          data
+        } = yield this.axios.post('/companies/address', body);
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    });
+  }
+}
+
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+var categoriesClient = new CategoriesApi({
+  baseURL: 'https://api.staging.cencox.xyz/ebisu/api-bff'
+});
+
+const getIconCategories = type => {
+  switch (type) {
+    case '11':
+      return 'homeappliances-electro-sm';
+    case '12':
+      return 'furniture-hdeco-sm';
+    case '13':
+      return 'gardenaccessories-exterior-sm';
+    case '16':
+      return 'endings-mdh';
+    case '17':
+      return 'kitchen-bathroom-mdh';
+    case '18':
+      return 'hygiene-hbeauty-sm';
+    case '19':
+      return 'pets-exterior-sm';
+    case '20':
+      return 'door-window-mdh';
+    case '21':
+      return 'flooring-mdh';
+    case '22':
+      return 'paint-mdh';
+    case "23":
+      return 'electric-tools-mdh';
+    case "24":
+      return 'automotive-mdh';
+    case "25":
+      return 'electricity-mdh';
+    case "26":
+      return 'hardware-store-mdh';
+    case "28":
+      return 'protection-neutral';
+    case "27":
+      return 'construction-mdh';
+    case "29":
+      return 'generic-neutral';
+    case "14":
+      return 'bed-hdeco-sm';
+    case "15":
+      return 'general-cleaning-sm';
+    default:
+      return '';
+  }
+};
+const mappingChildrenCategory = (data, level = 0, parentId) => {
+  return data.map(category => {
+    const icon = getIconCategories(`${category.id}`);
+    const parent = parentId || category.id;
+    if (category.children) {
+      const children = mappingChildrenCategory(category.children, level + 1, parent).sort((a, b) => a.order - b.order);
+      return Object.assign(Object.assign({}, category), {
+        level,
+        parentId: parent,
+        children,
+        icon,
+        url: `/category/${category.id}`
+      });
+    } else {
+      return Object.assign(Object.assign({}, category), {
+        level,
+        icon,
+        url: `/category/${category.id}`
+      });
+    }
+  });
+};
+const groupByLevel = data => {
+  const result = new Map();
+  function recursive(node) {
+    var _a;
+    result.set(node.level, [...(result.get(node.level) || []), node]);
+    (_a = node.children) === null || _a === void 0 ? void 0 : _a.forEach(recursive);
+  }
+  data.forEach(recursive);
+  return Array.from(result.values());
+};
+const findAncestors = (item, targetId, ancestors = []) => {
+  const currentAncestors = [...ancestors, {
+    id: item.id,
+    name: item.name,
+    level: item.level
+  }];
+  if (item.id === targetId) {
+    return currentAncestors;
+  }
+  let found = null;
+  item.children.some(child => {
+    const result = findAncestors(child, targetId, currentAncestors);
+    if (result) {
+      found = result;
+      return true; // Esto interrumpe la iteración de 'some' tan pronto como encontramos el nodo objetivo
+    }
+
+    return false;
+  });
+  return found;
+};
+const findParentsInRoot = (data, targetId) => {
+  let found = null;
+  data.some(item => {
+    const result = findAncestors(item, targetId);
+    if (result) {
+      found = result;
+      return true;
+    }
+    return false;
+  });
+  return found;
+};
+
+const GlobalContext = /*#__PURE__*/createContext({});
+const GlobalContextProvider = ({
+  children
+}) => {
+  const [isLoading, setLoader] = useState(false);
+  const [categoriesNav, setCategoriesNav] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [categoriesByLevel, setCategoriesByLevel] = useState([]);
+  const [isOpenModalCategories, setIsOpenModalCategories] = useState(false);
+  const [isOpenModalLogin, setIsOpenModalLogin] = useState(false);
+  useEffect(() => {
+    getData();
+    return () => {};
+  }, []);
+  const getData = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+      setLoader(true);
+      const {
+        data
+      } = yield categoriesClient.list();
+      const categoriesMapped = mappingChildrenCategory(data).sort((a, b) => b.name - b.name);
+      const categoriesByLevel = groupByLevel(categoriesMapped);
+      console.log(categoriesByLevel);
+      const menuData = [{
+        name: 'Categorías',
+        url: '/category',
+        submenu: [...categoriesMapped]
+      }];
+      setCategories(categoriesMapped);
+      setCategoriesByLevel(categoriesByLevel);
+      setCategoriesNav(menuData);
+      setLoader(false);
+    } catch (error) {
+      Ramen.Api.notification.error({
+        description: 'No hemos podido cargar las categorias',
+        message: 'Por favor intentelo de nuevo.'
+      });
+    }
+  });
+  return jsx(GlobalContext.Provider, Object.assign({
+    value: {
+      isLoading,
+      setLoader,
+      categories,
+      categoriesByLevel,
+      categoriesNav,
+      isOpenModalCategories,
+      setIsOpenModalCategories,
+      isOpenModalLogin,
+      setIsOpenModalLogin
+    }
+  }, {
+    children: children
+  }));
+};
+const useGlobal = () => useContext(GlobalContext);
+
+const Nav = ({
+  links
+}) => {
+  const {
+    isOpenModalCategories,
+    setIsOpenModalCategories
+  } = useGlobal();
+  return jsx("nav", {
+    children: jsx("ul", Object.assign({
+      className: "nav-wrapper"
+    }, {
+      children: (links || []).map((link, index) => jsx("li", Object.assign({
+        className: "nav-item"
+      }, {
+        children: link.submenu && jsx(Ramen.XButton, {
+          type: "tonal",
+          text: link.name,
+          icon: isOpenModalCategories ? 'close-outline' : 'list-outline',
+          onClick: () => setIsOpenModalCategories(!isOpenModalCategories)
+        })
+      }), index))
+    }))
+  });
+};
+var Nav$1 = /*#__PURE__*/memo(Nav);
+
+var aCallable = aCallable$b;
+var toObject = toObject$9;
+var IndexedObject = indexedObject;
+var lengthOfArrayLike = lengthOfArrayLike$9;
+
+var $TypeError = TypeError;
+
+// `Array.prototype.{ reduce, reduceRight }` methods implementation
+var createMethod = function (IS_RIGHT) {
+  return function (that, callbackfn, argumentsLength, memo) {
+    aCallable(callbackfn);
+    var O = toObject(that);
+    var self = IndexedObject(O);
+    var length = lengthOfArrayLike(O);
+    var index = IS_RIGHT ? length - 1 : 0;
+    var i = IS_RIGHT ? -1 : 1;
+    if (argumentsLength < 2) while (true) {
+      if (index in self) {
+        memo = self[index];
+        index += i;
+        break;
+      }
+      index += i;
+      if (IS_RIGHT ? index < 0 : length <= index) {
+        throw $TypeError('Reduce of empty array with no initial value');
+      }
+    }
+    for (;IS_RIGHT ? index >= 0 : length > index; index += i) if (index in self) {
+      memo = callbackfn(memo, self[index], index, O);
+    }
+    return memo;
+  };
+};
+
+var arrayReduce = {
+  // `Array.prototype.reduce` method
+  // https://tc39.es/ecma262/#sec-array.prototype.reduce
+  left: createMethod(false),
+  // `Array.prototype.reduceRight` method
+  // https://tc39.es/ecma262/#sec-array.prototype.reduceright
+  right: createMethod(true)
+};
+
+var $$2 = _export;
+var $reduce = arrayReduce.left;
+var arrayMethodIsStrict = arrayMethodIsStrict$2;
+var CHROME_VERSION = engineV8Version;
+var IS_NODE = engineIsNode;
+
+// Chrome 80-82 has a critical bug
+// https://bugs.chromium.org/p/chromium/issues/detail?id=1049982
+var CHROME_BUG = !IS_NODE && CHROME_VERSION > 79 && CHROME_VERSION < 83;
+var FORCED = CHROME_BUG || !arrayMethodIsStrict('reduce');
+
+// `Array.prototype.reduce` method
+// https://tc39.es/ecma262/#sec-array.prototype.reduce
+$$2({ target: 'Array', proto: true, forced: FORCED }, {
+  reduce: function reduce(callbackfn /* , initialValue */) {
+    var length = arguments.length;
+    return $reduce(this, callbackfn, length, length > 1 ? arguments[1] : undefined);
+  }
+});
+
+const useLocalStorage = () => {
+  const getStorage = key => {
+    return JSON.parse(localStorage.getItem(key) || '[]');
+  };
+  const setStorage = (key, data) => {
+    localStorage.setItem(key, JSON.stringify(data));
+  };
+  return {
+    setStorage,
+    getStorage
+  };
+};
+
+const cartReducer = (state, action) => {
+  var _a, _b;
+  switch (action.type) {
+    case 'ADD_TO_CART':
+      return Object.assign(Object.assign({}, state), {
+        products: action.payload
+      });
+    case 'REMOVE_FROM_CART':
+      return Object.assign(Object.assign({}, state), {
+        products: state.products.filter(item => item.id !== action.payload)
+      });
+    case 'INCRESE_COUNT':
+      return Object.assign(Object.assign({}, state), {
+        products: state.products.map(item => {
+          if (item.id === action.payload) {
+            return Object.assign(Object.assign({}, item), {
+              quantity: item.quantity + 1
+            });
+          }
+          return item;
+        })
+      });
+    case 'UPDATE_COUNT':
+      const id = (_a = action.payload) === null || _a === void 0 ? void 0 : _a.id;
+      const quantity = (_b = action.payload) === null || _b === void 0 ? void 0 : _b.quantity;
+      return Object.assign(Object.assign({}, state), {
+        products: state.products.map(item => {
+          if (item.id === id) {
+            return Object.assign(Object.assign({}, item), {
+              quantity
+            });
+          }
+          return item;
+        })
+      });
+    case 'DECRESE_COUNT':
+      return Object.assign(Object.assign({}, state), {
+        products: state.products.map(item => {
+          if (item.id === action.payload) {
+            return Object.assign(Object.assign({}, item), {
+              quantity: item.quantity - 1
+            });
+          }
+          return item;
+        })
+      });
+    case 'SET_TOTAL_PRICE':
+      return Object.assign(Object.assign({}, state), {
+        totalPrice: action.payload
+      });
+    case 'SET_CART':
+      return Object.assign(Object.assign({}, state), {
+        products: action.payload
+      });
+    case 'CLEAR_CART':
+      return {
+        totalPrice: 0,
+        products: []
+      };
+    default:
+      return state;
+  }
+};
+
+const initialState = {
+  totalPrice: 0,
+  products: []
+};
+const CartContext = /*#__PURE__*/createContext(initialState);
+const CartContextProvider = ({
+  children
+}) => {
+  const [state, dispath] = useReducer(cartReducer, initialState);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const {
+    getStorage,
+    setStorage
+  } = useLocalStorage();
+  const addToCart = (productData, quantity = 1) => {
+    const {
+      products
+    } = state;
+    // add count to the new product and set it to 1 as default
+    if (products.find(product => product.id === productData.id)) {
+      const product = products.find(product => product.id === productData.id);
+      product.quantity += quantity;
+      const newState = products.filter(newProduct => newProduct.id !== (product === null || product === void 0 ? void 0 : product.id));
+      setStorage('SHOP_CART', [...newState, product]);
+      dispath({
+        type: 'SET_CART',
+        payload: [...newState, product]
+      });
+    } else {
+      // if allready have count and added to cart, add one to count
+      productData.quantity = quantity;
+      const cartData = getStorage('SHOP_CART');
+      setStorage('SHOP_CART', [...cartData, productData]);
+      dispath({
+        type: 'ADD_TO_CART',
+        payload: [...products, productData]
+      });
+    }
+  };
+  const updateCart = products => {
+    setStorage('SHOP_CART', products);
+    dispath({
+      type: 'SET_CART',
+      payload: products
+    });
+  };
+  const deleteFromCart = item => {
+    dispath({
+      type: 'REMOVE_FROM_CART',
+      payload: item.id
+    });
+    // delete from local storage
+    const cartCopy = Object.assign({}, state);
+    const filterdCart = cartCopy.products.filter(product => product.id !== item.id);
+    setStorage('SHOP_CART', filterdCart);
+  };
+  const increaseQuantity = item => {
+    dispath({
+      type: 'INCRESE_COUNT',
+      payload: item.id
+    });
+    const newProducts = state.products.map(productItem => {
+      if (productItem.id === item.id) {
+        return Object.assign(Object.assign({}, productItem), {
+          quantity: item.quantity + 1
+        });
+      }
+      return productItem;
+    });
+    setStorage('SHOP_CART', newProducts);
+  };
+  const updateQuantity = (item, quantity) => {
+    if (quantity === 0) {
+      return;
+    } else {
+      dispath({
+        type: "UPDATE_COUNT",
+        payload: {
+          id: item.id,
+          quantity
+        }
+      });
+      const newProducts = state.products.map(productItem => {
+        if (productItem.id === item.id) {
+          return Object.assign(Object.assign({}, productItem), {
+            quantity
+          });
+        }
+        return productItem;
+      });
+      setStorage("SHOP_CART", newProducts);
+    }
+  };
+  const decreaseQuantity = item => {
+    dispath({
+      type: 'DECRESE_COUNT',
+      payload: item.id
+    });
+    const newProducts = state.products.map(productItem => {
+      if (productItem.id === item.id) {
+        return Object.assign(Object.assign({}, productItem), {
+          quantity: item.quantity - 1
+        });
+      }
+      return productItem;
+    });
+    setStorage('SHOP_CART', newProducts);
+    if (item.quantity <= 1) {
+      deleteFromCart(item);
+    }
+  };
+  const clearCart = () => {
+    dispath({
+      type: 'CLEAR_CART'
+    });
+    setStorage('SHOP_CART', []);
+  };
+  const setTotalPrice = price => {
+    dispath({
+      type: 'SET_TOTAL_PRICE',
+      payload: price
+    });
+  };
+  useEffect(() => {
+    let totalPrice = state.products.reduce((prev, item) => prev += item.price * item.quantity, 0).toFixed(2);
+    setTotalPrice(totalPrice);
+  }, [state.products]);
+  return jsx(CartContext.Provider, Object.assign({
+    value: {
+      cart: state.products,
+      totalPrice: state.totalPrice,
+      isOpenModal,
+      setIsOpenModal,
+      dispath,
+      updateCart,
+      clearCart,
+      addToCart,
+      deleteFromCart,
+      increaseQuantity,
+      updateQuantity,
+      decreaseQuantity,
+      setTotalPrice
+    }
+  }, {
+    children: children
+  }));
+};
+const useCartContext = () => useContext(CartContext);
+
+const ShopCart = () => {
+  const {
+    cart,
+    setIsOpenModal,
+    isOpenModal
+  } = useCartContext();
+  const {
+    pathname
+  } = useLocation();
+  const [addAnimation, setAddAnimation] = useState(false);
+  useEffect(() => {
+    setAddAnimation(true);
+    setTimeout(() => {
+      setAddAnimation(false);
+    }, 1000);
+  }, [cart]);
+  useEffect(() => {
+    setIsOpenModal(false);
+  }, [pathname]);
+  return jsx("div", Object.assign({
+    onClick: () => setIsOpenModal(!isOpenModal),
+    className: "cart"
+  }, {
+    children: jsxs("div", Object.assign({
+      className: "cart-icons"
+    }, {
+      children: [cart.length > 0 && jsx("span", Object.assign({
+        className: `cart-quantity ${addAnimation ? 'active' : ''}`
+      }, {
+        children: cart.reduce((prev, pro) => prev += pro.quantity, 0)
+      })), jsx("div", Object.assign({
+        className: 'button-cart'
+      }, {
+        children: jsx(Ramen.XButtonIcon, {
+          icon: 'shopping-cart-outline',
+          size: 'm'
+        })
+      }))]
+    }))
+  }));
+};
+var ShopCart$1 = /*#__PURE__*/memo(ShopCart);
+
+const MobileNav = () => {
+  const {
+    isOpenModalCategories,
+    setIsOpenModalCategories
+  } = useGlobal();
+  return jsx("div", Object.assign({
+    className: "mobile-nav"
+  }, {
+    children: jsx(Ramen.XButtonIcon, {
+      type: "tonal",
+      icon: isOpenModalCategories ? 'close-outline' : 'list-outline',
+      onClick: () => setIsOpenModalCategories(!isOpenModalCategories)
+    })
+  }));
+};
+
+const Button = props => {
+  const {
+      children,
+      className
+    } = props,
+    rest = __rest(props, ["children", "className"]);
+  return jsx("button", Object.assign({
+    className: `button-default ${className}`
+  }, rest, {
+    children: children
+  }));
+};
+
+var img$c = "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='75' height='75'%3e %3cdefs%3e %3cclipPath id='clip-path'%3e %3cpath id='Rect%c3%a1ngulo_108' data-name='Rect%c3%a1ngulo 108' style='fill:none' d='M0 0h75v75H0z'/%3e %3c/clipPath%3e %3cstyle%3e .cls-4%7bfill:%23ddd%7d %3c/style%3e %3c/defs%3e %3cg id='dummy-img' transform='translate(-5 -4.89)'%3e %3cg id='Grupo_131' data-name='Grupo 131' transform='translate(5 4.89)'%3e %3cg id='Grupo_130' data-name='Grupo 130' style='clip-path:url(%23clip-path)'%3e %3cpath id='Rect%c3%a1ngulo_107' data-name='Rect%c3%a1ngulo 107' transform='translate(-.313 -.313)' style='fill:white' d='M0 0h75.625v75.625H0z'/%3e %3c/g%3e %3c/g%3e %3cg id='Grupo_132' data-name='Grupo 132' transform='translate(15 14.89)'%3e %3ccircle id='Elipse_1' data-name='Elipse 1' class='cls-4' cx='5.625' cy='5.625' r='5.625' transform='translate(7.5 7.5)'/%3e %3cpath id='Trazado_445' data-name='Trazado 445' class='cls-4' d='M88.558 36.89H40.442A3.47 3.47 0 0 0 37 40.388v31.864a.769.769 0 1 0 1.538 0V40.388a1.92 1.92 0 0 1 1.9-1.936h48.12a1.92 1.92 0 0 1 1.9 1.936v17.805a.769.769 0 1 0 1.538 0V40.388a3.47 3.47 0 0 0-3.438-3.498z' transform='translate(-37 -36.89)'/%3e %3cpath id='Trazado_446' data-name='Trazado 446' class='cls-4' d='m91.43 97.681-11.762-14.51a1.561 1.561 0 0 0-1.211-.579 1.564 1.564 0 0 0-1.211.575l-5.688 6.976-8.694 10.129L60.8 98.5l-5.549-5.36a1.563 1.563 0 0 0-2.283.118l-13.8 16.429-2.07 2.277a1.5 1.5 0 0 0-.1.117v8.086a3.143 3.143 0 0 0 3.143 3.143h48.716A3.143 3.143 0 0 0 92 120.167V98.4l-.413-.487a1.559 1.559 0 0 0-.157-.232z' transform='translate(-37 -68.31)'/%3e %3c/g%3e %3c/g%3e%3c/svg%3e";
+
 const ProductCard = ({
   productData
 }) => {
+  var _a;
   const {
     addToCart
   } = useCartContext();
@@ -12432,7 +12576,7 @@ const ProductCard = ({
   } = Ramen.Api.notification;
   const history = useHistory();
   const handleOpenProduct = () => {
-    history.push(`/products/detail/${productData.sku}`);
+    history.push(`/products/detail/${productData.ean}`);
   };
   const imageOnErrorHandler = event => {
     event.currentTarget.src = img$c;
@@ -12444,6 +12588,7 @@ const ProductCard = ({
       description: 'Producto agregado a tu cotización.'
     });
   };
+  const urlImage = productData.urlImage ? productData.urlImage : !!((_a = productData === null || productData === void 0 ? void 0 : productData.urlImageOTher) === null || _a === void 0 ? void 0 : _a.length) ? productData.urlImageOTher[0] : `https://media.easy.cl/is/image/EasySA/${StringFormatter$1.removeInitialZero(productData.sku)}` || img$c;
   return jsxs("div", Object.assign({
     onClick: handleOpenProduct,
     className: "product-card"
@@ -12454,7 +12599,7 @@ const ProductCard = ({
       children: jsx("img", {
         className: "product-card__image-image",
         loading: "lazy",
-        src: productData.urlImage || img$c,
+        src: urlImage,
         alt: productData.name,
         onError: imageOnErrorHandler
       })
@@ -12479,7 +12624,7 @@ const ProductCard = ({
         }), jsx(Ramen.XText, Object.assign({
           fontSize: 10
         }, {
-          children: StringFormatter$1.capitalizeLetter(productData === null || productData === void 0 ? void 0 : productData.name, true)
+          children: StringFormatter$1.capitalizeLetter((productData === null || productData === void 0 ? void 0 : productData.longName) || productData.name, true)
         })), jsx(Ramen.XVSpace, {
           size: 's'
         }), jsxs(Ramen.XText, Object.assign({
@@ -12512,26 +12657,10 @@ const ProductCard = ({
   }));
 };
 
-const Input = props => {
-  const {
-    className
-  } = props;
-  const [isFocus, setIsFocus] = useState('false');
-  const handleShowError = () => {
-    setIsFocus('true');
-  };
-  return jsx("input", Object.assign({
-    "is-focus": isFocus,
-    onBlur: handleShowError,
-    type: 'text'
-  }, props, {
-    className: `input-default ${className}`
-  }));
-};
-
 const ShopCartItem = ({
   item
 }) => {
+  var _a;
   const {
     deleteFromCart,
     increaseQuantity,
@@ -12549,6 +12678,7 @@ const ShopCartItem = ({
   const imageOnErrorHandler = event => {
     event.currentTarget.src = img$c;
   };
+  const urlImage = item.urlImage ? item.urlImage : !!((_a = item === null || item === void 0 ? void 0 : item.urlImageOTher) === null || _a === void 0 ? void 0 : _a.length) ? item.urlImageOTher[0] : `https://media.easy.cl/is/image/EasySA/${StringFormatter$1.removeInitialZero(item.sku)}` || img$c;
   return jsxs("div", Object.assign({
     className: "shop-cart__item"
   }, {
@@ -12560,13 +12690,13 @@ const ShopCartItem = ({
       children: [jsx("img", {
         className: "shop-cart__item__image",
         loading: "lazy",
-        src: item.urlImage,
+        src: urlImage,
         onError: imageOnErrorHandler,
         alt: item.name
       }), jsx("div", Object.assign({
         className: "shop-cart__item__data",
         onClick: () => {
-          history.push(`/products/detail/${item.sku}`);
+          history.push(`/products/detail/${item.ean}`);
         }
       }, {
         children: jsxs(Ramen.XBox, Object.assign({
@@ -12584,7 +12714,7 @@ const ShopCartItem = ({
           }), jsx(Ramen.XText, Object.assign({
             fontSize: 10
           }, {
-            children: StringFormatter$1.capitalizeLetter(item === null || item === void 0 ? void 0 : item.name, true)
+            children: StringFormatter$1.capitalizeLetter((item === null || item === void 0 ? void 0 : item.longName) || item.name, true)
           })), jsx(Ramen.XVSpace, {
             size: "xxs"
           }), jsxs(Ramen.XBox, Object.assign({
@@ -12854,8 +12984,8 @@ const UserContextProvider = ({
   const getMe = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
       const tokenAuth = clientRequest.getToken();
-      const data = yield sessionStorage.getItem(storageName);
-      if (!!tokenAuth && !!data) {
+      const user = yield sessionStorage.getItem(storageName);
+      if (!!tokenAuth && !!user) {
         //get info data User
         const userData = yield clientRequest.me();
         const companyInfo = userData === null || userData === void 0 ? void 0 : userData.company_id;
@@ -12866,16 +12996,16 @@ const UserContextProvider = ({
           sap_code,
           name
         } = companyInfo;
-        const companyData = {
+        const companyData = Object.assign(Object.assign({}, (data === null || data === void 0 ? void 0 : data.companyData) || {}), {
           sapCode: sap_code,
           hasCreditLine: credit_limit > 0,
           name,
           address: addresses,
           rut: identification_id
-        };
+        });
         updateStateContext({
-          isAuthenticated: !!data,
-          user: JSON.parse(data),
+          isAuthenticated: !!user,
+          user: JSON.parse(user),
           userData,
           companyData,
           provider: ''
@@ -12905,6 +13035,7 @@ const UserContextProvider = ({
       companyData,
       userData,
       isAuthenticated,
+      getMe,
       getDataCompany,
       updateStateContext,
       hasRoles,
@@ -12933,7 +13064,7 @@ var img$9 = "data:image/svg+xml,%3csvg width='111' height='111' viewBox='0 0 111
 
 var img$8 = "data:image/svg+xml,%3csvg width='110' height='110' viewBox='0 0 110 110' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M54.9997 13.75C32.2179 13.75 13.7497 32.2183 13.7497 55C13.7497 77.7818 32.2179 96.25 54.9997 96.25C77.7814 96.25 96.2497 77.7818 96.2497 55C96.2497 32.2183 77.7814 13.75 54.9997 13.75ZM4.58301 55C4.58301 27.1557 27.1553 4.58337 54.9997 4.58337C82.844 4.58337 105.416 27.1557 105.416 55C105.416 82.8444 82.844 105.417 54.9997 105.417C27.1553 105.417 4.58301 82.8444 4.58301 55Z' fill='black'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M54.9997 32.0834C57.531 32.0834 59.583 34.1354 59.583 36.6667V55C59.583 57.5313 57.531 59.5834 54.9997 59.5834C52.4684 59.5834 50.4163 57.5313 50.4163 55V36.6667C50.4163 34.1354 52.4684 32.0834 54.9997 32.0834Z' fill='black'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M50.4163 73.3334C50.4163 70.8021 52.4684 68.75 54.9997 68.75H55.0455C57.5768 68.75 59.6288 70.8021 59.6288 73.3334C59.6288 75.8647 57.5768 77.9167 55.0455 77.9167H54.9997C52.4684 77.9167 50.4163 75.8647 50.4163 73.3334Z' fill='black'/%3e%3c/svg%3e";
 
-var Styles$7 = {"xalert-modal":"root-module_xalert-modal__DrLKB","xalert-modal__backdrop":"root-module_xalert-modal__backdrop__mPVil","xalert-modal__content":"root-module_xalert-modal__content__EOPQX","xalert-modal__header":"root-module_xalert-modal__header__XoAND","xalert-modal__body":"root-module_xalert-modal__body__z3zBz","xalert-modal__body__image":"root-module_xalert-modal__body__image__LfNCK","xalert-modal__body__title":"root-module_xalert-modal__body__title__E4y6R","xalert-modal__body__message":"root-module_xalert-modal__body__message__qOIrH","xalert-modal__actions":"root-module_xalert-modal__actions__TiEa5"};
+var Styles$8 = {"xalert-modal":"root-module_xalert-modal__DrLKB","xalert-modal__backdrop":"root-module_xalert-modal__backdrop__mPVil","xalert-modal__content":"root-module_xalert-modal__content__EOPQX","xalert-modal__header":"root-module_xalert-modal__header__XoAND","xalert-modal__body":"root-module_xalert-modal__body__z3zBz","xalert-modal__body__image":"root-module_xalert-modal__body__image__LfNCK","xalert-modal__body__title":"root-module_xalert-modal__body__title__E4y6R","xalert-modal__body__message":"root-module_xalert-modal__body__message__qOIrH","xalert-modal__actions":"root-module_xalert-modal__actions__TiEa5"};
 
 const XAlertModal = props => {
   const onCloseModalHandler = () => {
@@ -12954,7 +13085,7 @@ const XAlertModal = props => {
   if (!props.visible) {
     return null;
   }
-  const rootClass = classnames(Styles$7['xalert-modal']);
+  const rootClass = classnames(Styles$8['xalert-modal']);
   const getImage = type => {
     switch (type) {
       case 'success':
@@ -12967,12 +13098,12 @@ const XAlertModal = props => {
     className: rootClass
   }, {
     children: [jsx("div", {
-      className: Styles$7['xalert-modal__backdrop']
+      className: Styles$8['xalert-modal__backdrop']
     }), jsxs("div", Object.assign({
-      className: Styles$7['xalert-modal__content']
+      className: Styles$8['xalert-modal__content']
     }, {
       children: [jsx("div", Object.assign({
-        className: Styles$7['xalert-modal__header']
+        className: Styles$8['xalert-modal__header']
       }, {
         children: jsx(Ramen.XButtonIcon, {
           size: "s",
@@ -12981,16 +13112,16 @@ const XAlertModal = props => {
           onClick: onCloseModalHandler
         })
       })), jsxs("div", Object.assign({
-        className: Styles$7['xalert-modal__body']
+        className: Styles$8['xalert-modal__body']
       }, {
         children: [jsx("div", Object.assign({
-          className: Styles$7['xalert-modal__body__image']
+          className: Styles$8['xalert-modal__body__image']
         }, {
           children: jsx(Ramen.XImage, {
             src: getImage(`${props.type}`)
           })
         })), props.title && jsx("div", Object.assign({
-          className: Styles$7['xalert-modal__body__title']
+          className: Styles$8['xalert-modal__body__title']
         }, {
           children: jsx(Ramen.XText, Object.assign({
             weight: "bold",
@@ -12999,7 +13130,7 @@ const XAlertModal = props => {
             children: props.title
           }))
         })), props.message && jsx("div", Object.assign({
-          className: Styles$7['xalert-modal__body__message']
+          className: Styles$8['xalert-modal__body__message']
         }, {
           children: jsx(Ramen.XText, Object.assign({
             colorThone: "dim",
@@ -13010,7 +13141,7 @@ const XAlertModal = props => {
           }))
         })), props.children]
       })), jsxs("div", Object.assign({
-        className: Styles$7['xalert-modal__actions']
+        className: Styles$8['xalert-modal__actions']
       }, {
         children: [props.useCancel && jsx(Ramen.XButton, {
           size: "xl",
@@ -13064,6 +13195,8 @@ const ModalCart = ({
   } = useUserContext();
   const [isLoadingRequest, setIsLoadingRequest] = useState(false);
   const [showModal, setShoModal] = useState(false);
+  const [errorMsg, setErrorMsg] = useState();
+  const [modalErrorMsg, setModalErrorMsg] = useState(false);
   const titleAlert = isAuthenticated ? 'Una vez envíes la solicitud, tu ejecutivo se encargará de enviarte un correo con la cotización.' : 'Inicia sesión para solicitar una cotización. Si no tienes cuenta solicita acceso.';
   const titleOkButton = isAuthenticated ? 'Enviar cotización' : "Iniciar sesión";
   const openLogin = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -13071,6 +13204,7 @@ const ModalCart = ({
     setIsOpenModal(false);
   });
   const sentCart = () => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
     try {
       setIsLoadingRequest(true);
       const address = (companyData === null || companyData === void 0 ? void 0 : companyData.toDelivery) || (companyData === null || companyData === void 0 ? void 0 : companyData.address[0]);
@@ -13083,12 +13217,12 @@ const ModalCart = ({
           ean: item.ean,
           sku: item.sku,
           quantity: item.quantity,
-          unit: `${(_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.metadata) === null || _a === void 0 ? void 0 : _a.unit) === null || _b === void 0 ? void 0 : _b.saleUnit) === null || _c === void 0 ? void 0 : _c.code}`
+          unit: item.saleUnit || `${(_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.metadata) === null || _a === void 0 ? void 0 : _a.unit) === null || _b === void 0 ? void 0 : _b.saleUnit) === null || _c === void 0 ? void 0 : _c.code}`
         };
       });
       const input = {
         cart_details: cartMapped,
-        address: (companyData === null || companyData === void 0 ? void 0 : companyData.toDelivery) || (companyData === null || companyData === void 0 ? void 0 : companyData.address[0])
+        address: companyData === null || companyData === void 0 ? void 0 : companyData.address[0]
       };
       yield cartClient.createIntention(input);
       clearCart();
@@ -13096,15 +13230,24 @@ const ModalCart = ({
       setIsLoadingRequest(false);
       setShoModal(true);
     } catch (error) {
-      console.log(error === null || error === void 0 ? void 0 : error.message);
+      console.log(error);
       let message = "Ha ocurrido un error enviando la solicitud de cotización.";
       if ((error === null || error === void 0 ? void 0 : error.message) === "invalidAddress") {
         message = "No se encontró dirección de despacho. Por favor seleccione una dirección de despacho en su perfil.";
         setIsOpenModal(false);
       }
-      Ramen.Api.notification.error({
-        description: message
-      });
+      if (((_b = (_a = error === null || error === void 0 ? void 0 : error.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.message) === "User doesn't have any associated seller") {
+        setErrorMsg({
+          title: 'Ups! De momento no tienes vendedor asignado.',
+          message: 'Contáctanos y te ayudaremos.'
+        });
+        setModalErrorMsg(true);
+        setIsOpenModal(false);
+      } else {
+        Ramen.Api.notification.error({
+          description: message
+        });
+      }
       setIsLoadingRequest(false);
     }
   });
@@ -13209,6 +13352,15 @@ const ModalCart = ({
       onConfirm: () => setShoModal(false),
       title: "Solicitud de cotizaci\u00F3n enviada",
       message: 'Nos contactaremos contigo lo antes posible para atender especialmente tu solicitud.'
+    }), jsx(XAlertModal, {
+      type: 'confirm',
+      visible: modalErrorMsg,
+      confirmText: 'Finalizar',
+      onClose: () => setModalErrorMsg(false),
+      useCancel: false,
+      onConfirm: () => setModalErrorMsg(false),
+      title: (errorMsg === null || errorMsg === void 0 ? void 0 : errorMsg.title) || '',
+      message: (errorMsg === null || errorMsg === void 0 ? void 0 : errorMsg.message) || ''
     })]
   });
 };
@@ -13283,7 +13435,7 @@ const ListWrapper = ({
         height: '4px'
       },
       ref: elementRef
-    }), data.length <= 0 && emptyResultRender && emptyResultRender()]
+    }), !loading && data.length <= 0 && emptyResultRender && emptyResultRender()]
   }));
 };
 
@@ -13309,8 +13461,8 @@ const loadingMoreRenderProduct = () => {
 };
 const emptyResultsRender = () => {
   return jsx(EmptyResultsComponent, {
-    emptyMessage: "Error en la carga de productos",
-    descriptionMessage: 'Tuvimos un error en el servicio.'
+    emptyMessage: "Oops... no hay resultados de b\u00FAsqueda.",
+    descriptionMessage: "Lo sentimos, no hay datos para mostrar ahora"
   });
 };
 const ProductsList = ({
@@ -13333,8 +13485,16 @@ const ProductsList = ({
   loadMoreProducts: loadMoreProducts
 });
 
-var Styles$6 = {"filter-component":"root-module_filter-component__C4Mmr","filter-container":"root-module_filter-container__cbkC0"};
+var Styles$7 = {"filter-component":"root-module_filter-component__C4Mmr","filter-container":"root-module_filter-container__cbkC0"};
 
+const breakPoints = {
+  xs: 480,
+  sm: 576,
+  md: 768,
+  lg: 992,
+  xl: 1200,
+  xxl: 1600
+};
 const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState({
     width: undefined,
@@ -13354,7 +13514,7 @@ const useWindowSize = () => {
   return windowSize;
 };
 
-var Styles$5 = {"xcontainer_filter":"root-module_xcontainer_filter__cEYyE","container_filter__item":"root-module_container_filter__item__IchDn","xcontainer_filter__title":"root-module_xcontainer_filter__title__ZdzKr","xcontainer_filter__item":"root-module_xcontainer_filter__item__dyeBW","xcontainer_filter__item--selected":"root-module_xcontainer_filter__item--selected__93n0o"};
+var Styles$6 = {"xcontainer_filter":"root-module_xcontainer_filter__cEYyE","container_filter__item":"root-module_container_filter__item__IchDn","xcontainer_filter__title":"root-module_xcontainer_filter__title__ZdzKr","xcontainer_filter__item":"root-module_xcontainer_filter__item__dyeBW","xcontainer_filter__item--selected":"root-module_xcontainer_filter__item--selected__93n0o"};
 
 const Root = ({
   filter,
@@ -13363,6 +13523,7 @@ const Root = ({
   onFilterClick
 }) => {
   const [updated, setUpdated] = useState(false);
+  const [search, setSearch] = useState();
   const handleFilterClick = (filter, option) => {
     const newActiveFilters = activeFilters;
     if (filter.multiple) {
@@ -13383,25 +13544,42 @@ const Root = ({
     }, option));
     setUpdated(!updated);
   };
-  const checkIfIsActive = (filter, option) => filter.multiple ? (activeFilters[filter.key] || []).includes(option.key) : activeFilters[filter.key] === option.key;
+  const checkIfIsActive = (filter, option) => {
+    return filter.multiple ? (activeFilters[filter.key] || []).includes(option.key) : activeFilters[filter.key] === option.key;
+  };
+  const filterOptions = useMemo(() => {
+    if (!search || !filter.useSearch) {
+      return filter.options;
+    }
+    return filter.options.filter(item => item.label.includes(search));
+  }, [filter.useSearch, search, filter.options, updated]);
   return jsxs("div", Object.assign({
-    className: classnames(Styles$5['xcontainer_filter__title'])
+    className: classnames(Styles$6['xcontainer_filter__title'])
   }, {
     children: [jsx(Ramen.XVSpace, {
       size: "m"
     }), jsx("div", Object.assign({
-      className: classnames(Styles$5['xcontainer_filter__title'])
+      className: classnames(Styles$6['xcontainer_filter__title'])
     }, {
       children: filter.label
     })), jsx(Ramen.XVSpace, {
       size: "s"
+    }), filter.useSearch && jsxs(Fragment, {
+      children: [jsx(Ramen.XSearchInput, {
+        onChange: e => setSearch(e.target.value),
+        value: search,
+        size: "l",
+        placeholder: `Buscar ${filter.label.toLocaleLowerCase()}`
+      }), jsx(Ramen.XVSpace, {
+        size: "s"
+      })]
     }), jsx("div", Object.assign({
-      className: classnames(Styles$5['xcontainer_filter'])
+      className: classnames(Styles$6['xcontainer_filter'])
     }, {
-      children: filter.options.map(option => {
+      children: filterOptions.map(option => {
         const isActive = checkIfIsActive(filter, option);
-        const itemClasses = classnames(Styles$5['xcontainer_filter__item'], {
-          [Styles$5['xcontainer_filter__item--selected']]: isActive
+        const itemClasses = classnames(Styles$6['xcontainer_filter__item'], {
+          [Styles$6['xcontainer_filter__item--selected']]: isActive
         });
         return jsxs("div", Object.assign({
           className: itemClasses,
@@ -13430,6 +13608,7 @@ const Root = ({
 };
 
 const FilterComponent = ({
+  loading,
   filters,
   selectdFilters,
   onFilterClick,
@@ -13465,12 +13644,77 @@ const FilterComponent = ({
     onChange === null || onChange === void 0 ? void 0 : onChange({});
     setOpen(false);
   };
+  const FilterSkeleton = () => {
+    return jsxs(Ramen.XBox, {
+      children: [jsx(Ramen.XVSpace, {
+        size: "m"
+      }), jsx(Ramen.XSkeleton, {
+        type: "text",
+        width: "l"
+      }), jsx(Ramen.XVSpace, {
+        size: "s"
+      }), jsxs(Ramen.XBox, Object.assign({
+        gap: "s",
+        width: 'full'
+      }, {
+        children: [jsx(Ramen.XSkeleton, {
+          size: "l",
+          type: "image",
+          width: "xl"
+        }), jsx(Ramen.XSkeleton, {
+          size: "l",
+          type: "image",
+          width: "xl"
+        }), jsx(Ramen.XSkeleton, {
+          size: "l",
+          type: "image",
+          width: "xl"
+        }), jsx(Ramen.XSkeleton, {
+          size: "l",
+          type: "image",
+          width: "xl"
+        })]
+      })), jsx(Ramen.XVSpace, {
+        size: "s"
+      }), jsx(Ramen.XDivider, {}), jsx(Ramen.XVSpace, {
+        size: "m"
+      })]
+    });
+  };
   const renderFilters = () => {
-    return jsxs("div", Object.assign({
-      className: Styles$6['filter-component']
+    if (loading) {
+      return jsxs("div", Object.assign({
+        className: Styles$7['filter-component']
+      }, {
+        children: [jsxs("div", Object.assign({
+          className: Styles$7['filter-container']
+        }, {
+          children: [jsx(FilterSkeleton, {}), jsx(FilterSkeleton, {}), jsx(FilterSkeleton, {})]
+        })), jsx(Ramen.XVSpace, {
+          size: "s"
+        }), jsxs(Ramen.XBox, Object.assign({
+          orientation: width < 450 ? 'vertical' : 'horizontal',
+          gap: "m",
+          horizontalAlign: "center",
+          width: 'full'
+        }, {
+          children: [jsx(Ramen.XSkeleton, {
+            size: "l",
+            type: "image",
+            width: "xl"
+          }), jsx(Ramen.XSkeleton, {
+            size: "l",
+            type: "image",
+            width: "xl"
+          })]
+        }))]
+      }));
+    }
+    return !!filters.length ? jsxs("div", Object.assign({
+      className: Styles$7['filter-component']
     }, {
       children: [jsx("div", Object.assign({
-        className: Styles$6['filter-container']
+        className: Styles$7['filter-container']
       }, {
         children: filters.map(filter => jsx(Root, {
           filter: filter,
@@ -13500,14 +13744,20 @@ const FilterComponent = ({
           onClick: handleFilterApply
         })]
       }))]
-    }));
+    })) : jsx(Ramen.XBox, {
+      children: jsxs(Ramen.XText, Object.assign({
+        colorThone: "dim"
+      }, {
+        children: [" ", `No hay filtros disponibles.`]
+      }))
+    });
   };
   return jsx("div", {
     children: renderFilters()
   });
 };
 
-var Styles$4 = {"categories-wrapper__body":"root-module_categories-wrapper__body__ytY1c","categories-wrapper__body__list":"root-module_categories-wrapper__body__list__HXHrh","categories_item":"root-module_categories_item__0lWDM","categories_item__selected":"root-module_categories_item__selected__tR3wv","categories_item__list":"root-module_categories_item__list__L8jwG","categories_item__list__name":"root-module_categories_item__list__name__FFurE","categories_seeAll":"root-module_categories_seeAll__DC3fe"};
+var Styles$5 = {"categories-wrapper__body":"root-module_categories-wrapper__body__ytY1c","categories-wrapper__body__list":"root-module_categories-wrapper__body__list__HXHrh","categories_item":"root-module_categories_item__0lWDM","categories_item__selected":"root-module_categories_item__selected__tR3wv","categories_item__list":"root-module_categories_item__list__L8jwG","categories_item__list__name":"root-module_categories_item__list__name__FFurE","categories_seeAll":"root-module_categories_seeAll__DC3fe"};
 
 // `SameValue` abstract operation
 // https://tc39.es/ecma262/#sec-samevalue
@@ -14001,7 +14251,7 @@ const SearchComponentFilter = ({
   onSearch,
   searchPrevious
 }) => {
-  const history = useHistory();
+  useHistory();
   const [currentValue, setValue] = useState(value || '');
   const [canSend, setCanSend] = useState(false);
   let _timer;
@@ -14017,7 +14267,7 @@ const SearchComponentFilter = ({
       if (canSend) {
         onSearch && onSearch(currentValue);
       }
-    }, 1000);
+    }, 1500);
     return () => {
       clearTimeout(_timer);
       setCanSend(false);
@@ -14042,7 +14292,6 @@ const SearchComponentFilter = ({
   const handleClear = () => {
     setValue('');
     onSearch && onSearch('');
-    global && searchPrevious && history.push(searchPrevious);
   };
   return jsxs("div", Object.assign({
     className: "search-component-filter"
@@ -14092,9 +14341,9 @@ const GlobalSearchComponent = ({
   const handleSearch = s => {
     if (s.length > 2) {
       !inSearchPag && localStorage.setItem('searchPrevious', pathname);
-      history.push(`/products?s=${s}`);
+      history.push(`/products?s=${s}`, Object.assign({}, history.state || {}));
     } else {
-      history.replace(`/products`);
+      history.replace(`/products`, Object.assign({}, history.state || {}));
     }
     onEvent && onEvent(s);
   };
@@ -14114,7 +14363,7 @@ const CategoryItemList = ({
 }) => {
   return jsxs(Fragment, {
     children: [jsx("div", Object.assign({
-      className: classnames(Styles$4['categories_item__list__name']),
+      className: classnames(Styles$5['categories_item__list__name']),
       onClick: () => onItemSelected === null || onItemSelected === void 0 ? void 0 : onItemSelected(category)
     }, {
       children: jsx(Ramen.XText, Object.assign({
@@ -14130,7 +14379,7 @@ const CategoryItemList = ({
 const SeeAllComponent = ({
   onClick
 }) => jsxs("div", Object.assign({
-  className: classnames(Styles$4['categories_seeAll'])
+  className: classnames(Styles$5['categories_seeAll'])
 }, {
   children: [jsxs(Ramen.XText, Object.assign({
     fontSize: 11
@@ -14154,19 +14403,23 @@ const CategoryList = ({
   onItemHover
 }) => {
   return jsxs("div", Object.assign({
-    className: classnames(Styles$4['categories_item__list'])
+    className: classnames(Styles$5['categories_item__list'])
   }, {
     children: [jsx(Ramen.XVSpace, {
       size: "m"
-    }), jsxs(Ramen.XText, Object.assign({
+    }), jsx(Ramen.XText, Object.assign({
       fontSize: 10
     }, {
-      children: [" ", category === null || category === void 0 ? void 0 : category.name]
+      children: jsx("span", Object.assign({
+        onClick: () => onItemSelected === null || onItemSelected === void 0 ? void 0 : onItemSelected(category)
+      }, {
+        children: category === null || category === void 0 ? void 0 : category.name
+      }))
     })), jsx(Ramen.XVSpace, {
       size: "s"
     }), jsx(Ramen.XList, {
       skeleton: !category,
-      dataSource: (category === null || category === void 0 ? void 0 : category.menu) || [],
+      dataSource: (category === null || category === void 0 ? void 0 : category.children) || [],
       renderItem: (item, index) => {
         return jsx(CategoryItemList, {
           category: item,
@@ -14190,8 +14443,8 @@ const CategoryItem = ({
   onItemHover
 }) => {
   return jsx("div", Object.assign({
-    className: classnames(Styles$4['categories_item'], {
-      [Styles$4[`categories_item__selected`]]: isActive
+    className: classnames(Styles$5['categories_item'], {
+      [Styles$5[`categories_item__selected`]]: isActive
     }),
     onClick: () => onItemSelected === null || onItemSelected === void 0 ? void 0 : onItemSelected(category),
     onMouseEnter: () => onItemHover === null || onItemHover === void 0 ? void 0 : onItemHover(true, category)
@@ -14243,15 +14496,13 @@ const DrawerCategories = ({
   } = useWindowSize();
   const isMobile = width < 720;
   const onItemSelected = link => {
+    var _a, _b;
     setIsOpenModalCategories(!isOpenModalCategories);
-    const categoryFilter = link.url.split('/');
-    const routes = categoryFilter.slice(2, categoryFilter.length);
-    const category = categoryFilter.slice(-1);
-    const keyCategory = routes.length > 2 ? 'typeProducts' : routes.length > 1 ? 'SubCategories' : 'Categories';
-    history.push('/products', Object.assign(Object.assign(Object.assign({}, history.state), {
-      [keyCategory]: category
-    }), {
-      routes
+    const category = (_a = link.id) === null || _a === void 0 ? void 0 : _a.toString();
+    const categoryName = (_b = link.name) === null || _b === void 0 ? void 0 : _b.toString();
+    history.push('/products', Object.assign(Object.assign({}, history.state), {
+      category,
+      categoryName
     }));
   };
   const onItemHover = (show, link) => {
@@ -14271,7 +14522,7 @@ const DrawerCategories = ({
     }
   }, [isShown]);
   return jsx("div", Object.assign({
-    className: classnames(Styles$4['categories_drawer'])
+    className: classnames(Styles$5['categories_drawer'])
   }, {
     children: jsxs(Ramen.XDrawer, Object.assign({
       size: isShown && !isMobile ? 'xl' : 's',
@@ -14283,11 +14534,11 @@ const DrawerCategories = ({
       mountNode
     }, {
       children: [jsxs("div", Object.assign({
-        className: classnames(Styles$4['categories-wrapper__body']),
+        className: classnames(Styles$5['categories-wrapper__body']),
         ref: refElement
       }, {
         children: [jsxs("div", Object.assign({
-          className: classnames(Styles$4['categories-wrapper__body__list'])
+          className: classnames(Styles$5['categories-wrapper__body__list'])
         }, {
           children: [isMobile && jsxs(Fragment, {
             children: [jsx(GlobalSearchComponent, {}), jsx(Ramen.XVSpace, {
@@ -14340,7 +14591,7 @@ const DrawerCategories = ({
             })), jsx(Ramen.XVSpace, {
               size: "l"
             }), jsx(GridContainer, {
-              children: ((selected === null || selected === void 0 ? void 0 : selected.menu) || []).map((item, index) => {
+              children: ((selected === null || selected === void 0 ? void 0 : selected.children) || []).map((item, index) => {
                 return jsx(CategoryList, {
                   category: item,
                   onItemSelected: onItemSelected
@@ -14412,7 +14663,6 @@ const AuthRouterLoader = /*#__PURE__*/memo(({
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, {}), [userData, hasPermission, routes]);
-  console.log(validRoutes);
   return jsx(RouterLoader, {
     routes: validRoutes,
     notfoundRedirect: notfoundRedirect
@@ -14420,22 +14670,22 @@ const AuthRouterLoader = /*#__PURE__*/memo(({
 });
 var AuthRouterLoader$1 = /*#__PURE__*/memo(AuthRouterLoader);
 
-var Styles$3 = {"xdivider__vertical":"root-module_xdivider__vertical__gCbVo"};
+var Styles$4 = {"xdivider__vertical":"root-module_xdivider__vertical__gCbVo"};
 
 const XDividerVertical = () => {
-  const rootClass = classnames(Styles$3['xdivider__vertical'], {});
-  return jsx("hr", {
+  const rootClass = classnames(Styles$4['xdivider__vertical'], {});
+  return jsx("div", {
     className: rootClass
   });
 };
 XDividerVertical.defaultProps = {};
 
-var Styles$2 = {"xheader":"root-module_xheader__viI2o","xheader__profile":"root-module_xheader__profile__L66F1","xheader__profile-clickable":"root-module_xheader__profile-clickable__Q-xd-","xheader__profile_logout":"root-module_xheader__profile_logout__zJOkY"};
+var Styles$3 = {"xheader":"root-module_xheader__viI2o","xheader__profile":"root-module_xheader__profile__L66F1","xheader__profile-clickable":"root-module_xheader__profile-clickable__Q-xd-","xheader__profile_logout":"root-module_xheader__profile_logout__zJOkY"};
 
 var img$7 = "data:image/svg+xml,%3csvg width='52' height='53' viewBox='0 0 52 53' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M52 26.041C52 40.4004 40.3594 52.041 26 52.041C11.6406 52.041 0 40.4004 0 26.041C0 11.6816 11.6406 0.0410156 26 0.0410156C40.3594 0.0410156 52 11.6816 52 26.041ZM26 49.2553C38.8209 49.2553 49.2143 38.8619 49.2143 26.041C49.2143 13.2201 38.8209 2.82673 26 2.82673C13.1791 2.82673 2.78571 13.2201 2.78571 26.041C2.78571 38.8619 13.1791 49.2553 26 49.2553Z' fill='white'/%3e%3cmask id='mask0_316_28843' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='2' y='2' width='48' height='48'%3e%3cpath d='M2.78578 26.0405C2.78578 38.8614 13.1792 49.2547 26.0001 49.2547C38.821 49.2547 49.2144 38.8614 49.2144 26.0405C49.2144 13.2196 38.821 2.82617 26.0001 2.82617C13.1792 2.82617 2.78578 13.2196 2.78578 26.0405Z' fill='white'/%3e%3cpath d='M2.78578 26.0405C2.78578 38.8614 13.1792 49.2547 26.0001 49.2547C38.821 49.2547 49.2144 38.8614 49.2144 26.0405C49.2144 13.2196 38.821 2.82617 26.0001 2.82617C13.1792 2.82617 2.78578 13.2196 2.78578 26.0405Z' stroke='white'/%3e%3c/mask%3e%3cg mask='url(%23mask0_316_28843)'%3e%3cpath d='M49.2142 26.0405C49.2142 38.8614 38.8208 49.2547 25.9999 49.2547C13.179 49.2547 2.78564 38.8614 2.78564 26.0405C2.78564 13.2196 13.179 2.82617 25.9999 2.82617C38.8208 2.82617 49.2142 13.2196 49.2142 26.0405Z' fill='%23D2D8E7'/%3e%3cpath d='M34.1482 36.1611C31.311 38.2246 28.4736 39.8754 25.6363 39.8754C22.7991 39.8754 19.9617 38.2246 17.1244 36.1611C19.4631 35.4492 20.6496 34.3865 20.6839 32.973C20.6839 32.7211 20.6821 32.3633 20.6804 31.6914C20.6804 31.5848 20.6801 31.4755 20.6796 31.3636C20.675 29.5622 20.6674 27.1851 20.6567 24.7708C18.4387 21.8958 19.2535 18.5252 19.9485 18.6093C20.8006 18.7129 28.1832 11.7072 29.5993 11.348C31.0154 10.9888 34.6125 12.1484 35.2316 15.3791C35.8506 18.6097 36.1094 26.753 33.7613 30.0041C33.0932 30.9292 32.0408 31.2911 30.6042 31.0897C30.6022 31.7659 30.5982 32.1454 30.5887 32.9111C30.6071 34.3889 31.7935 35.45 34.1482 36.1611Z' fill='%23C7CFE2'/%3e%3cg style='mix-blend-mode:multiply' opacity='0.6'%3e%3cpath d='M30.5894 31.0896C27.1846 30.7027 25.0179 29.2324 25.0179 29.2324C25.0179 29.2324 27.4941 32.3277 30.5894 32.9467V31.0896Z' fill='black' fill-opacity='0.2'/%3e%3c/g%3e%3cpath d='M19.5236 24.8192C18.4573 22.2548 14.1843 17.032 17.8676 13.782C19.1057 7.74629 25.9462 8.4144 30.5117 9.80725C33.5801 10.7434 35.8974 12.593 36.3926 11.2001C39.4879 13.782 37.9378 16.3073 35.8974 17.032C34.0455 17.6897 30.914 18.3475 25.5893 17.7284C24.6381 17.6178 24.8373 20.5309 24.3291 20.8458C23.5666 21.3183 22.9748 18.3475 20.8842 19.2395C18.7937 20.1316 20.0343 24.2677 22.2783 24.2677C23.0521 24.2677 23.4391 26.3952 21.3498 27.4012C19.8331 28.1465 20.2164 26.4855 19.5236 24.8192Z' fill='%23B7C0D8'/%3e%3cpath d='M9.38658 40.8832C7.91324 43.879 7.06515 50.788 7.06515 50.788H44.208C44.208 50.788 43.3596 43.8782 41.8866 40.8832C40.4136 37.8883 31.8116 35.1105 31.8116 35.1105C26.2169 35.1094 24.3598 35.1094 19.4661 35.1094C19.4661 35.1094 10.8599 37.8875 9.38658 40.8832Z' fill='%23B7C0D8'/%3e%3c/g%3e%3c/svg%3e";
 
 const XHeaderProfile = props => {
-  const rootClass = classnames(Styles$2['xheader']);
+  const rootClass = classnames(Styles$3['xheader']);
   const onSignOutClickHandler = () => {
     if (props.onSignOutClick) {
       props.onSignOutClick();
@@ -14446,8 +14696,8 @@ const XHeaderProfile = props => {
       props.onProfileClick();
     }
   };
-  const profileClasses = classnames(Styles$2['xheader__profile'], {
-    [Styles$2['xheader__profile-clickable']]: props.onProfileClick
+  const profileClasses = classnames(Styles$3['xheader__profile'], {
+    [Styles$3['xheader__profile-clickable']]: props.onProfileClick
   });
   return jsx("div", Object.assign({
     className: rootClass
@@ -14471,18 +14721,19 @@ const XHeaderProfile = props => {
             verticalAlign: "center",
             gap: "s"
           }, {
-            children: [jsxs(Ramen.XBox, Object.assign({
+            children: [props.showInfoProfile && jsxs(Ramen.XBox, Object.assign({
               horizontalAlign: "end"
             }, {
               children: [jsx(Ramen.XText, Object.assign({
-                colorThone: 'lightest',
+                colorThone: "lightest",
                 weight: "bold",
                 fontSize: 12
               }, {
                 children: props.profile.title
               })), jsx(Ramen.XText, Object.assign({
-                colorThone: 'lightest',
+                colorThone: "lightest",
                 weight: "bold",
+                textAlign: "right",
                 fontSize: 11
               }, {
                 children: props.profile.name
@@ -14490,17 +14741,17 @@ const XHeaderProfile = props => {
             })), jsx(Ramen.XBox, {
               children: props.profile.avatar ? jsx(Ramen.XAvatar, {
                 src: props.profile.avatar,
-                size: 'l'
+                size: "l"
               }) : jsx(Ramen.XAvatar, {
                 src: img$7,
-                size: 'l'
+                size: "l"
               })
             })]
           }))
         })), jsx("div", {
           children: props.children
         }), props.auth && jsx("div", Object.assign({
-          className: classnames(Styles$2['xheader__profile_logout'], {})
+          className: classnames(Styles$3['xheader__profile_logout'], {})
         }, {
           children: jsx(Ramen.XButtonIcon, {
             icon: "log-out-outline",
@@ -14516,7 +14767,8 @@ const XHeaderProfile = props => {
 XHeaderProfile.defaultProps = {
   onProfileClick: undefined,
   onSignOutClick: undefined,
-  children: undefined
+  children: undefined,
+  showInfoProfile: true
 };
 
 const Header = () => {
@@ -14537,7 +14789,8 @@ const Header = () => {
   const name = isAuthenticated ? `${userData === null || userData === void 0 ? void 0 : userData.name}` : 'Inicia sesión';
   const profile = {
     title: 'Hola!',
-    name
+    name,
+    avatar: userData === null || userData === void 0 ? void 0 : userData.imageUrl
   };
   const containerRef = useRef(null);
   const onProfileAction = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -14570,7 +14823,7 @@ const Header = () => {
     children: jsxs("div", Object.assign({
       className: `header ${show ? 'sticky' : ''}`
     }, {
-      children: [jsx(MobileNav, {}), jsxs("div", Object.assign({
+      children: [jsxs("div", Object.assign({
         className: "header-left"
       }, {
         children: [jsx(Link, Object.assign({
@@ -14581,7 +14834,7 @@ const Header = () => {
             src: img$b,
             alt: "logo of website"
           })
-        })), width > 715 && jsx(XDividerVertical, {}), jsx(Nav$1, {
+        })), jsx(XDividerVertical, {}), jsx(MobileNav, {}), jsx(Nav$1, {
           links: categoriesNav
         }), width > 715 && jsx("div", Object.assign({
           style: {
@@ -14597,7 +14850,8 @@ const Header = () => {
           auth: isAuthenticated,
           onProfileClick: onProfileAction,
           onSignOutClick: onLogout,
-          profile: profile
+          profile: profile,
+          showInfoProfile: width > breakPoints.sm
         }, {
           children: jsx(ShopCart$1, {})
         }))
@@ -14686,6 +14940,9 @@ var productsClient = new ProductsApi({
 
 var img$6 = "data:image/svg+xml,%3csvg width='48' height='48' viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M37.6308 9.30176H7.87266C5.73727 9.30176 4 11.0766 4 13.2583V13.795C4 15.9767 5.73727 17.7515 7.87266 17.7515H37.6309C37.9555 17.7515 38.2184 17.4829 38.2184 17.1513V9.90198C38.2184 9.57042 37.9554 9.30176 37.6308 9.30176Z' fill='%237C3D1E'/%3e%3cpath d='M22.7246 7.45596L20.4927 5.17576C20.2633 4.94141 19.8913 4.94141 19.6618 5.17576L8.35566 16.7267C8.18761 16.8984 8.13738 17.1565 8.2284 17.3808C8.31926 17.6052 8.53363 17.7514 8.77121 17.7514H13.235C13.3908 17.7514 13.5403 17.6882 13.6505 17.5757L22.7247 8.30497C22.8349 8.19235 22.8968 8.03974 22.8968 7.8805C22.8968 7.72127 22.8348 7.56866 22.7246 7.45596Z' fill='%2378AA17'/%3e%3cpath d='M36.2636 16.7267L24.9575 5.17576C24.728 4.94141 24.3561 4.94141 24.1265 5.17576L12.8205 16.7267C12.6525 16.8984 12.6022 17.1565 12.6932 17.3808C12.7841 17.6052 12.9985 17.7514 13.2361 17.7514H35.8482C36.0858 17.7514 36.3001 17.6052 36.3911 17.3808C36.4818 17.1565 36.4316 16.8984 36.2636 16.7267Z' fill='%238ACC19'/%3e%3cpath d='M32.9237 16.7266L26.6466 10.3135C26.5364 10.2009 26.3869 10.1377 26.2311 10.1377C26.0753 10.1377 25.926 10.2009 25.8157 10.3135C25.4781 10.6584 25.0293 10.8484 24.5518 10.8484C24.0744 10.8484 23.6256 10.6585 23.288 10.3135C23.1778 10.2009 23.0284 10.1377 22.8725 10.1377C22.7167 10.1377 22.5673 10.2009 22.4571 10.3135L16.1799 16.7266C16.0118 16.8983 15.9616 17.1564 16.0526 17.3807C16.1435 17.6051 16.3578 17.7513 16.5954 17.7513H32.5083C32.7459 17.7513 32.9603 17.6051 33.0511 17.3807C33.142 17.1564 33.0917 16.8982 32.9237 16.7266Z' fill='%2378A017'/%3e%3cpath d='M41.2816 16.551H13.33H8.13531H7.17719C5.49 16.551 4.11 15.2101 4.00063 13.5146C4.00055 13.5186 4 13.5226 4 13.5269V13.5269V38.7754C4 41.105 5.85508 43.0002 8.13531 43.0002H41.2816C41.6062 43.0002 41.8691 42.7315 41.8691 42.4V17.1512C41.8691 16.8197 41.6061 16.551 41.2816 16.551Z' fill='%23AA5D24'/%3e%3cpath d='M41.8692 26.8613H35.5454C33.1834 26.8613 31.2617 28.8245 31.2617 31.2378C31.2617 33.6509 33.1833 35.6142 35.5454 35.6142H41.8692V26.8613Z' fill='%237C3D1E'/%3e%3cpath d='M42.2376 25.3193H35.5454C33.1834 25.3193 31.2617 27.2825 31.2617 29.6958C31.2617 32.1089 33.1833 34.0722 35.5454 34.0722H42.2376C43.2095 34.0722 44.0002 33.2644 44.0002 32.2714V27.1202C44.0002 26.1271 43.2095 25.3193 42.2376 25.3193Z' fill='%23FFC107'/%3e%3cpath d='M36.0415 27.7373C34.9848 27.7373 34.125 28.6158 34.125 29.6954C34.125 30.775 34.9848 31.6533 36.0415 31.6533C37.0982 31.6533 37.958 30.775 37.958 29.6954C37.958 28.6158 37.0982 27.7373 36.0415 27.7373Z' fill='%23D4A106'/%3e%3c/svg%3e";
 
+const imageOnErrorHandler = event => {
+  event.currentTarget.src = img$c;
+};
 const ProductSlider = ({
   images
 }) => {
@@ -14699,6 +14956,7 @@ const ProductSlider = ({
     children: [jsx("img", {
       className: 'product-slider__main-image',
       src: slectedImage,
+      onError: imageOnErrorHandler,
       alt: ''
     }, slectedImage), jsx("div", Object.assign({
       className: 'product-slider__images'
@@ -14710,8 +14968,8 @@ const ProductSlider = ({
         breakpoints: {
           990: {
             direction: 'vertical',
-            spaceBetween: 10,
-            slidesPerView: 3
+            spaceBetween: 1,
+            slidesPerView: 4
           },
           480: {
             spaceBetween: 5,
@@ -14726,6 +14984,7 @@ const ProductSlider = ({
             onClick: handleChangeImage,
             src: image,
             loading: 'lazy',
+            onError: imageOnErrorHandler,
             className: `product-slider__images-image ${image === slectedImage ? 'active-slide' : ''}`
           })
         }, i))
@@ -15044,7 +15303,7 @@ const useForm = (submitFunction, defaultValue = {}) => {
   };
 };
 
-var Styles$1 = {"xlogin_request_access":"root-module_xlogin_request_access__Dt-oZ"};
+var Styles$2 = {"xlogin_request_access":"root-module_xlogin_request_access__Dt-oZ"};
 
 const LoginDrawer = () => {
   const {
@@ -15172,7 +15431,7 @@ const LoginDrawer = () => {
                 weight: 'normal'
               }, {
                 children: jsx("span", Object.assign({
-                  className: classnames(Styles$1['xlogin_request_access']),
+                  className: classnames(Styles$2['xlogin_request_access']),
                   onClick: onClickForgotPassword
                 }, {
                   children: "\u00BF Olvidaste tu contrase\u00F1a ?"
@@ -15192,7 +15451,7 @@ const LoginDrawer = () => {
           }, {
             children: jsxs(Ramen.XText, {
               children: ["\u00BFNo tiene una cuenta?", ' ', jsx("span", Object.assign({
-                className: classnames(Styles$1['xlogin_request_access']),
+                className: classnames(Styles$2['xlogin_request_access']),
                 onClick: onClickRequestAccess
               }, {
                 children: "Solicitar acceso"
@@ -15282,7 +15541,62 @@ const Home = () => {
   });
 };
 
+var Styles$1 = {"breadcumb-link":"root-module_breadcumb-link__QXGFS"};
+
+const BreadCumbs = ({
+  routes: _routes = []
+}) => {
+  const history = useHistory();
+  const onItemSelected = link => {
+    var _a, _b;
+    const category = (_a = link.id) === null || _a === void 0 ? void 0 : _a.toString();
+    const categoryName = (_b = link.name) === null || _b === void 0 ? void 0 : _b.toString();
+    history.push('/products', Object.assign(Object.assign({}, history.state), {
+      category,
+      categoryName
+    }));
+  };
+  return jsxs(Ramen.XBox, Object.assign({
+    orientation: "horizontal",
+    verticalAlign: "start",
+    width: 'full',
+    padding: "s"
+  }, {
+    children: [jsx(Link, Object.assign({
+      className: classnames(Styles$1['breadcumb-link']),
+      to: "/"
+    }, {
+      children: jsx(Ramen.XText, Object.assign({
+        weight: 'bold'
+      }, {
+        children: "Inicio"
+      }))
+    })), ' ', _routes === null || _routes === void 0 ? void 0 : _routes.map((item, index) => {
+      return jsxs(Fragment, {
+        children: [jsx(Ramen.XText, {
+          children: " / "
+        }), jsxs("a", Object.assign({
+          className: classnames(Styles$1['breadcumb-link']),
+          onClick: () => {
+            index + 1 < _routes.length && onItemSelected(item);
+          }
+        }, {
+          children: [jsxs(Ramen.XText, Object.assign({
+            weight: 'bold',
+            colorThone: index + 1 < _routes.length ? 'darkest' : 'dim'
+          }, {
+            children: [" ", item === null || item === void 0 ? void 0 : item.name]
+          })), ' ']
+        }))]
+      });
+    })]
+  }));
+};
+
+const disabledSpecification = ['Filtros Bucket', 'Configuraciones', 'Tipos de entrega', 'Filtros'];
+const activeFeatures = ['Características destacadas', 'Dimensiones', 'Materiales'];
 const Product = () => {
+  var _a, _b, _c;
   const {
     id
   } = useParams();
@@ -15297,9 +15611,26 @@ const Product = () => {
     error,
     success
   } = Ramen.Api.notification;
+  const {
+    categories
+  } = useGlobal();
+  const specificationsMapped = useMemo(() => {
+    const filterSpecification = filter$1(product === null || product === void 0 ? void 0 : product.specification, item => {
+      return !disabledSpecification.includes(item.fieldGroupName);
+    });
+    const specifications = groupBy(filterSpecification, item => {
+      return item.fieldGroupName;
+    });
+    return map(specifications, (item, index) => {
+      return {
+        fieldGroup: index,
+        value: item
+      };
+    });
+  }, [product === null || product === void 0 ? void 0 : product.specification]);
   const handleAddToCart = () => {
-    if (+values.quantity >= 1 && (product === null || product === void 0 ? void 0 : product.inStock)) {
-      if (values.quantity > 1) {
+    if (+values.quantity >= 1 && !!product) {
+      if (values.quantity > 1 && isAddToCart) {
         updateQuantity(product, +values.quantity);
       } else {
         addToCart(product, +values.quantity);
@@ -15309,8 +15640,7 @@ const Product = () => {
       });
     } else {
       error({
-        message: 'make sure put number in quantity input',
-        description: 'cant add product to cart'
+        description: 'No se pudo agregar el producto a tu cotización.'
       });
     }
   };
@@ -15319,15 +15649,17 @@ const Product = () => {
     const {
       data: productData
     } = yield productsClient.getProducts({
-      store: "E518",
-      sku: id
+      filter: {
+        store: 'E518',
+        ['identifier.isMainEan']: true,
+        ean: id
+      }
     });
-    const data = productData[0];
+    const [data] = productData;
     if (!data) {
       history.push('/products');
       error({
-        message: 'product not found',
-        description: 'make sure enter correct product id in url'
+        description: 'Producto no encontrado. Por favor intente de nuevo.'
       });
     }
     setProduct(data);
@@ -15344,177 +15676,291 @@ const Product = () => {
       console.log(errorMessage);
     }
   }, [id]);
+  const renderTabSpecifications = useMemo(() => {
+    if (!specificationsMapped.length) {
+      return jsx(Fragment, {});
+    }
+    const tabs = map(specificationsMapped, (item, index) => {
+      return {
+        key: `tab-specification-${index}`,
+        label: item.fieldGroup,
+        disabled: false,
+        type: 'outline',
+        children: item.value
+      };
+    });
+    const defaultKey = tabs[0].key;
+    const renderByFieldGroup = fields => {
+      return jsx("div", Object.assign({
+        className: "product-page__specification_container"
+      }, {
+        children: jsx(Ramen.XCard, Object.assign({
+          borderType: "solid",
+          size: "l"
+        }, {
+          children: jsx(Ramen.XBox, Object.assign({
+            width: 'full'
+          }, {
+            children: jsx("div", Object.assign({
+              className: "product-page__specification_row"
+            }, {
+              children: map(fields, item => {
+                return jsxs(Ramen.XBox, Object.assign({
+                  orientation: "horizontal",
+                  width: 'full',
+                  horizontalAlign: "between",
+                  verticalAlign: "center"
+                }, {
+                  children: [jsx(Ramen.XBox, Object.assign({
+                    width: 'half',
+                    padding: "s"
+                  }, {
+                    children: jsx(Ramen.XText, Object.assign({
+                      weight: "bold"
+                    }, {
+                      children: item.fieldName
+                    }))
+                  })), jsx(XDividerVertical, {}), jsx(Ramen.XBox, Object.assign({
+                    gap: "xxs",
+                    width: 'half',
+                    padding: "xs"
+                  }, {
+                    children: map(item.fieldValues, element => jsx(Ramen.XText, {
+                      children: element
+                    }))
+                  }))]
+                }));
+              })
+            }))
+          }))
+        }))
+      }));
+    };
+    return jsxs(Fragment, {
+      children: [jsx(Ramen.XText, Object.assign({
+        fontSize: 8,
+        weight: "bold"
+      }, {
+        children: "Caracter\u00EDsticas de producto"
+      })), jsx(Ramen.XVSpace, {
+        size: "m"
+      }), jsxs("div", Object.assign({
+        className: "product-page__specification_tabs_container"
+      }, {
+        children: [jsx(Ramen.XTabs, {
+          defaultKey: defaultKey,
+          size: "l",
+          tabs: tabs,
+          onTabChange: () => {}
+        }), jsx(Ramen.XVSpace, {
+          size: "m"
+        }), jsx(Ramen.XTabContent, {
+          children: map(tabs, item => {
+            return jsx(Fragment, {
+              children: jsx(Ramen.XTabPanel, Object.assign({
+                tabKey: item.key
+              }, {
+                children: renderByFieldGroup(item.children)
+              }))
+            });
+          })
+        })]
+      }))]
+    });
+  }, [specificationsMapped]);
+  const renderFeatures = useMemo(() => {
+    if (!(product === null || product === void 0 ? void 0 : product.specification)) {
+      return jsx(Fragment, {});
+    }
+    const featuredFeatures = ((product === null || product === void 0 ? void 0 : product.specification) || []).filter(item => activeFeatures.includes(item.fieldGroupName));
+    return jsx("ul", Object.assign({
+      className: "product-page__description__features"
+    }, {
+      children: !!(featuredFeatures === null || featuredFeatures === void 0 ? void 0 : featuredFeatures.length) && featuredFeatures.map((feature, i) => jsx("li", Object.assign({
+        className: "product-page__description__feature"
+      }, {
+        children: jsxs(Ramen.XBox, Object.assign({
+          width: 'full',
+          orientation: "horizontal",
+          verticalAlign: "center",
+          gap: "xxs"
+        }, {
+          children: [jsxs(Ramen.XText, {
+            children: [feature.fieldName, ":"]
+          }), jsx(Ramen.XBox, Object.assign({
+            gap: "xxs"
+          }, {
+            children: map(feature.fieldValues, element => jsx(Ramen.XText, {
+              children: element
+            }))
+          }))]
+        }))
+      }), i))
+    }));
+  }, [specificationsMapped]);
+  const onChangeCount = value => {
+    handleChange({
+      target: {
+        name: 'quantity',
+        value
+      }
+    });
+  };
+  const inCart = cart.find(item => item.id === (product === null || product === void 0 ? void 0 : product.id));
+  const isAddToCart = inCart ? true : false;
+  const initialValue = inCart ? inCart.quantity : 1;
   const {
     handleChange,
     handleSubmit,
     values
   } = useForm(handleAddToCart, {
-    quantity: 1
+    quantity: initialValue
   });
   if (!product) {
-    return jsxs(Container, {
-      children: [jsxs("div", Object.assign({
-        className: 'product-skeleton-loading'
-      }, {
-        children: [jsx("section", Object.assign({
-          className: 'product-skeleton-loading__left'
+    return jsx(MainLayout, {
+      children: jsxs(Container, {
+        children: [jsxs("div", Object.assign({
+          className: "product-skeleton-loading"
         }, {
-          children: jsx("div", {
-            className: 'product-skeleton-loading__left__image'
-          })
-        })), jsxs("section", Object.assign({
-          className: 'product-skeleton-loading__right'
+          children: [jsx("section", Object.assign({
+            className: "product-skeleton-loading__left"
+          }, {
+            children: jsx("div", {
+              className: "product-skeleton-loading__left__image"
+            })
+          })), jsxs("section", Object.assign({
+            className: "product-skeleton-loading__right"
+          }, {
+            children: [jsx("div", {
+              className: "product-skeleton-loading__right__title"
+            }), jsx("div", {
+              className: "product-skeleton-loading__right__date"
+            }), jsx("div", {
+              className: "product-skeleton-loading__right__price"
+            }), jsxs("section", Object.assign({
+              className: "product-skeleton-loading__right__buy"
+            }, {
+              children: [jsx("div", {
+                className: "product-skeleton-loading__right__buy__text"
+              }), jsx("div", {
+                className: "product-skeleton-loading__right__buy__button"
+              })]
+            })), jsxs("section", Object.assign({
+              className: "product-skeleton-loading__right__buy"
+            }, {
+              children: [jsx("div", {
+                className: "product-skeleton-loading__right__buy__text"
+              }), jsx("div", {
+                className: "product-skeleton-loading__right__buy__button"
+              })]
+            })), jsx("div", {
+              className: "product-skeleton-loading__paragraph"
+            })]
+          }))]
+        })), jsxs("div", Object.assign({
+          className: "product-skeleton-loading non-flex"
         }, {
           children: [jsx("div", {
-            className: 'product-skeleton-loading__right__title'
+            className: "product-skeleton-loading__dis-title"
           }), jsx("div", {
-            className: 'product-skeleton-loading__right__date'
-          }), jsx("div", {
-            className: 'product-skeleton-loading__right__price'
-          }), jsxs("section", Object.assign({
-            className: 'product-skeleton-loading__right__buy'
-          }, {
-            children: [jsx("div", {
-              className: 'product-skeleton-loading__right__buy__text'
-            }), jsx("div", {
-              className: 'product-skeleton-loading__right__buy__button'
-            })]
-          })), jsxs("section", Object.assign({
-            className: 'product-skeleton-loading__right__buy'
-          }, {
-            children: [jsx("div", {
-              className: 'product-skeleton-loading__right__buy__text'
-            }), jsx("div", {
-              className: 'product-skeleton-loading__right__buy__button'
-            })]
-          })), jsx("div", {
-            className: 'product-skeleton-loading__paragraph'
+            className: "product-skeleton-loading__dis-text"
           })]
         }))]
-      })), jsxs("div", Object.assign({
-        className: 'product-skeleton-loading non-flex'
-      }, {
-        children: [jsx("div", {
-          className: 'product-skeleton-loading__dis-title'
-        }), jsx("div", {
-          className: 'product-skeleton-loading__dis-text'
-        })]
-      }))]
+      })
     });
   }
   const discountPrice = (product.price || 0).toFixed(2);
-  const isAddToCart = cart.find(item => item.id === product.id) ? true : false;
-  const ImagesURl = [product.urlImage || 'assets/svg/dummy-img.svg', product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage, product.urlImage];
+  const ImagesURl = [...(!!((_a = product === null || product === void 0 ? void 0 : product.urlImageOTher) === null || _a === void 0 ? void 0 : _a.length) ? product.urlImageOTher : [`https://media.easy.cl/is/image/EasySA/${StringFormatter$1.removeInitialZero(product.sku)}`] || [])];
+  const nameProduct = StringFormatter$1.capitalizeLetter((product === null || product === void 0 ? void 0 : product.longName) || product.name || '-', true);
+  const category = ((_b = product.hierarchy) === null || _b === void 0 ? void 0 : _b.length) ? product.hierarchy[((_c = product === null || product === void 0 ? void 0 : product.hierarchy) === null || _c === void 0 ? void 0 : _c.length) - 1] : 0;
+  const routes = findParentsInRoot(categories, Number(category)) || [];
+  const routesMapped = [...routes, {
+    id: product.id,
+    name: nameProduct
+  }];
   return jsx(MainLayout, {
     children: jsxs(Container, {
-      children: [jsxs("div", Object.assign({
-        className: 'product-page__path'
+      children: [jsx("div", Object.assign({
+        className: "product-page__path"
       }, {
-        children: [jsx(Link, Object.assign({
-          className: 'product-page__path-link',
-          to: '/'
-        }, {
-          children: "Home"
-        })), ' ', "/", ' ', jsx(Link, Object.assign({
-          className: 'product-page__path-link',
-          to: '/products'
-        }, {
-          children: "Productos"
-        })), ' ', "/ ", product.name]
+        children: jsx(BreadCumbs, {
+          routes: routesMapped
+        })
       })), jsxs("div", Object.assign({
-        className: 'product-page'
+        className: "product-page"
       }, {
         children: [jsx("div", Object.assign({
-          className: 'product-page__image'
+          className: "product-page__image"
         }, {
           children: jsx(ProductSlider, {
             images: ImagesURl
           })
         })), jsxs("div", Object.assign({
-          className: 'product-page__content'
+          className: "product-page__content"
         }, {
-          children: [jsx("h2", Object.assign({
-            className: 'product-page__content__title'
+          children: [jsxs(Ramen.XText, Object.assign({
+            fontSize: 10
           }, {
-            children: product.brandName
-          })), jsx("h2", Object.assign({
-            className: 'product-page__content__title'
+            children: [' ', StringFormatter$1.capitalizeLetter(product === null || product === void 0 ? void 0 : product.brandName, true)]
+          })), jsx(Ramen.XVSpace, {
+            size: "xs"
+          }), jsx(Ramen.XText, Object.assign({
+            weight: "bold",
+            fontSize: 8
           }, {
-            children: product.name
-          })), jsx("div", Object.assign({
-            className: 'product-page__content__prices'
+            children: nameProduct
+          })), jsx(Ramen.XVSpace, {
+            size: "xs"
+          }), jsxs(Ramen.XText, Object.assign({
+            fontSize: 11,
+            colorThone: "dim"
           }, {
-            children: jsxs("h4", Object.assign({
-              className: 'product-page__content__price'
-            }, {
-              children: [!!discountPrice ? NumberFormatter$1.toCurrency(Number(discountPrice)) : '-', ' ']
-            }))
-          })), jsx("hr", {
-            className: 'product-page__line'
-          }), jsx("div", Object.assign({
-            className: 'product-page__status'
+            children: ["C\u00F3digo del producto: ", product.sku]
+          })), jsx(Ramen.XVSpace, {
+            size: "xl"
+          }), jsx(Ramen.XText, Object.assign({
+            weight: "bold",
+            fontSize: 8
           }, {
-            children: jsxs("h4", Object.assign({
-              className: 'product-page__status__stock'
-            }, {
-              children: [jsx("span", Object.assign({
-                style: {
-                  color: '#0000009d'
-                }
-              }, {
-                children: "Disponibilidad :"
-              })), ' ', product.inStock ? jsx("span", Object.assign({
-                className: 'product-page__status__stock-text'
-              }, {
-                children: "En stock"
-              })) : jsx("span", Object.assign({
-                className: 'product-page__status__stock-text'
-              }, {
-                children: "Fuera de stock"
-              }))]
-            }))
-          })), jsx("hr", {
-            className: 'product-page__line'
+            children: !!discountPrice ? NumberFormatter$1.toCurrency(Number(discountPrice)) : '-'
+          })), jsx(Ramen.XVSpace, {
+            size: "xxs"
+          }), jsx(Ramen.XText, Object.assign({
+            fontSize: 11,
+            colorThone: "dim"
+          }, {
+            children: "Precio referencial"
+          })), jsx(Ramen.XVSpace, {
+            size: "xl"
+          }), renderFeatures, jsx(Ramen.XVSpace, {
+            size: "xl"
           }), jsxs("form", Object.assign({
-            className: 'product-page__buy-section',
+            className: "product-page__buy-section",
             onSubmit: handleSubmit
           }, {
-            children: [jsxs("div", Object.assign({
-              className: 'product-page__buy-section__input'
+            children: [jsx("div", Object.assign({
+              className: "product-page__buy-section__input"
             }, {
-              children: [jsx("h4", {
-                children: "Cantidad:"
-              }), jsx(Input, {
+              children: jsx(Ramen.XCounter, {
                 min: 1,
-                max: 9999,
-                onChange: handleChange,
-                value: values.quantity,
-                name: 'quantity',
-                type: 'number'
-              })]
+                max: 100000,
+                onChange: onChangeCount,
+                editable: true,
+                count: values.quantity
+              })
             })), jsx(Ramen.XButton, {
               type: 'solid',
               text: isAddToCart ? 'Actualizar en cotización' : 'Añadir a cotización'
             })]
           }))]
         }))]
-      })), jsx("hr", {
-        className: 'product-page__line'
-      }), jsxs("div", Object.assign({
-        className: 'product-page__discription'
+      })), jsx(Ramen.XVSpace, {
+        size: "l"
+      }), jsx("div", Object.assign({
+        className: "product-page__discription"
       }, {
-        children: [jsx("h4", Object.assign({
-          className: 'product-page__discription__title'
-        }, {
-          children: "Informaci\u00F3n del producto:"
-        })), jsx("p", Object.assign({
-          className: 'product-page__discription__text'
-        }, {
-          children: product.description
-        }))]
-      })), jsx("hr", {
-        className: 'product-page__line'
-      })]
+        children: renderTabSpecifications
+      }))]
     })
   });
 };
@@ -15611,6 +16057,7 @@ const Cart = () => {
 
 var useQueryCollection = ((request, params, useInfinite = false) => {
   const [data, setData] = useState([]);
+  const [otherResults, setOtherResults] = useState({});
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState();
   const [loadMoreLoading, setLoadMoreLoading] = useState(false);
@@ -15636,11 +16083,13 @@ var useQueryCollection = ((request, params, useInfinite = false) => {
         limit: filters.limit,
         offset: !useNext ? 0 : filters.offset
       }, query);
-      const {
-        data: dataNew,
-        offset,
-        total
-      } = yield request(filter);
+      const _b = yield request(filter),
+        {
+          data: dataNew,
+          offset,
+          total
+        } = _b,
+        otherValues = __rest(_b, ["data", "offset", "total"]);
       // get data for request
       const dataMapped = useNext ? [...data, ...dataNew] : dataNew;
       // Set filters for previews request
@@ -15653,6 +16102,7 @@ var useQueryCollection = ((request, params, useInfinite = false) => {
       useNext ? setLoadMoreLoading(false) : setLoading(false);
       //Set Data info for request
       setData(dataMapped);
+      setOtherResults(otherValues);
     } catch (errorMessage) {
       console.log(errorMessage);
       //Set error if has
@@ -15677,6 +16127,7 @@ var useQueryCollection = ((request, params, useInfinite = false) => {
     }
   }), [data, loading, hasNext, loadMoreLoading, filters]);
   return {
+    otherResults,
     loading,
     errors,
     loadMoreLoading,
@@ -15694,45 +16145,19 @@ var useQueryCollection = ((request, params, useInfinite = false) => {
   };
 });
 
-const INITIAL_FILTERS = {};
 const orderOptions = [{
-  label: 'Destacados',
-  value: 'featured'
+  label: 'Nombre',
+  value: 'name'
 }, {
   label: 'Precio',
   value: 'price'
-}, {
-  label: 'Nombre',
-  value: 'name'
 }];
-const BreadCumbs = () => {
-  return jsx(Ramen.XBox, Object.assign({
-    orientation: "horizontal",
-    verticalAlign: "start",
-    width: 'full',
-    padding: "s"
-  }, {
-    children: jsxs("div", Object.assign({
-      className: "product-page__path"
-    }, {
-      children: [jsx(Link, Object.assign({
-        className: "product-page__path-link",
-        to: "/"
-      }, {
-        children: "Inicio"
-      })), ' ', "/", ' ', jsx(Link, Object.assign({
-        className: "product-page__path-link",
-        to: "/products"
-      }, {
-        children: "Productos"
-      })), ' ']
-    }))
-  }));
-};
 const SectionFiltersOrder = ({
-  brandName,
+  loading,
+  title,
   activeFilters,
   filters,
+  activeSort,
   onChangeFilter,
   onSortHandle
 }) => {
@@ -15788,7 +16213,6 @@ const SectionFiltersOrder = ({
     onChangeFilter === null || onChangeFilter === void 0 ? void 0 : onChangeFilter(newActiveFilters);
   };
   const onChange = value => {
-    console.log('onChange', value);
     onSortHandle === null || onSortHandle === void 0 ? void 0 : onSortHandle(value);
   };
   return jsxs(Fragment, {
@@ -15800,11 +16224,15 @@ const SectionFiltersOrder = ({
       padding: "m",
       width: 'full'
     }, {
-      children: [brandName ? jsx(Ramen.XText, Object.assign({
+      children: [loading ? jsx(Ramen.XSkeleton, {
+        type: 'text',
+        size: 'm',
+        width: 'm'
+      }) : title ? jsx(Ramen.XText, Object.assign({
         fontSize: 7
       }, {
-        children: brandName
-      })) : jsx("div", {}), jsxs(Ramen.XBox, Object.assign({
+        children: title
+      })) : jsx("div", {}), !loading ? jsxs(Ramen.XBox, Object.assign({
         orientation: "horizontal",
         verticalAlign: "center",
         gap: "s"
@@ -15818,15 +16246,34 @@ const SectionFiltersOrder = ({
         }, {
           children: jsx(Ramen.XSelect, {
             options: orderOptions,
-            defaultValue: "featured",
+            value: Object.keys(activeSort || {})[0],
             size: "s",
             onChange: onChange
           })
+        })), jsx(Ramen.XTooltip, Object.assign({
+          text: Object.values(activeSort || {})[0] === 'asc' ? 'Orden ascendente' : 'Orden descendente',
+          inline: true,
+          placement: 'left'
+        }, {
+          children: jsx(Ramen.XIcon, {
+            icon: Object.values(activeSort || {})[0] === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline',
+            size: "xs"
+          })
         }))]
+      })) : jsx("div", Object.assign({
+        style: {
+          width: 150
+        }
+      }, {
+        children: jsx(Ramen.XSkeleton, {
+          size: "l",
+          type: "image",
+          width: "xl"
+        })
       }))]
     })), jsx(Ramen.XVSpace, {
       size: "s"
-    }), !!filtersMapped.length && jsxs(Ramen.XBox, Object.assign({
+    }), !loading && !!filtersMapped.length && jsxs(Ramen.XBox, Object.assign({
       orientation: "vertical",
       verticalAlign: "center",
       padding: "m"
@@ -15849,68 +16296,64 @@ const SectionFiltersOrder = ({
     }))]
   });
 };
+
 const Shop = () => {
   const {
     error
   } = Ramen.Api.notification;
   const {
     search,
-    state
+    state,
+    pathname
   } = useLocation();
+  const {
+    category,
+    categoryName,
+    brand,
+    brandName
+  } = state || {};
   const {
     width
   } = useWindowSize();
+  const {
+    categories,
+    categoriesByLevel
+  } = useGlobal();
+  const [isOpenModalFilters, setIsOpenModalFilters] = useState(false);
+  const arrayParents = findParentsInRoot(categories, Number(category)) || [];
+  const lvlCategory = arrayParents.length;
+  const isMultipleHierarchy = false;
+  const getKeyByLvl = value => {
+    switch (value) {
+      case 0:
+        return 'category';
+      case 1:
+        return 'departament';
+      case 2:
+        return 'subcategory';
+      case 3:
+        return 'typeProduct';
+      default:
+        return 'category';
+    }
+  };
+  const INITIAL_FILTERS = useMemo(() => {
+    return Object.assign({}, category && {
+      [getKeyByLvl(arrayParents.length - 1)]: `${category}` 
+    });
+  }, [category]);
   const [activeFilters, setActiveFilters] = useState(INITIAL_FILTERS);
-  const filter = [{
-    key: 'rubro',
-    label: 'Categorías',
-    multiple: true,
-    options: [{
-      key: 'CAT1',
-      label: 'Categoria 1'
-    }, {
-      key: 'CAT3',
-      label: 'Categoria 2'
-    }]
-  }, {
-    key: 'subRubro',
-    label: 'Subcategorías',
-    multiple: true,
-    options: [{
-      key: 'SUBCAT1',
-      label: 'SubCategoria 1'
-    }, {
-      key: 'SUBCAT2',
-      label: 'SubCategoria 2'
-    }]
-  }, {
-    key: 'article',
-    label: 'Tipo producto',
-    multiple: true,
-    options: [{
-      key: 'ART1',
-      label: 'Artículo 1'
-    }, {
-      key: 'ART2',
-      label: 'Artículo 2'
-    }]
-  }, {
-    key: 'brandName',
-    label: 'Marcas',
-    options: [{
-      key: 'BRAND1',
-      label: 'Marca 1'
-    }, {
-      key: 'BRAND2',
-      label: 'Marca 2'
-    }]
-  }];
+  const [sortField, setSortFields] = useState({
+    name: 'asc'
+  });
   const {
     loading,
     errors,
     loadMoreLoading,
     filters,
+    otherResults,
     data,
+    total,
     getData,
     loadMore,
     setErrors
@@ -15919,34 +16362,175 @@ const Shop = () => {
     offset: 0,
     total: 0
   }, true);
+  const getDataFilterByType = item => {
+    let data = {};
+    const options = (item.data || []).map(({
+      key,
+      value,
+      label
+    }) => {
+      return {
+        key: `${key}`,
+        label: StringFormatter$1.capitalizeLetter(`${label || key}  (${value})`, true)
+      };
+    });
+    switch (item.type) {
+      case 'brand.name':
+        data.key = 'brand';
+        data.label = 'Marcas';
+        data.multiple = true;
+        break;
+    }
+    data.options = options;
+    data.useSearch = options.length > 7;
+    return data;
+  };
+  const hierarchy = useMemo(() => {
+    return activeFilters['typeProduct'] || activeFilters['subcategory'] || activeFilters['departament'] || activeFilters['category'];
+  }, [activeFilters]);
+  const filter = useMemo(() => {
+    if (loading) {
+      return [];
+    }
+    console.log('activeFilters in memo', activeFilters);
+    const filtersResults = (otherResults === null || otherResults === void 0 ? void 0 : otherResults.summary) || [];
+    const [filterHierarchy] = filtersResults.filter(item => item.type === 'hierarchy.levels.id');
+    let initialFilters = [{
+      key: 'category',
+      label: 'Categorías',
+      multiple: isMultipleHierarchy,
+      options: []
+    }, {
+      key: 'departament',
+      label: 'Departamento',
+      multiple: isMultipleHierarchy,
+      options: []
+    }, {
+      key: 'subcategory',
+      label: 'Subcategoría',
+      multiple: isMultipleHierarchy,
+      options: []
+    }, {
+      key: 'typeProduct',
+      label: 'Tipo de producto',
+      multiple: isMultipleHierarchy,
+      options: []
+    }];
+    if (categoriesByLevel) {
+      initialFilters.forEach((item, index) => {
+        let arrayOptions = categoriesByLevel[index];
+        if (!!arrayOptions) {
+          if (filterHierarchy === null || filterHierarchy === void 0 ? void 0 : filterHierarchy.data) {
+            arrayOptions = arrayOptions.filter(item => filterHierarchy === null || filterHierarchy === void 0 ? void 0 : filterHierarchy.data.find(itemHierarchy => `${itemHierarchy.key}` === `${item.id}`));
+          }
+          let options = (arrayOptions || []).map(({
+            id,
+            name
+          }) => {
+            const existCategory = ((filterHierarchy === null || filterHierarchy === void 0 ? void 0 : filterHierarchy.data) || []).find(item => `${item.key}` === `${id}`);
+            const value = (existCategory === null || existCategory === void 0 ? void 0 : existCategory.value) ? `(${existCategory === null || existCategory === void 0 ? void 0 : existCategory.value})` : '';
+            return {
+              key: `${id}`,
+              label: `${name} ${value}`
+            };
+          });
+          let valueFilter;
+          switch (index) {
+            case 0:
+              valueFilter = activeFilters['category'] || category && (category);
+              break;
+            case 1:
+              valueFilter = activeFilters['departament'];
+              break;
+            case 2:
+              valueFilter = activeFilters['subcategory'];
+              break;
+            case 3:
+              valueFilter = activeFilters['typeProduct'];
+              break;
+          }
+          if (!!valueFilter) {
+            options = options.filter(item => valueFilter.includes(item.key));
+          }
+          // Show only herarchy for lvl
+          options = options.filter((item, index) => index > lvlCategory);
+          item.options = options;
+          item.useSearch = options.length > 7;
+        }
+      });
+    }
+    const filterMapped = filtersResults.map(item => {
+      const data = getDataFilterByType(item);
+      return data;
+    }).filter(item => item.key && item.options.length);
+    return [...initialFilters, ...filterMapped].filter(item => item.key && item.options.length);
+  }, [otherResults, loading, categoriesByLevel, activeFilters]);
   const searchQuery = useMemo(() => {
     return new URLSearchParams(search).get('s') || '';
   }, [search]);
   const handleFilterChange = filter => {
+    const key = Object.keys(filter)[0];
+    const value = Object.values(filter)[0];
+    if (!value || !(value === null || value === void 0 ? void 0 : value.length)) {
+      filter[key] = null;
+    }
     setActiveFilters(Object.assign({}, filter));
+    setIsOpenModalFilters(false);
+  };
+  const onSortField = value => {
+    let order = 'asc';
+    if (sortField[value]) {
+      order = 'desc';
+    }
+    setSortFields({
+      [value]: order
+    });
   };
   // check when user type or product add search with the search query
   useEffect(() => {
-    console.log(activeFilters);
-    console.log(state);
-    const filter = Object.assign({
-      store: 'E518'
-    }, !!searchQuery && {
-      ['description.longName']: searchQuery
-    });
+    const filter = {
+      filter: Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({
+        //Filter by store or location
+        store: 'E518'
+      }, !!brand && {
+        brand
+      }), !!activeFilters && Object.assign({}, activeFilters)), !!hierarchy && {
+        category: hierarchy
+      }), !!searchQuery && {
+        ['name']: searchQuery
+      }), {
+        isMainEan: true
+      }),
+      sort: [sortField]
+    };
     getData(filter);
-  }, [activeFilters, searchQuery, state]);
+  }, [activeFilters, searchQuery, sortField]);
   useEffect(() => {
     if (!!errors) {
       error({
-        description: 'Error',
-        message: 'We have errors please try again'
+        description: 'Error en la carga de productos',
+        message: 'Por favor intenta nuevamente.'
       });
       setErrors();
     }
   }, [errors]);
-  return jsx(Fragment, {
-    children: jsx(MainLayout, {
+  useEffect(() => {
+    return () => {
+      //Clean filter when route change
+      setActiveFilters({});
+    };
+  }, [state]);
+  const getFilters = () => {
+    return jsx(FilterComponent, {
+      loading: loading,
+      filters: filter,
+      selectdFilters: activeFilters,
+      onChange: handleFilterChange
+    });
+  };
+  const titleList = searchQuery ? `Resultado de búsqueda para "${searchQuery}"` : categoryName || brandName || '';
+  return jsxs(Fragment, {
+    children: [jsx(MainLayout, {
       children: jsx(Container, {
         children: jsx("div", Object.assign({
           className: "shop"
@@ -15954,22 +16538,44 @@ const Shop = () => {
           children: jsxs(Ramen.XBox, Object.assign({
             orientation: "horizontal"
           }, {
-            children: [width > 750 && jsx(Ramen.XBox, Object.assign({
+            children: [width > breakPoints.lg && jsxs(Ramen.XBox, Object.assign({
               gap: "l",
               padding: "l"
             }, {
-              children: jsx(FilterComponent, {
-                filters: filter,
-                selectdFilters: activeFilters,
-                onChange: handleFilterChange
-              })
+              children: [!loading && jsx(Ramen.XBox, {
+                children: jsxs(Ramen.XText, Object.assign({
+                  colorThone: "dim"
+                }, {
+                  children: [' ', `${total} resultados encontrados.`]
+                }))
+              }), getFilters()]
             })), jsxs(Ramen.XBox, Object.assign({
               width: 'full'
             }, {
-              children: [jsx(BreadCumbs, {}), jsx(SectionFiltersOrder, {
+              children: [jsxs(Ramen.XBox, Object.assign({
+                width: 'full',
+                orientation: "horizontal"
+              }, {
+                children: [!loading && jsx(BreadCumbs, {
+                  routes: arrayParents
+                }), !loading && width < breakPoints.lg && filter.length && jsx(Ramen.XBox, Object.assign({
+                  padding: "m"
+                }, {
+                  children: jsx(Ramen.XButton, {
+                    type: "outline",
+                    icon: "filter-outline",
+                    text: "Filtros",
+                    onClick: () => setIsOpenModalFilters(true)
+                  })
+                }))]
+              })), jsx(SectionFiltersOrder, {
+                title: titleList,
+                loading: loading,
                 activeFilters: activeFilters,
                 filters: filter,
-                onChangeFilter: handleFilterChange
+                activeSort: sortField,
+                onChangeFilter: handleFilterChange,
+                onSortHandle: onSortField
               }), jsx(ProductsList, {
                 data: data,
                 loading: loading,
@@ -15982,7 +16588,18 @@ const Shop = () => {
           }))
         }))
       })
-    })
+    }), jsx(Ramen.XDrawer, Object.assign({
+      size: "s",
+      placement: "left",
+      title: 'Filtros',
+      headerType: "fixed",
+      closable: true,
+      open: isOpenModalFilters,
+      onClose: () => setIsOpenModalFilters(!isOpenModalFilters),
+      onClickAction: () => setIsOpenModalFilters(!isOpenModalFilters)
+    }, {
+      children: getFilters()
+    }))]
   });
 };
 
@@ -16511,7 +17128,6 @@ const SetPassword = () => {
     history.push('/');
   };
   const isDirect = !tokenValue && !!token;
-  console.log(isDirect, tokenValue, token);
   const onSubmit = values => __awaiter(void 0, void 0, void 0, function* () {
     try {
       Ramen.Api.loading.show({
@@ -16857,7 +17473,7 @@ const ResetPassword = () => {
   });
 };
 
-var styles$1 = {"xprofile-container":"root-module_xprofile-container__czIm0","xprofile-container_credit_card":"root-module_xprofile-container_credit_card__Jm-HV","xprofile-container_content":"root-module_xprofile-container_content__eOUnE","xcredit-card-image":"root-module_xcredit-card-image__0gFkK","xavatar-component_button_edit":"root-module_xavatar-component_button_edit__6oFl0"};
+var styles$2 = {"xprofile-container":"root-module_xprofile-container__czIm0","xprofile-container_credit_card":"root-module_xprofile-container_credit_card__Jm-HV","xprofile-container_content":"root-module_xprofile-container_content__eOUnE","xcredit-card-image":"root-module_xcredit-card-image__0gFkK"};
 
 var Styles = {"xsidebar":"root-module_xsidebar__st05C","xsidebar--expanded":"root-module_xsidebar--expanded__rf9cW","xsidebar__shadow":"root-module_xsidebar__shadow__USOyG","xsidebar__logo":"root-module_xsidebar__logo__K73S1","xsidebar__menu":"root-module_xsidebar__menu__QvWTs","xsidebar__menu__item_action":"root-module_xsidebar__menu__item_action__mS4vt","xsidebar__menu__item_action--selected":"root-module_xsidebar__menu__item_action--selected__BnoPo","xsidebar__menu__item_divider":"root-module_xsidebar__menu__item_divider__pUhVJ","xsidebar__expander":"root-module_xsidebar__expander__niS7U","xsidebar__footer":"root-module_xsidebar__footer__2-24a"};
 
@@ -16866,6 +17482,10 @@ const XSidebarPortal = props => {
   const rootClass = classnames(Styles['xsidebar'], {
     [Styles['xsidebar--expanded']]: expanded
   });
+  useEffect(() => {
+    console.log(props.expanded);
+    setExpanded(props.expanded);
+  }, [props.expanded]);
   const onActionItemMenuClickHandler = key => {
     if (props.onActionClick) {
       props.onActionClick(key);
@@ -17019,6 +17639,7 @@ const HistoryRequest = () => {
   const [shoModal, setShowModal] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState();
   const {
+    cart,
     clearCart,
     updateCart,
     setIsOpenModal
@@ -17039,12 +17660,33 @@ const HistoryRequest = () => {
     limit: filters.limit,
     total: filters.total
   }), [filters]);
-  const repeatRequest = cardId => __awaiter(void 0, void 0, void 0, function* () {
+  const onDownloadAction = cartId => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+      let downloadLink;
+      Ramen.Api.loading.show({
+        text: 'Descargando pdf de la solicitud...'
+      });
+      const data = yield new Promise(resolve => {
+        setTimeout(() => resolve({
+          url: ''
+        }), 1000);
+      });
+      downloadLink = data === null || data === void 0 ? void 0 : data.url;
+      Ramen.Api.loading.hide();
+      Ramen.Api.notification.success({
+        description: 'Archivo de solicitud descargado satisfactoriamente.'
+      });
+      window.open(downloadLink, '_system', 'location=yes');
+    } catch (error) {
+      Ramen.Api.loading.hide;
+    }
+  });
+  const repeatRequest = cartId => __awaiter(void 0, void 0, void 0, function* () {
     try {
       Ramen.Api.loading.show({
         text: 'Cargando solicitud al carrito'
       });
-      const cartDetails = yield cartClient.getDetailCart(cardId);
+      const cartDetails = yield cartClient.getDetailCart(cartId);
       const products = (cartDetails.cart_details || []).map(item => {
         const {
           ean,
@@ -17058,6 +17700,7 @@ const HistoryRequest = () => {
           inStock,
           measurement,
           description,
+          saleUnit,
           id
         } = item;
         const product = {
@@ -17071,6 +17714,7 @@ const HistoryRequest = () => {
           urlImage: urlImageOTher.length > 0 ? urlImageOTher[0] : `https://media.easy.cl/is/image/EasySA/${StringFormatter$1.removeInitialZero(sku)}`,
           brandName,
           inStock,
+          saleUnit,
           metadata: {
             measurement,
             unit
@@ -17166,8 +17810,12 @@ const HistoryRequest = () => {
                 icon: "repeat-outline",
                 type: "clear",
                 onClick: () => {
-                  setSelectedRecord(record);
-                  setShowModal(true);
+                  if (cart.length) {
+                    setSelectedRecord(record);
+                    setShowModal(true);
+                  } else {
+                    repeatRequest(record === null || record === void 0 ? void 0 : record._id);
+                  }
                 }
               })
             })), jsx(Ramen.XTooltip, Object.assign({
@@ -17177,7 +17825,7 @@ const HistoryRequest = () => {
               children: jsx(Ramen.XButtonIcon, {
                 type: "clear",
                 icon: "download-outline",
-                onClick: () => console.log('Download Clicked', record)
+                onClick: () => onDownloadAction(record === null || record === void 0 ? void 0 : record._id)
               })
             }))]
           }))
@@ -17350,7 +17998,80 @@ const HelpCenter = () => {
   }));
 };
 
-var styles = {"x-myaccount_card_container":"root-module_x-myaccount_card_container__DZGUV","x-myaccount_card_item":"root-module_x-myaccount_card_item__GOnHu","x-address-container":"root-module_x-address-container__yS8n-"};
+var styles$1 = {"x-myaccount_card_container":"root-module_x-myaccount_card_container__DZGUV","x-myaccount_card_item":"root-module_x-myaccount_card_item__GOnHu","x-address-container":"root-module_x-address-container__yS8n-"};
+
+var styles = {"xavatar-component_button_edit":"root-module_xavatar-component_button_edit__GtZgd"};
+
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+var filesClient = new FilesApi({
+  baseURL: 'https://api.staging.cencox.xyz/ebisu/api-bff'
+});
+
+const AvatarComponent = () => {
+  const {
+    userData,
+    getMe
+  } = useUserContext();
+  const inputFile = useRef();
+  const onTakePhotoClickHandler = base64String => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+      Ramen.Api.loading.show({
+        text: 'Actualizando imagen de usuario...'
+      });
+      yield filesClient.uploadPhotoUser(base64String);
+      yield getMe();
+      Ramen.Api.loading.hide();
+      Ramen.Api.notification.success({
+        description: 'Se ha actualizado la imagen del usuario satisfactoriamente'
+      });
+    } catch (error) {
+      console.error(error);
+      Ramen.Api.notification.error({
+        description: 'Ha ocurrido un error al subir la imagen.',
+        message: 'Por favor intente de nuevo.'
+      });
+      Ramen.Api.loading.hide();
+    }
+  });
+  const onErrorImage = error => {
+    Ramen.Api.notification.error({
+      description: 'Ha ocurrido un error al subir la imagen.',
+      message: error.message ? error.message : 'Por favor intente de nuevo.'
+    });
+  };
+  return jsx(Ramen.XBox, Object.assign({
+    width: 1,
+    height: 'full'
+  }, {
+    children: jsxs("div", Object.assign({
+      className: classnames(styles['xavatar-component_button_edit'])
+    }, {
+      children: [jsx(Ramen.XImage, {
+        rounded: "full",
+        src: (userData === null || userData === void 0 ? void 0 : userData.imageUrl) || img$7,
+        height: 1,
+        width: 'full'
+      }), jsx(Ramen.XButtonIcon, {
+        size: "s",
+        type: "solid",
+        icon: "edit-2-outline",
+        onClick: () => {
+          inputFile.current.click();
+        }
+      }), jsx("input", {
+        type: "file",
+        accept: 'image/*',
+        name: "image",
+        ref: inputFile,
+        hidden: true,
+        onChange: event => {
+          filesClient.getBase64(event, onTakePhotoClickHandler, onErrorImage);
+        }
+      })]
+    }))
+  }));
+};
+var AvatarComponent$1 = /*#__PURE__*/memo(AvatarComponent);
 
 const XCardItemList = ({
   loading,
@@ -17358,7 +18079,7 @@ const XCardItemList = ({
   value
 }) => {
   return jsx("div", Object.assign({
-    className: classnames(styles['x-myaccount_card_item'])
+    className: classnames(styles$1['x-myaccount_card_item'])
   }, {
     children: loading ? jsx(Ramen.XSkeleton, {
       size: "xl",
@@ -17390,12 +18111,11 @@ const AddressComponent = ({
   loading,
   onChangeAddress
 }) => {
-  console.log(value);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(value);
   useEffect(() => {
     if (value !== selectedAddress) {
-      selectedAddress(value);
+      setSelectedAddress(value);
     }
   }, [value]);
   const changeMode = () => {
@@ -17410,20 +18130,20 @@ const AddressComponent = ({
   const onUpdateAddress = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
       Ramen.Api.loading.show({
-        text: 'Actualizando dirección de despacho...'
+        text: 'Actualizando dirección comercial...'
       });
       const input = uniq([selectedAddress, ...(address || [])]);
       yield companyClient.updateAddress(uniq([selectedAddress, ...(address || [])]));
       onChangeAddress === null || onChangeAddress === void 0 ? void 0 : onChangeAddress(input);
       changeMode();
       Ramen.Api.notification.success({
-        description: 'Dirección de despacho actualizada correctamente.'
+        description: 'Dirección comercial actualizada correctamente.'
       });
       Ramen.Api.loading.hide();
     } catch (error) {
       Ramen.Api.loading.hide();
       Ramen.Api.notification.error({
-        description: 'No pudimso actualizar su dirección de despacho. Por favor intenta nuevamente.'
+        description: 'No pudimso actualizar su dirección comercial. Por favor intenta nuevamente.'
       });
     }
   });
@@ -17432,7 +18152,7 @@ const AddressComponent = ({
     changeMode();
   });
   return jsx("div", Object.assign({
-    className: classnames(styles['x-address-container']),
+    className: classnames(styles$1['x-address-container']),
     onClick: () => {
       !isEditing && changeMode();
     }
@@ -17443,7 +18163,7 @@ const AddressComponent = ({
       width: "xl"
     }) : jsx(Ramen.XCard, {
       children: jsx(Ramen.XFormItem, Object.assign({
-        label: "Direcci\u00F3n de despacho"
+        label: "Direcci\u00F3n comercial"
       }, {
         children: jsxs(Ramen.XBox, Object.assign({
           width: 'full',
@@ -17457,7 +18177,7 @@ const AddressComponent = ({
             disabled: !isEditing || !optionsAddress.length,
             options: optionsAddress,
             onChange: setSelectedAddress,
-            placeholder: "Selecciona direcci\u00F3n de despacho"
+            placeholder: "Selecciona direcci\u00F3n comercial"
           }), isEditing && jsx(Ramen.XButtonIcon, {
             icon: "x-bold",
             onClick: onCancel
@@ -17479,10 +18199,11 @@ const MyAccount = () => {
     data: state,
     updateStateContext
   } = useUserContext();
+  const {
+    width
+  } = useWindowSize();
   useEffect(() => {
-    if (!!(companyData === null || companyData === void 0 ? void 0 : companyData.office)) {
-      getData();
-    }
+    getData();
   }, []);
   const getData = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -17516,8 +18237,8 @@ const MyAccount = () => {
       weight: "bold"
     }, {
       children: "Informaci\u00F3n personal"
-    })), jsx(Ramen.XDivider, {}), jsxs("div", Object.assign({
-      className: classnames(styles['x-myaccount_card_container'])
+    })), jsx(Ramen.XDivider, {}), width < breakPoints.md && jsx(AvatarComponent$1, {}), jsxs("div", Object.assign({
+      className: classnames(styles$1['x-myaccount_card_container'])
     }, {
       children: [jsx(XCardItemList, {
         loading: loadingRequest,
@@ -17538,7 +18259,7 @@ const MyAccount = () => {
       })]
     })), jsx(AddressComponent, {
       value: companyData === null || companyData === void 0 ? void 0 : companyData.toDelivery,
-      address: ((_c = companyData === null || companyData === void 0 ? void 0 : companyData.deliveryAddresses) === null || _c === void 0 ? void 0 : _c.length) ? companyData === null || companyData === void 0 ? void 0 : companyData.deliveryAddresses : companyData === null || companyData === void 0 ? void 0 : companyData.address,
+      address: !!((_c = companyData === null || companyData === void 0 ? void 0 : companyData.deliveryAddresses) === null || _c === void 0 ? void 0 : _c.length) ? companyData === null || companyData === void 0 ? void 0 : companyData.deliveryAddresses : companyData === null || companyData === void 0 ? void 0 : companyData.address,
       loading: loadingRequest,
       onChangeAddress: onChangeAddress
     })]
@@ -17574,16 +18295,19 @@ const menuList = [{
   icon: 'user-outline',
   key: 'my-profile',
   text: 'Información personal',
+  label: 'Información personal',
   type: 'action'
 }, {
   icon: 'shopping-bag-outline',
   key: 'history-request',
   text: 'Historial de cotización',
+  label: 'Historial de cotización',
   type: 'action'
 }, {
   icon: 'support-filled',
   key: 'help-center',
   text: 'Centro de ayuda',
+  label: 'Centro de ayuda',
   type: 'action'
 }];
 const CreditProfileCard = ({
@@ -17605,7 +18329,7 @@ const CreditProfileCard = ({
       gap: "xs"
     }, {
       children: [jsx("div", Object.assign({
-        className: classnames(styles$1['xcredit-card-image'])
+        className: classnames(styles$2['xcredit-card-image'])
       }, {
         children: icon && jsx(Ramen.XImage, {
           height: 7,
@@ -17620,12 +18344,12 @@ const CreditProfileCard = ({
         }, {
           children: [jsx(Ramen.XText, Object.assign({
             fontSize: 12,
-            colorThone: 'lightest'
+            colorThone: "lightest"
           }, {
             children: title
           })), jsx(Ramen.XText, Object.assign({
             fontSize: 8,
-            colorThone: 'lightest'
+            colorThone: "lightest"
           }, {
             children: !!totalCredit ? NumberFormatter$1.toCurrency(Number(totalCredit)) : '-'
           }))]
@@ -17634,32 +18358,15 @@ const CreditProfileCard = ({
     }))
   });
 };
-const AvatarComponent = () => {
-  const [isEditing, setIsEditing] = useState(false);
-  return jsxs(Ramen.XBox, Object.assign({
-    width: 1
-  }, {
-    children: [jsx(Ramen.XImage, {
-      src: img$7,
-      height: 1
-    }), !isEditing && jsx("div", Object.assign({
-      className: classnames(styles$1['xavatar-component_button_edit'])
-    }, {
-      children: jsx(Ramen.XButtonIcon, {
-        size: 's',
-        onClick: () => setIsEditing(true),
-        type: 'solid',
-        icon: 'edit-2-outline'
-      })
-    }))]
-  }));
-};
 const ProfileContainer = () => {
   var _a;
   const {
     location,
     push
   } = useHistory();
+  const {
+    width
+  } = useWindowSize();
   const {
     userData,
     isAuthenticated,
@@ -17684,7 +18391,6 @@ const ProfileContainer = () => {
   }, [location.pathname, companyData === null || companyData === void 0 ? void 0 : companyData.rut]);
   const getData = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-      console.log(companyData === null || companyData === void 0 ? void 0 : companyData.rut);
       setLoadingRequest(true);
       const infoCompany = yield getDataCompany(`${companyData === null || companyData === void 0 ? void 0 : companyData.rut}`);
       updateStateContext(Object.assign(Object.assign({}, state), {
@@ -17705,13 +18411,13 @@ const ProfileContainer = () => {
     children: jsx(MainLayout, {
       children: jsx(Container, {
         children: jsx("div", Object.assign({
-          className: classnames(styles$1['xprofile-container'])
+          className: classnames(styles$2['xprofile-container'])
         }, {
           children: jsxs(Ramen.XBox, Object.assign({
-            orientation: "horizontal",
+            orientation: width > breakPoints.md ? "horizontal" : "vertical",
             gap: "l"
           }, {
-            children: [jsx(XSidebarPortal, {
+            children: [width > breakPoints.md ? jsx(XSidebarPortal, Object.assign({
               header: jsx(Fragment, {
                 children: jsxs(Ramen.XBox, Object.assign({
                   orientation: "vertical",
@@ -17720,11 +18426,11 @@ const ProfileContainer = () => {
                 }, {
                   children: [jsx(Ramen.XVSpace, {
                     size: "l"
-                  }), jsx(AvatarComponent, {}), jsx(Ramen.XVSpace, {
+                  }), jsx(AvatarComponent$1, {}), jsx(Ramen.XVSpace, {
                     size: "l"
                   }), !(userData === null || userData === void 0 ? void 0 : userData.name) ? jsx(Ramen.XSkeleton, {
-                    type: 'tag',
-                    size: 'xl'
+                    type: "tag",
+                    size: "xl"
                   }) : jsx(Ramen.XText, Object.assign({
                     fontSize: 8
                   }, {
@@ -17732,8 +18438,8 @@ const ProfileContainer = () => {
                   })), jsx(Ramen.XVSpace, {
                     size: "m"
                   }), !(userData === null || userData === void 0 ? void 0 : userData.email) ? jsx(Ramen.XSkeleton, {
-                    type: 'tag',
-                    size: 'xl'
+                    type: "tag",
+                    size: "xl"
                   }) : jsx(Ramen.XButton, {
                     icon: "mail-outline",
                     type: "tonal",
@@ -17744,7 +18450,7 @@ const ProfileContainer = () => {
                   }), jsx(Ramen.XDivider, {}), jsx(Ramen.XVSpace, {
                     size: "m"
                   }), (companyData === null || companyData === void 0 ? void 0 : companyData.hasCreditLine) && jsx("div", Object.assign({
-                    className: classnames(styles$1['xprofile-container_credit_card'])
+                    className: classnames(styles$2['xprofile-container_credit_card'])
                   }, {
                     children: jsx(CreditProfileCard, {
                       icon: img$6,
@@ -17767,13 +18473,26 @@ const ProfileContainer = () => {
               selectedKey: selectedKey,
               menu: menuList,
               onActionClick: onActionClick
-            }), jsx("div", Object.assign({
-              className: classnames(styles$1['xprofile-container_content'])
+            }, width < 750 && {
+              expanded: false
+            })) : jsx(Ramen.XBox, Object.assign({
+              width: 'full'
+            }, {
+              children: jsx(Ramen.XTabs, {
+                defaultKey: selectedKey,
+                size: "l",
+                tabs: menuList,
+                onTabChange: key => {
+                  push(`/profile/${key}`);
+                }
+              })
+            })), jsx("div", Object.assign({
+              className: classnames(styles$2['xprofile-container_content'])
             }, {
               children: jsx(Ramen.XBox, Object.assign({
                 width: 'full',
                 height: 'full',
-                padding: 'm'
+                padding: "m"
               }, {
                 children: jsx(RoutesProfile, {})
               }))

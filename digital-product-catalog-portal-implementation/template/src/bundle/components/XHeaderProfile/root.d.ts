@@ -9,6 +9,7 @@ export interface IProps {
     onProfileClick?: () => void;
     auth?: boolean;
     children?: any;
+    showInfoProfile?: boolean;
     profile: IProfileHeader;
 }
 declare const XHeaderProfile: React.FC<IProps>;

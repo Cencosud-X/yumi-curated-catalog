@@ -7,6 +7,7 @@ declare const GlobalContextProvider: FC<IProps>;
 interface IContext {
     isLoading: boolean;
     categories: IMenuData[];
+    categoriesByLevel: any[];
     categoriesNav: IMenuData[];
     setLoader: (status: boolean) => void;
     isOpenModalCategories: boolean;

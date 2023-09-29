@@ -15,6 +15,7 @@ export interface IUserData {
     country?: string;
     name: string;
     email: string;
+    imageUrl?: string;
     roles?: any;
     avatar?: string;
     permissions?: any;
@@ -62,6 +63,7 @@ interface IContext {
     login: any;
     getDataCompany: (rut: string) => Promise<ICompanyData>;
     logout: any;
+    getMe: () => Promise<any>;
 }
 declare const useUserContext: () => IContext;
 export { UserContextProvider, useUserContext };

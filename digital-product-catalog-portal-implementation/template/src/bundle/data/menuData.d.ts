@@ -4,6 +4,16 @@ export interface IMenuData {
     url: string;
     icon?: any;
     submenu?: IMenuData[];
-    menu?: any[];
+    level?: number;
+    parentId?: number;
+    children?: any[];
 }
-export declare const mappingChildrenCategory: (data: any[]) => any[];
+declare type Ancestor = {
+    id: number;
+    name: string;
+};
+export declare const mappingChildrenCategory: (data: any[], level?: number, parentId?: number) => any[];
+export declare const groupByLevel: (data: any) => any[];
+export declare const findAncestors: (item: any, targetId: number, ancestors?: Ancestor[]) => Ancestor[] | null;
+export declare const findParentsInRoot: (data: any, targetId: number) => Ancestor[] | null;
+export {};

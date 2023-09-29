@@ -11,9 +11,7 @@ export default class ProductsApi extends BaseRest {
    * @returns {Promise<Product.IProduct> | error }
    * @memberof ProductClient
    */
-    getProducts(filter?: {
-        [key: string]: unknown;
-    }): Promise<Rest.IArrayRestResponse<Interfaces.ProductsInterfaces.IProduct>>;
+    getProducts(filter?: Rest.IListParams<any>): Promise<Rest.IArrayRestResponse<Interfaces.ProductsInterfaces.IProduct>>;
     createProduct(params: any): Promise<any>;
 }
 export {};

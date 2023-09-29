@@ -110,15 +110,12 @@ const CategorySlider = ({
   } = useWindowSize();
   const slidesPerView = width > 1024 ? 8 : width > 768 ? 5 : width > 425 ? 3 : 2;
   const handleItemRenderClick = item => {
-    const categoryFilter = item.url.split('/');
-    const routes = categoryFilter.slice(2, categoryFilter.length);
-    const category = categoryFilter.slice(-1);
-    console.log(routes, item);
-    const keyCategory = routes.length > 2 ? 'typeProducts' : routes.length > 1 ? 'SubCategories' : 'Categories';
-    history.push('/products', Object.assign(Object.assign(Object.assign({}, history.state), {
-      [keyCategory]: category
-    }), {
-      routes
+    var _a, _b;
+    const category = (_a = item.id) === null || _a === void 0 ? void 0 : _a.toString();
+    const categoryName = (_b = item.name) === null || _b === void 0 ? void 0 : _b.toString();
+    history.push('/products', Object.assign(Object.assign({}, history.state), {
+      category,
+      categoryName
     }));
   };
   return jsxs(Ramen.XBox, Object.assign({
@@ -372,7 +369,7 @@ const HomeLayout = ({}) => {
   const filters = {
     limit: 20
   };
-  const history = useHistory();
+  useHistory();
   useEffect(() => {
     // fetch and get product
     getData();
@@ -383,7 +380,11 @@ const HomeLayout = ({}) => {
       const {
         data
       } = yield productsClient.getProducts(Object.assign(Object.assign({}, filters), {
-        store: 'E518'
+        filter: {
+          ['identifier.isMainEan']: true,
+          store: 'E518',
+          category: '21'
+        }
       }));
       setProducts(data);
       setLoading(false);
@@ -409,22 +410,18 @@ const HomeLayout = ({}) => {
         items: categories
       }), jsx(Ramen.XVSpace, {
         size: "l"
-      }), jsxs(Ramen.XBox, Object.assign({
+      }), jsx(Ramen.XBox, Object.assign({
         orientation: "horizontal",
         horizontalAlign: "between",
         verticalAlign: "center",
         gap: "xxs",
         padding: "l"
       }, {
-        children: [jsx(Ramen.XText, Object.assign({
+        children: jsx(Ramen.XText, Object.assign({
           fontSize: 8
         }, {
           children: " Productos esenciales para tu negocio"
-        })), jsx(Ramen.XButton, {
-          type: 'solid',
-          text: '+ Ver más productos',
-          onClick: () => history.push('/products')
-        })]
+        }))
       })), jsx(ProductsList, {
         loadMoreLoading: false,
         data: products,

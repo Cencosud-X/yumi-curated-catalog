@@ -8,6 +8,7 @@ export interface IFilterSelect {
     label: string;
     multiple?: boolean;
     options: IOptionFilterSelect[];
+    useSearch?: boolean;
     showDivider?: boolean;
 }
 declare const Root: FC<{
