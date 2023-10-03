@@ -8,6 +8,7 @@ interface IContext {
     isLoading: boolean;
     categories: IMenuData[];
     categoriesByLevel: any[];
+    categoriesPlane: any[];
     categoriesNav: IMenuData[];
     setLoader: (status: boolean) => void;
     isOpenModalCategories: boolean;

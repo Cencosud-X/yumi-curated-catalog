@@ -1,5 +1,4 @@
-import { FC } from "react";
-import "./SearchComponent.css";
+import { FC } from 'react';
 interface IProps {
     classNameExtra?: string;
     onSearch?: (v: string) => void;

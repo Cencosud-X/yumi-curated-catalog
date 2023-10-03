@@ -881,46 +881,149 @@
   background: blue;
 }
 
-.search-component-filter {
+.root-module_search-component-filter__uJbim {
     position: relative;
 
-    .search-icon {
-        position: absolute;
-        left: 1.5rem;
-        > div {
-          color: #999999;
-        }
-        /* font-size: 2rem; */
-        top: 50%;
-        transform: translateY(-50%);
-    }
+  }
+  .root-module_search-icon__bvFuJ {
+      position: absolute;
+      left: 1.5rem;
+      > div {
+        color: #999999;
+      }
+      /* font-size: 2rem; */
+      top: 50%;
+      transform: translateY(-50%);
+  }
 
-    .close-icon {
-        position: absolute;
-        right: 1.5rem;
-        > div {
-          color: #999999;
-        }
-        cursor: pointer;
-        /* font-size: 2rem; */
-        top: 50%;
-        transform: translateY(-50%);
-    }
+  .root-module_close-icon__UdKqF {
+      position: absolute;
+      right: 1.5rem;
+      > div {
+        color: #999999;
+      }
+      cursor: pointer;
+      /* font-size: 2rem; */
+      top: 50%;
+      transform: translateY(-50%);
+  }
 
-    .search-input {
-        width: 100%;
-        padding: 1rem 1rem 1rem 4rem;
-        border: solid #999999 0.2rem;
-        border-radius: 100rem;
-    }
+  .root-module_search-input__pfVaU {
+      width: 100%;
+      padding: 1rem 1rem 1rem 4rem;
+      border: solid #999999 0.2rem;
+      border-radius: 100rem;
+  }
 
-    .search::-moz-placeholder {
-        font-weight: 300;
-    }
+  .root-module_search__3KC9i::-moz-placeholder {
+      font-weight: 300;
+  }
 
-    .search::placeholder {
-        font-weight: 300;
-    }
+  .root-module_search__3KC9i::placeholder {
+      font-weight: 300;
+  }
+
+.root-module_dropdown__g6luW {
+  box-sizing: border-box;
+  width: 150%;
+  position: absolute;
+  background: var(--color-neutral-lightest);
+  box-shadow: 0px 6px 12px -1px rgba(24, 39, 75, 0.1);
+  border-radius: 16px;
+  padding: 42px 40px;
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.root-module_dropdown__item__Igour {
+  padding: var(--xbox-padding-xs);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--color-neutral-lighter);
+  transition: all 0.25s ease-in-out;
+  transition-property: transform, opacity;
+}
+
+.root-module_dropdown__item__Igour:hover {
+  transform: scale(1.025);
+}
+
+.root-module_dropdown__item__Igour:active {
+  transform: scale(0.95);
+}
+
+.root-module_dropdown__item__icon__KoHnH {
+  flex-shrink: 0;
+  display: flex;
+}
+
+.root-module_dropdown__item__text__Ha-eS {
+  flex: 1;
+  text-align: left;
+
+  min-width: 0;
+}
+
+.root-module_dropdown__item__text__Ha-eS>div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-bottom: 2px;
+}
+
+.root-module_table-container__dwRGC {
+  width: 100%;
+  margin-top: 24px;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+}
+
+@media screen and (max-width: 400px) {
+  .root-module_dropdown__g6luW {
+    display: none;
+  }
+}
+
+.root-module_dropdown__item__icon__KoHnH {
+  flex-shrink: 0;
+  display: flex;
+}
+
+.root-module_dropdown__item__text__Ha-eS {
+  flex: 1;
+  text-align: left;
+
+  min-width: 0;
+}
+
+.root-module_dropdown__item__text__Ha-eS>div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-bottom: 2px;
+}
+
+.root-module_dropdown_search-clear__button__j9mtq{
+  cursor: pointer;
+}
+
+.root-module_results-list_container__AHzAv {
+  width: 210px;
+  display: flex;
+  flex-direction: row;
+}
+
+.root-module_xdivider__vertical__gCbVo{
+  border-right:1px solid var(--color-neutral-light, #f0f0f0);
+  min-height: 32px;
+  height: 100%;
 }
 
 .header-container {
@@ -995,12 +1098,6 @@
   .header-logo {
     width: 14rem;
   }
-}
-
-.root-module_xdivider__vertical__gCbVo{
-  border-right:1px solid var(--color-neutral-light, #f0f0f0);
-  min-height: 32px;
-  height: 100%;
 }
 
 .root-module_xheader__viI2o {
@@ -1830,6 +1927,13 @@
   width: 100%;
   > :nth-child(2n) {
     background-color: #F5F5F5;
+  }
+}
+
+.root-module_breadcumb-container__Zf1A8 {
+  width: 100%;
+  > div {
+    flex-wrap: wrap;
   }
 }
 

@@ -5,7 +5,7 @@ import { Route, useLocation, useHistory, Switch, Redirect, Link, BrowserRouter, 
 import Ramen from '@team_yumi/ramen-web';
 import axios from 'axios';
 import { Subject, filter } from 'rxjs';
-import { get as get$2, isEmpty, map, reduce, filter as filter$1, groupBy, uniq } from 'lodash';
+import _, { get as get$2, isEmpty, uniq, flatten, map, reduce, filter as filter$1, groupBy } from 'lodash';
 import classnames from 'classnames';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
@@ -12126,6 +12126,7 @@ const GlobalContextProvider = ({
   const [categoriesNav, setCategoriesNav] = useState([]);
   const [categories, setCategories] = useState([]);
   const [categoriesByLevel, setCategoriesByLevel] = useState([]);
+  const [categoriesPlane, setCategoriesPlane] = useState([]);
   const [isOpenModalCategories, setIsOpenModalCategories] = useState(false);
   const [isOpenModalLogin, setIsOpenModalLogin] = useState(false);
   useEffect(() => {
@@ -12140,7 +12141,6 @@ const GlobalContextProvider = ({
       } = yield categoriesClient.list();
       const categoriesMapped = mappingChildrenCategory(data).sort((a, b) => b.name - b.name);
       const categoriesByLevel = groupByLevel(categoriesMapped);
-      console.log(categoriesByLevel);
       const menuData = [{
         name: 'Categorías',
         url: '/category',
@@ -12148,6 +12148,7 @@ const GlobalContextProvider = ({
       }];
       setCategories(categoriesMapped);
       setCategoriesByLevel(categoriesByLevel);
+      setCategoriesPlane(uniq(flatten(categoriesByLevel)));
       setCategoriesNav(menuData);
       setLoader(false);
     } catch (error) {
@@ -12163,6 +12164,7 @@ const GlobalContextProvider = ({
       setLoader,
       categories,
       categoriesByLevel,
+      categoriesPlane,
       categoriesNav,
       isOpenModalCategories,
       setIsOpenModalCategories,
@@ -13064,7 +13066,7 @@ var img$9 = "data:image/svg+xml,%3csvg width='111' height='111' viewBox='0 0 111
 
 var img$8 = "data:image/svg+xml,%3csvg width='110' height='110' viewBox='0 0 110 110' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M54.9997 13.75C32.2179 13.75 13.7497 32.2183 13.7497 55C13.7497 77.7818 32.2179 96.25 54.9997 96.25C77.7814 96.25 96.2497 77.7818 96.2497 55C96.2497 32.2183 77.7814 13.75 54.9997 13.75ZM4.58301 55C4.58301 27.1557 27.1553 4.58337 54.9997 4.58337C82.844 4.58337 105.416 27.1557 105.416 55C105.416 82.8444 82.844 105.417 54.9997 105.417C27.1553 105.417 4.58301 82.8444 4.58301 55Z' fill='black'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M54.9997 32.0834C57.531 32.0834 59.583 34.1354 59.583 36.6667V55C59.583 57.5313 57.531 59.5834 54.9997 59.5834C52.4684 59.5834 50.4163 57.5313 50.4163 55V36.6667C50.4163 34.1354 52.4684 32.0834 54.9997 32.0834Z' fill='black'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M50.4163 73.3334C50.4163 70.8021 52.4684 68.75 54.9997 68.75H55.0455C57.5768 68.75 59.6288 70.8021 59.6288 73.3334C59.6288 75.8647 57.5768 77.9167 55.0455 77.9167H54.9997C52.4684 77.9167 50.4163 75.8647 50.4163 73.3334Z' fill='black'/%3e%3c/svg%3e";
 
-var Styles$8 = {"xalert-modal":"root-module_xalert-modal__DrLKB","xalert-modal__backdrop":"root-module_xalert-modal__backdrop__mPVil","xalert-modal__content":"root-module_xalert-modal__content__EOPQX","xalert-modal__header":"root-module_xalert-modal__header__XoAND","xalert-modal__body":"root-module_xalert-modal__body__z3zBz","xalert-modal__body__image":"root-module_xalert-modal__body__image__LfNCK","xalert-modal__body__title":"root-module_xalert-modal__body__title__E4y6R","xalert-modal__body__message":"root-module_xalert-modal__body__message__qOIrH","xalert-modal__actions":"root-module_xalert-modal__actions__TiEa5"};
+var Styles$9 = {"xalert-modal":"root-module_xalert-modal__DrLKB","xalert-modal__backdrop":"root-module_xalert-modal__backdrop__mPVil","xalert-modal__content":"root-module_xalert-modal__content__EOPQX","xalert-modal__header":"root-module_xalert-modal__header__XoAND","xalert-modal__body":"root-module_xalert-modal__body__z3zBz","xalert-modal__body__image":"root-module_xalert-modal__body__image__LfNCK","xalert-modal__body__title":"root-module_xalert-modal__body__title__E4y6R","xalert-modal__body__message":"root-module_xalert-modal__body__message__qOIrH","xalert-modal__actions":"root-module_xalert-modal__actions__TiEa5"};
 
 const XAlertModal = props => {
   const onCloseModalHandler = () => {
@@ -13085,7 +13087,7 @@ const XAlertModal = props => {
   if (!props.visible) {
     return null;
   }
-  const rootClass = classnames(Styles$8['xalert-modal']);
+  const rootClass = classnames(Styles$9['xalert-modal']);
   const getImage = type => {
     switch (type) {
       case 'success':
@@ -13098,12 +13100,12 @@ const XAlertModal = props => {
     className: rootClass
   }, {
     children: [jsx("div", {
-      className: Styles$8['xalert-modal__backdrop']
+      className: Styles$9['xalert-modal__backdrop']
     }), jsxs("div", Object.assign({
-      className: Styles$8['xalert-modal__content']
+      className: Styles$9['xalert-modal__content']
     }, {
       children: [jsx("div", Object.assign({
-        className: Styles$8['xalert-modal__header']
+        className: Styles$9['xalert-modal__header']
       }, {
         children: jsx(Ramen.XButtonIcon, {
           size: "s",
@@ -13112,16 +13114,16 @@ const XAlertModal = props => {
           onClick: onCloseModalHandler
         })
       })), jsxs("div", Object.assign({
-        className: Styles$8['xalert-modal__body']
+        className: Styles$9['xalert-modal__body']
       }, {
         children: [jsx("div", Object.assign({
-          className: Styles$8['xalert-modal__body__image']
+          className: Styles$9['xalert-modal__body__image']
         }, {
           children: jsx(Ramen.XImage, {
             src: getImage(`${props.type}`)
           })
         })), props.title && jsx("div", Object.assign({
-          className: Styles$8['xalert-modal__body__title']
+          className: Styles$9['xalert-modal__body__title']
         }, {
           children: jsx(Ramen.XText, Object.assign({
             weight: "bold",
@@ -13130,7 +13132,7 @@ const XAlertModal = props => {
             children: props.title
           }))
         })), props.message && jsx("div", Object.assign({
-          className: Styles$8['xalert-modal__body__message']
+          className: Styles$9['xalert-modal__body__message']
         }, {
           children: jsx(Ramen.XText, Object.assign({
             colorThone: "dim",
@@ -13141,7 +13143,7 @@ const XAlertModal = props => {
           }))
         })), props.children]
       })), jsxs("div", Object.assign({
-        className: Styles$8['xalert-modal__actions']
+        className: Styles$9['xalert-modal__actions']
       }, {
         children: [props.useCancel && jsx(Ramen.XButton, {
           size: "xl",
@@ -13485,7 +13487,7 @@ const ProductsList = ({
   loadMoreProducts: loadMoreProducts
 });
 
-var Styles$7 = {"filter-component":"root-module_filter-component__C4Mmr","filter-container":"root-module_filter-container__cbkC0"};
+var Styles$8 = {"filter-component":"root-module_filter-component__C4Mmr","filter-container":"root-module_filter-container__cbkC0"};
 
 const breakPoints = {
   xs: 480,
@@ -13514,7 +13516,7 @@ const useWindowSize = () => {
   return windowSize;
 };
 
-var Styles$6 = {"xcontainer_filter":"root-module_xcontainer_filter__cEYyE","container_filter__item":"root-module_container_filter__item__IchDn","xcontainer_filter__title":"root-module_xcontainer_filter__title__ZdzKr","xcontainer_filter__item":"root-module_xcontainer_filter__item__dyeBW","xcontainer_filter__item--selected":"root-module_xcontainer_filter__item--selected__93n0o"};
+var Styles$7 = {"xcontainer_filter":"root-module_xcontainer_filter__cEYyE","container_filter__item":"root-module_container_filter__item__IchDn","xcontainer_filter__title":"root-module_xcontainer_filter__title__ZdzKr","xcontainer_filter__item":"root-module_xcontainer_filter__item__dyeBW","xcontainer_filter__item--selected":"root-module_xcontainer_filter__item--selected__93n0o"};
 
 const Root = ({
   filter,
@@ -13554,12 +13556,12 @@ const Root = ({
     return filter.options.filter(item => item.label.includes(search));
   }, [filter.useSearch, search, filter.options, updated]);
   return jsxs("div", Object.assign({
-    className: classnames(Styles$6['xcontainer_filter__title'])
+    className: classnames(Styles$7['xcontainer_filter__title'])
   }, {
     children: [jsx(Ramen.XVSpace, {
       size: "m"
     }), jsx("div", Object.assign({
-      className: classnames(Styles$6['xcontainer_filter__title'])
+      className: classnames(Styles$7['xcontainer_filter__title'])
     }, {
       children: filter.label
     })), jsx(Ramen.XVSpace, {
@@ -13574,12 +13576,12 @@ const Root = ({
         size: "s"
       })]
     }), jsx("div", Object.assign({
-      className: classnames(Styles$6['xcontainer_filter'])
+      className: classnames(Styles$7['xcontainer_filter'])
     }, {
       children: filterOptions.map(option => {
         const isActive = checkIfIsActive(filter, option);
-        const itemClasses = classnames(Styles$6['xcontainer_filter__item'], {
-          [Styles$6['xcontainer_filter__item--selected']]: isActive
+        const itemClasses = classnames(Styles$7['xcontainer_filter__item'], {
+          [Styles$7['xcontainer_filter__item--selected']]: isActive
         });
         return jsxs("div", Object.assign({
           className: itemClasses,
@@ -13684,10 +13686,10 @@ const FilterComponent = ({
   const renderFilters = () => {
     if (loading) {
       return jsxs("div", Object.assign({
-        className: Styles$7['filter-component']
+        className: Styles$8['filter-component']
       }, {
         children: [jsxs("div", Object.assign({
-          className: Styles$7['filter-container']
+          className: Styles$8['filter-container']
         }, {
           children: [jsx(FilterSkeleton, {}), jsx(FilterSkeleton, {}), jsx(FilterSkeleton, {})]
         })), jsx(Ramen.XVSpace, {
@@ -13711,10 +13713,10 @@ const FilterComponent = ({
       }));
     }
     return !!filters.length ? jsxs("div", Object.assign({
-      className: Styles$7['filter-component']
+      className: Styles$8['filter-component']
     }, {
       children: [jsx("div", Object.assign({
-        className: Styles$7['filter-container']
+        className: Styles$8['filter-container']
       }, {
         children: filters.map(filter => jsx(Root, {
           filter: filter,
@@ -13757,7 +13759,7 @@ const FilterComponent = ({
   });
 };
 
-var Styles$5 = {"categories-wrapper__body":"root-module_categories-wrapper__body__ytY1c","categories-wrapper__body__list":"root-module_categories-wrapper__body__list__HXHrh","categories_item":"root-module_categories_item__0lWDM","categories_item__selected":"root-module_categories_item__selected__tR3wv","categories_item__list":"root-module_categories_item__list__L8jwG","categories_item__list__name":"root-module_categories_item__list__name__FFurE","categories_seeAll":"root-module_categories_seeAll__DC3fe"};
+var Styles$6 = {"categories-wrapper__body":"root-module_categories-wrapper__body__ytY1c","categories-wrapper__body__list":"root-module_categories-wrapper__body__list__HXHrh","categories_item":"root-module_categories_item__0lWDM","categories_item__selected":"root-module_categories_item__selected__tR3wv","categories_item__list":"root-module_categories_item__list__L8jwG","categories_item__list__name":"root-module_categories_item__list__name__FFurE","categories_seeAll":"root-module_categories_seeAll__DC3fe"};
 
 // `SameValue` abstract operation
 // https://tc39.es/ecma262/#sec-samevalue
@@ -14244,79 +14246,390 @@ if (!USE_NATIVE_URL && isCallable$1(Headers)) {
   }
 }
 
+var Styles$5 = {"search-component-filter":"root-module_search-component-filter__uJbim","search-icon":"root-module_search-icon__bvFuJ","close-icon":"root-module_close-icon__UdKqF","search-input":"root-module_search-input__pfVaU","search":"root-module_search__3KC9i","dropdown":"root-module_dropdown__g6luW","dropdown__item":"root-module_dropdown__item__Igour","dropdown__item__icon":"root-module_dropdown__item__icon__KoHnH","dropdown__item__text":"root-module_dropdown__item__text__Ha-eS","table-container":"root-module_table-container__dwRGC","dropdown_search-clear__button":"root-module_dropdown_search-clear__button__j9mtq","results-list_container":"root-module_results-list_container__AHzAv"};
+
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+var productsClient = new ProductsApi({
+  baseURL: 'https://api.staging.cencox.xyz/ebisu/api-bff'
+});
+
+var Styles$4 = {"xdivider__vertical":"root-module_xdivider__vertical__gCbVo"};
+
+const XDividerVertical = () => {
+  const rootClass = classnames(Styles$4['xdivider__vertical'], {});
+  return jsx("div", {
+    className: rootClass
+  });
+};
+XDividerVertical.defaultProps = {};
+
+const SeeAllComponent$1 = ({
+  onClick
+}) => jsxs("div", {
+  children: [jsxs(Ramen.XText, Object.assign({
+    colorThone: "dim",
+    fontSize: 11
+  }, {
+    children: [' ', jsxs("span", Object.assign({
+      style: {
+        cursor: 'pointer'
+      },
+      onClick: () => onClick === null || onClick === void 0 ? void 0 : onClick()
+    }, {
+      children: [' ', "Ver m\u00E1s"]
+    }))]
+  })), jsx(Ramen.XVSpace, {
+    size: "xxs"
+  })]
+});
+const ResultItemList = ({
+  item,
+  key,
+  onItemSelected,
+  onItemHover
+}) => {
+  return jsxs(Fragment, {
+    children: [jsx("div", Object.assign({
+      onClick: () => onItemSelected === null || onItemSelected === void 0 ? void 0 : onItemSelected(item)
+    }, {
+      children: jsx(Ramen.XText, Object.assign({
+        fontSize: 11
+      }, {
+        children: StringFormatter$1.capitalizeLetter((item === null || item === void 0 ? void 0 : item.name) || (item === null || item === void 0 ? void 0 : item.label), true)
+      }))
+    }), key), jsx(Ramen.XVSpace, {
+      size: "s"
+    }), jsx(Ramen.XDivider, {})]
+  });
+};
+const ResultsList = ({
+  item,
+  key,
+  onItemSelected,
+  onItemHover,
+  maxList: _maxList = 10
+}) => {
+  var _a;
+  return jsxs("div", Object.assign({
+    className: classnames(Styles$5['results-list_container'])
+  }, {
+    children: [jsxs(Ramen.XBox, Object.assign({
+      width: 'full',
+      padding: "m"
+    }, {
+      children: [jsx(Ramen.XText, Object.assign({
+        fontSize: 10,
+        colorThone: "dim"
+      }, {
+        children: jsx("span", {
+          children: item === null || item === void 0 ? void 0 : item.name
+        })
+      })), jsx(Ramen.XVSpace, {
+        size: "s"
+      }), jsx(Ramen.XDivider, {}), jsx(Ramen.XVSpace, {
+        size: "s"
+      }), jsx(Ramen.XList, {
+        skeleton: !item,
+        dataSource: ((item === null || item === void 0 ? void 0 : item.children) || []).slice(0, _maxList),
+        renderItem: (itemList, index) => {
+          return jsx(ResultItemList, {
+            item: itemList,
+            onItemSelected: itemList => {
+              onItemSelected === null || onItemSelected === void 0 ? void 0 : onItemSelected({
+                type: item.type,
+                record: itemList
+              });
+            }
+          });
+        }
+      }), jsx(Ramen.XVSpace, {
+        size: "s"
+      }), ((_a = item === null || item === void 0 ? void 0 : item.children) === null || _a === void 0 ? void 0 : _a.length) > _maxList && jsxs(Fragment, {
+        children: [jsx(SeeAllComponent$1, {
+          onClick: () => onItemSelected === null || onItemSelected === void 0 ? void 0 : onItemSelected({
+            record: item
+          })
+        }), jsx(Ramen.XVSpace, {
+          size: "m"
+        })]
+      })]
+    })), jsx(XDividerVertical, {})]
+  }));
+};
 const SearchComponentFilter = ({
   placeholder,
-  classNameExtra: _classNameExtra = "",
+  classNameExtra: _classNameExtra = '',
   value,
   onSearch,
   searchPrevious
 }) => {
-  useHistory();
+  const history = useHistory();
   const [currentValue, setValue] = useState(value || '');
   const [canSend, setCanSend] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchHistory, setSearchHistory] = useState([]);
+  const [data, setData] = useState(null);
+  const dropdownRef = useRef(null);
+  const {
+    categoriesPlane
+  } = useGlobal();
   let _timer;
+  const MAX_SEARCH_HISTORY = 10;
   useEffect(() => {
     setValue(value || '');
     return () => {
       clearTimeout(_timer);
       setCanSend(false);
     };
-  }, [value]);
-  useEffect(() => {
-    _timer = setTimeout(() => {
-      if (canSend) {
-        onSearch && onSearch(currentValue);
-      }
-    }, 1500);
-    return () => {
-      clearTimeout(_timer);
-      setCanSend(false);
-    };
-  }, [currentValue]);
-  const handleValue = e => {
-    !canSend && setCanSend(true);
-    setValue(e.target.value);
-    _timer && clearTimeout(_timer);
-  };
+  }, [value, _timer]);
   useEffect(() => {
     return () => {
       clearTimeout(_timer);
       setCanSend(false);
       setValue('');
     };
+  }, [_timer]);
+  useEffect(() => {
+    document.addEventListener('mousedown', closeDropdown);
+    return () => {
+      document.removeEventListener('mousedown', closeDropdown);
+    };
   }, []);
+  const debouncedSearch = _.debounce(query => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+      if (canSend) {
+        setCanSend(false);
+        const response = yield productsClient.getProducts({
+          filter: {
+            name: query,
+            isMainEan: true
+          },
+          limit: 10
+        });
+        const [brandsData] = (response.summary || []).filter(item => item.type === 'brand.name');
+        const [categoriesData] = (response.summary || []).filter(item => item.type === 'hierarchy.levels.id');
+        const products = (response.data || []).map(item => Object.assign(Object.assign({}, item), {
+          name: item.longName
+        }));
+        const brands = ((brandsData === null || brandsData === void 0 ? void 0 : brandsData.data) || []).map(({
+          key,
+          value
+        }) => ({
+          key,
+          label: key
+        }));
+        const categories = ((categoriesData === null || categoriesData === void 0 ? void 0 : categoriesData.data) || []).map(item => {
+          const existCategory = (categoriesPlane || []).find(itemHierarchy => `${item.key}` === `${itemHierarchy.id}`);
+          return {
+            key: item.key,
+            label: existCategory === null || existCategory === void 0 ? void 0 : existCategory.name
+          };
+        }).filter(item => !!(item === null || item === void 0 ? void 0 : item.label));
+        setData([{
+          name: 'Productos',
+          type: 'products',
+          children: products
+        }, {
+          name: 'Marcas',
+          type: 'brands',
+          children: brands
+        }, {
+          name: 'Categorías',
+          type: 'categories',
+          children: categories
+        }]);
+      }
+      setCanSend(true);
+    } catch (error) {
+      console.error(error);
+    }
+  }), 300);
+  const handleValue = e => {
+    console.log(e.target.value);
+    debouncedSearch(e.target.value);
+    !canSend && setCanSend(true);
+    setValue(e.target.value);
+    getSearchHistory();
+  };
   const handleSearch = e => {
     clearTimeout(_timer);
+    saveSearchToLocalStorage(currentValue);
     onSearch && onSearch(currentValue);
   };
   const handleClear = () => {
     setValue('');
-    onSearch && onSearch('');
+  };
+  const handleSearchOptions = (navigateTo, props) => {
+    history.push(navigateTo, Object.assign({}, history.state || props));
+    setIsDropdownOpen(false);
+  };
+  const toggleDropdown = () => {
+    getSearchHistory();
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+  const closeDropdown = event => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropdownOpen(false);
+    }
+  };
+  const saveSearchToLocalStorage = searchTerm => {
+    const searches = JSON.parse(localStorage.getItem('searches') || '[]');
+    if (searches.includes(searchTerm)) return;
+    searches.unshift(searchTerm);
+    if (searches.length > MAX_SEARCH_HISTORY) {
+      searches.pop();
+    }
+    localStorage.setItem('searches', JSON.stringify(searches));
+  };
+  const onRemoveOption = option => {
+    const searches = JSON.parse(localStorage.getItem('searches') || '[]');
+    const newSearches = searches.filter(search => search !== option);
+    localStorage.setItem('searches', JSON.stringify(newSearches));
+    setSearchHistory(newSearches);
+  };
+  const getSearchHistory = () => {
+    const searches = JSON.parse(localStorage.getItem('searches') || '[]');
+    setSearchHistory(searches);
+    return searches;
+  };
+  const onSearchSelected = value => {
+    onSearch && onSearch(value);
+    setIsDropdownOpen(false);
+  };
+  const onItemSelected = item => {
+    var _a, _b, _c, _d, _e;
+    let url = '';
+    let props = {};
+    switch (item.type) {
+      case 'products':
+        url = `/products/detail/${(_a = item.record) === null || _a === void 0 ? void 0 : _a.ean}`;
+        break;
+      case 'categories':
+        url = `/products?s=${currentValue}`;
+        saveSearchToLocalStorage(currentValue);
+        props = Object.assign(Object.assign({}, history.state || {}), {
+          category: (_b = item.record) === null || _b === void 0 ? void 0 : _b.key,
+          categoryName: (_c = item.record) === null || _c === void 0 ? void 0 : _c.label
+        });
+        break;
+      case 'brands':
+        url = `/products?s=${currentValue}`;
+        saveSearchToLocalStorage(currentValue);
+        props = Object.assign(Object.assign({}, history.state || {}), {
+          brand: (_d = item.record) === null || _d === void 0 ? void 0 : _d.key,
+          brandName: (_e = item.record) === null || _e === void 0 ? void 0 : _e.label
+        });
+        break;
+      default:
+        url = `/products?s=${currentValue}`;
+        saveSearchToLocalStorage(currentValue);
+        break;
+    }
+    console.log(url, props);
+    handleSearchOptions(url, props);
   };
   return jsxs("div", Object.assign({
-    className: "search-component-filter"
+    className: classnames(Styles$5['search-component-filter'])
   }, {
     children: [jsx("div", Object.assign({
-      className: "search-icon"
+      className: classnames(Styles$5['search-icon'])
     }, {
       children: jsx(Ramen.XIcon, {
-        size: 's',
-        icon: 'search-outline'
+        size: "s",
+        icon: "search-outline"
       })
     })), jsx("input", {
-      className: `search-input ${_classNameExtra}`,
+      className: classnames(Styles$5[`search-input`]),
       value: currentValue,
       onChange: handleValue,
       onKeyDown: e => e.key === 'Enter' && handleSearch(),
-      placeholder: placeholder || "Search products",
+      onFocus: toggleDropdown,
+      placeholder: placeholder || 'Search products',
       type: "text"
-    }), !!currentValue && jsx("div", Object.assign({
-      className: "close-icon",
+    }), isDropdownOpen && searchHistory.length > 0 && !currentValue ? jsxs("div", Object.assign({
+      className: classnames(Styles$5['dropdown']),
+      ref: dropdownRef
+    }, {
+      children: [jsxs(Ramen.XBox, Object.assign({
+        orientation: "horizontal",
+        horizontalAlign: "between"
+      }, {
+        children: [jsxs(Ramen.XBox, Object.assign({
+          orientation: "horizontal",
+          verticalAlign: "center",
+          gap: "s"
+        }, {
+          children: [jsx(Ramen.XIcon, {
+            size: "xs",
+            icon: "clock-outline"
+          }), jsx(Ramen.XText, Object.assign({
+            fontSize: 8,
+            weight: "bold"
+          }, {
+            children: "B\u00FAsquedas recientes"
+          }))]
+        })), jsx(Ramen.XButton, {
+          text: "Borrar historial",
+          type: "clear"
+        })]
+      })), searchHistory === null || searchHistory === void 0 ? void 0 : searchHistory.map(option => {
+        return jsxs("div", Object.assign({
+          className: classnames(Styles$5['dropdown__item'])
+        }, {
+          children: [jsx("div", Object.assign({
+            className: classnames(Styles$5['dropdown__item__text']),
+            onClick: () => onSearchSelected(option)
+          }, {
+            children: jsx(Ramen.XText, Object.assign({
+              fontSize: 11,
+              weight: "bold"
+            }, {
+              children: option
+            }))
+          })), option && jsx("div", Object.assign({
+            className: classnames(Styles$5['dropdown__item__icon']),
+            onClick: () => onRemoveOption(option)
+          }, {
+            children: jsx(Ramen.XButtonIcon, {
+              size: "s",
+              type: "clear",
+              icon: 'close-outline'
+            })
+          }))]
+        }), option);
+      })]
+    })) : isDropdownOpen && (data === null || data === void 0 ? void 0 : data.length) && currentValue.length > 0 ? jsxs("div", Object.assign({
+      className: classnames(Styles$5['dropdown']),
+      ref: dropdownRef
+    }, {
+      children: [jsx(Ramen.XBox, Object.assign({
+        orientation: "horizontal",
+        horizontalAlign: "center"
+      }, {
+        children: jsxs(Ramen.XText, Object.assign({
+          fontSize: 8,
+          weight: "bold"
+        }, {
+          children: ["Resultados de tu b\u00FAsqueda \"", currentValue, "\""]
+        }))
+      })), jsx("div", Object.assign({
+        className: classnames(Styles$5['table-container'])
+      }, {
+        children: (data || []).map((item, index) => {
+          return jsx(ResultsList, {
+            item: item,
+            onItemSelected: onItemSelected,
+            maxList: 5
+          }, index);
+        })
+      }))]
+    })) : null, !!currentValue && jsx("div", Object.assign({
+      className: classnames(Styles$5['close-icon']),
       onClick: handleClear
     }, {
       children: jsx(Ramen.XIcon, {
-        icon: 'close-outline',
-        size: 'xs'
+        icon: "close-outline",
+        size: "xs"
       })
     }))]
   }));
@@ -14363,7 +14676,7 @@ const CategoryItemList = ({
 }) => {
   return jsxs(Fragment, {
     children: [jsx("div", Object.assign({
-      className: classnames(Styles$5['categories_item__list__name']),
+      className: classnames(Styles$6['categories_item__list__name']),
       onClick: () => onItemSelected === null || onItemSelected === void 0 ? void 0 : onItemSelected(category)
     }, {
       children: jsx(Ramen.XText, Object.assign({
@@ -14379,7 +14692,7 @@ const CategoryItemList = ({
 const SeeAllComponent = ({
   onClick
 }) => jsxs("div", Object.assign({
-  className: classnames(Styles$5['categories_seeAll'])
+  className: classnames(Styles$6['categories_seeAll'])
 }, {
   children: [jsxs(Ramen.XText, Object.assign({
     fontSize: 11
@@ -14403,7 +14716,7 @@ const CategoryList = ({
   onItemHover
 }) => {
   return jsxs("div", Object.assign({
-    className: classnames(Styles$5['categories_item__list'])
+    className: classnames(Styles$6['categories_item__list'])
   }, {
     children: [jsx(Ramen.XVSpace, {
       size: "m"
@@ -14443,8 +14756,8 @@ const CategoryItem = ({
   onItemHover
 }) => {
   return jsx("div", Object.assign({
-    className: classnames(Styles$5['categories_item'], {
-      [Styles$5[`categories_item__selected`]]: isActive
+    className: classnames(Styles$6['categories_item'], {
+      [Styles$6[`categories_item__selected`]]: isActive
     }),
     onClick: () => onItemSelected === null || onItemSelected === void 0 ? void 0 : onItemSelected(category),
     onMouseEnter: () => onItemHover === null || onItemHover === void 0 ? void 0 : onItemHover(true, category)
@@ -14522,7 +14835,7 @@ const DrawerCategories = ({
     }
   }, [isShown]);
   return jsx("div", Object.assign({
-    className: classnames(Styles$5['categories_drawer'])
+    className: classnames(Styles$6['categories_drawer'])
   }, {
     children: jsxs(Ramen.XDrawer, Object.assign({
       size: isShown && !isMobile ? 'xl' : 's',
@@ -14534,11 +14847,11 @@ const DrawerCategories = ({
       mountNode
     }, {
       children: [jsxs("div", Object.assign({
-        className: classnames(Styles$5['categories-wrapper__body']),
+        className: classnames(Styles$6['categories-wrapper__body']),
         ref: refElement
       }, {
         children: [jsxs("div", Object.assign({
-          className: classnames(Styles$5['categories-wrapper__body__list'])
+          className: classnames(Styles$6['categories-wrapper__body__list'])
         }, {
           children: [isMobile && jsxs(Fragment, {
             children: [jsx(GlobalSearchComponent, {}), jsx(Ramen.XVSpace, {
@@ -14669,16 +14982,6 @@ const AuthRouterLoader = /*#__PURE__*/memo(({
   });
 });
 var AuthRouterLoader$1 = /*#__PURE__*/memo(AuthRouterLoader);
-
-var Styles$4 = {"xdivider__vertical":"root-module_xdivider__vertical__gCbVo"};
-
-const XDividerVertical = () => {
-  const rootClass = classnames(Styles$4['xdivider__vertical'], {});
-  return jsx("div", {
-    className: rootClass
-  });
-};
-XDividerVertical.defaultProps = {};
 
 var Styles$3 = {"xheader":"root-module_xheader__viI2o","xheader__profile":"root-module_xheader__profile__L66F1","xheader__profile-clickable":"root-module_xheader__profile-clickable__Q-xd-","xheader__profile_logout":"root-module_xheader__profile_logout__zJOkY"};
 
@@ -14932,11 +15235,6 @@ if (DESCRIPTORS && isCallable(NativeSymbol) && (!('description' in SymbolPrototy
     Symbol: SymbolWrapper
   });
 }
-
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-var productsClient = new ProductsApi({
-  baseURL: 'https://api.staging.cencox.xyz/ebisu/api-bff'
-});
 
 var img$6 = "data:image/svg+xml,%3csvg width='48' height='48' viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M37.6308 9.30176H7.87266C5.73727 9.30176 4 11.0766 4 13.2583V13.795C4 15.9767 5.73727 17.7515 7.87266 17.7515H37.6309C37.9555 17.7515 38.2184 17.4829 38.2184 17.1513V9.90198C38.2184 9.57042 37.9554 9.30176 37.6308 9.30176Z' fill='%237C3D1E'/%3e%3cpath d='M22.7246 7.45596L20.4927 5.17576C20.2633 4.94141 19.8913 4.94141 19.6618 5.17576L8.35566 16.7267C8.18761 16.8984 8.13738 17.1565 8.2284 17.3808C8.31926 17.6052 8.53363 17.7514 8.77121 17.7514H13.235C13.3908 17.7514 13.5403 17.6882 13.6505 17.5757L22.7247 8.30497C22.8349 8.19235 22.8968 8.03974 22.8968 7.8805C22.8968 7.72127 22.8348 7.56866 22.7246 7.45596Z' fill='%2378AA17'/%3e%3cpath d='M36.2636 16.7267L24.9575 5.17576C24.728 4.94141 24.3561 4.94141 24.1265 5.17576L12.8205 16.7267C12.6525 16.8984 12.6022 17.1565 12.6932 17.3808C12.7841 17.6052 12.9985 17.7514 13.2361 17.7514H35.8482C36.0858 17.7514 36.3001 17.6052 36.3911 17.3808C36.4818 17.1565 36.4316 16.8984 36.2636 16.7267Z' fill='%238ACC19'/%3e%3cpath d='M32.9237 16.7266L26.6466 10.3135C26.5364 10.2009 26.3869 10.1377 26.2311 10.1377C26.0753 10.1377 25.926 10.2009 25.8157 10.3135C25.4781 10.6584 25.0293 10.8484 24.5518 10.8484C24.0744 10.8484 23.6256 10.6585 23.288 10.3135C23.1778 10.2009 23.0284 10.1377 22.8725 10.1377C22.7167 10.1377 22.5673 10.2009 22.4571 10.3135L16.1799 16.7266C16.0118 16.8983 15.9616 17.1564 16.0526 17.3807C16.1435 17.6051 16.3578 17.7513 16.5954 17.7513H32.5083C32.7459 17.7513 32.9603 17.6051 33.0511 17.3807C33.142 17.1564 33.0917 16.8982 32.9237 16.7266Z' fill='%2378A017'/%3e%3cpath d='M41.2816 16.551H13.33H8.13531H7.17719C5.49 16.551 4.11 15.2101 4.00063 13.5146C4.00055 13.5186 4 13.5226 4 13.5269V13.5269V38.7754C4 41.105 5.85508 43.0002 8.13531 43.0002H41.2816C41.6062 43.0002 41.8691 42.7315 41.8691 42.4V17.1512C41.8691 16.8197 41.6061 16.551 41.2816 16.551Z' fill='%23AA5D24'/%3e%3cpath d='M41.8692 26.8613H35.5454C33.1834 26.8613 31.2617 28.8245 31.2617 31.2378C31.2617 33.6509 33.1833 35.6142 35.5454 35.6142H41.8692V26.8613Z' fill='%237C3D1E'/%3e%3cpath d='M42.2376 25.3193H35.5454C33.1834 25.3193 31.2617 27.2825 31.2617 29.6958C31.2617 32.1089 33.1833 34.0722 35.5454 34.0722H42.2376C43.2095 34.0722 44.0002 33.2644 44.0002 32.2714V27.1202C44.0002 26.1271 43.2095 25.3193 42.2376 25.3193Z' fill='%23FFC107'/%3e%3cpath d='M36.0415 27.7373C34.9848 27.7373 34.125 28.6158 34.125 29.6954C34.125 30.775 34.9848 31.6533 36.0415 31.6533C37.0982 31.6533 37.958 30.775 37.958 29.6954C37.958 28.6158 37.0982 27.7373 36.0415 27.7373Z' fill='%23D4A106'/%3e%3c/svg%3e";
 
@@ -15541,7 +15839,7 @@ const Home = () => {
   });
 };
 
-var Styles$1 = {"breadcumb-link":"root-module_breadcumb-link__QXGFS"};
+var Styles$1 = {"breadcumb-container":"root-module_breadcumb-container__Zf1A8","breadcumb-link":"root-module_breadcumb-link__QXGFS"};
 
 const BreadCumbs = ({
   routes: _routes = []
@@ -15556,40 +15854,44 @@ const BreadCumbs = ({
       categoryName
     }));
   };
-  return jsxs(Ramen.XBox, Object.assign({
-    orientation: "horizontal",
-    verticalAlign: "start",
-    width: 'full',
-    padding: "s"
+  return jsx("div", Object.assign({
+    className: classnames(Styles$1['breadcumb-container'])
   }, {
-    children: [jsx(Link, Object.assign({
-      className: classnames(Styles$1['breadcumb-link']),
-      to: "/"
+    children: jsxs(Ramen.XBox, Object.assign({
+      orientation: "horizontal",
+      verticalAlign: "start",
+      width: 'full',
+      padding: "s"
     }, {
-      children: jsx(Ramen.XText, Object.assign({
-        weight: 'bold'
+      children: [jsx(Link, Object.assign({
+        className: classnames(Styles$1['breadcumb-link']),
+        to: "/"
       }, {
-        children: "Inicio"
-      }))
-    })), ' ', _routes === null || _routes === void 0 ? void 0 : _routes.map((item, index) => {
-      return jsxs(Fragment, {
-        children: [jsx(Ramen.XText, {
-          children: " / "
-        }), jsxs("a", Object.assign({
-          className: classnames(Styles$1['breadcumb-link']),
-          onClick: () => {
-            index + 1 < _routes.length && onItemSelected(item);
-          }
+        children: jsx(Ramen.XText, Object.assign({
+          weight: 'bold'
         }, {
-          children: [jsxs(Ramen.XText, Object.assign({
-            weight: 'bold',
-            colorThone: index + 1 < _routes.length ? 'darkest' : 'dim'
+          children: "Inicio"
+        }))
+      })), ' ', _routes === null || _routes === void 0 ? void 0 : _routes.map((item, index) => {
+        return jsxs(Fragment, {
+          children: [jsx(Ramen.XText, {
+            children: " / "
+          }), jsxs("a", Object.assign({
+            className: classnames(Styles$1['breadcumb-link']),
+            onClick: () => {
+              index + 1 < _routes.length && onItemSelected(item);
+            }
           }, {
-            children: [" ", item === null || item === void 0 ? void 0 : item.name]
-          })), ' ']
-        }))]
-      });
-    })]
+            children: [jsxs(Ramen.XText, Object.assign({
+              weight: 'bold',
+              colorThone: index + 1 < _routes.length ? 'darkest' : 'dim'
+            }, {
+              children: [" ", item === null || item === void 0 ? void 0 : item.name]
+            })), ' ']
+          }))]
+        });
+      })]
+    }))
   }));
 };
 
@@ -16322,7 +16624,7 @@ const Shop = () => {
   const [isOpenModalFilters, setIsOpenModalFilters] = useState(false);
   const arrayParents = findParentsInRoot(categories, Number(category)) || [];
   const lvlCategory = arrayParents.length;
-  const isMultipleHierarchy = false;
+  const isMultipleHierarchy = true;
   const getKeyByLvl = value => {
     switch (value) {
       case 0:
@@ -16338,8 +16640,10 @@ const Shop = () => {
     }
   };
   const INITIAL_FILTERS = useMemo(() => {
-    return Object.assign({}, category && {
-      [getKeyByLvl(arrayParents.length - 1)]: `${category}` 
+    return Object.assign(Object.assign({}, category && {
+      [getKeyByLvl(arrayParents.length - 1)]: [`${category}`]
+    }), !!brand && {
+      brand: [`${brand}`]
     });
   }, [category]);
   const [activeFilters, setActiveFilters] = useState(INITIAL_FILTERS);
@@ -16378,7 +16682,7 @@ const Shop = () => {
       case 'brand.name':
         data.key = 'brand';
         data.label = 'Marcas';
-        data.multiple = true;
+        data.multiple = isMultipleHierarchy;
         break;
     }
     data.options = options;
@@ -16437,7 +16741,7 @@ const Shop = () => {
           let valueFilter;
           switch (index) {
             case 0:
-              valueFilter = activeFilters['category'] || category && (category);
+              valueFilter = activeFilters['category'] || category && ([category] );
               break;
             case 1:
               valueFilter = activeFilters['departament'];
@@ -16453,7 +16757,9 @@ const Shop = () => {
             options = options.filter(item => valueFilter.includes(item.key));
           }
           // Show only herarchy for lvl
-          options = options.filter((item, index) => index > lvlCategory);
+          {
+            options = options.filter((item, index) => index > lvlCategory);
+          }
           item.options = options;
           item.useSearch = options.length > 7;
         }
@@ -16489,12 +16795,10 @@ const Shop = () => {
   // check when user type or product add search with the search query
   useEffect(() => {
     const filter = {
-      filter: Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({
+      filter: Object.assign(Object.assign(Object.assign(Object.assign({
         //Filter by store or location
         store: 'E518'
-      }, !!brand && {
-        brand
-      }), !!activeFilters && Object.assign({}, activeFilters)), !!hierarchy && {
+      }, !!activeFilters && Object.assign({}, activeFilters)), !!hierarchy && {
         category: hierarchy
       }), !!searchQuery && {
         ['name']: searchQuery
@@ -17483,7 +17787,6 @@ const XSidebarPortal = props => {
     [Styles['xsidebar--expanded']]: expanded
   });
   useEffect(() => {
-    console.log(props.expanded);
     setExpanded(props.expanded);
   }, [props.expanded]);
   const onActionItemMenuClickHandler = key => {
