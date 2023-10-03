@@ -1,4 +1,4 @@
-import { c as img } from './index2.js';
+import { d as img } from './index2.js';
 import { jsxs, jsx } from 'react/jsx-runtime';
 import classnames from 'classnames';
 import Ramen from '@team_yumi/ramen-web';

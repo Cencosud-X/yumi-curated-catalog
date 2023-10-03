@@ -25,6 +25,7 @@ export interface ICartRequest {
     is_active: boolean;
     created_at: string;
     updated_at: string;
+    url?: string;
     __v: number;
     total_products: number;
 }

@@ -1,4 +1,4 @@
-import { _ as __awaiter, u as useWindowSize, a as useUserContext, i as img$4, N as NumberFormatter, b as useGlobal, p as productsClient, P as ProductsList } from './index2.js';
+import { _ as __awaiter, u as useWindowSize, a as useUserContext, b as breakPoints, i as img$4, N as NumberFormatter, c as useGlobal, p as productsClient, P as ProductsList } from './index2.js';
 import { jsx, Fragment as Fragment$1, jsxs } from 'react/jsx-runtime';
 import { useState, useRef, Fragment, useMemo, useEffect } from 'react';
 import Ramen from '@team_yumi/ramen-web';
@@ -310,6 +310,9 @@ const LinksCardsHome = () => {
     updateStateContext
   } = useUserContext();
   const [loadingRequest, setLoadingRequest] = useState(false);
+  const {
+    width
+  } = useWindowSize();
   const handleItemRenderClick = item => {
     history.push(item === null || item === void 0 ? void 0 : item.url);
   };
@@ -338,6 +341,7 @@ const LinksCardsHome = () => {
     }
   });
   const totalPrice = ((_a = companyData === null || companyData === void 0 ? void 0 : companyData.infoCredit) === null || _a === void 0 ? void 0 : _a.amountCredit) || '-';
+  const widthCard = width < breakPoints.md ? '100%' : (data === null || data === void 0 ? void 0 : data.length) === 2 ? '45%' : (data === null || data === void 0 ? void 0 : data.length) === 3 ? "30%" : (data === null || data === void 0 ? void 0 : data.length) > 3 ? "20%" : '100%';
   return jsxs(Fragment$1, {
     children: [jsx(Ramen.XVSpace, {
       size: "xl"
@@ -346,6 +350,9 @@ const LinksCardsHome = () => {
     }, {
       children: data.map((item, index) => {
         return jsx("div", Object.assign({
+          style: {
+            width: widthCard
+          },
           onClick: () => handleItemRenderClick(item)
         }, {
           children: useItemRender && useItemRender(totalPrice, loadingRequest, item)

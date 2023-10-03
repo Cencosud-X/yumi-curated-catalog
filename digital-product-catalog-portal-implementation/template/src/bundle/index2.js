@@ -5,7 +5,7 @@ import { Route, useLocation, useHistory, Switch, Redirect, Link, BrowserRouter, 
 import Ramen from '@team_yumi/ramen-web';
 import axios from 'axios';
 import { Subject, filter } from 'rxjs';
-import _, { get as get$2, isEmpty, uniq, flatten, map, reduce, filter as filter$1, groupBy } from 'lodash';
+import { get as get$2, isEmpty, uniq, flatten, debounce, map, reduce, filter as filter$1, groupBy } from 'lodash';
 import classnames from 'classnames';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
@@ -12152,6 +12152,7 @@ const GlobalContextProvider = ({
       setCategoriesNav(menuData);
       setLoader(false);
     } catch (error) {
+      setLoader(false);
       Ramen.Api.notification.error({
         description: 'No hemos podido cargar las categorias',
         message: 'Por favor intentelo de nuevo.'
@@ -14246,7 +14247,7 @@ if (!USE_NATIVE_URL && isCallable$1(Headers)) {
   }
 }
 
-var Styles$5 = {"search-component-filter":"root-module_search-component-filter__uJbim","search-icon":"root-module_search-icon__bvFuJ","close-icon":"root-module_close-icon__UdKqF","search-input":"root-module_search-input__pfVaU","search":"root-module_search__3KC9i","dropdown":"root-module_dropdown__g6luW","dropdown__item":"root-module_dropdown__item__Igour","dropdown__item__icon":"root-module_dropdown__item__icon__KoHnH","dropdown__item__text":"root-module_dropdown__item__text__Ha-eS","table-container":"root-module_table-container__dwRGC","dropdown_search-clear__button":"root-module_dropdown_search-clear__button__j9mtq","results-list_container":"root-module_results-list_container__AHzAv"};
+var Styles$5 = {"search-component-filter":"root-module_search-component-filter__uJbim","search-icon":"root-module_search-icon__bvFuJ","close-icon":"root-module_close-icon__UdKqF","search-input":"root-module_search-input__pfVaU","search":"root-module_search__3KC9i","dropdown":"root-module_dropdown__g6luW","dropdown__item":"root-module_dropdown__item__Igour","dropdown__item__icon":"root-module_dropdown__item__icon__KoHnH","dropdown__item__text":"root-module_dropdown__item__text__Ha-eS","table-container":"root-module_table-container__dwRGC","dropdown_search-clear__button":"root-module_dropdown_search-clear__button__j9mtq","results-list_container":"root-module_results-list_container__AHzAv","results-list_container__item":"root-module_results-list_container__item__ZkS4j"};
 
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 var productsClient = new ProductsApi({
@@ -14290,6 +14291,7 @@ const ResultItemList = ({
 }) => {
   return jsxs(Fragment, {
     children: [jsx("div", Object.assign({
+      className: classnames(Styles$5['results-list_container__item']),
       onClick: () => onItemSelected === null || onItemSelected === void 0 ? void 0 : onItemSelected(item)
     }, {
       children: jsx(Ramen.XText, Object.assign({
@@ -14395,7 +14397,7 @@ const SearchComponentFilter = ({
       document.removeEventListener('mousedown', closeDropdown);
     };
   }, []);
-  const debouncedSearch = _.debounce(query => __awaiter(void 0, void 0, void 0, function* () {
+  const debouncedSearch = debounce(query => __awaiter(void 0, void 0, void 0, function* () {
     try {
       if (canSend) {
         setCanSend(false);
@@ -14445,7 +14447,6 @@ const SearchComponentFilter = ({
     }
   }), 300);
   const handleValue = e => {
-    console.log(e.target.value);
     debouncedSearch(e.target.value);
     !canSend && setCanSend(true);
     setValue(e.target.value);
@@ -15154,7 +15155,7 @@ const Header = () => {
           onProfileClick: onProfileAction,
           onSignOutClick: onLogout,
           profile: profile,
-          showInfoProfile: width > breakPoints.sm
+          showInfoProfile: width > breakPoints.lg
         }, {
           children: jsx(ShopCart$1, {})
         }))
@@ -16623,8 +16624,8 @@ const Shop = () => {
   } = useGlobal();
   const [isOpenModalFilters, setIsOpenModalFilters] = useState(false);
   const arrayParents = findParentsInRoot(categories, Number(category)) || [];
-  const lvlCategory = arrayParents.length;
-  const isMultipleHierarchy = true;
+  arrayParents.length;
+  const isMultipleHierarchy = false;
   const getKeyByLvl = value => {
     switch (value) {
       case 0:
@@ -16641,9 +16642,9 @@ const Shop = () => {
   };
   const INITIAL_FILTERS = useMemo(() => {
     return Object.assign(Object.assign({}, category && {
-      [getKeyByLvl(arrayParents.length - 1)]: [`${category}`]
+      [getKeyByLvl(arrayParents.length - 1)]: `${category}` 
     }), !!brand && {
-      brand: [`${brand}`]
+      brand: `${brand}` 
     });
   }, [category]);
   const [activeFilters, setActiveFilters] = useState(INITIAL_FILTERS);
@@ -16741,7 +16742,7 @@ const Shop = () => {
           let valueFilter;
           switch (index) {
             case 0:
-              valueFilter = activeFilters['category'] || category && ([category] );
+              valueFilter = activeFilters['category'] || category && (category);
               break;
             case 1:
               valueFilter = activeFilters['departament'];
@@ -16755,10 +16756,6 @@ const Shop = () => {
           }
           if (!!valueFilter) {
             options = options.filter(item => valueFilter.includes(item.key));
-          }
-          // Show only herarchy for lvl
-          {
-            options = options.filter((item, index) => index > lvlCategory);
           }
           item.options = options;
           item.useSearch = options.length > 7;
@@ -17969,12 +17966,8 @@ const HistoryRequest = () => {
       Ramen.Api.loading.show({
         text: 'Descargando pdf de la solicitud...'
       });
-      const data = yield new Promise(resolve => {
-        setTimeout(() => resolve({
-          url: ''
-        }), 1000);
-      });
-      downloadLink = data === null || data === void 0 ? void 0 : data.url;
+      const cartDetails = yield cartClient.getDetailCart(cartId);
+      downloadLink = (cartDetails === null || cartDetails === void 0 ? void 0 : cartDetails.url) || '';
       Ramen.Api.loading.hide();
       Ramen.Api.notification.success({
         description: 'Archivo de solicitud descargado satisfactoriamente.'
@@ -18140,7 +18133,7 @@ const HistoryRequest = () => {
       onChange: onChangeTable
     }), loading && (data === null || data === void 0 ? void 0 : data.length) === 0 && jsxs(Fragment, {
       children: [jsx(Ramen.XVSpace, {
-        size: 's'
+        size: "s"
       }), jsx(Ramen.XList, {
         dataSource: [{}, {}, {}, {}, {}],
         renderItem: item => jsx(Ramen.XSkeleton, {
@@ -18905,4 +18898,4 @@ class PortalModule extends Module {
 }
 PortalModule.route = '/';
 
-export { DrawerCategories$1 as D, Flow as F, Header as H, ModalCart$1 as M, NumberFormatter$1 as N, ProductsList as P, __awaiter as _, useUserContext as a, useGlobal as b, img$b as c, PortalModule as d, img$6 as i, productsClient as p, useWindowSize as u };
+export { DrawerCategories$1 as D, Flow as F, Header as H, ModalCart$1 as M, NumberFormatter$1 as N, ProductsList as P, __awaiter as _, useUserContext as a, breakPoints as b, useGlobal as c, img$b as d, PortalModule as e, img$6 as i, productsClient as p, useWindowSize as u };
