@@ -33,6 +33,6 @@
     "arcus-documentation-implementation/typerc.json",
     "product-searcher-module-implementation/typerc.json",
     "labeling-implementation/typerc.json",
-    "web-portal-with-layout-implementation/typerc.json"
+    "yumi-web/typerc.json"
   ]
 }
