@@ -1,0 +1,29 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
+  "name": "Web",
+  "tags": [
+    "Nestjs",
+    "Api",
+    "Node",
+    "React"
+  ],
+  "kind": "web",
+  "folder": "apps",
+  "icons": {
+    "light": "icons/icon.svg",
+    "dark": "icons/icon.svg"
+  },
+  "descriptions": {
+    "es": "Plantilla de proyecto que se encuentra desarrollada bajo el framework React con funcionalidades de live reloading y webpack como su empaquetador. Incluye modulo IAM y Layout",
+    "en": "Project template based on the React framework with live reloading and webpack. Includes Layout and IAM Module."
+  },
+  "scripts": {
+    "pre": "scripts/pre.js",
+    "post": "scripts/post.js",
+    "rollback": "scripts/rollback.js"
+  },
+  "interpolations": {
+    "source": "template"
+  },
+  "display_name": "Web Yumi"
+}
