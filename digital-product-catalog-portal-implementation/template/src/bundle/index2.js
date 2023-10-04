@@ -16698,7 +16698,7 @@ const Shop = () => {
   };
   const hierarchy = useMemo(() => {
     return activeFilters['typeProduct'] || activeFilters['subcategory'] || activeFilters['departament'] || activeFilters['category'];
-  }, [activeFilters]);
+  }, [activeFilters, isMultipleHierarchy]);
   const filter = useMemo(() => {
     if (loading) {
       return [];
