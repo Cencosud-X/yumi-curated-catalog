@@ -14488,6 +14488,11 @@ const SearchComponentFilter = ({
     localStorage.setItem('searches', JSON.stringify(newSearches));
     setSearchHistory(newSearches);
   };
+  const onRemoveAll = () => {
+    const searches = [];
+    localStorage.setItem('searches', JSON.stringify(searches));
+    setSearchHistory(searches);
+  };
   const getSearchHistory = () => {
     const searches = JSON.parse(localStorage.getItem('searches') || '[]');
     setSearchHistory(searches);
@@ -14571,7 +14576,8 @@ const SearchComponentFilter = ({
           }))]
         })), jsx(Ramen.XButton, {
           text: "Borrar historial",
-          type: "clear"
+          type: "clear",
+          onClick: onRemoveAll
         })]
       })), searchHistory === null || searchHistory === void 0 ? void 0 : searchHistory.map(option => {
         return jsxs("div", Object.assign({
@@ -16697,7 +16703,6 @@ const Shop = () => {
     if (loading) {
       return [];
     }
-    console.log('activeFilters in memo', activeFilters);
     const filtersResults = (otherResults === null || otherResults === void 0 ? void 0 : otherResults.summary) || [];
     const [filterHierarchy] = filtersResults.filter(item => item.type === 'hierarchy.levels.id');
     let initialFilters = [{
@@ -16805,7 +16810,7 @@ const Shop = () => {
       sort: [sortField]
     };
     getData(filter);
-  }, [activeFilters, searchQuery, sortField]);
+  }, [activeFilters, searchQuery, sortField, hierarchy]);
   useEffect(() => {
     if (!!errors) {
       error({
