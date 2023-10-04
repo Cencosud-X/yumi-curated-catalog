@@ -8,8 +8,6 @@ module.exports = async (runner, args) => {
       'npm install -D react-router-dom@6.3.0',
       'npm install -D eslint@^8.15.0',
       'npm install -D @nrwl/cypress@14.4.2',
-      'npm install -D @nrwl/jest@14.4.2',
-      'npm install -D @testing-library/react@13.3.0'
       `npx nx g @nrwl/web:app ${rc.path}`
     ], {
       cwd: rc.workspace_path
