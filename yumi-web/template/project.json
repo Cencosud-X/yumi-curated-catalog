@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/dummy/src",
+  "sourceRoot": "apps/template/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -9,14 +9,14 @@
       "defaultConfiguration": "production",
       "options": {
         "compiler": "babel",
-        "outputPath": "dist/apps/dummy",
-        "index": "apps/dummy/src/index.html",
+        "outputPath": "dist/apps/template",
+        "index": "apps/template/src/index.html",
         "baseHref": "/",
-        "main": "apps/dummy/src/main.tsx",
-        "polyfills": "apps/dummy/src/polyfills.ts",
-        "tsConfig": "apps/dummy/tsconfig.app.json",
-        "assets": ["apps/dummy/src/assets"],
-        "styles": ["apps/dummy/src/styles.scss"],
+        "main": "apps/template/src/main.tsx",
+        "polyfills": "apps/template/src/polyfills.ts",
+        "tsConfig": "apps/template/tsconfig.app.json",
+        "assets": ["apps/template/src/assets"],
+        "styles": ["apps/template/src/styles.scss"],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"
       },
@@ -30,8 +30,8 @@
         "production": {
           "fileReplacements": [
             {
-              "replace": "apps/dummy/src/environments/environment.ts",
-              "with": "apps/dummy/src/environments/environment.prod.ts"
+              "replace": "apps/template/src/environments/environment.ts",
+              "with": "apps/template/src/environments/environment.prod.ts"
             }
           ],
           "optimization": true,
@@ -47,15 +47,15 @@
       "executor": "@nrwl/web:dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "dummy:build",
+        "buildTarget": "template:build",
         "hmr": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "dummy:build:development"
+          "buildTarget": "template:build:development"
         },
         "production": {
-          "buildTarget": "dummy:build:production",
+          "buildTarget": "template:build:production",
           "hmr": false
         }
       }
@@ -64,14 +64,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/dummy/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["apps/template/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/dummy"],
+      "outputs": ["coverage/apps/template"],
       "options": {
-        "jestConfig": "apps/dummy/jest.config.ts",
+        "jestConfig": "apps/template/jest.config.ts",
         "passWithNoTests": true
       }
     }
