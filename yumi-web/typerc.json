@@ -14,7 +14,7 @@
     "dark": "icons/icon.svg"
   },
   "descriptions": {
-    "es": ">> Plantilla de proyecto que se encuentra desarrollada bajo el framework React con funcionalidades de live reloading y webpack como su empaquetador. Incluye modulo IAM y Layout",
+    "es": "Plantilla de proyecto que se encuentra desarrollada bajo el framework React con funcionalidades de live reloading y webpack como su empaquetador. Incluye modulo IAM y Layout",
     "en": "Project template based on the React framework with live reloading and webpack. Includes Layout and IAM Module."
   },
   "scripts": {

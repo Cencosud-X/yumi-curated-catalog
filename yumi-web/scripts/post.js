@@ -5,7 +5,7 @@ module.exports = async (runner, args) => {
     const rc = args.rc;
     await runner.execute([
       `npx nx g @nrwl/workspace:rm ${rc.path}-e2e`,
-      'rm -rf ./src/app',
+      /* 'rm -rf ./src/app', */
       'rm -rf ./src/test-setup.ts',
       'rm -rf ./favicon.ico',
       'rm -rf ./src/favicon.ico',
