@@ -15827,14 +15827,26 @@ const LoginDrawer = () => {
 };
 var LoginDrawer$1 = /*#__PURE__*/memo(LoginDrawer);
 
+const notShowMessage = e => {
+  var _a, _b, _c;
+  const status = (e === null || e === void 0 ? void 0 : e.status) || (e === null || e === void 0 ? void 0 : e.statusCode) || ((_a = e === null || e === void 0 ? void 0 : e.response) === null || _a === void 0 ? void 0 : _a.status);
+  const url = (_c = (_b = e === null || e === void 0 ? void 0 : e.response) === null || _b === void 0 ? void 0 : _b.config) === null || _c === void 0 ? void 0 : _c.url;
+  return (status === 401 || status === 403) && url.includes('/logout');
+};
 const AlertWatcher = () => {
   const {
     logout
   } = useUserContext();
   watcher(MODULES.NETWORK_MODULE, e => {
-    console.log('e in AlertWatcher');
+    var _a;
+    if (notShowMessage(e)) {
+      return;
+    }
+    console.log('e in AlertWatcher', e);
+    const status = (e === null || e === void 0 ? void 0 : e.status) || (e === null || e === void 0 ? void 0 : e.statusCode) || ((_a = e === null || e === void 0 ? void 0 : e.response) === null || _a === void 0 ? void 0 : _a.status);
     // logout system when  unhautorized.
-    if ((e === null || e === void 0 ? void 0 : e.status) === 403 || (e === null || e === void 0 ? void 0 : e.status) === 401) {
+    if (status === 403 || status === 401) {
+      console.log('logout error unhautorized ');
       setTimeout(() => logout(), 1000);
     }
   });
