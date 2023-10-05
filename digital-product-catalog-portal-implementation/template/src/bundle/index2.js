@@ -2798,7 +2798,7 @@ var Promise$1 = global$f.Promise;
 // Node.js 11 shows ExperimentalWarning on getting `queueMicrotask`
 var queueMicrotaskDescriptor = getOwnPropertyDescriptor$1(global$f, 'queueMicrotask');
 var microtask$1 = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
-var notify$1, toggle, node, promise, then;
+var notify$2, toggle, node, promise, then;
 
 // modern engines have queueMicrotask method
 if (!microtask$1) {
@@ -2810,7 +2810,7 @@ if (!microtask$1) {
     while (fn = queue.get()) try {
       fn();
     } catch (error) {
-      if (queue.head) notify$1();
+      if (queue.head) notify$2();
       throw error;
     }
     if (parent) parent.enter();
@@ -2822,7 +2822,7 @@ if (!microtask$1) {
     toggle = true;
     node = document$2.createTextNode('');
     new MutationObserver(flush).observe(node, { characterData: true });
-    notify$1 = function () {
+    notify$2 = function () {
       node.data = toggle = !toggle;
     };
   // environments with maybe non-completely correct, but existent Promise
@@ -2832,12 +2832,12 @@ if (!microtask$1) {
     // workaround of WebKit ~ iOS Safari 10.1 bug
     promise.constructor = Promise$1;
     then = bind$5(promise.then, promise);
-    notify$1 = function () {
+    notify$2 = function () {
       then(flush);
     };
   // Node.js without promises
   } else if (IS_NODE$3) {
-    notify$1 = function () {
+    notify$2 = function () {
       process$2.nextTick(flush);
     };
   // for other environments - macrotask based on:
@@ -2849,13 +2849,13 @@ if (!microtask$1) {
   } else {
     // `webpack` dev server bug on IE global methods - use bind(fn, global)
     macrotask = bind$5(macrotask, global$f);
-    notify$1 = function () {
+    notify$2 = function () {
       macrotask(flush);
     };
   }
 
   microtask$1 = function (fn) {
-    if (!queue.head) notify$1();
+    if (!queue.head) notify$2();
     queue.add(fn);
   };
 }
@@ -3050,7 +3050,7 @@ var callReaction = function (reaction, state) {
   }
 };
 
-var notify = function (state, isReject) {
+var notify$1 = function (state, isReject) {
   if (state.notified) return;
   state.notified = true;
   microtask(function () {
@@ -3121,7 +3121,7 @@ var internalReject = function (state, value, unwrap) {
   if (unwrap) state = unwrap;
   state.value = value;
   state.state = REJECTED;
-  notify(state, true);
+  notify$1(state, true);
 };
 
 var internalResolve = function (state, value, unwrap) {
@@ -3146,7 +3146,7 @@ var internalResolve = function (state, value, unwrap) {
     } else {
       state.value = value;
       state.state = FULFILLED;
-      notify(state, false);
+      notify$1(state, false);
     }
   } catch (error) {
     internalReject({ done: false }, error, state);
@@ -3559,6 +3559,58 @@ $$b({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR }, {
   }
 });
 
+const stateCollection = new Map();
+const subscribers = new Map();
+const initModule = (module, state) => {
+  !stateCollection.has(module) && stateCollection.set(module, state);
+};
+const watcher = (module, fn) => {
+  if (subscribers.has(module)) {
+    const set = subscribers.get(module);
+    !set.has(fn) && set.add(fn);
+    subscribers.set(module, set);
+  } else {
+    subscribers.set(module, new Set([fn]));
+  }
+  return {
+    module,
+    fn
+  };
+};
+const notify = (module, newValue, oldValue) => {
+  if (subscribers.has(module)) {
+    const set = subscribers.get(module);
+    set.forEach(fn => fn(newValue, oldValue));
+  }
+};
+const getValue = module => {
+  return stateCollection.get(module);
+};
+const setValue = (module, value) => {
+  const oldValue = getValue(module);
+  stateCollection.set(module, value);
+  notify(module, value, oldValue);
+};
+const observe = (module, value) => {
+  initModule(module, value);
+  return (...args) => {
+    switch (args.length) {
+      case 0:
+        return getValue(module);
+      case 1:
+        return setValue(module, args[0]);
+      default:
+        throw new Error("Expected 0 or 1 arguments");
+    }
+  };
+};
+
+const MODULES = {
+  NETWORK_MODULE: 'network_module'
+};
+//module : state
+const networkModule = observe(MODULES.NETWORK_MODULE, null);
+
 class BaseRest {
   constructor(config) {
     this.accessTokenKey = '__access_token__';
@@ -3582,6 +3634,7 @@ class BaseRest {
     };
     this.handleError = error => {
       this.listener.next(error);
+      networkModule(error);
       return Promise.reject({
         status: error.response && error.response.status,
         response: error.response || error
@@ -13021,7 +13074,11 @@ const UserContextProvider = ({
     }
   });
   const logout = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield clientRequest.logout();
+    try {
+      yield clientRequest.logout();
+    } catch (error) {
+      console.log(error);
+    }
     yield updateStateContext({
       isAuthenticated: false,
       user: undefined,
@@ -15770,6 +15827,20 @@ const LoginDrawer = () => {
 };
 var LoginDrawer$1 = /*#__PURE__*/memo(LoginDrawer);
 
+const AlertWatcher = () => {
+  const {
+    logout
+  } = useUserContext();
+  watcher(MODULES.NETWORK_MODULE, e => {
+    console.log('e in AlertWatcher');
+    // logout system when  unhautorized.
+    if ((e === null || e === void 0 ? void 0 : e.status) === 403 || (e === null || e === void 0 ? void 0 : e.status) === 401) {
+      setTimeout(() => logout(), 1000);
+    }
+  });
+  return jsx(Fragment, {});
+};
+
 const PortalContextComponent = ({
   children
 }) => {
@@ -15777,10 +15848,10 @@ const PortalContextComponent = ({
     clientRequest: authClient
   }, {
     children: jsx(GlobalContextProvider, {
-      children: jsx(CartContextProvider, {
-        children: jsx(React__default.StrictMode, {
+      children: jsxs(CartContextProvider, {
+        children: [jsx(React__default.StrictMode, {
           children: children
-        })
+        }), jsx(AlertWatcher, {})]
       })
     })
   }));
@@ -16669,7 +16740,7 @@ const Shop = () => {
     loadMore,
     setErrors
   } = useQueryCollection(args => productsClient.getProducts(args), {
-    limit: 50,
+    limit: 20,
     offset: 0,
     total: 0
   }, true);

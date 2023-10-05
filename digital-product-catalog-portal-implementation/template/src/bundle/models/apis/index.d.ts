@@ -6,4 +6,6 @@ import BaseRest from './baseRest';
 import CartRequestApi from './cartsApi';
 import sapApi from './sapApi';
 import companyApi from './companyApi';
-export { CategoriesApi, ProductsApi, FilesApi, BaseRest, AuthApi, CartRequestApi, sapApi, companyApi };
+import * as ConfigRaindrop from './configRaindrop';
+import * as LibRaindrop from './raindrop/index';
+export { CategoriesApi, ProductsApi, FilesApi, BaseRest, AuthApi, CartRequestApi, sapApi, companyApi, ConfigRaindrop, LibRaindrop };
