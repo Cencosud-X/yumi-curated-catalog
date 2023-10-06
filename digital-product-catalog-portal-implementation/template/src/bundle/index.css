@@ -2312,6 +2312,19 @@
   cursor: pointer;
 }
 
+.root-module_container-title__NCryv{
+  position: absolute;
+  margin-top: 14px;
+}
+
+div[class^='root-module_xtooltip__container__tooltip'],
+div[class*=' root-module_xtooltip__container__tooltip']
+{
+  min-width: -moz-max-content;
+  min-width: max-content;
+  font-weight: bold;
+}
+
 .root-module_x-myaccount_card_container__DZGUV{
     display: flex;
     flex-direction: row;
@@ -2321,7 +2334,8 @@
 }
 
 .root-module_x-myaccount_card_item__GOnHu{
-  width: 410px;
+  width: 48%;
+  min-width: 410px;
   cursor: pointer;
 }
 

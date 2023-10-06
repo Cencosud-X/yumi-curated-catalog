@@ -13124,7 +13124,7 @@ var img$9 = "data:image/svg+xml,%3csvg width='111' height='111' viewBox='0 0 111
 
 var img$8 = "data:image/svg+xml,%3csvg width='110' height='110' viewBox='0 0 110 110' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M54.9997 13.75C32.2179 13.75 13.7497 32.2183 13.7497 55C13.7497 77.7818 32.2179 96.25 54.9997 96.25C77.7814 96.25 96.2497 77.7818 96.2497 55C96.2497 32.2183 77.7814 13.75 54.9997 13.75ZM4.58301 55C4.58301 27.1557 27.1553 4.58337 54.9997 4.58337C82.844 4.58337 105.416 27.1557 105.416 55C105.416 82.8444 82.844 105.417 54.9997 105.417C27.1553 105.417 4.58301 82.8444 4.58301 55Z' fill='black'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M54.9997 32.0834C57.531 32.0834 59.583 34.1354 59.583 36.6667V55C59.583 57.5313 57.531 59.5834 54.9997 59.5834C52.4684 59.5834 50.4163 57.5313 50.4163 55V36.6667C50.4163 34.1354 52.4684 32.0834 54.9997 32.0834Z' fill='black'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M50.4163 73.3334C50.4163 70.8021 52.4684 68.75 54.9997 68.75H55.0455C57.5768 68.75 59.6288 70.8021 59.6288 73.3334C59.6288 75.8647 57.5768 77.9167 55.0455 77.9167H54.9997C52.4684 77.9167 50.4163 75.8647 50.4163 73.3334Z' fill='black'/%3e%3c/svg%3e";
 
-var Styles$9 = {"xalert-modal":"root-module_xalert-modal__DrLKB","xalert-modal__backdrop":"root-module_xalert-modal__backdrop__mPVil","xalert-modal__content":"root-module_xalert-modal__content__EOPQX","xalert-modal__header":"root-module_xalert-modal__header__XoAND","xalert-modal__body":"root-module_xalert-modal__body__z3zBz","xalert-modal__body__image":"root-module_xalert-modal__body__image__LfNCK","xalert-modal__body__title":"root-module_xalert-modal__body__title__E4y6R","xalert-modal__body__message":"root-module_xalert-modal__body__message__qOIrH","xalert-modal__actions":"root-module_xalert-modal__actions__TiEa5"};
+var Styles$a = {"xalert-modal":"root-module_xalert-modal__DrLKB","xalert-modal__backdrop":"root-module_xalert-modal__backdrop__mPVil","xalert-modal__content":"root-module_xalert-modal__content__EOPQX","xalert-modal__header":"root-module_xalert-modal__header__XoAND","xalert-modal__body":"root-module_xalert-modal__body__z3zBz","xalert-modal__body__image":"root-module_xalert-modal__body__image__LfNCK","xalert-modal__body__title":"root-module_xalert-modal__body__title__E4y6R","xalert-modal__body__message":"root-module_xalert-modal__body__message__qOIrH","xalert-modal__actions":"root-module_xalert-modal__actions__TiEa5"};
 
 const XAlertModal = props => {
   const onCloseModalHandler = () => {
@@ -13145,7 +13145,7 @@ const XAlertModal = props => {
   if (!props.visible) {
     return null;
   }
-  const rootClass = classnames(Styles$9['xalert-modal']);
+  const rootClass = classnames(Styles$a['xalert-modal']);
   const getImage = type => {
     switch (type) {
       case 'success':
@@ -13158,12 +13158,12 @@ const XAlertModal = props => {
     className: rootClass
   }, {
     children: [jsx("div", {
-      className: Styles$9['xalert-modal__backdrop']
+      className: Styles$a['xalert-modal__backdrop']
     }), jsxs("div", Object.assign({
-      className: Styles$9['xalert-modal__content']
+      className: Styles$a['xalert-modal__content']
     }, {
       children: [jsx("div", Object.assign({
-        className: Styles$9['xalert-modal__header']
+        className: Styles$a['xalert-modal__header']
       }, {
         children: jsx(Ramen.XButtonIcon, {
           size: "s",
@@ -13172,16 +13172,16 @@ const XAlertModal = props => {
           onClick: onCloseModalHandler
         })
       })), jsxs("div", Object.assign({
-        className: Styles$9['xalert-modal__body']
+        className: Styles$a['xalert-modal__body']
       }, {
         children: [jsx("div", Object.assign({
-          className: Styles$9['xalert-modal__body__image']
+          className: Styles$a['xalert-modal__body__image']
         }, {
           children: jsx(Ramen.XImage, {
             src: getImage(`${props.type}`)
           })
         })), props.title && jsx("div", Object.assign({
-          className: Styles$9['xalert-modal__body__title']
+          className: Styles$a['xalert-modal__body__title']
         }, {
           children: jsx(Ramen.XText, Object.assign({
             weight: "bold",
@@ -13190,7 +13190,7 @@ const XAlertModal = props => {
             children: props.title
           }))
         })), props.message && jsx("div", Object.assign({
-          className: Styles$9['xalert-modal__body__message']
+          className: Styles$a['xalert-modal__body__message']
         }, {
           children: jsx(Ramen.XText, Object.assign({
             colorThone: "dim",
@@ -13201,7 +13201,7 @@ const XAlertModal = props => {
           }))
         })), props.children]
       })), jsxs("div", Object.assign({
-        className: Styles$9['xalert-modal__actions']
+        className: Styles$a['xalert-modal__actions']
       }, {
         children: [props.useCancel && jsx(Ramen.XButton, {
           size: "xl",
@@ -13545,7 +13545,7 @@ const ProductsList = ({
   loadMoreProducts: loadMoreProducts
 });
 
-var Styles$8 = {"filter-component":"root-module_filter-component__C4Mmr","filter-container":"root-module_filter-container__cbkC0"};
+var Styles$9 = {"filter-component":"root-module_filter-component__C4Mmr","filter-container":"root-module_filter-container__cbkC0"};
 
 const breakPoints = {
   xs: 480,
@@ -13574,7 +13574,7 @@ const useWindowSize = () => {
   return windowSize;
 };
 
-var Styles$7 = {"xcontainer_filter":"root-module_xcontainer_filter__cEYyE","container_filter__item":"root-module_container_filter__item__IchDn","xcontainer_filter__title":"root-module_xcontainer_filter__title__ZdzKr","xcontainer_filter__item":"root-module_xcontainer_filter__item__dyeBW","xcontainer_filter__item--selected":"root-module_xcontainer_filter__item--selected__93n0o"};
+var Styles$8 = {"xcontainer_filter":"root-module_xcontainer_filter__cEYyE","container_filter__item":"root-module_container_filter__item__IchDn","xcontainer_filter__title":"root-module_xcontainer_filter__title__ZdzKr","xcontainer_filter__item":"root-module_xcontainer_filter__item__dyeBW","xcontainer_filter__item--selected":"root-module_xcontainer_filter__item--selected__93n0o"};
 
 const Root = ({
   filter,
@@ -13614,12 +13614,12 @@ const Root = ({
     return filter.options.filter(item => item.label.includes(search));
   }, [filter.useSearch, search, filter.options, updated]);
   return jsxs("div", Object.assign({
-    className: classnames(Styles$7['xcontainer_filter__title'])
+    className: classnames(Styles$8['xcontainer_filter__title'])
   }, {
     children: [jsx(Ramen.XVSpace, {
       size: "m"
     }), jsx("div", Object.assign({
-      className: classnames(Styles$7['xcontainer_filter__title'])
+      className: classnames(Styles$8['xcontainer_filter__title'])
     }, {
       children: filter.label
     })), jsx(Ramen.XVSpace, {
@@ -13634,12 +13634,12 @@ const Root = ({
         size: "s"
       })]
     }), jsx("div", Object.assign({
-      className: classnames(Styles$7['xcontainer_filter'])
+      className: classnames(Styles$8['xcontainer_filter'])
     }, {
       children: filterOptions.map(option => {
         const isActive = checkIfIsActive(filter, option);
-        const itemClasses = classnames(Styles$7['xcontainer_filter__item'], {
-          [Styles$7['xcontainer_filter__item--selected']]: isActive
+        const itemClasses = classnames(Styles$8['xcontainer_filter__item'], {
+          [Styles$8['xcontainer_filter__item--selected']]: isActive
         });
         return jsxs("div", Object.assign({
           className: itemClasses,
@@ -13744,10 +13744,10 @@ const FilterComponent = ({
   const renderFilters = () => {
     if (loading) {
       return jsxs("div", Object.assign({
-        className: Styles$8['filter-component']
+        className: Styles$9['filter-component']
       }, {
         children: [jsxs("div", Object.assign({
-          className: Styles$8['filter-container']
+          className: Styles$9['filter-container']
         }, {
           children: [jsx(FilterSkeleton, {}), jsx(FilterSkeleton, {}), jsx(FilterSkeleton, {})]
         })), jsx(Ramen.XVSpace, {
@@ -13771,10 +13771,10 @@ const FilterComponent = ({
       }));
     }
     return !!filters.length ? jsxs("div", Object.assign({
-      className: Styles$8['filter-component']
+      className: Styles$9['filter-component']
     }, {
       children: [jsx("div", Object.assign({
-        className: Styles$8['filter-container']
+        className: Styles$9['filter-container']
       }, {
         children: filters.map(filter => jsx(Root, {
           filter: filter,
@@ -13817,7 +13817,7 @@ const FilterComponent = ({
   });
 };
 
-var Styles$6 = {"categories-wrapper__body":"root-module_categories-wrapper__body__ytY1c","categories-wrapper__body__list":"root-module_categories-wrapper__body__list__HXHrh","categories_item":"root-module_categories_item__0lWDM","categories_item__selected":"root-module_categories_item__selected__tR3wv","categories_item__list":"root-module_categories_item__list__L8jwG","categories_item__list__name":"root-module_categories_item__list__name__FFurE","categories_seeAll":"root-module_categories_seeAll__DC3fe"};
+var Styles$7 = {"categories-wrapper__body":"root-module_categories-wrapper__body__ytY1c","categories-wrapper__body__list":"root-module_categories-wrapper__body__list__HXHrh","categories_item":"root-module_categories_item__0lWDM","categories_item__selected":"root-module_categories_item__selected__tR3wv","categories_item__list":"root-module_categories_item__list__L8jwG","categories_item__list__name":"root-module_categories_item__list__name__FFurE","categories_seeAll":"root-module_categories_seeAll__DC3fe"};
 
 // `SameValue` abstract operation
 // https://tc39.es/ecma262/#sec-samevalue
@@ -14304,17 +14304,17 @@ if (!USE_NATIVE_URL && isCallable$1(Headers)) {
   }
 }
 
-var Styles$5 = {"search-component-filter":"root-module_search-component-filter__uJbim","search-icon":"root-module_search-icon__bvFuJ","close-icon":"root-module_close-icon__UdKqF","search-input":"root-module_search-input__pfVaU","search":"root-module_search__3KC9i","dropdown":"root-module_dropdown__g6luW","dropdown__item":"root-module_dropdown__item__Igour","dropdown__item__icon":"root-module_dropdown__item__icon__KoHnH","dropdown__item__text":"root-module_dropdown__item__text__Ha-eS","table-container":"root-module_table-container__dwRGC","dropdown_search-clear__button":"root-module_dropdown_search-clear__button__j9mtq","results-list_container":"root-module_results-list_container__AHzAv","results-list_container__item":"root-module_results-list_container__item__ZkS4j"};
+var Styles$6 = {"search-component-filter":"root-module_search-component-filter__uJbim","search-icon":"root-module_search-icon__bvFuJ","close-icon":"root-module_close-icon__UdKqF","search-input":"root-module_search-input__pfVaU","search":"root-module_search__3KC9i","dropdown":"root-module_dropdown__g6luW","dropdown__item":"root-module_dropdown__item__Igour","dropdown__item__icon":"root-module_dropdown__item__icon__KoHnH","dropdown__item__text":"root-module_dropdown__item__text__Ha-eS","table-container":"root-module_table-container__dwRGC","dropdown_search-clear__button":"root-module_dropdown_search-clear__button__j9mtq","results-list_container":"root-module_results-list_container__AHzAv","results-list_container__item":"root-module_results-list_container__item__ZkS4j"};
 
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 var productsClient = new ProductsApi({
   baseURL: 'https://api.staging.cencox.xyz/ebisu/api-bff'
 });
 
-var Styles$4 = {"xdivider__vertical":"root-module_xdivider__vertical__gCbVo"};
+var Styles$5 = {"xdivider__vertical":"root-module_xdivider__vertical__gCbVo"};
 
 const XDividerVertical = () => {
-  const rootClass = classnames(Styles$4['xdivider__vertical'], {});
+  const rootClass = classnames(Styles$5['xdivider__vertical'], {});
   return jsx("div", {
     className: rootClass
   });
@@ -14348,7 +14348,7 @@ const ResultItemList = ({
 }) => {
   return jsxs(Fragment, {
     children: [jsx("div", Object.assign({
-      className: classnames(Styles$5['results-list_container__item']),
+      className: classnames(Styles$6['results-list_container__item']),
       onClick: () => onItemSelected === null || onItemSelected === void 0 ? void 0 : onItemSelected(item)
     }, {
       children: jsx(Ramen.XText, Object.assign({
@@ -14370,7 +14370,7 @@ const ResultsList = ({
 }) => {
   var _a;
   return jsxs("div", Object.assign({
-    className: classnames(Styles$5['results-list_container'])
+    className: classnames(Styles$6['results-list_container'])
   }, {
     children: [jsxs(Ramen.XBox, Object.assign({
       width: 'full',
@@ -14592,17 +14592,17 @@ const SearchComponentFilter = ({
     handleSearchOptions(url, props);
   };
   return jsxs("div", Object.assign({
-    className: classnames(Styles$5['search-component-filter'])
+    className: classnames(Styles$6['search-component-filter'])
   }, {
     children: [jsx("div", Object.assign({
-      className: classnames(Styles$5['search-icon'])
+      className: classnames(Styles$6['search-icon'])
     }, {
       children: jsx(Ramen.XIcon, {
         size: "s",
         icon: "search-outline"
       })
     })), jsx("input", {
-      className: classnames(Styles$5[`search-input`]),
+      className: classnames(Styles$6[`search-input`]),
       value: currentValue,
       onChange: handleValue,
       onKeyDown: e => e.key === 'Enter' && handleSearch(),
@@ -14610,7 +14610,7 @@ const SearchComponentFilter = ({
       placeholder: placeholder || 'Search products',
       type: "text"
     }), isDropdownOpen && searchHistory.length > 0 && !currentValue ? jsxs("div", Object.assign({
-      className: classnames(Styles$5['dropdown']),
+      className: classnames(Styles$6['dropdown']),
       ref: dropdownRef
     }, {
       children: [jsxs(Ramen.XBox, Object.assign({
@@ -14638,10 +14638,10 @@ const SearchComponentFilter = ({
         })]
       })), searchHistory === null || searchHistory === void 0 ? void 0 : searchHistory.map(option => {
         return jsxs("div", Object.assign({
-          className: classnames(Styles$5['dropdown__item'])
+          className: classnames(Styles$6['dropdown__item'])
         }, {
           children: [jsx("div", Object.assign({
-            className: classnames(Styles$5['dropdown__item__text']),
+            className: classnames(Styles$6['dropdown__item__text']),
             onClick: () => onSearchSelected(option)
           }, {
             children: jsx(Ramen.XText, Object.assign({
@@ -14651,7 +14651,7 @@ const SearchComponentFilter = ({
               children: option
             }))
           })), option && jsx("div", Object.assign({
-            className: classnames(Styles$5['dropdown__item__icon']),
+            className: classnames(Styles$6['dropdown__item__icon']),
             onClick: () => onRemoveOption(option)
           }, {
             children: jsx(Ramen.XButtonIcon, {
@@ -14663,7 +14663,7 @@ const SearchComponentFilter = ({
         }), option);
       })]
     })) : isDropdownOpen && (data === null || data === void 0 ? void 0 : data.length) && currentValue.length > 0 ? jsxs("div", Object.assign({
-      className: classnames(Styles$5['dropdown']),
+      className: classnames(Styles$6['dropdown']),
       ref: dropdownRef
     }, {
       children: [jsx(Ramen.XBox, Object.assign({
@@ -14677,7 +14677,7 @@ const SearchComponentFilter = ({
           children: ["Resultados de tu b\u00FAsqueda \"", currentValue, "\""]
         }))
       })), jsx("div", Object.assign({
-        className: classnames(Styles$5['table-container'])
+        className: classnames(Styles$6['table-container'])
       }, {
         children: (data || []).map((item, index) => {
           return jsx(ResultsList, {
@@ -14688,7 +14688,7 @@ const SearchComponentFilter = ({
         })
       }))]
     })) : null, !!currentValue && jsx("div", Object.assign({
-      className: classnames(Styles$5['close-icon']),
+      className: classnames(Styles$6['close-icon']),
       onClick: handleClear
     }, {
       children: jsx(Ramen.XIcon, {
@@ -14740,7 +14740,7 @@ const CategoryItemList = ({
 }) => {
   return jsxs(Fragment, {
     children: [jsx("div", Object.assign({
-      className: classnames(Styles$6['categories_item__list__name']),
+      className: classnames(Styles$7['categories_item__list__name']),
       onClick: () => onItemSelected === null || onItemSelected === void 0 ? void 0 : onItemSelected(category)
     }, {
       children: jsx(Ramen.XText, Object.assign({
@@ -14756,7 +14756,7 @@ const CategoryItemList = ({
 const SeeAllComponent = ({
   onClick
 }) => jsxs("div", Object.assign({
-  className: classnames(Styles$6['categories_seeAll'])
+  className: classnames(Styles$7['categories_seeAll'])
 }, {
   children: [jsxs(Ramen.XText, Object.assign({
     fontSize: 11
@@ -14780,7 +14780,7 @@ const CategoryList = ({
   onItemHover
 }) => {
   return jsxs("div", Object.assign({
-    className: classnames(Styles$6['categories_item__list'])
+    className: classnames(Styles$7['categories_item__list'])
   }, {
     children: [jsx(Ramen.XVSpace, {
       size: "m"
@@ -14820,8 +14820,8 @@ const CategoryItem = ({
   onItemHover
 }) => {
   return jsx("div", Object.assign({
-    className: classnames(Styles$6['categories_item'], {
-      [Styles$6[`categories_item__selected`]]: isActive
+    className: classnames(Styles$7['categories_item'], {
+      [Styles$7[`categories_item__selected`]]: isActive
     }),
     onClick: () => onItemSelected === null || onItemSelected === void 0 ? void 0 : onItemSelected(category),
     onMouseEnter: () => onItemHover === null || onItemHover === void 0 ? void 0 : onItemHover(true, category)
@@ -14899,7 +14899,7 @@ const DrawerCategories = ({
     }
   }, [isShown]);
   return jsx("div", Object.assign({
-    className: classnames(Styles$6['categories_drawer'])
+    className: classnames(Styles$7['categories_drawer'])
   }, {
     children: jsxs(Ramen.XDrawer, Object.assign({
       size: isShown && !isMobile ? 'xl' : 's',
@@ -14911,11 +14911,11 @@ const DrawerCategories = ({
       mountNode
     }, {
       children: [jsxs("div", Object.assign({
-        className: classnames(Styles$6['categories-wrapper__body']),
+        className: classnames(Styles$7['categories-wrapper__body']),
         ref: refElement
       }, {
         children: [jsxs("div", Object.assign({
-          className: classnames(Styles$6['categories-wrapper__body__list'])
+          className: classnames(Styles$7['categories-wrapper__body__list'])
         }, {
           children: [isMobile && jsxs(Fragment, {
             children: [jsx(GlobalSearchComponent, {}), jsx(Ramen.XVSpace, {
@@ -15047,12 +15047,12 @@ const AuthRouterLoader = /*#__PURE__*/memo(({
 });
 var AuthRouterLoader$1 = /*#__PURE__*/memo(AuthRouterLoader);
 
-var Styles$3 = {"xheader":"root-module_xheader__viI2o","xheader__profile":"root-module_xheader__profile__L66F1","xheader__profile-clickable":"root-module_xheader__profile-clickable__Q-xd-","xheader__profile_logout":"root-module_xheader__profile_logout__zJOkY"};
+var Styles$4 = {"xheader":"root-module_xheader__viI2o","xheader__profile":"root-module_xheader__profile__L66F1","xheader__profile-clickable":"root-module_xheader__profile-clickable__Q-xd-","xheader__profile_logout":"root-module_xheader__profile_logout__zJOkY"};
 
 var img$7 = "data:image/svg+xml,%3csvg width='52' height='53' viewBox='0 0 52 53' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M52 26.041C52 40.4004 40.3594 52.041 26 52.041C11.6406 52.041 0 40.4004 0 26.041C0 11.6816 11.6406 0.0410156 26 0.0410156C40.3594 0.0410156 52 11.6816 52 26.041ZM26 49.2553C38.8209 49.2553 49.2143 38.8619 49.2143 26.041C49.2143 13.2201 38.8209 2.82673 26 2.82673C13.1791 2.82673 2.78571 13.2201 2.78571 26.041C2.78571 38.8619 13.1791 49.2553 26 49.2553Z' fill='white'/%3e%3cmask id='mask0_316_28843' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='2' y='2' width='48' height='48'%3e%3cpath d='M2.78578 26.0405C2.78578 38.8614 13.1792 49.2547 26.0001 49.2547C38.821 49.2547 49.2144 38.8614 49.2144 26.0405C49.2144 13.2196 38.821 2.82617 26.0001 2.82617C13.1792 2.82617 2.78578 13.2196 2.78578 26.0405Z' fill='white'/%3e%3cpath d='M2.78578 26.0405C2.78578 38.8614 13.1792 49.2547 26.0001 49.2547C38.821 49.2547 49.2144 38.8614 49.2144 26.0405C49.2144 13.2196 38.821 2.82617 26.0001 2.82617C13.1792 2.82617 2.78578 13.2196 2.78578 26.0405Z' stroke='white'/%3e%3c/mask%3e%3cg mask='url(%23mask0_316_28843)'%3e%3cpath d='M49.2142 26.0405C49.2142 38.8614 38.8208 49.2547 25.9999 49.2547C13.179 49.2547 2.78564 38.8614 2.78564 26.0405C2.78564 13.2196 13.179 2.82617 25.9999 2.82617C38.8208 2.82617 49.2142 13.2196 49.2142 26.0405Z' fill='%23D2D8E7'/%3e%3cpath d='M34.1482 36.1611C31.311 38.2246 28.4736 39.8754 25.6363 39.8754C22.7991 39.8754 19.9617 38.2246 17.1244 36.1611C19.4631 35.4492 20.6496 34.3865 20.6839 32.973C20.6839 32.7211 20.6821 32.3633 20.6804 31.6914C20.6804 31.5848 20.6801 31.4755 20.6796 31.3636C20.675 29.5622 20.6674 27.1851 20.6567 24.7708C18.4387 21.8958 19.2535 18.5252 19.9485 18.6093C20.8006 18.7129 28.1832 11.7072 29.5993 11.348C31.0154 10.9888 34.6125 12.1484 35.2316 15.3791C35.8506 18.6097 36.1094 26.753 33.7613 30.0041C33.0932 30.9292 32.0408 31.2911 30.6042 31.0897C30.6022 31.7659 30.5982 32.1454 30.5887 32.9111C30.6071 34.3889 31.7935 35.45 34.1482 36.1611Z' fill='%23C7CFE2'/%3e%3cg style='mix-blend-mode:multiply' opacity='0.6'%3e%3cpath d='M30.5894 31.0896C27.1846 30.7027 25.0179 29.2324 25.0179 29.2324C25.0179 29.2324 27.4941 32.3277 30.5894 32.9467V31.0896Z' fill='black' fill-opacity='0.2'/%3e%3c/g%3e%3cpath d='M19.5236 24.8192C18.4573 22.2548 14.1843 17.032 17.8676 13.782C19.1057 7.74629 25.9462 8.4144 30.5117 9.80725C33.5801 10.7434 35.8974 12.593 36.3926 11.2001C39.4879 13.782 37.9378 16.3073 35.8974 17.032C34.0455 17.6897 30.914 18.3475 25.5893 17.7284C24.6381 17.6178 24.8373 20.5309 24.3291 20.8458C23.5666 21.3183 22.9748 18.3475 20.8842 19.2395C18.7937 20.1316 20.0343 24.2677 22.2783 24.2677C23.0521 24.2677 23.4391 26.3952 21.3498 27.4012C19.8331 28.1465 20.2164 26.4855 19.5236 24.8192Z' fill='%23B7C0D8'/%3e%3cpath d='M9.38658 40.8832C7.91324 43.879 7.06515 50.788 7.06515 50.788H44.208C44.208 50.788 43.3596 43.8782 41.8866 40.8832C40.4136 37.8883 31.8116 35.1105 31.8116 35.1105C26.2169 35.1094 24.3598 35.1094 19.4661 35.1094C19.4661 35.1094 10.8599 37.8875 9.38658 40.8832Z' fill='%23B7C0D8'/%3e%3c/g%3e%3c/svg%3e";
 
 const XHeaderProfile = props => {
-  const rootClass = classnames(Styles$3['xheader']);
+  const rootClass = classnames(Styles$4['xheader']);
   const onSignOutClickHandler = () => {
     if (props.onSignOutClick) {
       props.onSignOutClick();
@@ -15063,8 +15063,8 @@ const XHeaderProfile = props => {
       props.onProfileClick();
     }
   };
-  const profileClasses = classnames(Styles$3['xheader__profile'], {
-    [Styles$3['xheader__profile-clickable']]: props.onProfileClick
+  const profileClasses = classnames(Styles$4['xheader__profile'], {
+    [Styles$4['xheader__profile-clickable']]: props.onProfileClick
   });
   return jsx("div", Object.assign({
     className: rootClass
@@ -15106,7 +15106,7 @@ const XHeaderProfile = props => {
                 children: props.profile.name
               }))]
             })), jsx(Ramen.XBox, {
-              children: props.profile.avatar ? jsx(Ramen.XAvatar, {
+              children: !!props.profile.avatar ? jsx(Ramen.XAvatar, {
                 src: props.profile.avatar,
                 size: "l"
               }) : jsx(Ramen.XAvatar, {
@@ -15118,7 +15118,7 @@ const XHeaderProfile = props => {
         })), jsx("div", {
           children: props.children
         }), props.auth && jsx("div", Object.assign({
-          className: classnames(Styles$3['xheader__profile_logout'], {})
+          className: classnames(Styles$4['xheader__profile_logout'], {})
         }, {
           children: jsx(Ramen.XButtonIcon, {
             icon: "log-out-outline",
@@ -15665,7 +15665,7 @@ const useForm = (submitFunction, defaultValue = {}) => {
   };
 };
 
-var Styles$2 = {"xlogin_request_access":"root-module_xlogin_request_access__Dt-oZ"};
+var Styles$3 = {"xlogin_request_access":"root-module_xlogin_request_access__Dt-oZ"};
 
 const LoginDrawer = () => {
   const {
@@ -15793,7 +15793,7 @@ const LoginDrawer = () => {
                 weight: 'normal'
               }, {
                 children: jsx("span", Object.assign({
-                  className: classnames(Styles$2['xlogin_request_access']),
+                  className: classnames(Styles$3['xlogin_request_access']),
                   onClick: onClickForgotPassword
                 }, {
                   children: "\u00BF Olvidaste tu contrase\u00F1a ?"
@@ -15813,7 +15813,7 @@ const LoginDrawer = () => {
           }, {
             children: jsxs(Ramen.XText, {
               children: ["\u00BFNo tiene una cuenta?", ' ', jsx("span", Object.assign({
-                className: classnames(Styles$2['xlogin_request_access']),
+                className: classnames(Styles$3['xlogin_request_access']),
                 onClick: onClickRequestAccess
               }, {
                 children: "Solicitar acceso"
@@ -15929,7 +15929,7 @@ const Home = () => {
   });
 };
 
-var Styles$1 = {"breadcumb-container":"root-module_breadcumb-container__Zf1A8","breadcumb-link":"root-module_breadcumb-link__QXGFS"};
+var Styles$2 = {"breadcumb-container":"root-module_breadcumb-container__Zf1A8","breadcumb-link":"root-module_breadcumb-link__QXGFS"};
 
 const BreadCumbs = ({
   routes: _routes = []
@@ -15945,7 +15945,7 @@ const BreadCumbs = ({
     }));
   };
   return jsx("div", Object.assign({
-    className: classnames(Styles$1['breadcumb-container'])
+    className: classnames(Styles$2['breadcumb-container'])
   }, {
     children: jsxs(Ramen.XBox, Object.assign({
       orientation: "horizontal",
@@ -15954,7 +15954,7 @@ const BreadCumbs = ({
       padding: "s"
     }, {
       children: [jsx(Link, Object.assign({
-        className: classnames(Styles$1['breadcumb-link']),
+        className: classnames(Styles$2['breadcumb-link']),
         to: "/"
       }, {
         children: jsx(Ramen.XText, Object.assign({
@@ -15967,7 +15967,7 @@ const BreadCumbs = ({
           children: [jsx(Ramen.XText, {
             children: " / "
           }), jsxs("a", Object.assign({
-            className: classnames(Styles$1['breadcumb-link']),
+            className: classnames(Styles$2['breadcumb-link']),
             onClick: () => {
               index + 1 < _routes.length && onItemSelected(item);
             }
@@ -17864,12 +17864,12 @@ const ResetPassword = () => {
 
 var styles$2 = {"xprofile-container":"root-module_xprofile-container__czIm0","xprofile-container_credit_card":"root-module_xprofile-container_credit_card__Jm-HV","xprofile-container_content":"root-module_xprofile-container_content__eOUnE","xcredit-card-image":"root-module_xcredit-card-image__0gFkK"};
 
-var Styles = {"xsidebar":"root-module_xsidebar__st05C","xsidebar--expanded":"root-module_xsidebar--expanded__rf9cW","xsidebar__shadow":"root-module_xsidebar__shadow__USOyG","xsidebar__logo":"root-module_xsidebar__logo__K73S1","xsidebar__menu":"root-module_xsidebar__menu__QvWTs","xsidebar__menu__item_action":"root-module_xsidebar__menu__item_action__mS4vt","xsidebar__menu__item_action--selected":"root-module_xsidebar__menu__item_action--selected__BnoPo","xsidebar__menu__item_divider":"root-module_xsidebar__menu__item_divider__pUhVJ","xsidebar__expander":"root-module_xsidebar__expander__niS7U","xsidebar__footer":"root-module_xsidebar__footer__2-24a"};
+var Styles$1 = {"xsidebar":"root-module_xsidebar__st05C","xsidebar--expanded":"root-module_xsidebar--expanded__rf9cW","xsidebar__shadow":"root-module_xsidebar__shadow__USOyG","xsidebar__logo":"root-module_xsidebar__logo__K73S1","xsidebar__menu":"root-module_xsidebar__menu__QvWTs","xsidebar__menu__item_action":"root-module_xsidebar__menu__item_action__mS4vt","xsidebar__menu__item_action--selected":"root-module_xsidebar__menu__item_action--selected__BnoPo","xsidebar__menu__item_divider":"root-module_xsidebar__menu__item_divider__pUhVJ","xsidebar__expander":"root-module_xsidebar__expander__niS7U","xsidebar__footer":"root-module_xsidebar__footer__2-24a"};
 
 const XSidebarPortal = props => {
   const [expanded, setExpanded] = useState(props.expanded);
-  const rootClass = classnames(Styles['xsidebar'], {
-    [Styles['xsidebar--expanded']]: expanded
+  const rootClass = classnames(Styles$1['xsidebar'], {
+    [Styles$1['xsidebar--expanded']]: expanded
   });
   useEffect(() => {
     setExpanded(props.expanded);
@@ -17886,10 +17886,10 @@ const XSidebarPortal = props => {
     className: rootClass
   }, {
     children: jsxs("div", Object.assign({
-      className: Styles['xsidebar__shadow']
+      className: Styles$1['xsidebar__shadow']
     }, {
       children: [props.showLogo && jsx("div", Object.assign({
-        className: Styles['xsidebar__logo']
+        className: Styles$1['xsidebar__logo']
       }, {
         children: jsx("div", {
           children: jsx(Ramen.XImage, {
@@ -17905,14 +17905,14 @@ const XSidebarPortal = props => {
         width: 'full'
       }, {
         children: jsx("div", Object.assign({
-          className: Styles['xsidebar__menu']
+          className: Styles$1['xsidebar__menu']
         }, {
           children: props.menu.map((item, index) => {
             switch (item.type) {
               case 'action':
                 {
-                  const actionClasses = classnames(Styles['xsidebar__menu__item_action'], {
-                    [Styles['xsidebar__menu__item_action--selected']]: item.key === props.selectedKey
+                  const actionClasses = classnames(Styles$1['xsidebar__menu__item_action'], {
+                    [Styles$1['xsidebar__menu__item_action--selected']]: item.key === props.selectedKey
                   });
                   const icon = typeof item.icon === 'string' ? jsx(Ramen.XIcon, {
                     size: "xs",
@@ -17938,7 +17938,7 @@ const XSidebarPortal = props => {
                 }
               case 'divider':
                 return jsx("div", Object.assign({
-                  className: Styles['xsidebar__menu__item_divider']
+                  className: Styles$1['xsidebar__menu__item_divider']
                 }, {
                   children: jsx(Ramen.XText, Object.assign({
                     weight: "bold",
@@ -17960,14 +17960,14 @@ const XSidebarPortal = props => {
         horizontalAlign: "center"
       }, {
         children: jsx("div", Object.assign({
-          className: Styles['xsidebar__menu']
+          className: Styles$1['xsidebar__menu']
         }, {
           children: props.menu.map(item => {
             switch (item.type) {
               case 'action':
                 {
-                  const actionClasses = classnames(Styles['xsidebar__menu__item_action'], {
-                    [Styles['xsidebar__menu__item_action--selected']]: item.key === props.selectedKey
+                  const actionClasses = classnames(Styles$1['xsidebar__menu__item_action'], {
+                    [Styles$1['xsidebar__menu__item_action--selected']]: item.key === props.selectedKey
                   });
                   const icon = typeof item.icon === 'string' ? jsx(Ramen.XIcon, {
                     size: "m",
@@ -17998,11 +17998,11 @@ const XSidebarPortal = props => {
           })
         }))
       })), expanded && props.footer && jsx("div", Object.assign({
-        className: classnames(Styles['xsidebar__footer'])
+        className: classnames(Styles$1['xsidebar__footer'])
       }, {
         children: props.footer
       })), jsx("div", Object.assign({
-        className: Styles['xsidebar__expander'],
+        className: Styles$1['xsidebar__expander'],
         onClick: () => onToggleExpandedClickHandler()
       }, {
         children: jsx(Ramen.XIcon, {
@@ -18017,6 +18017,8 @@ XSidebarPortal.defaultProps = {
   menu: [],
   expanded: true
 };
+
+var Styles = {"container-title":"root-module_container-title__NCryv"};
 
 const HistoryRequest = () => {
   const title = 'Historial de cotización';
@@ -18150,13 +18152,16 @@ const HistoryRequest = () => {
     getData(newFilters);
   });
   return jsxs(Fragment, {
-    children: [jsx(Ramen.XTable, {
-      header: {
-        left: {
-          component: 'title',
-          value: title
-        }
-      },
+    children: [jsx("div", Object.assign({
+      className: classnames(Styles['container-title'])
+    }, {
+      children: jsx(Ramen.XText, Object.assign({
+        fontSize: 9,
+        weight: "bold"
+      }, {
+        children: title
+      }))
+    })), jsx(Ramen.XTable, {
       columns: [{
         title: 'Fecha',
         dataIndex: 'created_at',
@@ -18166,7 +18171,7 @@ const HistoryRequest = () => {
           return jsx(Ramen.XText, Object.assign({
             fontSize: 10
           }, {
-            children: StringFormatter$1.capitalizeLetter(DateFormatter$1.formatDate(value, 'ddd D MMM YYYY, h:mm a'), true)
+            children: StringFormatter$1.capitalizeLetter(DateFormatter$1.formatDate(value, 'ddd D MMM YYYY', 'es'), true)
           }));
         }
       }, {
@@ -18432,7 +18437,7 @@ const AvatarComponent = () => {
     }, {
       children: [jsx(Ramen.XImage, {
         rounded: "full",
-        src: (userData === null || userData === void 0 ? void 0 : userData.imageUrl) || img$7,
+        src: !!(userData === null || userData === void 0 ? void 0 : userData.imageUrl) ? userData === null || userData === void 0 ? void 0 : userData.imageUrl : img$7,
         height: 1,
         width: 'full'
       }), jsx(Ramen.XButtonIcon, {
