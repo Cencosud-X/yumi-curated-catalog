@@ -1,13 +1,16 @@
 import { StrictMode } from 'react';
-import * as ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
+import '@team_yumi/ramen-web/index.css';
+import '@team_yumi/ramen-web/themes/fonts.css';
+import '@team_yumi/ramen-web/themes/default.css';
+import App from './app';
+import * as SDK from '@team_yumi/sdk';
 
-import App from './app/app';
+SDK.setupModules({ stage: 'STAGING' });
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
+ReactDOM.render(
   <StrictMode>
     <App />
-  </StrictMode>
+  </StrictMode>,
+  document.getElementById('root')
 );
