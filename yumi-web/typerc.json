@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
-  "name": "Yumi Web",
+  "name": "Web Yumi",
   "tags": [
     "Nestjs",
     "Api",
@@ -14,8 +14,8 @@
     "dark": "icons/icon.svg"
   },
   "descriptions": {
-    "es": "Plantilla de proyecto Web Seki con React, adaptado para trabajar con Yumi + Ramen + IAM. Ideal para webs portal y playgrounds.",
-    "en": "Seki Web project template with React, adapted to work with Yumi + Ramen + IAM. Ideal for portal websites and playgrounds."
+    "es": ">Plantilla de proyecto que se encuentra desarrollada bajo el framework React con funcionalidades de live reloading y webpack como su empaquetador. Incluye modulo IAM y Layout",
+    "en": "Project template based on the React framework with live reloading and webpack. Includes Layout and IAM Module."
   },
   "scripts": {
     "pre": "scripts/pre.js",
@@ -25,5 +25,5 @@
   "interpolations": {
     "source": "template"
   },
-  "display_name": "Yumi Web"
+  "display_name": "Web Yumi"
 }

@@ -84,19 +84,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
   }, []);
 
+  const contextValues: AuthContextData = {
+    user,
+    isAuthenticated,
+    accessToken,
+    handleLogin,
+    errorLogin,
+    profileData
+  }
+
   return booting ? (
     <h1>Loading</h1>
   ) : (
-    <AuthContext.Provider
-      value={{
-        user,
-        isAuthenticated,
-        accessToken,
-        handleLogin,
-        errorLogin,
-        profileData,
-      }}
-    >
+    <AuthContext.Provider value={contextValues}>
       {children}
     </AuthContext.Provider>
   );
