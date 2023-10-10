@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/template/src",
+  "sourceRoot": "{{data.group_folder}}/{{data.path}}/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -9,14 +9,14 @@
       "defaultConfiguration": "production",
       "options": {
         "compiler": "babel",
-        "outputPath": "dist/apps/template",
-        "index": "apps/template/src/index.html",
+        "outputPath": "dist/{{data.group_folder}}/{{data.path}}",
+        "index": "{{data.group_folder}}/{{data.path}}/src/index.html",
         "baseHref": "/",
-        "main": "apps/template/src/main.tsx",
-        "polyfills": "apps/template/src/polyfills.ts",
-        "tsConfig": "apps/template/tsconfig.app.json",
-        "assets": ["apps/template/src/assets"],
-        "styles": ["apps/template/src/styles.scss"],
+        "main": "{{data.group_folder}}/{{data.path}}/src/main.tsx",
+        "polyfills": "{{data.group_folder}}/{{data.path}}/src/polyfills.ts",
+        "tsConfig": "{{data.group_folder}}/{{data.path}}/tsconfig.app.json",
+        "assets": ["{{data.group_folder}}/{{data.path}}/src/assets"],
+        "styles": ["{{data.group_folder}}/{{data.path}}/src/styles.scss"],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"
       },
@@ -30,8 +30,8 @@
         "production": {
           "fileReplacements": [
             {
-              "replace": "apps/template/src/environments/environment.ts",
-              "with": "apps/template/src/environments/environment.prod.ts"
+              "replace": "{{data.group_folder}}/{{data.path}}/src/environments/environment.ts",
+              "with": "{{data.group_folder}}/{{data.path}}/src/environments/environment.prod.ts"
             }
           ],
           "optimization": true,
@@ -47,15 +47,15 @@
       "executor": "@nrwl/web:dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "template:build",
+        "buildTarget": "{{data.path}}:build",
         "hmr": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "template:build:development"
+          "buildTarget": "{{data.path}}:build:development"
         },
         "production": {
-          "buildTarget": "template:build:production",
+          "buildTarget": "{{data.path}}:build:production",
           "hmr": false
         }
       }
@@ -64,14 +64,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/template/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["{{data.group_folder}}/{{data.path}}/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/template"],
+      "outputs": ["coverage/{{data.group_folder}}/{{data.path}}"],
       "options": {
-        "jestConfig": "apps/template/jest.config.ts",
+        "jestConfig": "{{data.group_folder}}/{{data.path}}/jest.config.ts",
         "passWithNoTests": true
       }
     }
