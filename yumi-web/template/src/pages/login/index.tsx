@@ -1,7 +1,7 @@
 import './styles.scss';
 import { useAuthContext } from '../../contexts/auth.context';
 import Ramen from '@team_yumi/ramen-web';
-import Iam from '../../../../../libs/iam/src';
+import Iam from '../../libs/iam/src';
 
 const Login: React.FC = () => {
   const { handleLogin } = useAuthContext();

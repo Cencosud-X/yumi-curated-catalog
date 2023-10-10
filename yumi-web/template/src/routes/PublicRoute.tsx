@@ -1,23 +1,24 @@
 import { Redirect, Route } from 'react-router-dom';
 import { useAuthContext } from '../contexts/auth.context';
-import Layout from '../components/layout';
 
-type PrivateRouteProps = {
+type PublicRouteProps = {
   children: React.ReactNode;
   [x: string]: unknown;
 };
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ children, ...rest }) => {
+const PublicRoute: React.FC<PublicRouteProps> = ({ children, ...rest }) => {
   const { isAuthenticated } = useAuthContext();
+
+  console.log({isAuthenticated}, 'OJ')
 
   return (
     <Route
       {...rest}
       render={() => {
-        return isAuthenticated ? <Layout>{children}</Layout> : <Redirect to="/login" exact />;
+        return isAuthenticated ? <Redirect to="/"/> : children;
       }}
     />
   );
 };
 
-export default PrivateRoute;
+export default PublicRoute;

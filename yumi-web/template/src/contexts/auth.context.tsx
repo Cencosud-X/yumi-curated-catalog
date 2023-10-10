@@ -48,10 +48,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     if (isAuthenticated) {
       const user = SDK.Lib.IAM.getUser().getInfo();
       const token = SDK.Lib.IAM.getUser().getToken();
-      const [firstName, , firstLastName] = user.unique_name.split(' ');
       const profileData: ProfileData = {
         title: 'MR',
-        name: `${firstName} ${firstLastName}`,
+        name: user.unique_name,
         avatar: user.avatar || DEFAULT_PROFILE_IMAGE,
       };
       setUser(user);
@@ -64,12 +63,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const handleLogin = async (): Promise<void> => {
     setIsAuthenticated(true);
-    history.push('/home');
+    history.push('/');
   };
 
   const handleLogout = (): void => {
     setIsAuthenticated(false);
-    history.push('/');
+    history.push('/login');
   };
 
   useEffect(() => {
