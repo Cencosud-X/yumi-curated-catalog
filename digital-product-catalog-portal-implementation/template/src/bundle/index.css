@@ -2169,6 +2169,17 @@
   }
 }
 
+.root-module_container_copy_alert__q8z-2{
+  > div > * {
+    color: #2B994C;
+  }
+}
+
+.root-module_xrequest_access_login_link__zlmIH{
+  cursor: pointer;
+  color:#3069AF;
+}
+
 .root-module_xprofile-container__czIm0 {
   width: 94vw;
   min-height: calc(100vh - 31.6rem);
