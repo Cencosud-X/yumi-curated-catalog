@@ -1,9 +1,9 @@
-import Ramen from '@team_yumi/ramen-web';
-import { useHistory } from 'react-router-dom';
 import { SIDEBAR_MENU_OPTIONS } from '../../constants';
 import { useAuthContext } from '../../contexts/auth.context';
-import LOGO from '../../assets/media/images/logo-here.png'
+import { useHistory } from 'react-router-dom';
 import * as SDK from '@team_yumi/sdk';
+import LOGO from '../../assets/media/images/default-logo.svg'
+import Ramen from '@team_yumi/ramen-web';
 
 type LayoutProps = {
   children: React.ReactNode;

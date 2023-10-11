@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as SDK from '@team_yumi/sdk';
-import DEFAULT_PROFILE_IMAGE from '../assets/media/images/default-profile.jpg';
+import DEFAULT_PROFILE_IMAGE from '../assets/media/images/profile.svg';
 
 SDK.setupModules({ stage: 'STAGING' });
 

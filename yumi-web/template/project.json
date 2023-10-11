@@ -16,7 +16,7 @@
         "polyfills": "{{data.group_folder}}/{{data.path}}/src/polyfills.ts",
         "tsConfig": "{{data.group_folder}}/{{data.path}}/tsconfig.app.json",
         "assets": ["{{data.group_folder}}/{{data.path}}/src/assets"],
-        "styles": ["{{data.group_folder}}/{{data.path}}/src/styles.scss"],
+        "styles": [],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"
       },
