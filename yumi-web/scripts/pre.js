@@ -51,6 +51,8 @@ module.exports = async (runner, args) => {
       const scripts = dependencies.map((dependency) => {
         const version = packageDependencies[dependency] || packageDevDependencies[dependency]
 
+        console.log(`VERSION ${dependency}->`, version)
+
         if (version) {
           const major = getMajor(version)
 
@@ -59,10 +61,10 @@ module.exports = async (runner, args) => {
           }
 
           if (version !== DEFAULT_VERSIONS[dependency]) {
-            return `${SCRIPTS[dependency]}.${version}`
+            return `${SCRIPTS[dependency]}${version}`
           }
         } else {
-          return `${SCRIPTS[dependency]}.${DEFAULT_VERSIONS[dependency]}`
+          return `${SCRIPTS[dependency]}${DEFAULT_VERSIONS[dependency]}`
         }
       })
 
