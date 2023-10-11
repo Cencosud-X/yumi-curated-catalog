@@ -40,7 +40,10 @@ const verifyVersions = (rc) => {
     }
   })
 
-  return { dynamicScripts, dependencyErrors }
+  return {
+    dynamicScripts: dynamicScripts.filter(Boolean),
+    dependencyErrors
+  }
 }
 
 module.exports = async (runner, args) => {
@@ -53,7 +56,7 @@ module.exports = async (runner, args) => {
       `npx nx g @nrwl/web:app ${rc.path} --unitTestRunner=jest --e2eTestRunner=none`
     ]
 
-    const { dynamicScripts, dependencyErrors } = verifyVersions(rc).filter(Boolean)
+    const { dynamicScripts, dependencyErrors } = verifyVersions(rc)
 
     if (dependencyErrors.length) {
       throw new Error(dependencyErrors)
