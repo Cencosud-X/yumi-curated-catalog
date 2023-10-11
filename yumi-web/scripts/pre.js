@@ -45,7 +45,7 @@ module.exports = async (runner, args) => {
     const verifyVersions = (rc) => {
       const dependencies = ['react-router-dom', 'react-router', 'react-dom', 'react', 'nx']
       const packageJsonPath = path.join(rc.workspace_path, 'package.json')
-      const packageDependencies = require(packageDevDependencies).dependencies
+      const packageDependencies = require(packageJsonPath).dependencies
       const packageDevDependencies = require(packageJsonPath).devDependencies
 
       const scripts = dependencies.map((dependency) => {
