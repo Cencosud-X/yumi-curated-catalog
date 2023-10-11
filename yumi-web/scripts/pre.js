@@ -63,6 +63,8 @@ module.exports = async (runner, args) => {
           if (version !== DEFAULT_VERSIONS[dependency]) {
             return `${SCRIPTS[dependency]}${version}`
           }
+
+          return
         } else {
           return `${SCRIPTS[dependency]}${DEFAULT_VERSIONS[dependency]}`
         }
