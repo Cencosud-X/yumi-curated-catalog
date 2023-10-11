@@ -69,8 +69,8 @@ module.exports = async (runner, args) => {
       return scripts
     }
 
-    const dynamicScripts = verifyVersions(rc)
-    const scripts = [...[...new Set(dynamicScripts)], ...defaultScripts]
+    const dynamicScripts = verifyVersions(rc).filter(Boolean)
+    const scripts = [...dynamicScripts, ...defaultScripts]
 
     console.log('> DYNAMIC SCRIPTS', dynamicScripts)
     console.log('> SCRIPTS', scripts)
