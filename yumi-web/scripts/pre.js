@@ -51,8 +51,6 @@ module.exports = async (runner, args) => {
       const scripts = dependencies.map((dependency) => {
         const version = packageDependencies[dependency] || packageDevDependencies[dependency]
 
-        console.log(`VERSION ${dependency}->`, version)
-
         if (version) {
           const major = getMajor(version)
 
@@ -61,11 +59,9 @@ module.exports = async (runner, args) => {
           }
 
           if (version !== DEFAULT_VERSIONS[dependency]) {
-            console.log('HERE->', `${SCRIPTS[dependency]}${version}`)
             return `${SCRIPTS[dependency]}${version}`
           }
         } else {
-          console.log('HERE2->',`${SCRIPTS[dependency]}${DEFAULT_VERSIONS[dependency]}`)
           return `${SCRIPTS[dependency]}${DEFAULT_VERSIONS[dependency]}`
         }
       })
@@ -74,7 +70,7 @@ module.exports = async (runner, args) => {
     }
 
     const dynamicScripts = verifyVersions(rc)
-    const scripts = [...dynamicScripts, ...defaultScripts]
+    const scripts = [...[...new Set(dynamicScripts)], ...defaultScripts]
 
     console.log('> DYNAMIC SCRIPTS', dynamicScripts)
     console.log('> SCRIPTS', scripts)
