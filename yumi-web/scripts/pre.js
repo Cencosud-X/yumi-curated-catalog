@@ -61,10 +61,11 @@ module.exports = async (runner, args) => {
           }
 
           if (version !== DEFAULT_VERSIONS[dependency]) {
-            console.log('HERE->', SCRIPTS[dependency])
+            console.log('HERE->', `${SCRIPTS[dependency]}${version}`)
             return `${SCRIPTS[dependency]}${version}`
           }
         } else {
+          console.log('HERE2->',`${SCRIPTS[dependency]}${DEFAULT_VERSIONS[dependency]}`)
           return `${SCRIPTS[dependency]}${DEFAULT_VERSIONS[dependency]}`
         }
       })
