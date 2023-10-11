@@ -32,33 +32,6 @@ const SCRIPTS = {
   react: 'npm install -S react@',
 }
 
-const verifyVersions = (rc) => {
-  const dependencies = ['react-router-dom', 'react-router', 'react-dom', 'react', 'nx']
-  const packageJsonPath = path.join(rc.workspace_path, 'package.json')
-  const packageDependencies = require(packageDevDependencies).dependencies
-  const packageDevDependencies = require(packageJsonPath).devDependencies
-
-  const scripts = dependencies.map((dependency) => {
-    const version = packageDependencies[dependency] || packageDevDependencies[dependency]
-
-    if (version) {
-      const major = getMajor(version)
-
-      if (major !== REQUIRED_VERSIONS[dependency]) {
-        throw new Error(`Must have a ${dependency} version ${REQUIRED_VERSIONS[dependency]}.x.x`)
-      }
-
-      if (version !== DEFAULT_VERSIONS[dependency]) {
-        return `${SCRIPTS[dependency]}.${version}`
-      }
-    } else {
-      return `${SCRIPTS[dependency]}.${DEFAULT_VERSIONS[dependency]}`
-    }
-  })
-
-  return scripts
-}
-
 module.exports = async (runner, args) => {
   try {
     console.log('> PRE: Installing prerequisites (WEB):');
@@ -68,6 +41,34 @@ module.exports = async (runner, args) => {
       'npm install -D webpack-merge',
       `npx nx g @nrwl/web:app ${rc.path} --unitTestRunner=jest --e2eTestRunner=none`
     ]
+
+    const verifyVersions = (rc) => {
+      const dependencies = ['react-router-dom', 'react-router', 'react-dom', 'react', 'nx']
+      const packageJsonPath = path.join(rc.workspace_path, 'package.json')
+      const packageDependencies = require(packageDevDependencies).dependencies
+      const packageDevDependencies = require(packageJsonPath).devDependencies
+
+      const scripts = dependencies.map((dependency) => {
+        const version = packageDependencies[dependency] || packageDevDependencies[dependency]
+
+        if (version) {
+          const major = getMajor(version)
+
+          if (major !== REQUIRED_VERSIONS[dependency]) {
+            throw new Error(`Must have a ${dependency} version ${REQUIRED_VERSIONS[dependency]}.x.x`)
+          }
+
+          if (version !== DEFAULT_VERSIONS[dependency]) {
+            return `${SCRIPTS[dependency]}.${version}`
+          }
+        } else {
+          return `${SCRIPTS[dependency]}.${DEFAULT_VERSIONS[dependency]}`
+        }
+      })
+
+      return scripts
+    }
+
     const dynamicScripts = verifyVersions(rc)
     const scripts = [...dynamicScripts, ...defaultScripts]
 
