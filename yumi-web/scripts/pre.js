@@ -72,9 +72,6 @@ module.exports = async (runner, args) => {
     const dynamicScripts = verifyVersions(rc).filter(Boolean)
     const scripts = [...dynamicScripts, ...defaultScripts]
 
-    console.log('> DYNAMIC SCRIPTS', dynamicScripts)
-    console.log('> SCRIPTS', scripts)
-
     await runner.execute(scripts, {
       cwd: rc.workspace_path
     })
