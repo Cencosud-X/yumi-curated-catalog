@@ -18,9 +18,14 @@ module.exports = async (runner, args) => {
     await runner.execute(
       [
         `npx nx g @nrwl/react:lib ${rc.path}`,
-        'npm install react@^18.2.0',
-        'npm install react-dom@^5.2.0',
+        'npm install react@^18.0.0',
+        'npm install react-dom@^18.0.0',
+        'npm install react-router@^5.2.0',
         'npm install react-router-dom@^5.3.4',
+        'npm install react-i18next@^13.2.2',
+        'npm install @team_yumi/ramen@^0.2.2-next.20231010-17bd05c-c176a5bf4d92eafd605a55c9a9727281',
+        'npm install @team_yumi/ramen-web@^0.2.2-next.20231010-17bd05c-c176a5bf4d92eafd605a55c9a9727281',
+        'npm install @team_yumi/sdk@^0.0.1-next.20230802-d58df76-3af85eb6f1052a838bc33e5a984630ef'
       ],
       {
         cwd: rc.workspace_path,

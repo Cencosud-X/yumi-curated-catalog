@@ -7,7 +7,7 @@
   "types": "./index.d.ts",
   "dependencies": {},
   "peerDependencies": {
-    "react": "18.2.0",
+    "react": "^18.0.0",
     "react-router-dom": "^5.3.4",
     "@team_yumi/ramen-web": "^0.2.2-next.20231010-17bd05c-c176a5bf4d92eafd605a55c9a9727281",
     "react-i18next": "^13.2.2",
