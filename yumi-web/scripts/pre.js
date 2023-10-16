@@ -69,7 +69,6 @@ module.exports = async (runner, args) => {
     })
 
     console.log('*********************')
-    console.log('DATA-> {{data.path}}')
     console.log('*********************')
     console.log('> PRE: requisites ✅ DONE')
 

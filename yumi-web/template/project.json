@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "{{data.group_folder}}/{{data.path}}/src",
+  "sourceRoot": "{{data.settings.PORTA}}/{{data.path}}/src",
   "targets": {
     "build": {
       "dependsOn": [
@@ -14,17 +14,17 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "release",
       "options": {
-        "outputPath": "dist/{{data.group_folder}}/{{data.path}}",
+        "outputPath": "dist/{{data.settings.PORTA}}/{{data.path}}",
         "compiler": "babel",
-        "index": "{{data.group_folder}}/{{data.path}}/src/index.html",
+        "index": "{{data.settings.PORTA}}/{{data.path}}/src/index.html",
         "baseHref": "/",
-        "main": "{{data.group_folder}}/{{data.path}}/src/main.tsx",
-        "polyfills": "{{data.group_folder}}/{{data.path}}/src/polyfills.ts",
-        "tsConfig": "{{data.group_folder}}/{{data.path}}/tsconfig.app.json",
-        "assets": ["{{data.group_folder}}/{{data.path}}/src/assets", "{{data.group_folder}}/{{data.path}}/src/config"],
+        "main": "{{data.settings.PORTA}}/{{data.path}}/src/main.tsx",
+        "polyfills": "{{data.settings.PORTA}}/{{data.path}}/src/polyfills.ts",
+        "tsConfig": "{{data.settings.PORTA}}/{{data.path}}/tsconfig.app.json",
+        "assets": ["{{data.settings.PORTA}}/{{data.path}}/src/assets", "{{data.settings.PORTA}}/{{data.path}}/src/config"],
         "styles": [],
         "scripts": [],
-        "webpackConfig": "{{data.group_folder}}/{{data.path}}/webpack.js"
+        "webpackConfig": "{{data.settings.PORTA}}/{{data.path}}/webpack.js"
       },
       "configurations": {
         "development": {
@@ -68,14 +68,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["{{data.group_folder}}/{{data.path}}/**/*.ts"]
+        "lintFilePatterns": ["{{data.settings.PORTA}}/{{data.path}}/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/{{data.group_folder}}/{{data.path}}"],
+      "outputs": ["coverage/{{data.settings.PORTA}}/{{data.path}}"],
       "options": {
-        "jestConfig": "{{data.group_folder}}/{{data.path}}/jest.config.ts",
+        "jestConfig": "{{data.settings.PORTA}}/{{data.path}}/jest.config.ts",
         "passWithNoTests": true
       }
     },
