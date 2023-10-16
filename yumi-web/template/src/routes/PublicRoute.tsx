@@ -9,8 +9,6 @@ type PublicRouteProps = {
 const PublicRoute: React.FC<PublicRouteProps> = ({ children, ...rest }) => {
   const { isAuthenticated } = useAuthContext();
 
-  console.log({isAuthenticated}, 'OJ')
-
   return (
     <Route
       {...rest}
