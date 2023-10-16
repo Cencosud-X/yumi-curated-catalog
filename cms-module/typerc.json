@@ -1,16 +1,16 @@
 {
   "$schema": "https://raw.githubusercontent.com/Cencosud-X/seki-schemas/main/v1/projects/typerc.schema.json",
-  "name": "Yumi Web",
+  "name": "CMS Module",
   "tags": ["Nestjs", "Api", "Node", "React"],
-  "kind": "yumi-web",
+  "kind": "cms-module",
   "folder": "apps",
   "icons": {
     "light": "icons/icon.svg",
     "dark": "icons/icon.svg"
   },
   "descriptions": {
-    "es": "Plantilla de proyecto Web Seki con React, adaptado para trabajar con Yumi + Ramen + IAM. Ideal para webs portal y playgrounds.",
-    "en": "Seki Web project template with React, adapted to work with Yumi + Ramen + IAM. Ideal for portal websites and playgrounds."
+    "es": "Plantilla para crear un módulo de WEB CMS. Estos módulos deben ser creados dentro del producto WEB CMS.",
+    "en": "Template to create a new WEB CMS module. This modules must be created inside of WEB CMS product."
   },
   "scripts": {
     "pre": "scripts/pre.js",
@@ -20,5 +20,5 @@
   "interpolations": {
     "source": "template"
   },
-  "display_name": "Yumi Web"
+  "display_name": "CMS Module"
 }
