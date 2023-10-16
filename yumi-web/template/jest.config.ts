@@ -7,5 +7,5 @@ export default {
     '^.+\\.[tj]s$': 'babel-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/{{data.settings.PORTA}}/{{data.path}}',
+  coverageDirectory: '../../coverage/{{data.group_folder}}/{{data.path}}',
 };
