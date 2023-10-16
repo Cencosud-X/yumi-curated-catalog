@@ -3,7 +3,7 @@
   "name": "CMS Module",
   "tags": ["Nestjs", "Api", "Node", "React"],
   "kind": "cms-module",
-  "folder": "apps",
+  "folder": "libs",
   "icons": {
     "light": "icons/icon.svg",
     "dark": "icons/icon.svg"
