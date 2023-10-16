@@ -68,6 +68,9 @@ module.exports = async (runner, args) => {
       cwd: rc.workspace_path
     })
 
+    console.log('*********************')
+    console.log('DATA -> {{data}}')
+    console.log('*********************')
     console.log('> PRE: requisites ✅ DONE')
 
   } catch (ex) {
