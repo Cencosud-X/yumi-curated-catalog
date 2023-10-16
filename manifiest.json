@@ -35,6 +35,7 @@
     "labeling-implementation/typerc.json",
     "yumi-web/typerc.json",
     "yumi-printer-portal-implementation/typerc.json",
-    "yumi-printer-mobile-implementation/typerc.json"
+    "yumi-printer-mobile-implementation/typerc.json",
+    "cms-module/typrc.json"
   ]
 }
