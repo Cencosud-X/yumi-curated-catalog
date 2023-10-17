@@ -1,7 +1,7 @@
 module.exports = async (runner, args) => {
   try {
     console.log('> POST: Cleansing (WEB):');
-    // console.log('ARGS------------------------------', args, args.workspacePath)
+    const { rc } = args
 
     const scripts = [
       /* 'rm -rf ./src/app', */
@@ -15,16 +15,8 @@ module.exports = async (runner, args) => {
       'rm -rf ./src/environments',
     ]
 
-    !args.rc.settings.flow && scripts.push(`rm -rf ./src/flow.tsx`)
-    console.log(scripts)
+    !rc.settings.flow && scripts.push(`rm -rf ./src/flow.tsx`)
 
-    /* const stat = statSync('./template/src/flow.tsx')
-
-    stat.size === 0 && scripts.push('rm -rf ./src/flow.tsx')
-
-    console.log('SCRIPTS-> ', scripts) */
-
-    // const rc = args.rc;
     await runner.execute(
       scripts,
       {

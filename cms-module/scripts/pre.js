@@ -22,6 +22,8 @@ const verifyVersions = (rc) => {
   const dynamicScripts = DEPENDENCIES.map((dependency) => {
     const version = packageDependencies[dependency] || packageDevDependencies[dependency];
 
+    if (!rc.settings.flow && ['react-router-dom', 'react-router'].includes(dependency)) return;
+
     if (version) {
       const major = getMajor(version);
 

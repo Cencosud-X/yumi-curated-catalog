@@ -1,4 +1,3 @@
-{{#if data.settings.flow}}
 import React from 'react';
 import * as SDK from '@team_yumi/sdk';
 /* En la instalación de Seki, configurar si desea instalar el flujo o sólo las páginas. */
@@ -36,4 +35,3 @@ export default class Module extends SDK.Lib.BaseModule<IStaticParams> {
     this.Component = () => <Flow params={params} />;
   }
 }
-{{/if}}
