@@ -6,5 +6,5 @@ export default {
     '^.+\\.[tj]sx?$': 'babel-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/{{data.group_folder}}/{{data.path}}',
+  coverageDirectory: '../../coverage/{{data.settings.flow}}/{{data.path}}',
 };
