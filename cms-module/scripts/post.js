@@ -3,7 +3,7 @@
 module.exports = async (runner, args) => {
   try {
     console.log('> POST: Cleansing (WEB):');
-    console.log('ARGS------------------------------')
+    console.log('ARGS------------------------------', args, args.workspacePath)
 
     const scripts = [
       /* 'rm -rf ./src/app', */
