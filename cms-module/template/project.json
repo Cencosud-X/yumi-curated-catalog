@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "{{data.settings.flow}}/{{data.path}}/src",
+  "sourceRoot": "{{data.group_folder}}/{{data.path}}/src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -8,14 +8,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["{{data.settings.flow}}/{{data.path}}/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["{{data.group_folder}}/{{data.path}}/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/{{data.settings.flow}}/{{data.path}}"],
+      "outputs": ["coverage/{{data.group_folder}}/{{data.path}}"],
       "options": {
-        "jestConfig": "{{data.settings.flow}}/{{data.path}}/jest.config.ts",
+        "jestConfig": "{{data.group_folder}}/{{data.path}}/jest.config.ts",
         "passWithNoTests": true
       }
     },

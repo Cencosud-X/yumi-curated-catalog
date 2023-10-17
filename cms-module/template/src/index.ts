@@ -1,11 +1,11 @@
 import * as Pages from './pages'
-{{ #if data.settings.flow }}
+{{#if data.settings.flow}}
 import * as Flow from './flow'
-{{ /if }}
+{{/if}}
 
 export {
   Pages,
-  {{ #if }}
+  {{#if}}
   Flow
-  {{ /if }}
+  {{/if}}
 }
