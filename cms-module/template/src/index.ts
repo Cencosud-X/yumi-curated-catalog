@@ -1,4 +1,11 @@
-import * as Pages from './pages';
-import * as Flow from './flow';
+import * as Pages from './pages'
+// {{ #if data.settings.flow }}
+//  import * as Flow from './flow'
+// {{ /if }}
 
-export { Pages, Flow };
+export {
+  Pages,
+  // {{ #if }}
+  //  export Flow
+  // {{ /if }}
+}
