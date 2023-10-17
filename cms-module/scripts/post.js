@@ -19,7 +19,7 @@ module.exports = async (runner, args) => {
 
     if (!stat.size) scripts.push('rm -rf ./src/flow.tsx')
 
-    console.log(scripts)
+    console.log('SCRIPTS-> ', scripts)
 
     // const rc = args.rc;
     await runner.execute(
