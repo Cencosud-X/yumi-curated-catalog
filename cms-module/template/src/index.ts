@@ -14,5 +14,3 @@ export {
   Flow
   {{/if}}
 }
-
-{{#if data.settings.flow}}
