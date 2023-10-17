@@ -4,10 +4,16 @@
     {
       "properties": {
         "settings": {
-          "required": [],
+          "required": ["flow"],
           "type": "object",
           "description": "Specific configuration",
-          "properties": {}
+          "properties": {
+            "flow": {
+              "type": "boolean",
+              "description": "Implementes with default flow",
+              "default": false
+            }
+          }
         }
       }
     },
