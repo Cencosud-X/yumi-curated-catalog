@@ -17,7 +17,7 @@ module.exports = async (runner, args) => {
     ]
     const stat = statSync('./src/flow.tsx')
 
-    if (!stat.size) scripts.push('rm -rf ./src/flow.tsx')
+    stat.size === 0 && scripts.push('rm -rf ./src/flow.tsx')
 
     console.log('SCRIPTS-> ', scripts)
 
