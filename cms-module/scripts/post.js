@@ -1,20 +1,29 @@
+const { statSync } = require("fs");
+
 module.exports = async (runner, args) => {
   try {
     console.log('> POST: Cleansing (WEB):');
 
+    const scripts = [
+      /* 'rm -rf ./src/app', */
+      'rm -rf ./src/test-setup.ts',
+      'rm -rf ./browserslist',
+      'rm -rf ./favicon.ico',
+      'rm -rf ./src/favicon.ico',
+      'rm -rf ./src/main.ts',
+      'rm -rf ./src/styles.css',
+      //'rm -rf ./src/assets',
+      'rm -rf ./src/environments',
+    ]
+    const stat = statSync('./src/flow.tsx')
+
+    if (!stat.size) scripts.push('rm -rf ./src/flow.tsx')
+
+    console.log(scripts)
+
     // const rc = args.rc;
     await runner.execute(
-      [
-        /* 'rm -rf ./src/app', */
-        'rm -rf ./src/test-setup.ts',
-        'rm -rf ./browserslist',
-        'rm -rf ./favicon.ico',
-        'rm -rf ./src/favicon.ico',
-        'rm -rf ./src/main.ts',
-        'rm -rf ./src/styles.css',
-        //'rm -rf ./src/assets',
-        'rm -rf ./src/environments',
-      ],
+      scripts,
       {
         cwd: args.workspacePath,
       }
