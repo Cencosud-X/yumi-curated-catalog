@@ -1,9 +1,7 @@
-// const { statSync } = require("fs");
-
 module.exports = async (runner, args) => {
   try {
     console.log('> POST: Cleansing (WEB):');
-    console.log('ARGS------------------------------', args, args.workspacePath)
+    // console.log('ARGS------------------------------', args, args.workspacePath)
 
     const scripts = [
       /* 'rm -rf ./src/app', */
@@ -16,6 +14,10 @@ module.exports = async (runner, args) => {
       //'rm -rf ./src/assets',
       'rm -rf ./src/environments',
     ]
+
+    !args.rc.settings.flow && scripts.push(`rm -rf ./src/flow.tsx`)
+    console.log(scripts)
+
     /* const stat = statSync('./template/src/flow.tsx')
 
     stat.size === 0 && scripts.push('rm -rf ./src/flow.tsx')
