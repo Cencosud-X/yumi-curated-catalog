@@ -1,9 +1,9 @@
-const { statSync } = require("fs");
+// const { statSync } = require("fs");
 
 module.exports = async (runner, args) => {
   try {
     console.log('> POST: Cleansing (WEB):');
-    console.log('ARGS', args.cwd())
+    console.log('ARGS------------------------------')
 
     const scripts = [
       /* 'rm -rf ./src/app', */
@@ -16,11 +16,11 @@ module.exports = async (runner, args) => {
       //'rm -rf ./src/assets',
       'rm -rf ./src/environments',
     ]
-    const stat = statSync('./template/src/flow.tsx')
+    /* const stat = statSync('./template/src/flow.tsx')
 
     stat.size === 0 && scripts.push('rm -rf ./src/flow.tsx')
 
-    console.log('SCRIPTS-> ', scripts)
+    console.log('SCRIPTS-> ', scripts) */
 
     // const rc = args.rc;
     await runner.execute(
