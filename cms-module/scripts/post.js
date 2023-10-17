@@ -3,6 +3,7 @@ const { statSync } = require("fs");
 module.exports = async (runner, args) => {
   try {
     console.log('> POST: Cleansing (WEB):');
+    console.log('ARGS', args.cwd())
 
     const scripts = [
       /* 'rm -rf ./src/app', */
