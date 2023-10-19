@@ -11,8 +11,8 @@
     "react": "^16.14.0",
     "@team_yumi/ramen": "^0.0.3-next.1691622154314",
     "react-router-dom": "^5.3.4",
-    "@awesome-cordova-plugins/in-app-browser": "^6.3.0",
     "lodash": "^4.17.21",
+    "@awesome-cordova-plugins/in-app-browser": "^6.3.0",
     "@capacitor/core": "4.8.0"
   }
 }
