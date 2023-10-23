@@ -1,6 +1,6 @@
-import { ICollection, IQueryParams } from "@team_yumi/sdk/src/models/rest";
-import { PrintRequestDTO } from "@yumi-printer/shared";
-import React from "react";
+import { ICollection, IQueryParams } from '@team_yumi/sdk/src/models/rest';
+import { PrintRequestDTO } from '../dtos';
+import React from 'react';
 declare type PrintRequestContextData = {
     loading: boolean;
     pending: ICollection<PrintRequestDTO>;

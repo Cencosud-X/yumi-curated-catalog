@@ -11,9 +11,9 @@
     "@ionic/react": "^7.2.3",
     "react-router-dom": "^5.3.4",
     "@team_yumi/sdk": "^0.0.1-next.20230802-d58df76-3af85eb6f1052a838bc33e5a984630ef",
-    "@yumi-printer/shared": "0.0.1",
     "@team_yumi/ramen-web": "^0.2.0-next.20231016-7058814-958a9dd979017cda7faf8e2ee1506483",
     "react-i18next": "^13.2.2",
+    "luxon": "^3.1.1",
     "i18next": "^23.4.4"
   }
 }
