@@ -7,8 +7,13 @@
   "types": "./index.d.ts",
   "dependencies": {},
   "peerDependencies": {
-    "react": "^16.14.0",
     "@team_yumi/sdk": "^0.0.1-next.20230802-d58df76-3af85eb6f1052a838bc33e5a984630ef",
-    "react-router-dom": "^5.3.4"
+    "axios": "^1.2.1",
+    "@team_yumi/ramen": "^0.2.4-next.20231013-7306f16-ea10439bcc40cadb618e414890f7268c",
+    "react": "^16.14.0",
+    "react-router-dom": "^5.3.4",
+    "react-i18next": "^13.1.0",
+    "i18next": "^23.4.4",
+    "luxon": "^3.4.3"
   }
 }
