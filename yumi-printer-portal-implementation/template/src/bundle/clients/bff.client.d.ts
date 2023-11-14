@@ -5,4 +5,5 @@ export declare class BffClient extends BaseRestClient {
     private static instance;
     static getInstance(baseUrl: string, country: string): BffClient;
     getPrintRequests(queryParams: IQueryParams<Partial<PrintRequestDTO>>): Promise<ICollection<PrintRequestDTO>>;
+    updatePrintRequest(printId: string, file_url: string): Promise<any>;
 }
