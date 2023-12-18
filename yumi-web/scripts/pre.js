@@ -53,7 +53,7 @@ module.exports = async (runner, args) => {
 
     const defaultScripts = [
       'npm install -D webpack-merge',
-      `npx nx g @nx/web:app ${rc.path} --unitTestRunner=jest --e2eTestRunner=none`
+      `npx nx g @nrwl/web:app ${rc.path} --unitTestRunner=jest --e2eTestRunner=none`
     ]
 
     const { dynamicScripts, dependencyErrors } = verifyVersions(rc)

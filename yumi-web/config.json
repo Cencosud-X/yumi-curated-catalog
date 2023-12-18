@@ -3,21 +3,21 @@
     "react-dom": 16,
     "react-router-dom": 5,
     "react-router": 5,
-    "nx": 16,
+    "nx": 14,
     "react": 16
   },
   "defaultVersions": {
     "react-dom": "^16.14.0",
     "react-router-dom": "^5.3.4",
     "react-router": "^5.2.0",
-    "nx": "16.10.0",
+    "nx": "14.4.2",
     "react": "^16.14.0"
   },
   "scripts": {
     "react-dom": "npm install -S react-dom@",
     "react-router-dom": "npm install -S react-router-dom@",
     "react-router": "npm install -S react-router@",
-    "nx": "npm install -D @nx/web@",
+    "nx": "npm install -D @nrwl/web@",
     "react": "npm install -S react@"
   },
   "dependencies": [
